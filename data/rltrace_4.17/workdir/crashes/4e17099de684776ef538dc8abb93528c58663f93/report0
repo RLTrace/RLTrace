@@ -1,0 +1,47 @@
+sd 0:0:0:0: [sg0] tag#0 Add. Sense: No additional sense information
+sd 0:0:0:0: [sg0] tag#0 CDB: Request Sense 03 e3 f8 72 54 a5
+kasan: CONFIG_KASAN_INLINE enabled
+kasan: GPF could be caused by NULL-ptr deref or user memory access
+general protection fault: 0000 [#1] SMP KASAN PTI
+Dumping ftrace buffer:
+   (ftrace buffer empty)
+Modules linked in:
+CPU: 0 PID: 1991 Comm: syz-executor.6 Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+RIP: 0010:strcmp+0x31/0xa0 lib/string.c:327
+RSP: 0018:ffff88003102f948 EFLAGS: 00010246
+RAX: 0000000000000007 RBX: 0000000000000000 RCX: ffffffff9354da5d
+RDX: 0000000000000000 RSI: ffff88003102fb08 RDI: 0000000000000038
+RBP: 0000000000000039 R08: ffffed000d4b34cd R09: ffffed000d4b34cd
+R10: 0000000000000001 R11: ffffed000d4b34cc R12: ffff88003102fb08
+R13: dffffc0000000000 R14: 000000000000000a R15: ffff88002f038000
+FS:  0000000002743940(0000) GS:ffff88006d200000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007ffe422d4d04 CR3: 0000000031022002 CR4: 00000000003606f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ xt_find_table_lock+0xd9/0x3d0 net/netfilter/x_tables.c:1212
+ xt_request_find_table_lock+0x23/0xb0 net/netfilter/x_tables.c:1257
+ get_info+0x114/0x450 net/ipv6/netfilter/ip6_tables.c:983
+ do_ip6t_get_ctl+0x133/0x7a0 net/ipv6/netfilter/ip6_tables.c:1707
+ nf_sockopt net/netfilter/nf_sockopt.c:104 [inline]
+ nf_getsockopt+0x68/0xd0 net/netfilter/nf_sockopt.c:122
+ ipv6_getsockopt+0x196/0x1f0 net/ipv6/ipv6_sockglue.c:1370
+ tcp_getsockopt+0x80/0xc0 net/ipv4/tcp.c:3349
+ __sys_getsockopt+0x125/0x1f0 net/socket.c:1940
+ __do_sys_getsockopt net/socket.c:1951 [inline]
+ __se_sys_getsockopt net/socket.c:1948 [inline]
+ __x64_sys_getsockopt+0xba/0x150 net/socket.c:1948
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x467a5a
+RSP: 002b:00007ffe422d5d98 EFLAGS: 00000206 ORIG_RAX: 0000000000000037
+RAX: ffffffffffffffda RBX: 00007ffe422d5dd0 RCX: 0000000000467a5a
+RDX: 0000000000000040 RSI: 0000000000000029 RDI: 0000000000000003
+RBP: 0000000000000003 R08: 00007ffe422d5dcc R09: 000000000000000a
+R10: 00007ffe422d5dd0 R11: 0000000000000206 R12: 0000000000000000
+R13: 0000000000000029 R14: 0000000000717ee0 R15: 0000000000715d20
+Code: 00 00 00 00 00 fc ff df 55 53 48 83 ec 08 eb 0a 84 db 48 89 ef 74 5a 4c 89 e6 48 89 f8 48 89 fa 48 8d 6f 01 48 c1 e8 03 83 e2 07 <42> 0f b6 04 28 38 d0 7f 04 84 c0 75 50 48 89 f0 48 89 f2 0f b6 
+RIP: strcmp+0x31/0xa0 lib/string.c:327 RSP: ffff88003102f948
+---[ end trace 56a534bdd0e7ae34 ]---

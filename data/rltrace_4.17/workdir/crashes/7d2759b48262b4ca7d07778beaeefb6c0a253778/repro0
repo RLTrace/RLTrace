@@ -1,0 +1,556 @@
+2020/01/27 15:13:01 reproducing crash 'BUG: Bad page map': 993 programs, 4 VMs, timeouts [15s 1m0s 6m0s]
+2020/01/27 15:13:01 reproducing crash 'BUG: Bad page map': extracting reproducer from 993 programs
+2020/01/27 15:13:01 reproducing crash 'BUG: Bad page map': single: executing 16 programs separately with timeout 15s
+2020/01/27 15:13:12 reproducing crash 'BUG: Bad page map': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): socket$nl_generic-bind$netlink-syz_open_dev$sg-ioctl$SNDRV_SEQ_IOCTL_GET_QUEUE_INFO-dup2
+2020/01/27 15:13:12 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+r0 = socket$nl_generic(0x10, 0x3, 0x10)
+bind$netlink(r0, &(0x7f00000000c0)={0x10, 0x0, 0x0, 0x8}, 0xc)
+r1 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SNDRV_SEQ_IOCTL_GET_QUEUE_INFO(r1, 0xc08c5334, &(0x7f0000000100)={0x20, 0xfbb, 0x1, 'queue1\x00', 0x401})
+dup2(r1, r0)
+2020/01/27 15:13:27 reproducing crash 'BUG: Bad page map': program did not crash
+2020/01/27 15:13:27 reproducing crash 'BUG: Bad page map': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): openat$procfs-syz_genetlink_get_family_id$netlbl_cipso-sendmsg$NLBL_CIPSOV4_C_ADD-socket$nl_generic-bind$netlink
+2020/01/27 15:13:27 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+r0 = openat$procfs(0xffffffffffffff9c, &(0x7f0000000040)='/proc/cgroups\x00', 0x0, 0x0)
+r1 = syz_genetlink_get_family_id$netlbl_cipso(&(0x7f00000000c0)='NLBL_CIPSOv4\x00')
+sendmsg$NLBL_CIPSOV4_C_ADD(r0, &(0x7f00000005c0)={&(0x7f0000000080)={0x10, 0x0, 0x0, 0x808500}, 0xc, &(0x7f0000000580)={&(0x7f0000000100)={0x420, r1, 0x200, 0x70bd2d, 0x25dfdbff, {}, [@NLBL_CIPSOV4_A_DOI={0x8, 0x1, 0x3}, @NLBL_CIPSOV4_A_MLSCATLST={0xc8, 0xc, [{0x34, 0xb, [@NLBL_CIPSOV4_A_MLSCATLOC={0x8, 0x9, 0x55ccc2e4}, @NLBL_CIPSOV4_A_MLSCATLOC={0x8, 0x9, 0x4e3d3cbb}, @NLBL_CIPSOV4_A_MLSCATLOC={0x8, 0x9, 0x2721993}, @NLBL_CIPSOV4_A_MLSCATLOC={0x8, 0x9, 0x413b2329}, @NLBL_CIPSOV4_A_MLSCATLOC={0x8, 0x9, 0x5265e7f0}, @NLBL_CIPSOV4_A_MLSCATREM={0x8, 0xa, 0x1db8}]}, {0x4}, {0x44, 0xb, [@NLBL_CIPSOV4_A_MLSCATLOC={0x8, 0x9, 0x6817ca64}, @NLBL_CIPSOV4_A_MLSCATREM={0x8, 0xa, 0x4921}, @NLBL_CIPSOV4_A_MLSCATLOC={0x8, 0x9, 0x40be561f}, @NLBL_CIPSOV4_A_MLSCATLOC={0x8, 0x9, 0x59666a88}, @NLBL_CIPSOV4_A_MLSCATREM={0x8, 0xa, 0x3b13}, @NLBL_CIPSOV4_A_MLSCATLOC={0x8, 0x9, 0x28f2b6f7}, @NLBL_CIPSOV4_A_MLSCATREM={0x8, 0xa, 0xce84}, @NLBL_CIPSOV4_A_MLSCATLOC={0x8, 0x9, 0x7863c6ee}]}, {0x24, 0xb, [@NLBL_CIPSOV4_A_MLSCATREM={0x8, 0xa, 0x92c5}, @NLBL_CIPSOV4_A_MLSCATREM={0x8, 0xa, 0xcd95}, @NLBL_CIPSOV4_A_MLSCATLOC={0x8, 0x9, 0x4cc3b42a}, @NLBL_CIPSOV4_A_MLSCATREM={0x8, 0xa, 0x1f0}]}, {0x24, 0xb, [@NLBL_CIPSOV4_A_MLSCATREM={0x8, 0xa, 0x42ef}, @NLBL_CIPSOV4_A_MLSCATLOC={0x8, 0x9, 0x66c45ee2}, @NLBL_CIPSOV4_A_MLSCATREM={0x8, 0xa, 0xbaa8}, @NLBL_CIPSOV4_A_MLSCATREM={0x8, 0xa, 0x96c7}]}]}, @NLBL_CIPSOV4_A_DOI={0x8}, @NLBL_CIPSOV4_A_MLSCATLST={0x58, 0xc, [{0x54, 0xb, [@NLBL_CIPSOV4_A_MLSCATLOC={0x8, 0x9, 0x781d03a9}, @NLBL_CIPSOV4_A_MLSCATLOC={0x8, 0x9, 0x36fe4de8}, @NLBL_CIPSOV4_A_MLSCATLOC={0x8, 0x9, 0x3ac7447f}, @NLBL_CIPSOV4_A_MLSCATLOC={0x8, 0x9, 0x636f9b28}, @NLBL_CIPSOV4_A_MLSCATREM={0x8, 0xa, 0x53bd}, @NLBL_CIPSOV4_A_MLSCATLOC={0x8, 0x9, 0x2caaa131}, @NLBL_CIPSOV4_A_MLSCATLOC={0x8, 0x9, 0xf020e9b}, @NLBL_CIPSOV4_A_MLSCATREM={0x8, 0xa, 0x490c}, @NLBL_CIPSOV4_A_MLSCATLOC={0x8, 0x9, 0x7404d75e}, @NLBL_CIPSOV4_A_MLSCATLOC={0x8, 0x9, 0x4e8ebccd}]}]}, @NLBL_CIPSOV4_A_MLSLVLLST={0x12c, 0x8, [{0xc, 0x7, [@NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x2bbfbd9a}]}, {0x34, 0x7, [@NLBL_CIPSOV4_A_MLSLVLREM={0x8, 0x6, 0xff}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x1a48b7a6}, @NLBL_CIPSOV4_A_MLSLVLREM={0x8, 0x6, 0xe6}, @NLBL_CIPSOV4_A_MLSLVLREM={0x8, 0x6, 0x2a}, @NLBL_CIPSOV4_A_MLSLVLREM={0x8, 0x6, 0x13}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x186d272e}]}, {0xc, 0x7, [@NLBL_CIPSOV4_A_MLSLVLREM={0x8, 0x6, 0xd}]}, {0x54, 0x7, [@NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x25f11693}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x4c655ad7}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x216fbbf5}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x3e752c5}, @NLBL_CIPSOV4_A_MLSLVLREM={0x8, 0x6, 0x3f}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x51979fe2}, @NLBL_CIPSOV4_A_MLSLVLREM={0x8, 0x6, 0x72}, @NLBL_CIPSOV4_A_MLSLVLREM={0x8, 0x6, 0x41}, @NLBL_CIPSOV4_A_MLSLVLREM={0x8, 0x6, 0xf2}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x43c1f370}]}, {0x24, 0x7, [@NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x2eee5ead}, @NLBL_CIPSOV4_A_MLSLVLREM={0x8, 0x6, 0x25}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x29c5b71a}, @NLBL_CIPSOV4_A_MLSLVLREM={0x8, 0x6, 0x63}]}, {0x34, 0x7, [@NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x2a5dc65e}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x4adf561}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x8}, @NLBL_CIPSOV4_A_MLSLVLREM={0x8, 0x6, 0x2f}, @NLBL_CIPSOV4_A_MLSLVLREM={0x8, 0x6, 0x10}, @NLBL_CIPSOV4_A_MLSLVLREM={0x8, 0x6, 0xb9}]}, {0x24, 0x7, [@NLBL_CIPSOV4_A_MLSLVLREM={0x8, 0x6, 0xac}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x50ecf221}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x323dba2a}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x24a381ec}]}, {0xc, 0x7, [@NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x6103512b}]}]}, @NLBL_CIPSOV4_A_MTYPE={0x8, 0x2, 0x2}, @NLBL_CIPSOV4_A_MLSLVLLST={0x138, 0x8, [{0x2c, 0x7, [@NLBL_CIPSOV4_A_MLSLVLREM={0x8, 0x6, 0xb3}, @NLBL_CIPSOV4_A_MLSLVLREM={0x8, 0x6, 0xd8}, @NLBL_CIPSOV4_A_MLSLVLREM={0x8, 0x6, 0x2e}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x790e33d9}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x85559db}]}, {0x2c, 0x7, [@NLBL_CIPSOV4_A_MLSLVLREM={0x8, 0x6, 0xfe}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x3e436e5e}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x767bdfa3}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x62402520}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x10f142f8}]}, {0x54, 0x7, [@NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x30bba446}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x1c4abab9}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x6678db57}, @NLBL_CIPSOV4_A_MLSLVLREM={0x8, 0x6, 0xc3}, @NLBL_CIPSOV4_A_MLSLVLREM={0x8, 0x6, 0x32}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x4121f6f6}, @NLBL_CIPSOV4_A_MLSLVLREM={0x8, 0x6, 0x50}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x33010788}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0xbbcc93}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x7ffae284}]}, {0xc, 0x7, [@NLBL_CIPSOV4_A_MLSLVLREM={0x8, 0x6, 0x83}]}, {0x14, 0x7, [@NLBL_CIPSOV4_A_MLSLVLREM={0x8, 0x6, 0xee}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x7f06358a}]}, {0x54, 0x7, [@NLBL_CIPSOV4_A_MLSLVLREM={0x8, 0x6, 0x87}, @NLBL_CIPSOV4_A_MLSLVLREM={0x8, 0x6, 0x70}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x6fe7dc9e}, @NLBL_CIPSOV4_A_MLSLVLREM={0x8, 0x6, 0xcf}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x407f070b}, @NLBL_CIPSOV4_A_MLSLVLREM={0x8, 0x6, 0xe1}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x38c1ad98}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x55e86b24}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x665c3ba6}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x317dcec8}]}, {0x14, 0x7, [@NLBL_CIPSOV4_A_MLSLVLREM={0x8, 0x6, 0x65}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x7f47b7c0}]}]}, @NLBL_CIPSOV4_A_MLSLVLLST={0x54, 0x8, [{0xc, 0x7, [@NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x77d1b89}]}, {0x44, 0x7, [@NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x1e45ed32}, @NLBL_CIPSOV4_A_MLSLVLREM={0x8, 0x6, 0x72}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0xcdea199}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x48a5671a}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x56621bf0}, @NLBL_CIPSOV4_A_MLSLVLREM={0x8, 0x6, 0xf9}, @NLBL_CIPSOV4_A_MLSLVLREM={0x8, 0x6, 0xb3}, @NLBL_CIPSOV4_A_MLSLVLLOC={0x8, 0x5, 0x42dca32f}]}]}, @NLBL_CIPSOV4_A_MTYPE={0x8}, @NLBL_CIPSOV4_A_TAGLST={0x14, 0x4, [{0x5, 0x3, 0x5}, {0x5, 0x3, 0xe}]}]}, 0x420}, 0x1, 0x0, 0x0, 0x80050}, 0x800)
+r2 = socket$nl_generic(0x10, 0x3, 0x10)
+bind$netlink(r2, &(0x7f0000000000)={0x10, 0x0, 0x25dfdbfd, 0xfb73cf2373628887}, 0xc)
+2020/01/27 15:13:42 reproducing crash 'BUG: Bad page map': program did not crash
+2020/01/27 15:13:42 reproducing crash 'BUG: Bad page map': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): pipe2-read$usbmon-pipe2-read$usbmon-ioctl$SECCOMP_IOCTL_NOTIF_RECV-newfstatat-setresuid-stat-getegid-getegid-getresgid-lsetxattr$system_posix_acl-socket$nl_generic-bind$netlink-accept4-openat$procfs-eventfd2-syz_open_dev$rtc-syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND-syz_open_dev$sg-ioctl$SG_IO-syz_open_dev$sg-ioctl$SG_IO-syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND-syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND-syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND-ioctl$TIOCGSID-newfstatat-setresuid-getresgid-syz_open_dev$sg-ioctl$SG_IO-pipe2-read$usbmon-openat$cgroup-socket$inet6_udp-syz_open_dev$sg-ioctl$SG_IO-syz_open_dev$sg-ioctl$SG_IO-syz_open_dev$sndtimer-syz_open_dev$sg-ioctl$SG_IO-syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND-ioctl$sock_FIOGETOWN-newfstatat-setresuid-newfstatat-syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND-syz_open_dev$sg-ioctl$SG_IO-getpgrp-process_vm_writev-getsockopt$sock_cred-getegid-syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND-openat$ttyS3-openat$cgroup_type-openat$cgroup_subtree-socket$nl_generic-bind$netlink-ioctl$sock_SIOCGPGRP-stat-getegid-getegid-getresgid-lsetxattr$system_posix_acl-stat-getegid-getegid-getresgid-lsetxattr$system_posix_acl-stat-getegid-getegid-getresgid-lsetxattr$system_posix_acl-stat-getegid-getegid-getresgid-lsetxattr$system_posix_acl-getgroups-syz_open_dev$sg-ioctl$SG_IO-socket$inet-getpgrp-process_vm_writev-socket$inet_udplite-sendmmsg$inet-getsockopt$inet_IP_IPSEC_POLICY-stat-getegid-getegid-getresgid-lsetxattr$system_posix_acl-stat-getegid-getegid-getresgid-lsetxattr$system_posix_acl-getgroups-syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND-getpgrp-process_vm_writev-ioctl$NS_GET_OWNER_UID-stat-getegid-getegid-getresgid-lsetxattr$system_posix_acl-getpgrp-process_vm_writev-newfstatat-setresuid-stat-getegid-getegid-getresgid-lsetxattr$system_posix_acl-stat-getegid-getegid-getresgid-lsetxattr$system_posix_acl-stat-getegid-getegid-getresgid-lsetxattr$system_posix_acl-stat-getegid-getegid-getresgid-lsetxattr$system_posix_acl-stat-getegid-getegid-getresgid-lsetxattr$system_posix_acl-stat-getegid-getegid-getresgid-lsetxattr$system_posix_acl-getgroups-getsockopt$sock_cred-newfstatat-setresuid-stat-getegid-getegid-getresgid-lsetxattr$system_posix_acl-getpgrp-process_vm_writev-newfstatat-setresuid-stat-getegid-getegid-getresgid-lsetxattr$system_posix_acl-sendmmsg$unix-ioctl$EVIOCSREP-syz_open_dev$sg-syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:13:42 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+pipe2(&(0x7f0000000000)={<r0=>0xffffffffffffffff, <r1=>0xffffffffffffffff}, 0x0)
+read$usbmon(r0, 0x0, 0x0)
+pipe2(&(0x7f0000000000)={<r2=>0xffffffffffffffff}, 0x0)
+read$usbmon(r2, 0x0, 0x0)
+ioctl$SECCOMP_IOCTL_NOTIF_RECV(0xffffffffffffffff, 0xc0502100, &(0x7f0000000380)={0x0, <r3=>0x0})
+newfstatat(0xffffffffffffff9c, &(0x7f0000002000)='./file0\x00', &(0x7f0000002040)={0x0, 0x0, 0x0, 0x0, <r4=>0x0}, 0x0)
+setresuid(0x0, r4, 0x0)
+stat(&(0x7f0000000100)='./file0\x00', &(0x7f0000000140)={0x0, 0x0, 0x0, 0x0, <r5=>0x0})
+r6 = getegid()
+r7 = getegid()
+getresgid(&(0x7f00000001c0), &(0x7f0000000200), &(0x7f0000000240)=<r8=>0x0)
+lsetxattr$system_posix_acl(&(0x7f0000000080)='./file0\x00', &(0x7f00000000c0)='system.posix_acl_access\x00', &(0x7f0000000280)=ANY=[@ANYBLOB="02000000010002000000000002000200", @ANYRES32=r5, @ANYBLOB="040007000000000008000300", @ANYRES32=r6, @ANYBLOB="08000100", @ANYRES32=r7, @ANYBLOB="08000300", @ANYRES32=r8, @ANYBLOB='\x00\x00\x00\x00', @ANYRES32, @ANYBLOB="08000400", @ANYRES32, @ANYBLOB="10000100000000002000050000000000"], 0x54, 0x2)
+r9 = socket$nl_generic(0x10, 0x3, 0x10)
+bind$netlink(r9, &(0x7f00000000c0)={0x10, 0x0, 0x0, 0x8}, 0xc)
+r10 = accept4(r9, &(0x7f0000000400)=@pppol2tpin6, &(0x7f0000000480)=0x80, 0x800)
+r11 = openat$procfs(0xffffffffffffff9c, &(0x7f00000004c0)='/proc/sysvipc/sem\x00', 0x0, 0x0)
+r12 = eventfd2(0x0, 0x80800)
+r13 = syz_open_dev$rtc(&(0x7f0000000500)='/dev/rtc#\x00', 0x3f, 0x0)
+r14 = syz_open_dev$sg(0x0, 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r14, 0x1, &(0x7f0000000040)={0x0, 0x0, 0x7f})
+r15 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SG_IO(r15, 0x2285, &(0x7f0000000500)={0x53, 0x0, 0x6, 0x0, @buffer={0x0, 0x0, 0x0}, &(0x7f0000000300)="745d5eb429af", 0x0, 0x0, 0x0, 0x0, 0x0})
+r16 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SG_IO(r16, 0x2285, &(0x7f0000000500)={0x53, 0x0, 0x6, 0x0, @buffer={0x0, 0x0, 0x0}, &(0x7f0000000300)="745d5eb429af", 0x0, 0x0, 0x0, 0x0, 0x0})
+r17 = syz_open_dev$sg(0x0, 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r17, 0x1, &(0x7f0000000040)={0x0, 0x0, 0x7f})
+r18 = syz_open_dev$sg(0x0, 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r18, 0x1, &(0x7f0000000040)={0x0, 0x0, 0x7f})
+r19 = syz_open_dev$sg(0x0, 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r19, 0x1, &(0x7f0000000040)={0x0, 0x0, 0x7f})
+ioctl$TIOCGSID(0xffffffffffffffff, 0x5429, &(0x7f0000000540)=<r20=>0x0)
+newfstatat(0xffffffffffffff9c, &(0x7f0000002000)='./file0\x00', &(0x7f0000002040)={0x0, 0x0, 0x0, 0x0, <r21=>0x0}, 0x0)
+setresuid(0x0, r21, 0x0)
+getresgid(&(0x7f0000000580)=<r22=>0x0, &(0x7f00000005c0), &(0x7f0000000600))
+r23 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SG_IO(r23, 0x2285, &(0x7f0000000500)={0x53, 0x0, 0x6, 0x0, @buffer={0x0, 0x0, 0x0}, &(0x7f0000000300)="745d5eb429af", 0x0, 0x0, 0x0, 0x0, 0x0})
+pipe2(&(0x7f0000000000)={<r24=>0xffffffffffffffff}, 0x0)
+read$usbmon(r24, 0x0, 0x0)
+r25 = openat$cgroup(r24, &(0x7f0000000640)='syz1\x00', 0x200002, 0x0)
+r26 = socket$inet6_udp(0xa, 0x2, 0x0)
+r27 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SG_IO(r27, 0x2285, &(0x7f0000000500)={0x53, 0x0, 0x6, 0x0, @buffer={0x0, 0x0, 0x0}, &(0x7f0000000300)="745d5eb429af", 0x0, 0x0, 0x0, 0x0, 0x0})
+r28 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SG_IO(r28, 0x2285, &(0x7f0000000500)={0x53, 0x0, 0x6, 0x0, @buffer={0x0, 0x0, 0x0}, &(0x7f0000000300)="745d5eb429af", 0x0, 0x0, 0x0, 0x0, 0x0})
+r29 = syz_open_dev$sndtimer(&(0x7f0000000680)='/dev/snd/timer\x00', 0x0, 0x80)
+r30 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SG_IO(r30, 0x2285, &(0x7f0000000500)={0x53, 0x0, 0x6, 0x0, @buffer={0x0, 0x0, 0x0}, &(0x7f0000000300)="745d5eb429af", 0x0, 0x0, 0x0, 0x0, 0x0})
+r31 = syz_open_dev$sg(0x0, 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r31, 0x1, &(0x7f0000000040)={0x0, 0x0, 0x7f})
+ioctl$sock_FIOGETOWN(r1, 0x8903, &(0x7f00000006c0)=<r32=>0x0)
+newfstatat(0xffffffffffffff9c, &(0x7f0000002000)='./file0\x00', &(0x7f0000002040)={0x0, 0x0, 0x0, 0x0, <r33=>0x0}, 0x0)
+setresuid(0x0, r33, 0x0)
+newfstatat(0xffffffffffffff9c, &(0x7f0000000700)='./file0\x00', &(0x7f0000000740)={0x0, 0x0, 0x0, 0x0, 0x0, <r34=>0x0}, 0x800)
+r35 = syz_open_dev$sg(0x0, 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r35, 0x1, &(0x7f0000000040)={0x0, 0x0, 0x7f})
+r36 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SG_IO(r36, 0x2285, &(0x7f0000000500)={0x53, 0x0, 0x6, 0x0, @buffer={0x0, 0x0, 0x0}, &(0x7f0000000300)="745d5eb429af", 0x0, 0x0, 0x0, 0x0, 0x0})
+r37 = getpgrp(0x0)
+process_vm_writev(r37, &(0x7f0000004140)=[{0x0}], 0x1, &(0x7f0000004280)=[{&(0x7f0000004180)=""/217, 0xd9}], 0x1, 0x0)
+getsockopt$sock_cred(0xffffffffffffffff, 0x1, 0x11, &(0x7f0000000ac0)={0x0, <r38=>0x0}, &(0x7f0000000b00)=0xc)
+r39 = getegid()
+r40 = syz_open_dev$sg(0x0, 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r40, 0x1, &(0x7f0000000040)={0x0, 0x0, 0x7f})
+r41 = openat$ttyS3(0xffffffffffffff9c, &(0x7f0000000b40)='/dev/ttyS3\x00', 0x8000, 0x0)
+r42 = openat$cgroup_type(0xffffffffffffffff, &(0x7f0000000c40)='cgroup.type\x00', 0x2, 0x0)
+r43 = openat$cgroup_subtree(0xffffffffffffffff, &(0x7f0000000c80)='cgroup.subtree_control\x00', 0x2, 0x0)
+r44 = socket$nl_generic(0x10, 0x3, 0x10)
+bind$netlink(r44, &(0x7f00000000c0)={0x10, 0x0, 0x0, 0x8}, 0xc)
+ioctl$sock_SIOCGPGRP(r44, 0x8904, &(0x7f0000000cc0)=<r45=>0x0)
+stat(&(0x7f0000000100)='./file0\x00', &(0x7f0000000140)={0x0, 0x0, 0x0, 0x0, <r46=>0x0})
+r47 = getegid()
+r48 = getegid()
+getresgid(&(0x7f00000001c0), &(0x7f0000000200), &(0x7f0000000240)=<r49=>0x0)
+lsetxattr$system_posix_acl(&(0x7f0000000080)='./file0\x00', &(0x7f00000000c0)='system.posix_acl_access\x00', &(0x7f0000000280)=ANY=[@ANYBLOB="02000000010002000000000002000200", @ANYRES32=r46, @ANYBLOB="040007000000000008000300", @ANYRES32=r47, @ANYBLOB="08000100", @ANYRES32=r48, @ANYBLOB="08000300", @ANYRES32=r49, @ANYBLOB='\x00\x00\x00\x00', @ANYRES32, @ANYBLOB="08000400", @ANYRES32, @ANYBLOB="10000100000000002000050000000000"], 0x54, 0x2)
+stat(&(0x7f0000000100)='./file0\x00', &(0x7f0000000140)={0x0, 0x0, 0x0, 0x0, <r50=>0x0})
+r51 = getegid()
+r52 = getegid()
+getresgid(&(0x7f00000001c0), &(0x7f0000000200), &(0x7f0000000240)=<r53=>0x0)
+lsetxattr$system_posix_acl(&(0x7f0000000080)='./file0\x00', &(0x7f00000000c0)='system.posix_acl_access\x00', &(0x7f0000000280)=ANY=[@ANYBLOB="02000000010002000000000002000200", @ANYRES32=r50, @ANYBLOB="040007000000000008000300", @ANYRES32=r51, @ANYBLOB="08000100", @ANYRES32=r52, @ANYBLOB="08000300", @ANYRES32=r53, @ANYBLOB='\x00\x00\x00\x00', @ANYRES32, @ANYBLOB="08000400", @ANYRES32, @ANYBLOB="10000100000000002000050000000000"], 0x54, 0x2)
+stat(&(0x7f0000000100)='./file0\x00', &(0x7f0000000140)={0x0, 0x0, 0x0, 0x0, <r54=>0x0})
+r55 = getegid()
+r56 = getegid()
+getresgid(&(0x7f00000001c0), &(0x7f0000000200), &(0x7f0000000240)=<r57=>0x0)
+lsetxattr$system_posix_acl(&(0x7f0000000080)='./file0\x00', &(0x7f00000000c0)='system.posix_acl_access\x00', &(0x7f0000000280)=ANY=[@ANYBLOB="02000000010002000000000002000200", @ANYRES32=r54, @ANYBLOB="040007000000000008000300", @ANYRES32=r55, @ANYBLOB="08000100", @ANYRES32=r56, @ANYBLOB="08000300", @ANYRES32=r57, @ANYBLOB='\x00\x00\x00\x00', @ANYRES32, @ANYBLOB="08000400", @ANYRES32, @ANYBLOB="10000100000000002000050000000000"], 0x54, 0x2)
+stat(&(0x7f0000000100)='./file0\x00', &(0x7f0000000140)={0x0, 0x0, 0x0, 0x0, <r58=>0x0})
+r59 = getegid()
+r60 = getegid()
+getresgid(&(0x7f00000001c0), &(0x7f0000000200), &(0x7f0000000240)=<r61=>0x0)
+lsetxattr$system_posix_acl(&(0x7f0000000080)='./file0\x00', &(0x7f00000000c0)='system.posix_acl_access\x00', &(0x7f0000000280)=ANY=[@ANYBLOB="02000000010002000000000002000200", @ANYRES32=r58, @ANYBLOB="040007000000000008000300", @ANYRES32=r59, @ANYBLOB="08000100", @ANYRES32=r60, @ANYBLOB="08000300", @ANYRES32=r61, @ANYBLOB='\x00\x00\x00\x00', @ANYRES32, @ANYBLOB="08000400", @ANYRES32, @ANYBLOB="10000100000000002000050000000000"], 0x54, 0x2)
+getgroups(0x8, &(0x7f0000000d00)=[r49, 0xffffffffffffffff, 0xee00, r52, 0xee01, r57, <r62=>0xffffffffffffffff, r61])
+r63 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SG_IO(r63, 0x2285, &(0x7f0000000500)={0x53, 0x0, 0x6, 0x0, @buffer={0x0, 0x0, 0x0}, &(0x7f0000000300)="745d5eb429af", 0x0, 0x0, 0x0, 0x0, 0x0})
+r64 = socket$inet(0x2, 0x800, 0xda)
+r65 = getpgrp(0x0)
+process_vm_writev(r65, &(0x7f0000004140)=[{0x0}], 0x1, &(0x7f0000004280)=[{&(0x7f0000004180)=""/217, 0xd9}], 0x1, 0x0)
+r66 = socket$inet_udplite(0x2, 0x2, 0x88)
+sendmmsg$inet(r66, &(0x7f0000001640)=[{{&(0x7f0000000000)={0x2, 0x4e24, @dev={0xac, 0x14, 0x14, 0x17}}, 0x10, 0x0}}, {{&(0x7f0000000180)={0x2, 0x4e22, @dev}, 0x10, 0x0, 0x0, &(0x7f0000001580)=ANY=[@ANYBLOB="1400000000000000fafc6546d53d6aba8903000004000000"], 0x134}}], 0x2, 0x0)
+getsockopt$inet_IP_IPSEC_POLICY(r66, 0x0, 0x10, &(0x7f0000000d40)={{{@in=@broadcast, @in=@multicast2, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, <r67=>0x0}}, {{@in6=@initdev}, 0x0, @in=@loopback}}, &(0x7f0000000e40)=0xe8)
+stat(&(0x7f0000000100)='./file0\x00', &(0x7f0000000140)={0x0, 0x0, 0x0, 0x0, <r68=>0x0})
+r69 = getegid()
+r70 = getegid()
+getresgid(&(0x7f00000001c0), &(0x7f0000000200), &(0x7f0000000240)=<r71=>0x0)
+lsetxattr$system_posix_acl(&(0x7f0000000080)='./file0\x00', &(0x7f00000000c0)='system.posix_acl_access\x00', &(0x7f0000000280)=ANY=[@ANYBLOB="02000000010002000000000002000200", @ANYRES32=r68, @ANYBLOB="040007000000000008000300", @ANYRES32=r69, @ANYBLOB="08000100", @ANYRES32=r70, @ANYBLOB="08000300", @ANYRES32=r71, @ANYBLOB='\x00\x00\x00\x00', @ANYRES32, @ANYBLOB="08000400", @ANYRES32, @ANYBLOB="10000100000000002000050000000000"], 0x54, 0x2)
+stat(&(0x7f0000000100)='./file0\x00', &(0x7f0000000140)={0x0, 0x0, 0x0, 0x0, <r72=>0x0})
+r73 = getegid()
+r74 = getegid()
+getresgid(&(0x7f00000001c0), &(0x7f0000000200), &(0x7f0000000240)=<r75=>0x0)
+lsetxattr$system_posix_acl(&(0x7f0000000080)='./file0\x00', &(0x7f00000000c0)='system.posix_acl_access\x00', &(0x7f0000000280)=ANY=[@ANYBLOB="02000000010002000000000002000200", @ANYRES32=r72, @ANYBLOB="040007000000000008000300", @ANYRES32=r73, @ANYBLOB="08000100", @ANYRES32=r74, @ANYBLOB="08000300", @ANYRES32=r75, @ANYBLOB='\x00\x00\x00\x00', @ANYRES32, @ANYBLOB="08000400", @ANYRES32, @ANYBLOB="10000100000000002000050000000000"], 0x54, 0x2)
+getgroups(0x2, &(0x7f0000000e80)=[r69, <r76=>r74])
+r77 = syz_open_dev$sg(0x0, 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r77, 0x1, &(0x7f0000000040)={0x0, 0x0, 0x7f})
+r78 = getpgrp(0x0)
+process_vm_writev(r78, &(0x7f0000004140)=[{0x0}], 0x1, &(0x7f0000004280)=[{&(0x7f0000004180)=""/217, 0xd9}], 0x1, 0x0)
+ioctl$NS_GET_OWNER_UID(0xffffffffffffffff, 0xb704, &(0x7f0000004500)=<r79=>0x0)
+stat(&(0x7f0000000100)='./file0\x00', &(0x7f0000000140)={0x0, 0x0, 0x0, 0x0, <r80=>0x0})
+r81 = getegid()
+r82 = getegid()
+getresgid(&(0x7f00000001c0), &(0x7f0000000200), &(0x7f0000000240)=<r83=>0x0)
+lsetxattr$system_posix_acl(&(0x7f0000000080)='./file0\x00', &(0x7f00000000c0)='system.posix_acl_access\x00', &(0x7f0000000280)=ANY=[@ANYBLOB="02000000010002000000000002000200", @ANYRES32=r80, @ANYBLOB="040007000000000008000300", @ANYRES32=r81, @ANYBLOB="08000100", @ANYRES32=r82, @ANYBLOB="08000300", @ANYRES32=r83, @ANYBLOB='\x00\x00\x00\x00', @ANYRES32, @ANYBLOB="08000400", @ANYRES32, @ANYBLOB="10000100000000002000050000000000"], 0x54, 0x2)
+r84 = getpgrp(0x0)
+process_vm_writev(r84, &(0x7f0000004140)=[{0x0}], 0x1, &(0x7f0000004280)=[{&(0x7f0000004180)=""/217, 0xd9}], 0x1, 0x0)
+newfstatat(0xffffffffffffff9c, &(0x7f0000002000)='./file0\x00', &(0x7f0000002040)={0x0, 0x0, 0x0, 0x0, <r85=>0x0}, 0x0)
+setresuid(0x0, r85, 0x0)
+stat(&(0x7f0000000100)='./file0\x00', &(0x7f0000000140)={0x0, 0x0, 0x0, 0x0, <r86=>0x0})
+r87 = getegid()
+r88 = getegid()
+getresgid(&(0x7f00000001c0), &(0x7f0000000200), &(0x7f0000000240)=<r89=>0x0)
+lsetxattr$system_posix_acl(&(0x7f0000000080)='./file0\x00', &(0x7f00000000c0)='system.posix_acl_access\x00', &(0x7f0000000280)=ANY=[@ANYBLOB="02000000010002000000000002000200", @ANYRES32=r86, @ANYBLOB="040007000000000008000300", @ANYRES32=r87, @ANYBLOB="08000100", @ANYRES32=r88, @ANYBLOB="08000300", @ANYRES32=r89, @ANYBLOB='\x00\x00\x00\x00', @ANYRES32, @ANYBLOB="08000400", @ANYRES32, @ANYBLOB="10000100000000002000050000000000"], 0x54, 0x2)
+stat(&(0x7f0000000100)='./file0\x00', &(0x7f0000000140)={0x0, 0x0, 0x0, 0x0, <r90=>0x0})
+r91 = getegid()
+r92 = getegid()
+getresgid(&(0x7f00000001c0), &(0x7f0000000200), &(0x7f0000000240)=<r93=>0x0)
+lsetxattr$system_posix_acl(&(0x7f0000000080)='./file0\x00', &(0x7f00000000c0)='system.posix_acl_access\x00', &(0x7f0000000280)=ANY=[@ANYBLOB="02000000010002000000000002000200", @ANYRES32=r90, @ANYBLOB="040007000000000008000300", @ANYRES32=r91, @ANYBLOB="08000100", @ANYRES32=r92, @ANYBLOB="08000300", @ANYRES32=r93, @ANYBLOB='\x00\x00\x00\x00', @ANYRES32, @ANYBLOB="08000400", @ANYRES32, @ANYBLOB="10000100000000002000050000000000"], 0x54, 0x2)
+stat(&(0x7f0000000100)='./file0\x00', &(0x7f0000000140)={0x0, 0x0, 0x0, 0x0, <r94=>0x0})
+r95 = getegid()
+r96 = getegid()
+getresgid(&(0x7f00000001c0), &(0x7f0000000200), &(0x7f0000000240)=<r97=>0x0)
+lsetxattr$system_posix_acl(&(0x7f0000000080)='./file0\x00', &(0x7f00000000c0)='system.posix_acl_access\x00', &(0x7f0000000280)=ANY=[@ANYBLOB="02000000010002000000000002000200", @ANYRES32=r94, @ANYBLOB="040007000000000008000300", @ANYRES32=r95, @ANYBLOB="08000100", @ANYRES32=r96, @ANYBLOB="08000300", @ANYRES32=r97, @ANYBLOB='\x00\x00\x00\x00', @ANYRES32, @ANYBLOB="08000400", @ANYRES32, @ANYBLOB="10000100000000002000050000000000"], 0x54, 0x2)
+stat(&(0x7f0000000100)='./file0\x00', &(0x7f0000000140)={0x0, 0x0, 0x0, 0x0, <r98=>0x0})
+r99 = getegid()
+r100 = getegid()
+getresgid(&(0x7f00000001c0), &(0x7f0000000200), &(0x7f0000000240)=<r101=>0x0)
+lsetxattr$system_posix_acl(&(0x7f0000000080)='./file0\x00', &(0x7f00000000c0)='system.posix_acl_access\x00', &(0x7f0000000280)=ANY=[@ANYBLOB="02000000010002000000000002000200", @ANYRES32=r98, @ANYBLOB="040007000000000008000300", @ANYRES32=r99, @ANYBLOB="08000100", @ANYRES32=r100, @ANYBLOB="08000300", @ANYRES32=r101, @ANYBLOB='\x00\x00\x00\x00', @ANYRES32, @ANYBLOB="08000400", @ANYRES32, @ANYBLOB="10000100000000002000050000000000"], 0x54, 0x2)
+stat(&(0x7f0000000100)='./file0\x00', &(0x7f0000000140)={0x0, 0x0, 0x0, 0x0, <r102=>0x0})
+r103 = getegid()
+r104 = getegid()
+getresgid(&(0x7f00000001c0), &(0x7f0000000200), &(0x7f0000000240)=<r105=>0x0)
+lsetxattr$system_posix_acl(&(0x7f0000000080)='./file0\x00', &(0x7f00000000c0)='system.posix_acl_access\x00', &(0x7f0000000280)=ANY=[@ANYBLOB="02000000010002000000000002000200", @ANYRES32=r102, @ANYBLOB="040007000000000008000300", @ANYRES32=r103, @ANYBLOB="08000100", @ANYRES32=r104, @ANYBLOB="08000300", @ANYRES32=r105, @ANYBLOB='\x00\x00\x00\x00', @ANYRES32, @ANYBLOB="08000400", @ANYRES32, @ANYBLOB="10000100000000002000050000000000"], 0x54, 0x2)
+stat(&(0x7f0000000100)='./file0\x00', &(0x7f0000000140)={0x0, 0x0, 0x0, 0x0, <r106=>0x0})
+r107 = getegid()
+r108 = getegid()
+getresgid(&(0x7f00000001c0), &(0x7f0000000200), &(0x7f0000000240)=<r109=>0x0)
+lsetxattr$system_posix_acl(&(0x7f0000000080)='./file0\x00', &(0x7f00000000c0)='system.posix_acl_access\x00', &(0x7f0000000280)=ANY=[@ANYBLOB="02000000010002000000000002000200", @ANYRES32=r106, @ANYBLOB="040007000000000008000300", @ANYRES32=r107, @ANYBLOB="08000100", @ANYRES32=r108, @ANYBLOB="08000300", @ANYRES32=r109, @ANYBLOB='\x00\x00\x00\x00', @ANYRES32, @ANYBLOB="08000400", @ANYRES32, @ANYBLOB="10000100000000002000050000000000"], 0x54, 0x2)
+getgroups(0x9, &(0x7f0000005a40)=[0xee01, 0xee00, r88, 0x0, r93, <r110=>r96, r100, r105, r107])
+getsockopt$sock_cred(0xffffffffffffffff, 0x1, 0x11, &(0x7f0000005a80)={<r111=>0x0}, &(0x7f0000005ac0)=0xc)
+newfstatat(0xffffffffffffff9c, &(0x7f0000002000)='./file0\x00', &(0x7f0000002040)={0x0, 0x0, 0x0, 0x0, <r112=>0x0}, 0x0)
+setresuid(0x0, r112, 0x0)
+stat(&(0x7f0000000100)='./file0\x00', &(0x7f0000000140)={0x0, 0x0, 0x0, 0x0, <r113=>0x0})
+r114 = getegid()
+r115 = getegid()
+getresgid(&(0x7f00000001c0), &(0x7f0000000200), &(0x7f0000000240)=<r116=>0x0)
+lsetxattr$system_posix_acl(&(0x7f0000000080)='./file0\x00', &(0x7f00000000c0)='system.posix_acl_access\x00', &(0x7f0000000280)=ANY=[@ANYBLOB="02000000010002000000000002000200", @ANYRES32=r113, @ANYBLOB="040007000000000008000300", @ANYRES32=r114, @ANYBLOB="08000100", @ANYRES32=r115, @ANYBLOB="08000300", @ANYRES32=r116, @ANYBLOB='\x00\x00\x00\x00', @ANYRES32, @ANYBLOB="08000400", @ANYRES32, @ANYBLOB="10000100000000002000050000000000"], 0x54, 0x2)
+r117 = getpgrp(0x0)
+process_vm_writev(r117, &(0x7f0000004140)=[{0x0}], 0x1, &(0x7f0000004280)=[{&(0x7f0000004180)=""/217, 0xd9}], 0x1, 0x0)
+newfstatat(0xffffffffffffff9c, &(0x7f0000002000)='./file0\x00', &(0x7f0000002040)={0x0, 0x0, 0x0, 0x0, <r118=>0x0}, 0x0)
+setresuid(0x0, r118, 0x0)
+stat(&(0x7f0000000100)='./file0\x00', &(0x7f0000000140)={0x0, 0x0, 0x0, 0x0, <r119=>0x0})
+r120 = getegid()
+r121 = getegid()
+getresgid(&(0x7f00000001c0), &(0x7f0000000200), &(0x7f0000000240)=<r122=>0x0)
+lsetxattr$system_posix_acl(&(0x7f0000000080)='./file0\x00', &(0x7f00000000c0)='system.posix_acl_access\x00', &(0x7f0000000280)=ANY=[@ANYBLOB="02000000010002000000000002000200", @ANYRES32=r119, @ANYBLOB="040007000000000008000300", @ANYRES32=r120, @ANYBLOB="08000100", @ANYRES32=r121, @ANYBLOB="08000300", @ANYRES32=r122, @ANYBLOB='\x00\x00\x00\x00', @ANYRES32, @ANYBLOB="08000400", @ANYRES32, @ANYBLOB="10000100000000002000050000000000"], 0x54, 0x2)
+sendmmsg$unix(r2, &(0x7f0000005b80)=[{&(0x7f0000000080)=@abs={0x0, 0x0, 0x4e21}, 0x6e, &(0x7f0000000340)=[{&(0x7f0000000100)="e2ae413dd0b63bc15295f6f4e4bd039902baadd196d8b3a392902e5fdf692605d19a6e159dd20288eb750d24fde20e66a923a5fe6107aa23ee9e4e954085a0714465d7054320a1f657a349793bf0ae60fee7be836e65982a897ff431678cb4a42de69675b0e7410e419d90896ee7f12acf25216221073c0987aa76882b0de2ebbc0615e10aa0abaf09510474bba99b3484e35747b112eb72d30d6e2f5a5df805835915d8e3d100314478b262e92ba77508b5c8c902ca19d2fea51e74e1845de5a98650972c69564c9800364509654b5c5404f1b1583cf99b45f09e", 0xdb}, {&(0x7f0000000200)="d064d6535191417ecadb1a7759d015c33e9bfa69c23a5fb4c4b113227225361ae1f0f7e2df901af781b0582d82df3681863c027d5413c860eeeb9d83550fa7ed6937f24c4572fd1b3fd5eac80ff27c7619fb88cfbbc26600b116294df26135e8a4e8fac243591478ad7a659110e55537", 0x70}, {&(0x7f0000000280)="4a8d25cad8c00c47268b428ee6e9893e813d7d1522903741e661ba0af6b065dba83cfa00a2388541e04f8acc69aad665917bbe956451a32d5296b3dec3945269159f88851aed686d05c144ef", 0x4c}, {&(0x7f0000000300)="98cfe0c78c7cc6d3e5ba2706b51359c88b28dc68b6b1ac", 0x17}], 0x4, &(0x7f00000007c0)=[@cred={{0x1c, 0x1, 0x2, {r3, r4, r7}}}, @rights={{0x30, 0x1, 0x1, [0xffffffffffffffff, r1, r0, r10, r11, r1, r12, r1]}}, @rights={{0x18, 0x1, 0x1, [r13, r14]}}, @rights={{0x18, 0x1, 0x1, [r15, r16]}}, @rights={{0x20, 0x1, 0x1, [r17, r18, r0, r19]}}, @cred={{0x1c, 0x1, 0x2, {r20, r21, r22}}}, @rights={{0x38, 0x1, 0x1, [r1, r0, r23, r25, r26, r27, r28, r29, r30, r31]}}, @cred={{0x1c, 0x1, 0x2, {r32, r33, r34}}}, @rights={{0x1c, 0x1, 0x1, [r35, r36, r1]}}], 0x138, 0x8}, {&(0x7f0000000900)=@file={0x1, './file0\x00'}, 0x6e, &(0x7f0000000a80)=[{&(0x7f0000000980)="25b6105a610ac40bc16c29087a78fa29e32b29838ffdbc96891c2ce680de9d", 0x1f}, {&(0x7f00000009c0)="913aad8f16dcb1d67172f9394ef5a9d1f7ce5f8ac9b249c4d11f46b1e0d0ee1683671a6988877b1dc255660957a845c577e2ef782d1f682093e70bd7fb7cee0577aa81a2fea67368d21e86f54463c6f39feafc25208234c7f4eb4efde04742cf4e78cae1bd8d3c9079d5369642387d4f3b778b58c3cd7ba8f9c3c506660ab2d28ded62a5c1fde0462f83a42c7b060250aaca4d98e8d074fd216f18d249ab4636768f9874f77ab5800c38c0dddfea851973c8a392447a796ba9", 0xb9}], 0x2, &(0x7f0000000ec0)=[@cred={{0x1c, 0x1, 0x2, {r37, r38, r39}}}, @rights={{0x30, 0x1, 0x1, [r1, r1, r40, r41, r1, r42, r1, r43]}}, @cred={{0x1c, 0x1, 0x2, {r45, 0xee00, r62}}}, @rights={{0x20, 0x1, 0x1, [r63, 0xffffffffffffffff, r64, 0xffffffffffffffff]}}, @cred={{0x1c, 0x1, 0x2, {r65, r67, r76}}}], 0xb0, 0x4}, {&(0x7f0000000f80)=@abs={0x0, 0x0, 0x4e20}, 0x6e, &(0x7f0000004280)=[{&(0x7f0000001000)="a7e41a5119d8047ed226757185276d72c3520a5c8f36c149a41205106a8c872808498c9695d1490d003ba5773d32e3167bde02eeca003be872bd0add1b860eee8e7a64b69ce851b4f4bfb58995ab554b419190ca6cdcecba54f2491481d3f5865feb78e16ef0b9f35443475f40a869a98c6e67eee6e08b3017c201d4d1b2b9fc796a77ef5bdb41356abe1020a87f4e68ebb4016af87d790f2f5d0b44bb4eaa88cfc651f080c7496d69d4021e5aea650b9bb8b17c56824e920f804349cb86a5cbce0b838c5eb73e6941cec312e253a6a267463f21fd1fd6dcc3f9f982faa403a1129f8dcbb49537d286f9c2ba753447a94e6c568b30fdc4e8c7c8b9eb0d967710d099bc47ae5b8affe09078a72526337483b714de33e757b9f49b59735369f08e34400b086546902daf3123f0f9e938df27ab326908303ef564d5dc787946333e4cf498948e55ca9590067111d15a5f229e7f49d961643473887326dc3009d79a1f143eded1e5c40c57fbab91e48342a7aac861cdd30a098addc34a40f62f438d30efb02b8cdb11de7f282dc934691cb5cdc9a4d1b65659113c6aa762ed0257c7f5ad3fa78b416d90563259f333e41958f65470ffdb1cf89a1db27a34e9340caeefe8a40a5c2473cd60d47b0e9eb7b0e0d28c59fdcfdad08dbcfe425264039220b067f6b70426802186d950c548576fc15bbe2517f921822e8c07175bf0420a35a329b925efc68464832341fb67633bd3d846bcdc26938e73831e684f6aa6994dcad6023abcb4a53b179dc07f929a4092d8d5494028763234f45ef136dd271b1a89ff31906ba522886cabd2445915de5c40d0204b86da1fb3dad544efc1ee660706b8d163b165e30799fee5ac039d7b9bed2a71ce15922e691f5c0c161d6bab4bf1375ff69e1d180ac5823a8873d946be6c33dd7a2bc8c3849c8a0649504358ab30328041b9070a4dd1f1f33c0d434d98588577ac8477fcc2839f46dac6296a78436f36def0940f4ddd6412bbdd52dd981c56d78beae7558a8f62a94dc157b32a4b4a7bb4d810103a4ccd1eead2b26b7dd5b1d2ef347d35af7f921d0c13f3e03f88adafa6df428feb028e257145564da5ed55a50fa73e5994e4c66c0c810c2e0ade5cd31a9465fccf4247304aa21148009309f8005a92916834111fbb23963c533265a0fdd66049b82db619666b24d06986df8a628e308de9502696dfdad025aff6fd18cea711daff43537c6916f462e9be1b97044b091ed8a2f2713816f42bb0dbf832d614a6c0de9a434d0600564bd2f723a06726dd127de0a1fab3cea71892b305c76bd0f65d548a0e9bd7a4b065f62a790be1a6ee7a93c1f8cd2345e5dd6cad97644992498453be2e302a5d09d01540a43c0ae9fa1eed1028a408ea20e00d87cd816466fbc6d4b3bd2cdeb7de0d81f3ef1b310b32224ca5f32f0cec2979612a15595e31a20e8be2d88551f02c4bd694f8ad8ac3d8ddac9e7dc20ea652053c8e925f02341b0bb9685fd50ac332ec01963859a2f464f3b9ce849a954e3531f8688ac1fc26dbb4174285d6681393589812587d991f588ed5bf44120aa875597492400579291294100d9121fd4216a4fef5b2da3e6235845e1daba2e70fb0422dbfc15653b8f0453675627104d35687048525395a4c47dab43c8c7a2a2d1b71d4d128b40c0d49657e28b2e654c8ad045863d3514d46efa9382acefe5dc50ab76caffbddbd4789f51491a7a4d1c0c181cb971e6579dcc0b2a4afca454e960955c14da09ada270105e46f4ab018e231de4d406547ad2c2a7f625fb9077c210f893db37430d5391580f33d982f3d4f3ac1d1e6a2c1ded62d64912b29b34b7a5ba48f45cad69e1ed325bb11b038a06183ea2293651d4aea8aa59b1b12ac9762775c374b12ed31b3059f3f86ed6e6d47bab306aa3b7af67a5b8b33aa6091ea5bf3d3e046c1fe5ddcaf449063e5b65861f61a47ca3850adb782a678d77a9ea20a7121835ac8cd6ea35e05c6a54ef645f858b1d637b8c1b0e649587948951d959b10a9b96a252210ba95ff086b56f2e54ffe85f7b45b8b423c9a32b6a4bf91c125ee5dfa567ba2f85e20efed8ba738145128f3768846ff28c66661970703e0bac6ec725dc3c9f57a209c9e4de7fdd045a5e1dc4ce5ed07c1b8397ee58669fe7fbffac3925307d118a48a7f0a71fa90ab2c8705b4b7bf56d6c4b4a941eb0bbb75232da76f684beb53275b8022c05b5311554b70e53382d4c0993dc036e3b5b923c0429072ef15ca8446b15e595848f063756ff950276743f863d5514432b6f95b96c11bdd1c049aab9989e76d0c2fb18116a7c967d9f44bc235ba5ce20e26f35caa6633a9da293a84c8c33b0fd7ad8562d4f673b8bbb46bc2d39718d34b40e3457a2a501a60f8b4e88b9a619bff1ffd3129f4a8bb12e8bf4168496bbf4c7d619b5aa9721737b9d5b454d0ab4048c5bdd4d7c9ec52ad30b9042ee37e0d992d8e48c49355b337de9ab8180b9cd7fa7807b3114df0f782fd2442c2fa51dbda6127fe6116b5ae7599fa140a1eb8a7976cbec72cc3532665a45518084dc2aad86f5856b5e4f3b4af947c9d60b9c83ae990dc7c37a4f83e8ecec5c814daff30ed05aaea1aaa0cbd85ce5dfcc19e222f8094ce9b549f90d1d837c2f6afc614bd125fc41173ffadadc4583d7d0ee3c98fdd62f3499558920280dde270d8fd1a1296bf7a2cdcbb360f31af926a955b756d9247c655e09488c60ff874250f6e5e57218444e7d9312ebfcaa9e61ec772d69ec1b9ad2b002d31fb55dbef2f4417ce0bfb90095924fcd5ef7d10459cf0addacea503d6c29175f03c5087678d36fb4883bae668c746f94c471b7a9e5d6333aa245b907287a075698c6bf98f80027185e46c180ea3c4ba075b1da40ddfd8c102bc32cd4677fce60d6a0a00db36af3dd45c66282de3b58abea9a1089cb438f73b4e511184a97ea95a7bfbafbd4303c150cf3dc94aa269a901bc088349e564b328e62dbe4b4fcbf6f6f1ab8d8f15354083a8997f148d961831e3d9a94f67802fd085b8a30bf19978b3646c1b2f0131b725b59a98d717773cc7fb4d6c310acb5920db6eead0cf774da1699206702ca8569159234c6a8797710777dbd97dbad66dc7b79f12e8b956d38155260ea14af419b60855ba1444ec1b0b4dfff08688b82b84da3aac111f00ee63aee3c9d37b564c8fe8f598608028c51ecb668b0c3050720a20303f483dbdb9b108fc863c72f47b07f5653fd5edb1f18fca8520e11b1a630c84046a4938976c761943dde6762843814f3a9368a1206ffe4524dfb530075b7d1d2223fd05aca2dd6cd95b0cca97b704d47be059483dd45c925a9567d54fa0994b48457d5bf05aa184ba2cc60be0b68f024855bdac6681a46c8aa5a19934ede71a1558464151e93f97872ec157b443d9a9f410fac1d58c2d63f9e9b88fbaf9f10f4576150fbc6f7b55ca123445e5ca8a0ee119d4eb79840b2738ef0231caca8612edf1e7bf262742dfae9ed02d80ea2bda1764245cb8038046ae638baf2dbda8936a4904a99c7f1e8c2ae2605f86d33d1a99b5d9eedb36fe955d763368d6ccb9222fbbee4015b08b2dc3dbb01b9faeca2ca57426226eeb787bb1e2a504e4cb1ac8af136bd51be2ede5a674502532e86f07150dc36e346c5bf32a897ad623021226531055fa1611ac4ecd8b6deb2b50de38048aeb43fef9eaf8e778b96ffe42dc6064ee67fabea760c88be9166947d585056357e84116f8b5be28c70b9ecde372c1cf8fccb99374ebae6c66dc51d7094a4e43433bfccb1092e19f24e2fa4ff0912bba78ba786a30082913b72dbc510bc92fd890197eb8be2c83d913f899f80db1b7cd2c689fe17075b7b4c70538724e732091017f7dd8580b1c88fe05515c506fe47d2256bdd46b68ed61dd65bc675372432c42607be6647a6bf85bed2bb9a7afac056a85503b7ca0909ccea2dcbf6725dd6e9a4385b11c2767074195868966656a3e8e2e7df6f0419f8a532c991d9bd36f83c35757f1262fedd52dfc0851b6c3aab4262dc45c981a3fbdfd04d023b3ea07bfb3917dbf35dc13d9dabcbd5e35710f774dc7a8fcb002e67f24eaaeeb0537429f3adc18ec4e72e6e96d0430cd535a896fac8f7fae8d12f89c0e3e34e24f33ad553830ed2991ba0f8e2296e4ac54266c724048e89ea87d6c3dacef7ab253c40d0b14c1f84cc7c262bf7a8c7c5cea56117456eb09d85942e6af9f1fd84f8710f90d8ad9cf2186dc005c566139265a688878d742d16717f0924b4a56ba9436f964f577e32b4902cf62d71a6d20b65963b8ba42511ceb61ba457e2ca0d2f643b590c5d955ffd547a4d87f9fff6ca6457912ce565969adf4fcd606d76e1571b5417cce62eae6817736ef0315035a57c62f3eb9876df4d610b259d0368c82dc8fd15d608d1508fa5b2d78b5f066da9cddd61ac3adf4a62e4b63a0ee8af65b6c286216839e703694752cb4c82528cf7906cde7550b0ff7fad934185a399236193c5b6f96331bc4ec0a813c8216e56236f47686beaa3347fed5e0879bfc0dc1348a8c2af75d8447e289a064e4f61cedbd8fb328fc720f7fa0ad8f4d4bd5e4d352e2f0ba685c9802018e186aaebb3eecbbc249e089da446c430c35496639a7384271a8accbb3d30de1f9f88fb72e44a5aa2661b4ddb0f04e5b522ce21904d6bf2b7f883b48d3c10ada18e4935876c699e0a8fb83bc2e7837704afe58a084d772ba19650b144dd431c2b81085d50b28ca66e199bf9f241fbf52e96498cd68d26aaeca095c8119035358517babb5bd62462a8b3bd6c7e5de50859bebc94657cc2542c1ba44b40633a5c355b26ae1831180c1d292a0a4b11b6626d614b608f5be466a4d7650aaad62011e29c709455741e4eddde71095c3f7785c06493e3a86e7081521fb35394f28f27ddbe8ba6257b96bf7a59a0478be0681f8e56f2088cfa508f2f5d15363d98afbce129379bb5006b227ac6b6067f8dc468f1387b579ecf0203bee6f9e19b9c76dfdfd1cc46bfd1d548d68dd1aed149b72b65e66353ba6a8f6f96f346cc89ea83d151eb4eb5da68133aa8291fd9234dc9a641dff9433774f1521f0a1080d95fd9abe4d4b5baf02befecc23a2dde3561f3b49b24b5bcf2bc6bd0060458f37825069c1214c3bb23b8888c41182c39ed236efb51396fad8568f5989df1b00b01ce5b39829736b6846c4736bbcd4889b0e70e19abf2cb8424f998235034f61028f989cdd5dc617cc0b4f160c998b2fd818a13911d1839740d2da1e73bf3a479dabccf2d3897ffe2fa16184e5eb3cbfe32ef5563de07cd74458b3269359bc1ea3e8f59bf624993845b19e1e0ec0dc275e72d085d5022beeb24e861fef831b029382bcc850105009cc5f4e2715b1752e494c01c543de85b8c079be52df1a93d478715c7efb56c34b2c58946586ac9831ded81e49eba56c00c0427ad3159a3cfa5a2a36de287d88ad5072640ad86ad12ae2520241a6f396b294573a007074d06d90b76400354142038914d171e46214233f27d0acbbed03664089fab4084d4cca965fdc11079aa7ef709ef070018562d82f295455fe968214f040b87f8dd0c7e8d67040329aab4401c46b1a0063cfc2ee86224eea8641f693809e76fde015f50c49db6cfa8b8d7c3854a21804a9ae96012d7cfc528dbf53c655fbc7a445a030f0c517d4b9acf04b5d5a55d875f826f961cfbe4e1c710bdba22d04f7096b851186d4c174eeae9c0c7145f43274fdd693b1c68bfa18cf994f8b8fb367644911e7af7d713e7ea12c98e7", 0x1000}, {&(0x7f0000002000)}, {&(0x7f0000002040)="1f0b937ef254636b774b1ad160875a5700fb0a69d3ed5c7f1e2750c6f4a28081fba4f23670c6f2af32019a40939ff94809eae4a9bfff3ec3b802afb2abc8684e8fbd812c291a5f9b777eaa320bcae018ceddc2e865e6ca70d9600cc1bda536994adffe73f9402e062fda67bfb41161a28e706d2cc312a24af13216ae3f84a32faeaa3ff5ac89e4e507142d8a281a60a95ff971d68c100cd37da9cf08263a0e62d894df7fca210e2287548fe4fba2e3c5af461e1230947c012bbc0c196f32601a28ccff35f86e78d9a98eadf4d70e784887fcf0685b2b7a3723a7ad7c1a03a2f7b5e99e76fb86bf32334c441f12a533371e315c937dcda24f987e2cf1374d4f85d0cadd73c87c5f1d03dc40c3a0790fb497c2f48919e879fca4bdfdb9ef6e47367e5f6edbeea9ef886dd075d7e6e4259b848e26afffc1d742b8fe61e967a8516e765236e66f03dec37c787c6e058ae3fc22072edeaa257122e6a3d63e989177784aadb5e031508b367099a38795d3407393a409355221bdb6b37f4dcbca8c7c32cd70c26f6e6a0639fc868951aeaff9739c3f61a4f6e1ca26e99128fffc0c7c75cd9e21428347fe0f39bd32c9bd2e875b2c6ff4bb90d2bcb511f8f27f54fc28469dde6f72682e2afe151cfcc598fc032802ff3c3f679219bdda6df9c7f43bde3a360e1f3e52e26d70cba3452479fa199804fec50a7186133c6b88ef5d23bc54ca384bad58e50a8df615ed7af4957ded807695e2b12c746dab7a5e321938999f0915678142a58bf4549fd1c1f4c25bf458bd5320e2c99d45fbf9b3c4a74be3bbb84d4a1a20c8cf5b26ce48b2c84db0b9381ef4c47564103076ab8cf36124fd030208b68620320d91e96e017436c5f3e87873541789ce8dcfa95ec060972915553b1786db7afb44d1f0b84ec0e06bc4d4851db21a826fac2dbe3cab39341a17fd89301e6b8bbe557d42a593c333c9dc254b528f8786284eb8d770467ff06ff4c8d13a2be3edfcbfd8eb9078b8a791b59fb6b70b0b32850a781b302cca3c493c2bb1d342f4e8c94c7821d108f822e255e53d33a8e5ab4f5eb5eb199aac6c5e885df12de37e902c7fa99b90fa6cea0007810410575ddeec610cb8b22207e926f597164c75cada1fa54e163928520a27b0e2270605cfdd6e1fc317fb4c4edcf86553a9425cca1c6889cf79473ed2d74d7f1ad9e9a9de97ee6a1ff3a4fa3ae9169d368903fb678cf2c32e3453eb5094da34b19bc5fc40a009ac0a35a66bbb64a50d2a67d7e12f0632bd163d7ad397467c4eb1d9ca3e35da3bd2878aef19372788bc334bd854988a864e70a937b81a3ebefd1420905ffc16b1307864e57bd15cc4415470f90870b9d7b385287013cd14c3af685c764360360fba768c6bdd4483330de86d26797a799c8b4475a1ba7d79eb43afc8f035e6ebca947361b2fa07f42e5fcab2dc54ea68f34d6eefa94c64699be6e38a61219f0f62e934ba93837ac1e7284e1ee37fcac50d176021d4aee7a0e62a1e9a1588b5326d3963298432ef474506eb1835264422bfdc908eba4170c8d711fe57a807673ba37cc53b02369bf693a14953249702c3a27b6034e01eeecf67041dac1ee6ac94015f6fa8928505892e7a3ec602463fe52bfd00a90768607dc09a66e8bbf8c4f9a378b80ff03e7be32a3707fe24e45efdaa96f855d3a1e285d841f5513f9cc9fd9bb6c41c362a1a3f3bc2001dd717802f244219e76659b29750adb9c8c410923e47a75de3e9d1abf62a18ea80e251bd5b7ae1ab2eda2bbdaf470893052041fcea26ca498021daee9791e9cce0e65cc0a54148d618f4762dd1d154aa1d4163db12b6ab24df35283cd35d63b81db5450f9cce3bd4c4334c2a0b7687de0529eeb24fd08632914e9fea31dc11dbf1dd0a717e7ee65a35317d54d29c2b431fc11ad1938175c7aa2966aecf5034032b3b269894ba4c1856356e219bfe14a55aab8275ef25ae341356e80815c5ff1b6a21e9c0cc3a4f76a8d1e58f2c3910a245cbd123ad05ee15fcf6554458e31343a84485142d8373f2004dc315c8634510f1a7027b4d68c98a9d500d8af9220ecbf94da728bcc1c9ea180886bef474ec5dc51917b789db2f78c05321be57a47a1490aaf416c5fb5de4d7b680182845dbf1b5be182cf92e026b9a481252456b7b536b59b9cb8238977380383b19ad95a6095d3fe37272d6b9acbb94c5d2f21226c4a326b21cb2c63bd495f3023dff83c5bf2e61167b1f5744c73fa177cf5e185ef4047fa4684fda14fbd44bcb19d6748bdacc26c3f53b12f1470d2f3971833166dd1f73ab83c5e0f06471f68ed049b534be644dda35fa7def06abd9af3008c34c3288da7547830686d009c23e88ee3fe39931f3d71b2e069d78fbdbc02cd5332529d76b0ff4e38a967dcf3d671e1b69e16aecb0acc1b7a949aef437e9baa969ac993589aac51ec9c9fd6bbc3fdcf1fe40bbe9dff93b291c30727d9d0d0fed6fb2b2600c59fde387dcd97f28b39e7ef10a62d0886eeeb93db46cd5163164425f4dd915991d16d69027583f3b2a972b8761cd930722b66738fdb3aaab537b547095c3e074bf1397b4f0a11215465c239fcbee89b4b8f06359241fbd669ff968186e45a2801f72f6000273a26a5f271766ab6415467b8f8f1924941caf3a63aabf416bc028e7693683e80a3c835d0a43d8dc841f834fbe397105cf999933622dac6e5174a95c77043551b33af804baa690a2525c778cc4170939171ea8ad6f65ff1bd4763b6455991460d3aa782f92c8007644eaf23da375585240a736eb376f506c0da61248407b03c1a0e4635984b8bd0f0644b7ff99ebccfddc5453c455a2f019aaddd3a0c6767992d843622d3949fd11f87e322f0703d19dd8d0d56d0c829135b3a7559c9b712d2fb4ba982cfac788703e8117156a7f9f1ac4a94cc624ba3a525a1a3a2fdf77302315bb316a47ef41cd5adcf82c48efc62cb0f434d39d019db45c987eca7debc13efbd53e7ec73f43092304bbac18a0f86c9dbbb5bda59392ba16bdce12fdc8268da4cd58c8e7f850c89eaba49b593ff030a39e01564f1d699d80aad1a0028575459ac39cd733e5f36c9db38a257bce49fd9155b2c762d30584a6d100e0db9f2c040d63e9c183e4f1d9e7fb3a31a0678b5c6d02e3eab3c42fdd96b89675038465bcc337360635eda30fd15a804843bd6b0a6d799493624805f097e1baff829f719c069e93dcb294858a4a9db4eececc13f18db4048e026c6e26e9648e261391994f6c1637f3887563fc216353165445bbdc24eca452d5637421a5c72bdd3333489d8581e829b822fbf53c39137659fba8a2a0b3c84057b7a2f32e6735f50fd0cb9facd9a8d3528f0b0084e5076c84bba02d131207a2c1268c1d1fbc21d282a9c751abd8e64ce92cf45f4d1de0847936c5da375020d31d578e13a9136ab8320e2f9143b8e45e79efe858273462c1045ba994030162953f4b53380f1dd2fc1b7cd1bc9ffbb5d9dec87e699aed4d8f6ff5c3c121bd9d4d6c43255d9a10e2a36824509598f160ed2d8ca0b3fd190754af748934565d6a9834e25bf5837bb7f84d780f1f45657e4f3af2ea574c0f6d7f178bd889baaf4c0241b2b05a0186020988e32de79b06e3975703e3b311dba1319b6be3d9f7a3026e62d9e270a334ac949257065bc08745280b93727b665dc7c5c8003125f2d9453dcba93ba5d20fdadaecd38d81e603e1028a55c89a7260963df9e16da36f8146b455e4c5bfa8d982a2deb1eb55e8ac3e01694997cb9f37d28b5122c38cfaf79f0a07237f4e7a884dbffca95adb9668ba68c35e25e9f0a23fb3a7f93ae086778c826017a345f1a5fee0adc59aa56a418029d58355773dcbc9eb9d14e86e7854b95a6c7183952668ff4a579682688f79868546bd0cc3083fab3ce35955f3339947af0a9629205eceb909da24ba24f8f2349e7e274ef8a80ea032c69676a075f72de0223f7791284def491e4390e6eca471cfe6338b98553cb7a271133f9bea7ff0975b86e0796ba750a4b50028a6112da9375b05e8b4cb247cef52fd6274d5541ba77110830a5c215c49653a9c38c485b5f7d25033864386fea8a600c51b35ea91e36ff97bb1fe0086aace9231dabaa774cf2ab8e0e622fcf0d6e79a8e0f418cff1465de6b3d93cb1406bf9abf490de320572d0218bc888efea7baa54cfb8f5ea912206552535026984f847298e6b92e4ade116c17272af812839b4df3adb872e3415061a175345e9d4b95656593465ea1a28761d1d0b307ed79811d71bab8b04da4dcd5d1b5d672f7de4a12eb98ac18f8c19ef3ef5055c090bd6583b9bd265a8874ead2605e157b0bbbaf9753159c2ad10ca9a1a9117f76dd5f3ee205b1a48af2dd120b9026a838e020c6c1a9d78c4a6d1e23fc3ade9373fcff193f357e037bc5de19b6fb6c2f821cca68611ca7da53a455995c67d01ac9a073d43ec357e71087f7a983aa350c4590868bd3e761221982e9e653ac8d8ca0322216b16c287dbc15d7a80d29841ace90822eeef54e9787b50aa7d859d29a5a90dd06f1bfb2225321eb0069a8eacc6268ea7a482632fe70613467e800c4b4e7639130f116086800e29fc2d62bc001ac9bf13586a2db5af6744d8ae82d40ac06eaee6e59f2608be569a9c507b04b5900c6e922dcf907237319110202bec15816269fd785f37110389a59d84239e0f553a13d82ff2924ffa6845df73f499d29de67a8d09705cb6a55853e7d2c36d0797ec035f6c04a942b2b0f389b1fcf99665475c3791cb5dd71d4fa77b44d1d98ac4d7cd624d4642e71381a440568afa37ad0b5e260de02919e0734c69510ee901d0a13bfb76425affc59e06e2a351b0071c3e8019acb6fd1e012b0dd70c7cc1834dd45e8233e587d5527f471dd91c1f4a897bee2809063caa3b22e271a2be3b5f3f7a3f517a3298437d74af43c34efeb71ca0b0eeb3f645b1d8f53d12ee39affc53a91322361ccd0b0dcd00d58a3bd4ebcf283838bc395e468590bd92bf625c00bc10da9892da2ff44ac3d97abdec338d957a8818f6fd78866cd86397755560fe8f065aa11706caca05a17acc5f06a64d808d63c8b75ade196e2e7d5bf99b57efbc62afd0e352b4c2a0cf80c9f4ffdead766f84252677b034579cfec0e6cd4a60c5e32c0d664b461f56a95996ba49d72593d0ae25ade928a88f9ac041765c7c41f868c647ab4f49ebc7014dd683e216d06fa6951a1bc16c93aee37f37abb5cc33951e4afc343a2fb1c4d30d4daaaa5608b31dd5f2759bd5bf91b050e28d8fdf176c46126449d373d1e4708c88482fbfd7f946b7833dbfa1195bfcff477e769fb30015097e2d2a086759f793a24da7027a0f75da8e38f894a8dc6b4791a8127d71c4d75b17180112d6b1d63b3b284c8bf1b9b9f139b49e0c45265983d0053c98f9b414222cab5a2d5f8c701ed22771a0af64c81969c2779d4ad83fad982f0b06b1074f90bc22e5107d80a3072bdecd96285e5b598560096b73294b5be144f9a56eb9e501a1f4b6e9e765e8ad2eecc2e2dbc32fd0945c9d6c49a8fc36ddba48493c6fa7b8de1840291300d56a4446103f0a3872f5cfc807f5ef441ae920a9f0f9becc7305f12ec5141f54927d2124954c217af155dcb782013cf16c5e521f74352ad080702338b872e9313600b76d77c78c12ca7c205462fd644520e9ed872131907925322dd588bf66b752efa2992e8dbbf1803ea6251a48099267de902f0f2a505e5df80e73c0ddf728137910adb76cf6fdb30f541d44bb5e099457ede953abbb7be", 0x1000}, {&(0x7f0000003040)="c5cd179c9d5ad471ef3f3a5aa6502d622e11bf654c982fd1bc77df45887ea4f768f829b17d90527d403e6c5d94f784cf5812b960e3e45c68e2ade423928f3ec6f800da636f2b609cd78874ae931fdf8af6d4d46bfc97012845db171d22dc0e79b276771fb23b885d45085d9b9c3706038f65997418e2153df9dfffb7ce843d9228cdaa6aed4e4ee10889e602e40a82c78def96bac435353fe7ef61204a6febc27fda167d65af3089bf699d90b7ea62e1c5160f28401777713e9c9cfe4e902176f9e5eb47593076dcfadf1a1471e3f5dff322c5e4a269a8b58656212ca3c7c72e044dc0cec9fa5794a8517ed6e24407d9a49706fa788f606907cded93d0027493791169fde862c901da93b94f2237c492b0d763d76b91d1bcdaea6f3caa3e330002b5865fde87bc0a41e417d7a230623481b385ef65f6aad4a4185bbad2456805e0867ed7c49796e030a2c880c3a52b88a7bc533ffcad2bb4656724b6f1b6e9952ccccc9c6deaba794250d2639eb87836f28723fa1a8bbe780eb119d194a8fa3554963ea4a48a9f02165b64e46d67da3d28df003e20ab629e7c5f748552ff29ce352b66f4459724016e14ac931d53b5b4994475a540d28bd50e522f980b45cbe6e457471c7ee55bd8742f40232dab8da2f658da2cf5eb3a15ec96cce144d1f6e23135170e0b757bf10a486ed1410192404f181dd793af1c4fd7fbfe86dee5789360d32b1a5a830638e57f8e193b9307bbc25056bc0b863a3b14f39b4ba344151d1da742d80565bb64a4b5aa884095a084a5834eacdcc889adfde7e9fdb723179e4261250627f601864a748736eac8873d509666181c43752c1bec5986117a5cf056bf58f099d11e1af3a0c1cb061f1818a6ec3218349dbb76f122955ae243b0e12e1c38a18a6d08ffb77a0fadc8197853480ef7228900f382affb7ff674ac2ed23d02436f6980473a27f00d07a5328920a20a97638c47bf6add8531cf6f2ccd672b106427e1c830d1de6beecccf12485a4c7dcb5fff942255b873e60fa86a3db56fa1c3c77b44cc439ed398b0ecc79883d2c7f0dc4441b462e16b69b8402dc3121a65958287c439dbb8748bb67041c63ea970fb6c32d2f444d4817dddaa5c0a01a1ad97afec8263351b2e080c2f9924093fe28be441ad1b41bac6e24d5007c4a5d2665118a7345c31fe7bbecc42befcbc36485b9d9587600853370758385f5b014fba934f7ae64450bfd43c7bbed60c0dc7b996c4826b8df90563dc6c09391f1bcd2c4c11a0f1a7fd5b09fa388a44783294b30b9e983541ad171235e2f3311e58d9c6e5bcb920e12424777b429c9f34d58f9142401d9535ada24ba6febd8fc7b6ec6fa6044d46c001baafe9d087e863c0ee4f0a7eb3a0413e82f83d8375c9479df18a226fea9e9639b01c58537682a8659570dfe373dde248a21358eab01696ceaf38bc3573694323778efe870bf5e15c56900bd6551299472ee80c97fb3c27aa95f18d7a518eaa697315a5ab8837ff01597bda8d9a27984fcbe7104dde257c553e57f1975abd9f258a2997244ee34713bdef3de5c7c383332dfd019cb1ba525d906263b6219cbf4688e25042ec401a1d51a6769fd6b52159445a20e0c0d3f329b40a919c293ecf32afb0eb1d02aabec59f1bd929d9299fa5e54406b15ba2e2ba93baba329599bb8c219e491faa7a6e6fef3fde02ff2f4cfc117efe8dbcf8908a94e881dc113bb0284d6317ad1dd6a76da31e88dba109bdb2244f0acb1438ca92dc27f095ebbca0f9b991a6069ced1c8fabe8acab70de2045342f13cd00a555e668d9df4964bb180a39b01afd1d3a3639d8479c497d32d320a8a95d6eb4d95c0d6dbbb7ed9f85e378b31cb5dca94497742860518c0e74e363dd5a244d16c5ed6fa21d4355d1676a37236398fd1477a94e1d2f3336d80f1f8191f4e1d75112f562785371c5a9019f3ca8b8b372de78f8fcce8bce958816e194c706bffb9ff641bbcbe855632139ea3d884c674f7ae5dd330c40eed34944808af892fd3c24c64f912bf033805d355b9e20a3114870585f1903ef5850baf5a20fc429f7827e067cbe2a828f58e9447f0bd14efabd63c80557432bac04479e35b68c2ad020e73df1759aef2f28cd490618bb1e88950f8c6a5f46e7c589ca2d69b70bee739937bb46f65591a465cb520345bdb071af6d347be477aa19fcde9968ba55e0aed88de4f022a87f4ce98f3d348dd0927ae55717994b5c77396a8ee1c36570f19f2ba6f1e188fe4bd03b2ba4ad937f35ae9bd0be2b82df8201b633b4b00c4a7b4e4913aa455987da65a69f1c32970f907bedcd336f4cf2832ac6d74248cd25b54fafae05238eed5c052024337f54a96db248329ff79b37a575f08aba89b62599994575f63b1b8afdd74990e96a0ab390b64c1f6cd90d8069d6fb44e169889b2240c203c2b6ef7b66a579ec7a3b2bf1146ce3c29824cd64a122650d0b9dc466f12ebb9057f2ba61d5c7d54217d1e5667747d2caa6039090741809516ceeec5dc1cfe437f247fd19001a5a2286ba8b55550d1e14a62b35363494a494174e14c3bb3d2ea8fdbf0fccf9872a388ec2b61e6c8eccae34529441305aeef34def59ddda5d8e1d21a975724c0d25262eda7df717f73c18c2808c71abf6411a4ceae2c39203ae4025a4935bbfcb65714bbeeabc65796b8349e41ea02323e2d9733cdb406dff30c62a40dc08aa71c94cbbbbfceada92f9f3457a4bef3ee9149407965cafcebac80e1f0e9ab87afa4758f4f1ac1abe96aebd1e44584bbe33b058b06afbff9568085e15cf5260f22f7ffce31e12414f941e3bfcbe857a4afc2e90ce0e0332b1100cd90354efb6ba04449ff8482510cd41a8a06d8bfefa50a81119c2a2c97764b46c9919372f81c4f4763ead0a0f8f6e0a3f3d960c4aec7250d550c5957eb54dd78c24906455b8c58c7de814232062be78a0f7ae55023a79fdcec96e444ee0ee8d750aa0a9ed8371582737fa66ab77656f6d1b8781ef5d38d6d75390e5e66b6ab12ef85fb9d61e1611c2931d91a892354270e3bc0a1c3e74bcaaffda0514ca6b3d0650736c8c9dec0db3200e010d6dba5256485f759c544114ffab10212ced8a0538ead4ce7896c07a14b9419b16925d698a8639a2ed1db9302dfb08013c286907aa590377cc32b065d3cd8b477a8b7b83353bce62c2d68ab906c245b143c791fe42245e8aabe2806b21620f22b870e4f942abd19e8b942cab8ffe29ae6ebfaa13b69fdb8915fcd29a39fa84cd565a2db0d4d97226b89957bf3957a836a631cf310d02f38588b192ec3d4f8bf0869321309a25495ec9f7da2a9a8886d88911917909f8e968b7d8024e40e69a53aac627c1571b0d303a619b7baa9426e6c46d474aa76062859bf07793f85d0d1b3b3b7988c6d52495ef0bb2bba5dae2315563cf63ea6ea2cbd715c59ef538c29024815838ec3ba207aebdf8da00001067dee7cb486f78f2d5e8e961673b2d858d1843e4c71efb6a6140248d019461a4245fa9960caab02bcdfdade91fa279baf2bea1a2d58af43d2118ef55923e47096688e78aab495f7baa6a6c475405c27d419c1e5a8af1889ea97ae9cb95ff28f96cd2862bac0762ba6c57068f730384f0d5c92c5659d0d4e434d4d43083f2ea657fccebc2360feaa8c587aac8d7bc1c75ba78f5c6ee6c0ac07900d3aec17c0b5d8e2338a32e099d79381483fb1ec993d0abe957533a197783e86207811368028863ca0e7b945a71533db2fe5512b9589e3575327787873e6dac710d414de3bef38bd0881305ad573a794db4982fa3bafe029413dc705b99c3a50650139467637d1070120ece438ce5908b20152012fa67bbdf44563963f7f9e13221bf39bacb126cf983f513bf7eb4417f56354f94b2f24cb694ec07ef66ba480b7269931f7c7fcebd29dfa925fe60c9bf04fd09b24d4816d44239e1f3a9d518ffac8146ff16e3aa2f26249274c55616403a64e04e41c410ff2fefb6324104a8891037bd6f0c852cfe323300b2d34cb067853903507d32df0a486ef871dd4d6b9b1264cf9901ceb98209f30812ca946b5b813ecf248b2e15fe0731e6dadb3c05cd402e8b1cf2423f6b946b09d9f50199e435a2ba0eecd0dfbef8bf4f6dcc980bd609be8f69628f4566456485897bc3f55e04f97e9c6eaf791ef2b8ae2af6b5037127de32b729938714258ce66945017a7d099f537a01b628d798d366ea51bd20f1279bc0b438e12b28278efe9ac67c94d2aab4b896c7e74ea7720cbbe9e313a34c3111db2a77e348af86f8d7759132925dd1105ecce10ca34f1661cbe5c8060f86b7dffd0ac2b527fea08ba959e57fbe026013bc7385a3fcee13ee428ddf26973bcd3bf841f26523ba953b9a665e0e02557230d93629ff43cda007bef4f0f564a0bd17774b5ae4bac795f3b857ed88b8d7e2676a9117436ad7dc94e491b0740e5527173df81df8009b2ab338489447930b5db4310f0cc80b6bc1ed3cdebe2ad66d14b894a5746c9dca802ecf39159120b69ee07aabdf1c073a2d33d18f49f4c4c80cc5758afafdd2b1c121c24ca42fca866c46a8c588d57cdf675fa65dec2d6482fe1d075603658137522c2ed83e8e6f1f47395419536e565e9fae163c0772eea213f797768953b8d6bb78ba12235d6058e460b595287a785b8cf75370393739e2706678c149f27db55ee5a558ca58912f9cd8f2f8717d956c55d9efa153c7b1dfc199ce8886f19c80e327adc14221a6ed701dd0aa333f1bb8a69c2b0121a61a74bf054f55b5f8bc6dad4a2cbc55bab4699dc6cac59471b8fd0076e7622d0687645828668075c17291fc6e09aae8c7b548b907657ebc2ef7308be0e6794d3cd1a4421a243d9539c73d9fc1a00f2a6e915ba6180812d75476e53978a0ac87802d321a6d7a7c7a999f112d35459b24b5504606dbe901b90ffcd9e3a8fb9d88aafc0bb4f8629b07c740104a71389c5e86119924b92bf426e22379f6a199fb70496479ddd6a3b7a898d59cc224389100fcd0f39b929306260371ab8f69a3b0c827ce88371718df28b08e9de872609872b3b44281c4e07a7871c91589c5cff615eb49b8ca5d8c2ad99ca6bcfb5373b51ee89a5c9379309670d4990f8c9f1191d4e56ed7ff4b48478e7cefa2b07d12bd33b304eb851dd230625848d3cf792ff5c264406c489bd08d7abb6f5889aad0cde1eb08e778159bec2372af867f3ffce9d17f028284b24858e3e0e88d6c26464488509243d41c514e3cd80768455eb590058e0f4f731e6363f6921b0cd9f2d08d353f580f9984ff91bfe4717ba512c7f510320b775d44d407f9b9ab268c1cf08fe51cb559bfe6076f64133302fe864ff6c635f32652b95ea060c4ada4a8c5dbaf8c91000359588283d4b0d202cf93b48285c5c5ddb8111d8d03f8b533cc51b547df93ad3bcedfdda1b4a58ff6fc8fd04dc6d636b35f891ae4e0f9a81b42b79d0d84840a90f21f76df9930fb456b118f7b280d8bad532bf0bae928aa558746b234ef343d5338b5e070c107d87b9904ed4bf46c967551fedf1b22df0ea6b874d1f94d5493dd443a94410b0f28c432784c249593cbc981469e21ddc0f292ae2d003e0a776d72a0545d7c97ff988e2a972768eba2c5514924710646f946b4b2721a0a4abaf8ad153de3f7d4af8f1b83c054fe93bca3b1370005745231766deaafbdb0bdc57bc47ec3c29036f1ea370673963eccb7c1f874e4249ca92b51d3c39f96796558909a3e5acc35f4d7a9e71d48726230bac31a70d4d4fc1c73c10038152fd837d50bcc", 0x1000}, {&(0x7f0000004040)="d69d00d299dbc7ef3ef1dc9e6233317be569", 0x12}, {&(0x7f0000004080)="67352b2fd3d8705b6c8b7e41c704739fbddbb20e57e8fde76795d61f776ecdbe6aa3a29077f9002640e73216be5bd439bf2bf77a5bbebd746a5194092050a4c0eefa9d5fffa9af18393279588decf5986c886ae6e5970d5d3bd1656ddeb1cb2418a62e6a0d2fef5e43b2dc0ef676d07e32bfbfd424794f6dbde89becf887a1480b3c545b1cef8e4b6f1c54d45f8ecc152de167dd6f8b274048e6ca5eb3430718c6548e36e99ba41cc7d3ec29e602b7f5ace7988e2fbf48ff77c71ca6701e7f565e4db81e8f5ffb9514c5326075b093963179309b0875a703b8a1", 0xda}, {&(0x7f0000004180)="0fe383d9edd6a7a189c95d9f6f6593e18eef6713ff0b400b424c69108daa0c9049265fb5cc57d55ba7365e483ba1dff89df7b460b72cf264c7fec215ca2bde0574a81b64998b3f9f57eb5740e918aacf4a709c521f2528553dd6b9375d75360f748ea08b7473d70d09fa8c5448f249aeb047a150be476336365c0ea254175951350837500996ee6bef28ff7cb2b0fe9edaf73735a821577798dc428a346cc537a0cc58c5e4f4ae0962cc88239e585df3d0023b4df98749c8b365e04a4f3777b36e358589ffdbb5", 0xc7}], 0x7, &(0x7f0000004300)=[@rights={{0x14, 0x1, 0x1, [r77]}}], 0x18, 0x800}, {&(0x7f0000004340)=@file={0x0, './file0\x00'}, 0x6e, &(0x7f00000044c0)=[{&(0x7f00000043c0)="75349d2982b91405f8d4cf099b1a78248c5f349caa1dfe90c670066e517c9e1166a39a763878715c6e34ef76104839933302cfc96886a9a63b24c23d38042513fe9078590caaf85585085f3a9d0b8fa3005805a7a4c0ae686cf5f7d9c6f190aa327c4b893c0a90e8dc2650c67da8e0343e945dc67a7e70575815a4cb592a2facdff0d8f13e853566f46561bc0b52ab35fefceae191916b7817a1f1cc34bbaa9012b1aa21523e56bc8ff7e5234ec96f162b7464f15b5a1f665094cc8b6c7bf221907cc41d357cc88ff384a1e227208f074d761fb2e0a7d931afd38cba764471d0a5e0a9b648377f8a835ca502167418e57450", 0xf2}], 0x1, &(0x7f0000004540)=[@cred={{0x1c, 0x1, 0x2, {r78, r79, r82}}}], 0x20, 0xbd2a9916a7e74b63}, {&(0x7f0000004580)=@abs={0x1, 0x0, 0x4e22}, 0x6e, &(0x7f00000059c0)=[{&(0x7f0000004600)="7d0e73dc38fff9de542f961f0811b17d5bfc1e8d376734a2e14d746c5827661e8be1105dbd4c7a2dfb78a8d03d9764c88efb8772f7615918d6f5e22c68b89108b924661f44e26e77a8e37558912a7e4b830767b17c34d6e33fd735759c9a06abdbb8ba3ed45b62b11210726a844221937956de215fa885237f132a84390cacf87d9b336e5c3f29336d8febc52bc51e85542794976ff6b0d50523179316a4ccd86d8a30a3c0c691e8ea37f26b0ecfc913ce604a345538519ed6d281f733e88c8e360e0c15d61308c19281114e37cf70a23732f820", 0xd4}, {&(0x7f0000004700)="6b80a84d1a193d061bee3935cd49ee0524ff381a672da9f021bca18d80e6f2bb6379be6daf4870591b56caa760805aa96ca106436762b3cd9537c05ca55741fe3c7b2398def931f2a6df13955dd8537c867395f581eafc852ff354b25c599d8823b1104e", 0x64}, {&(0x7f0000004780)="8ad3100a8e4e8d8274b49f8bc6addbbe9e1d0349cd0ae8ce3895d0ac460c1cf48b0e6d0ea6397284388215121284fdf91eeec94742f425d44c0950e4009926f8e98161599af9a8a13f5fe523c7ef0fb18ef48a6d62add07208c185c2249f1fd2d528b999bd65e8ebe648979fa16920529c3b01a7d31c8454ef5a207a2ae20a12c551d2686f600c23e29718b9274f6bc65c051ca458964826e00e87100472e2713eae996e2ced75afa537d11901bcb8a89708ce284386378ccd424dc99da365f9799af41de923473646116fca", 0xcc}, {&(0x7f0000004880)="3feb5b8250ca54ca9c17974020b3ef03480fd4e2d3967337776cd74d8de03f656d5f477545355b3624fe0642cb23d575a04374456b01c812b53f1d2601da5360679255db962cda1e10890828d86023da16931b2c76260609e1ad8cc567cc4f1dce71e60b8b9cdea0a7261acf", 0x6c}, {&(0x7f0000004900)="ac6318aad0d9a5ff41a0024782f9b53d308ac0777ce8cc915a01b91654c85030a7a0b94719f08ca78f3fe9b0a4fb1ab6ca9e1e5830204b3a9abecf261fcd153e0327fd77f3bbe6a878e706026a92e5af242ca53fa8b189ce09914762ab423e615b18bfd9a04f12b4d6715a4e9e73d5303701f792d52e059ce42684aa5ae8ac176184800593fecb034cc874b87a3f34ab722e0d48fa3f513e5b99d41ce4f1c136fff9ce226a8f66a068d35eaa19526febbe74eb4706dbf4d7739be2ec809ba8fa7d6c884d81ab137e493b48fe3e5c33517f66c10016d2ece7bbce19b9db94b023c4b982e82083f6ac35c77d2a0f6c3fc2d6a7accadc881c7e47081e29b05e46c581107450faa1e875311d2d9aafc50b6a6732930cfe8235ff9dc9c3b457d0b3210aba5dd1820b375914ceb659a21b762bee46bdbd91e6fa7476c8d4ba5ceb0737aa55ad8b67d65abebed241e538315212382216c6bf36b00b7cc4f056e66a2c0ca70ead069842aa317049f02d8572324d13e90c494703fde327de33e011c213f5030c29b12c9394ed88cb6e1c4afc51cc69fdbf81ad661b50583c239533a4223ebe3880e0b0699f5e623e31edd60c402dfd5bfeebc6c226aec748e2e6ba1ec4515dfd2385b533c96a8619d3b305825860a314755775c4324b0a177e96c7dbff984bf801b61efff6341e01e08883deaa1d62af150539ead7c1484c5fbd4bc25b430be67c8e9e73fc53f6b3e06cb7919dab32e058ea962ffc1f9930237065d39b810baaa7d878004b48b4dce7eab5322414889c103968aee5556a9dd7de32023f50428161ea34b8ec045623549a22283b25051c3bb81604b4fb65e5ed106fb89cfe7650cce6a06435f1ab7f0c73509ca85c9668862aef64d405322a5f45f5d5a2daedcc31253ad3ab8c22118fd8db2b79dd93216559d277cd2eac57f18de95f3a55f46775b33d930f93375e3e8d281954476b637728913938a9efa9a0dc30146e9b45bd359f3ad976fd1f2197805a904ffc52548ff9b3bad0ad900bc32d9cb299b9e5231a085541c87e147fd0f8d5fc8772c65941fcf5703d51cdf31ec5794515aa1631d27f949f8b3f95a7f77910baad1ab8f62e836a934a70efd8a061075f8c1a18bb2ed995aaad465be22e61cd98241be8ccabbdab64e70617cd95c27e6555e8cd0b8530bc5e5a1a1ce7c8e64a71c516f8ee4c3e735136330d744d05f868eebc367a6d3659ff79e518937f9cd67b2203310a5dcb69d663d2bb6f33644403bdb217f439083526bee8d3e88302616b019120ab8ac20b34482154f7ccecc3e363243240adcd2f2d368c01ed3c2abf3b7273780a2e34e9ee9e8c5828b525f85425fc55186a0f6b3c6ba8f2e0d6264e6261818551077da238bd9edc5301a8436d8552097b06bb8c47a85878ff270e2aee7f03b7a5a5c76f719121bb3714049df83a45aa4739f16594ce9f90fee0f4d2ba721306141c9942ba4e5288778eb198d40c0a17db7be3b634fed089c28ca6e35fc02f2f8e12a49ec8f5b75ed978f53dcd307014e983cabda1980608f85618a12982b898e310be1b9420a3677ca513a9a6b5d0fd757cebb16fa42ce7ede004969514219d8f640465561f13153c04e46f72fc2daed8e3d5cbb51f18aea25ae8966817464f282ea1b71b7b2886abc7b505a0bc43138295bf7af8399e45a991ee14fe0968406ef9c4d1e3289b71eefeabe25b3ae9c344f1cf991fe04a0b659b05c1a1b0bc64dc4359743f419dd25226cbfbf13c4f4eb67641514dc4e0af6b2bdcd4bc4a19746ed5d9325a7654af6a8c116e6543736b2c58e35a7e04c87ff9c53d1ef23fa6a8216fcb2b9e3dbe4930da10094055b8d03cb35773b9b76e7320f7e842e7d05e5fa6d52f9e87e18edb4df029587d19a553499768e5674609372fd24ef1c43ff7c955e5783afbf366f926bdd05db7d499e96a63a45ea7d3b54b5ef5b5cd57c16dc72bf8e77efbdf9405884ee86422b02ddccb69faae129d7af6449ed17d948de5fa59968f3ab3bc37e64465d84eeb50e551d459ea00123698104e911227cab7b5315fc00810b12c461392af8a5703bb3fe3aea453c34bc9412ff08bd426055f6bf421105ba6fdf19cba3fc9e0097e54c8b19ee5797f3228158655548837fc835cfad8798276996f19d87b57eec037e07c5a213c040669e67842ec944c4ce1d8bb7e996142d1f90a5df1351fbd9144ee95be1331da089646309f1f5629736ac1db0ad7b9568f305793c175c93a55c839d9da6662617747df5a8d035b1a17d781d04af81107d9778802414c346f462c09ea3f02464b0d099a8364da1b8f8ad0cadaad0504a65facfa5c2dd9108d89da61d849430faf1b7ccc6957922e32472452e0bbef6f08c2a3cafc546f39db9eae04a1ce7d235330d2bac42f3d5d0702d1a4e9c96192747f21b59e14b5613bb9dd9bb42aae4a7177b5dd1433f497451f6c2458cf47b209aae25edf7d33d5fb4723320d44d7f6dc10c515a03f1428604821c4a3f0df409c94fa5aaec04e0b5a28f33f96de8f97f37baf38b4c3696a6cedc9a021eb54e50de82e045766409777a887ca9c007068fa61b24416c28c3be05f42005271026da51a49331882c5eb521bafb90f9180190aa3541107ffec529df7a0e2ae48af3f94bbed9c8ec51a14ca805a4aecfda3dc6b85de3f08fc0689526286d2b20baece71e94bc7e4b43feb24cfe0889b16615d775f161a6e7c25c153755a38c17f1e72ad36fd0ba8b648bb86af61caa5295357557009ad012b26bd2ba0dea6cef6b4f65e4e2339b3ebed0dbabfd66a8d542d05f11c53d700fd0a6b2f927a4b63e02295c96d5749e29c82dcfb68d09901243842601c475d54231b055390d4082d67da663090cdfcfce5a5ed764c990716774aca40aecb936afc52613324e0a870f69f97a7a4a7f54b4672f4c26fa90883d08fa7a958b26f3448f215be7c07f2bfbd11cb0ef7534efe558c6c445fb30bb1f1567becd7425fba6ed64d224e9e0cb4e70a038fa4136ee98256db12d5d81d3ccf84b445fda265de7b596661ab5816c9855ee6ad65903b313d1bc41a96501b91c63c89d6072f7b66040a685e8f91bc9373cfb7eca8b6aadbe34560171baf341327e180eaf5155799ac1262d25d3032149e3b5a31ccf80bee4d5f960458a9c8e5d13dff0367e9a79d8e067c988b8ab0189358d3659d16af04da0e98f509f45394a6efd2b1463ac0a075cab4241fbbb055f094400504e744b1c35df7a4029475d7ab8b2e97034a912c3942adef47f082d0770abe49616469a71f5e8d1a10c094d21f41110f5c82bb2940ddb8142e9401d8cb8299518cb791ed681eed5ce2af143797b3eddbd40df48d137decb5662456fb9131f310e731f11f09793076158e35eb437ffe7e3edcc73153edc3c8db75fa0891b5929d7302facc1e13d10ee876f41739ee594860a9a7febd78fc235d97a38d9433e1a4203b48fd2cef5d840e49a04d148cda5b40b9bda9c835e357b7fd5d7cc366763cd891a41db4c0dce32da81c2fb87aa6e00f0c0107f5d7b2f88a2b5cd3949fafe94f2ecd5bdd792a4c791426c679f0d0337cb8842c299b610d4f42b5d2b3199d08ae51e377e830506485ea60daa848e9b00eb1e96fd881889782a8636c8ba1e97cbb3cfd7d1947fd6cc5b27ed6fe7dfcdb9c396566b28b8d1f945b2374f5b40a7f67a66557ab1cd921e4c79626100ee3b599e90cb5096d717d30ebdd7c11fee47da9d109d93200f4394f6d3bce455b71a1db7a9ced726aac5556beff2b8adb27a32634280da447af3372e3f9ca98385fea4fe33742be34d14e16db35b22804fd509baea8fc8a2abd5cd6684994e3101fb9e77ff6b6d47a11ac221afd8858171c7e6eaea24000a347b830d53a2d0177ac74de3d6f1f771b21883b4371a28e9e280c714b3d3f23b9f14949a6bc22101e76b618ca95d16645d8b9dd35a7999631dc78ea269467718ab37cbc8355ddb43303921d06eb8f894b02ae94b7fefe15037ab6a91aa037cf6f85e1414a8e34a98ba5516662da8b8396df88f775ca112fd2e299f14b3d3f744a809613e8efca64c76550b92847da226040f9dc951d87ba5113e79cdd9ad01200117312a6c288074095e7c73bfd421ce0ef3c2ad23eb2d904a4d3064522bc4bff84bc16eb911e6c9beb8326e25d68eb5c5bdec774bbc54c318aeba2e1d09f60ac90b4fd2a12cc6616e0d15d903cbc7a77e024812d64dac5d72007ead89fff3005f1273a5705410857965a5a35e0f52ec46c222e2addcbe293152077d80a8e32482a09fe305aab91e7e688b61849fbb81fdc4fe0ec335055f2c297f261c8c2c1c3c9e6027e83bb26708c1d31a8d05c9c55e26a79190018432b70db24c2239f4f662f2f57b1e6b678bce38ac2ab21950e8268100c9d1e23d35874f48034bdb705ade2599c1d3c4401ff055e52757867dbd557cfd8c9bba3e301d014a29d9f300a73c4c5e33c70c6cfa4022199864d73519b98931c75124e2af1bd5024c5b8178a194cb4eea8a83d30d5e0400c6bacd447d91f1918396086d3761a522a8b3a0984c57d3fa55e9accd330e723d4ae96da0dd22ac19fdaa724ca4a9389a3676a6fbc6eb02f91bcfcaa353779fc8186c61169dd5b48e63a82901c2ffbbc8e8343843dddf7de0628f47604427e6403ae1bc9c2049640e434e283af8e3882365e14d426767bb3b72a80176175abaa17e9179c3dd36fec010007dcd342effbcbd4e8d1ffe40d123fb4460190f09f4e1993e19abb71ee6a73c9547555a0c954d500ea454e00cbb1b7c8bf2e414a0f8dbf150623fdde67c08e44b7d375de77f085e6ddeaf18e5213532ea66fd7e794ee1a8e2c297b0d21597ce23b85c94a5aac3b3abd1de2d77cd9deaaaabcd9cf4223b3ff513bad69a1432ab8b9d80f126fd18c4aab201ec76f33010804c44e39c7d47b71655c6ac5be59d5c3e5541ee61884016f7ea9da1f453d676163ae6460325bc4a1aa864facaada01d06ed5afd90b7f42a4421111ee9a71337759ee2c08b3219eecec2fe098bbbf52c2ed41a78e2d2045d44e7b7653b8946bf701499990609613721a8f4b069afde11b0445ee827c9682b6e848a22efbaa4307411033699d4931acca17956b063b3c1d7f2995a5101727242214e3e57aed9bcd74e55d3b297f6c1ffba2642b4fab9dea19152104e101ee87d8c7e6c7c46a3f11ffdd4402fba99856427a3fd3f8cc2d5347ea9a47c2b8b03d2e7c90aa3d790b6399b442acd41d575dcfcb9f4ae88877fccd7d144ec4c25870b657e990c23e6167fdbbd71571c14704b286f6769648fcbcabe7c61e4d6a711aa170cf2f8aa2964589b5f92008b20a4fe2d04573b362b37ab08d9f21b157217cb8349f9b619883aa0d9eab8f1a17ebee798aea3107b2ab94fe2c65475bddacd8f671f55ed8611dec8ec1718fb201cfdcae5b4ea014576f121bcc932d1903fe7de1d7fdfc362bb9ddc63a7d677ffe1d48c85225fe76e1e4c6975e3f2e262ccd753007f48d490d643093836b130a14c542ede51879255f217e51237395be5fdd81f42118e0df06d51e027b8accaef8eb0624159a56b3c66b47eed31f33fdc77e8128425e4de638807455d7da3a96dc4c92d8e9ed7e15b0425fd9ee550b01aa1d42a31ecb6afc9f51372b0fc723dc83d75e94b43551505183183a72994f05f7a724efa414498aea77a32b83cf5a0c67f99e441d7ef1880784d1cb52ff54cd44ecc76cc4a7c14c910c5d36895de145645672b8669e41df8b513c821cb11a60a762960f98515a6408baaf594d", 0x1000}, {&(0x7f0000005900)="d64e12356036b3b8ad250241ada78a14b4704e85897a93dd7bb9d2", 0x1b}, {&(0x7f0000005940)="c688dea5a8033183a8d737fb27b3751488e7c1a2605ada40bf6faa583eb5c366f350c418b9a4119fb04c9bcf", 0x2c}, {&(0x7f0000005980)="12993450e814bd6338d10e905623c7eab3d32cd1d2f8114028b2ddc022da64f0fd066331afd34ec7449600f7cdac57213cbd7d2e744898bdad6589", 0x3b}], 0x8, &(0x7f0000005b00)=[@cred={{0x1c, 0x1, 0x2, {r84, r85, r110}}}, @cred={{0x1c, 0x1, 0x2, {r111, r112, r114}}}, @cred={{0x1c, 0x1, 0x2, {r117, r118, r121}}}], 0x60, 0x80}], 0x5, 0x60)
+ioctl$EVIOCSREP(r0, 0x40084503, &(0x7f0000000040)=[0x4, 0x9])
+syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+r123 = syz_open_dev$sg(0x0, 0x0, 0x982002)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r123, 0x1, 0x0)
+2020/01/27 15:13:57 reproducing crash 'BUG: Bad page map': program did not crash
+2020/01/27 15:13:57 reproducing crash 'BUG: Bad page map': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SG_IO-syz_open_procfs-syz_genetlink_get_family_id$netlbl_calipso-sendmsg$NLBL_CALIPSO_C_LIST-openat$cgroup_int-syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND-ioctl$FICLONERANGE-ppoll
+2020/01/27 15:13:57 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SG_IO(r0, 0x2285, 0x0)
+r1 = syz_open_procfs(0xffffffffffffffff, &(0x7f0000000140)='net/nf_conntrack_expect\x00')
+r2 = syz_genetlink_get_family_id$netlbl_calipso(&(0x7f0000000300)='NLBL_CALIPSO\x00')
+sendmsg$NLBL_CALIPSO_C_LIST(r1, &(0x7f00000003c0)={&(0x7f00000002c0)={0x10, 0x0, 0x0, 0x10000}, 0xc, &(0x7f0000000380)={&(0x7f0000000340)={0x1c, r2, 0x1, 0x70bd26, 0x25dfdbfc, {}, [@NLBL_CALIPSO_A_MTYPE={0x8}]}, 0x1c}, 0x1, 0x0, 0x0, 0x20004045}, 0x4000000)
+r3 = openat$cgroup_int(0xffffffffffffffff, &(0x7f00000000c0)='cpuset.memory_spread_slab\x00', 0x2, 0x0)
+r4 = syz_open_dev$sg(0x0, 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r4, 0x1, &(0x7f0000000180)=ANY=[@ANYBLOB="00000000000000007f000000d5267ada7da31603be27cd23d0921a980890861acbb05aa8dd042d258a04124012c7cbd0b95182548ca6005beee3dc5182b138ff83f1a24dc5bde2ea15b9b2919d623a2fc22252d616e5ea96a13d2b5b4c83dc8b7c5362453a3576c2968f554d3fb3cf4d2311d41c068bc20032dfcde1bcb7fa95ba2e4fbbb4a33175e0273dbef3f3db4536f084351717adb4c2850d36fe044bedee0bc28bcc9de848fafd25bf4009fb608f44b255567095dbc083742d98fa0886a43ee52226c9eba5815007540ee8017c3388606bf211c64af529ec03f26638bfc7e56694d973012c07bdb55c87e8dc368326acd31246ad03448270f27e3fc66f4b0582abd22474de8112338a"])
+ioctl$FICLONERANGE(r3, 0x4020940d, &(0x7f0000000100)={{r4}, 0x4, 0x1, 0x9})
+ppoll(&(0x7f0000000040)=[{r0}], 0x1, &(0x7f0000000080), 0x0, 0x0)
+2020/01/27 15:14:12 reproducing crash 'BUG: Bad page map': program did not crash
+2020/01/27 15:14:12 reproducing crash 'BUG: Bad page map': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-accept$inet-getsockopt$EBT_SO_GET_ENTRIES-prctl$PR_GET_TID_ADDRESS-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:14:12 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+r1 = accept$inet(0xffffffffffffffff, &(0x7f00000000c0)={0x2, 0x0, @empty}, &(0x7f0000000100)=0x10)
+getsockopt$EBT_SO_GET_ENTRIES(r1, 0x0, 0x81, &(0x7f0000000200)={'broute\x00', 0x0, 0x3, 0x9, [], 0x8, &(0x7f0000000140)=[{}, {}, {}, {}, {}, {}, {}, {}], &(0x7f00000001c0)=""/9}, &(0x7f0000000280)=0x78)
+prctl$PR_GET_TID_ADDRESS(0x28, &(0x7f0000000040))
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000000080)={0x1, 0x0, 0x8, "11"})
+2020/01/27 15:14:24 reproducing crash 'BUG: Bad page map': program crashed: general protection fault in acct_collect
+2020/01/27 15:14:24 reproducing crash 'BUG: Bad page map': single: successfully extracted reproducer
+2020/01/27 15:14:24 reproducing crash 'BUG: Bad page map': found reproducer with 5 syscalls
+2020/01/27 15:14:24 reproducing crash 'BUG: Bad page map': minimizing guilty program
+2020/01/27 15:14:24 reproducing crash 'BUG: Bad page map': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-accept$inet-getsockopt$EBT_SO_GET_ENTRIES-prctl$PR_GET_TID_ADDRESS
+2020/01/27 15:14:24 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+r0 = accept$inet(0xffffffffffffffff, &(0x7f00000000c0)={0x2, 0x0, @empty}, &(0x7f0000000100)=0x10)
+getsockopt$EBT_SO_GET_ENTRIES(r0, 0x0, 0x81, &(0x7f0000000200)={'broute\x00', 0x0, 0x3, 0x9, [], 0x8, &(0x7f0000000140)=[{}, {}, {}, {}, {}, {}, {}, {}], &(0x7f00000001c0)=""/9}, &(0x7f0000000280)=0x78)
+prctl$PR_GET_TID_ADDRESS(0x28, &(0x7f0000000040))
+2020/01/27 15:14:47 reproducing crash 'BUG: Bad page map': program did not crash
+2020/01/27 15:14:47 reproducing crash 'BUG: Bad page map': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-accept$inet-getsockopt$EBT_SO_GET_ENTRIES-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:14:47 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+r1 = accept$inet(0xffffffffffffffff, &(0x7f00000000c0)={0x2, 0x0, @empty}, &(0x7f0000000100)=0x10)
+getsockopt$EBT_SO_GET_ENTRIES(r1, 0x0, 0x81, &(0x7f0000000200)={'broute\x00', 0x0, 0x3, 0x9, [], 0x8, &(0x7f0000000140)=[{}, {}, {}, {}, {}, {}, {}, {}], &(0x7f00000001c0)=""/9}, &(0x7f0000000280)=0x78)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000000080)={0x1, 0x0, 0x8, "11"})
+2020/01/27 15:14:58 reproducing crash 'BUG: Bad page map': program crashed: BUG: Bad rss-counter state
+2020/01/27 15:14:59 reproducing crash 'BUG: Bad page map': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-accept$inet-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:14:59 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+accept$inet(0xffffffffffffffff, &(0x7f00000000c0)={0x2, 0x0, @empty}, &(0x7f0000000100)=0x10)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000000080)={0x1, 0x0, 0x8, "11"})
+2020/01/27 15:15:10 reproducing crash 'BUG: Bad page map': program crashed: BUG: unable to handle kernel paging request in __netlink_lookup
+2020/01/27 15:15:10 reproducing crash 'BUG: Bad page map': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:15:10 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000000080)={0x1, 0x0, 0x8, "11"})
+2020/01/27 15:15:22 reproducing crash 'BUG: Bad page map': program crashed: general protection fault in __radix_tree_lookup
+2020/01/27 15:15:22 reproducing crash 'BUG: Bad page map': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:15:22 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+ioctl$SCSI_IOCTL_SEND_COMMAND(0xffffffffffffffff, 0x1, &(0x7f0000000080)={0x1, 0x0, 0x8, "11"})
+2020/01/27 15:15:45 reproducing crash 'BUG: Bad page map': program did not crash
+2020/01/27 15:15:45 reproducing crash 'BUG: Bad page map': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:15:45 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(0x0, 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000000080)={0x1, 0x0, 0x8, "11"})
+2020/01/27 15:16:07 reproducing crash 'BUG: Bad page map': program did not crash
+2020/01/27 15:16:07 reproducing crash 'BUG: Bad page map': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:16:07 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, 0x0)
+2020/01/27 15:16:30 reproducing crash 'BUG: Bad page map': program did not crash
+2020/01/27 15:16:30 reproducing crash 'BUG: Bad page map': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:16:30 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000000080)={0x0, 0x0, 0x8})
+2020/01/27 15:16:53 reproducing crash 'BUG: Bad page map': program did not crash
+2020/01/27 15:16:53 reproducing crash 'BUG: Bad page map': extracting C reproducer
+2020/01/27 15:16:53 reproducing crash 'BUG: Bad page map': testing compiled C program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:17:05 reproducing crash 'BUG: Bad page map': program crashed: BUG: unable to handle kernel paging request in __kmalloc
+2020/01/27 15:17:05 reproducing crash 'BUG: Bad page map': simplifying C reproducer
+2020/01/27 15:17:05 reproducing crash 'BUG: Bad page map': testing compiled C program (duration=22.5s, {Threaded:true Collide:false Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:17:16 reproducing crash 'BUG: Bad page map': program crashed: BUG: unable to handle kernel paging request in kmem_cache_alloc
+2020/01/27 15:17:17 reproducing crash 'BUG: Bad page map': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:17:28 reproducing crash 'BUG: Bad page map': program crashed: kernel BUG at mm/rmap.c:LINE!
+2020/01/27 15:17:29 reproducing crash 'BUG: Bad page map': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:false RepeatTimes:0 Procs:1 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:false Cgroups:false BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:17:39 reproducing crash 'BUG: Bad page map': program did not crash
+2020/01/27 15:17:40 reproducing crash 'BUG: Bad page map': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:true RepeatTimes:0 Procs:1 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:17:50 reproducing crash 'BUG: Bad page map': program crashed: BUG: Bad rss-counter state
+2020/01/27 15:17:50 reproducing crash 'BUG: Bad page map': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:true RepeatTimes:0 Procs:1 Sandbox: Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:false NetDevices:false NetReset:false Cgroups:false BinfmtMisc:false CloseFDs:false KCSAN:false DevlinkPCI:false UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:18:01 reproducing crash 'BUG: Bad page map': program crashed: general protection fault in __radix_tree_lookup
+2020/01/27 15:18:01 reproducing crash 'BUG: Bad page map': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:true RepeatTimes:0 Procs:1 Sandbox: Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:false NetDevices:false NetReset:false Cgroups:false BinfmtMisc:false CloseFDs:false KCSAN:false DevlinkPCI:false UseTmpDir:false HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:18:11 reproducing crash 'BUG: Bad page map': program crashed: BUG: Bad page map
+2020/01/27 15:18:11 reproducing crash 'BUG: Bad page map': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:true RepeatTimes:0 Procs:1 Sandbox: Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:false NetDevices:false NetReset:false Cgroups:false BinfmtMisc:false CloseFDs:false KCSAN:false DevlinkPCI:false UseTmpDir:false HandleSegv:false Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:18:21 reproducing crash 'BUG: Bad page map': program crashed: BUG: unable to handle kernel paging request in qlist_free_all
+2020/01/27 15:18:21 reproducing crash 'BUG: Bad page map': reproducing took 5m20.720739184s
+2020/01/27 15:18:21 reproducing crash 'BUG: Bad page map': repro crashed as (corrupted=false):
+BUG: unable to handle kernel paging request at ffffebe46c000020
+PGD 0 P4D 0 
+Oops: 0000 [#1] SMP KASAN PTI
+Dumping ftrace buffer:
+   (ftrace buffer empty)
+Modules linked in:
+CPU: 0 PID: 302 Comm: syz-executor437 Not tainted 4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+RIP: 0010:qlist_free_all+0x7b/0xc0
+RSP: 0018:ffff880033cefb60 EFLAGS: 00010286
+RAX: ffffebe46c000000 RBX: 0000000000000000 RCX: 0000000000000000
+RDX: 000077ff80000000 RSI: 0000011b0000010b RDI: 0000000000000000
+RBP: 0000011b0000010b R08: 1ffff10006818a00 R09: ffffed0006818a00
+R10: 0000000000000001 R11: fffff940001a062b R12: ffff880033cefb98
+R13: ffffffff87b26df2 R14: 0000000080000000 R15: ffffffff80000000
+FS:  0000000000980880(0000) GS:ffff880036200000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: ffffebe46c000020 CR3: 0000000035546003 CR4: 0000000000360ef0
+Call Trace:
+ quarantine_reduce+0x13e/0x160
+ kasan_kmalloc+0xb9/0xd0
+ kmem_cache_alloc_node+0x101/0x1a0
+ copy_process.part.54+0x1277/0x5af0
+ _do_fork+0x176/0x870
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44dbd4
+RSP: 002b:00007fff1e2658c0 EFLAGS: 00000246 ORIG_RAX: 0000000000000038
+RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 000000000044dbd4
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000001200011
+RBP: 00007fff1e265900 R08: 0000000000980880 R09: 0000000000000000
+R10: 0000000000980b50 R11: 0000000000000246 R12: 0000000000000000
+R13: 00000000ffffffff R14: 0000000000000000 R15: 0000000000000000
+Code: 85 db 48 89 df 75 db 48 89 f0 4c 01 f0 72 56 4c 89 fa 48 2b 15 4f ff 61 02 48 01 d0 48 c1 e8 0c 48 c1 e0 06 48 03 05 2d ff 61 02 <48> 8b 50 20 48 8d 4a ff 83 e2 01 48 0f 45 c1 48 8b 78 30 eb a2 
+RIP: qlist_free_all+0x7b/0xc0 RSP: ffff880033cefb60
+CR2: ffffebe46c000020
+---[ end trace 519ea2ce9f4b82a4 ]---
+2020/01/27 15:18:21 reproducing crash 'BUG: Bad page map': final repro crashed as (corrupted=false):
+BUG: unable to handle kernel paging request at ffffebe46c000020
+PGD 0 P4D 0 
+Oops: 0000 [#1] SMP KASAN PTI
+Dumping ftrace buffer:
+   (ftrace buffer empty)
+Modules linked in:
+CPU: 0 PID: 302 Comm: syz-executor437 Not tainted 4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+RIP: 0010:qlist_free_all+0x7b/0xc0
+RSP: 0018:ffff880033cefb60 EFLAGS: 00010286
+RAX: ffffebe46c000000 RBX: 0000000000000000 RCX: 0000000000000000
+RDX: 000077ff80000000 RSI: 0000011b0000010b RDI: 0000000000000000
+RBP: 0000011b0000010b R08: 1ffff10006818a00 R09: ffffed0006818a00
+R10: 0000000000000001 R11: fffff940001a062b R12: ffff880033cefb98
+R13: ffffffff87b26df2 R14: 0000000080000000 R15: ffffffff80000000
+FS:  0000000000980880(0000) GS:ffff880036200000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: ffffebe46c000020 CR3: 0000000035546003 CR4: 0000000000360ef0
+Call Trace:
+ quarantine_reduce+0x13e/0x160
+ kasan_kmalloc+0xb9/0xd0
+ kmem_cache_alloc_node+0x101/0x1a0
+ copy_process.part.54+0x1277/0x5af0
+ _do_fork+0x176/0x870
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44dbd4
+RSP: 002b:00007fff1e2658c0 EFLAGS: 00000246 ORIG_RAX: 0000000000000038
+RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 000000000044dbd4
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000001200011
+RBP: 00007fff1e265900 R08: 0000000000980880 R09: 0000000000000000
+R10: 0000000000980b50 R11: 0000000000000246 R12: 0000000000000000
+R13: 00000000ffffffff R14: 0000000000000000 R15: 0000000000000000
+Code: 85 db 48 89 df 75 db 48 89 f0 4c 01 f0 72 56 4c 89 fa 48 2b 15 4f ff 61 02 48 01 d0 48 c1 e8 0c 48 c1 e0 06 48 03 05 2d ff 61 02 <48> 8b 50 20 48 8d 4a ff 83 e2 01 48 0f 45 c1 48 8b 78 30 eb a2 
+RIP: qlist_free_all+0x7b/0xc0 RSP: ffff880033cefb60
+CR2: ffffebe46c000020
+---[ end trace 519ea2ce9f4b82a4 ]---
+Extracting prog: 1m23.416642574s
+Minimizing prog: 2m28.642146109s
+Simplifying prog options: 0s
+Extracting C: 11.933412576s
+Simplifying C: 1m16.72850271s
+opts: {Threaded:false Collide:false Repeat:true RepeatTimes:0 Procs:1 Sandbox: Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:false NetDevices:false NetReset:false Cgroups:false BinfmtMisc:false CloseFDs:false KCSAN:false DevlinkPCI:false UseTmpDir:false HandleSegv:false Repro:false Trace:false} crepro: true
+
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000000080)={0x1, 0x0, 0x8, "11"})
+
+// autogenerated by syzkaller (https://github.com/google/syzkaller)
+
+#define _GNU_SOURCE 
+
+#include <dirent.h>
+#include <endian.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <signal.h>
+#include <stdarg.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/prctl.h>
+#include <sys/stat.h>
+#include <sys/syscall.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <time.h>
+#include <unistd.h>
+
+static void sleep_ms(uint64_t ms)
+{
+	usleep(ms * 1000);
+}
+
+static uint64_t current_time_ms(void)
+{
+	struct timespec ts;
+	if (clock_gettime(CLOCK_MONOTONIC, &ts))
+	exit(1);
+	return (uint64_t)ts.tv_sec * 1000 + (uint64_t)ts.tv_nsec / 1000000;
+}
+
+static bool write_file(const char* file, const char* what, ...)
+{
+	char buf[1024];
+	va_list args;
+	va_start(args, what);
+	vsnprintf(buf, sizeof(buf), what, args);
+	va_end(args);
+	buf[sizeof(buf) - 1] = 0;
+	int len = strlen(buf);
+	int fd = open(file, O_WRONLY | O_CLOEXEC);
+	if (fd == -1)
+		return false;
+	if (write(fd, buf, len) != len) {
+		int err = errno;
+		close(fd);
+		errno = err;
+		return false;
+	}
+	close(fd);
+	return true;
+}
+
+static long syz_open_dev(volatile long a0, volatile long a1, volatile long a2)
+{
+	if (a0 == 0xc || a0 == 0xb) {
+		char buf[128];
+		sprintf(buf, "/dev/%s/%d:%d", a0 == 0xc ? "char" : "block", (uint8_t)a1, (uint8_t)a2);
+		return open(buf, O_RDWR, 0);
+	} else {
+		char buf[1024];
+		char* hash;
+strncpy(buf, (char*)a0, sizeof(buf) - 1);
+		buf[sizeof(buf) - 1] = 0;
+		while ((hash = strchr(buf, '#'))) {
+			*hash = '0' + (char)(a1 % 10);
+			a1 /= 10;
+		}
+		return open(buf, a2, 0);
+	}
+}
+
+static void kill_and_wait(int pid, int* status)
+{
+	kill(-pid, SIGKILL);
+	kill(pid, SIGKILL);
+	int i;
+	for (i = 0; i < 100; i++) {
+		if (waitpid(-1, status, WNOHANG | __WALL) == pid)
+			return;
+		usleep(1000);
+	}
+	DIR* dir = opendir("/sys/fs/fuse/connections");
+	if (dir) {
+		for (;;) {
+			struct dirent* ent = readdir(dir);
+			if (!ent)
+				break;
+			if (strcmp(ent->d_name, ".") == 0 || strcmp(ent->d_name, "..") == 0)
+				continue;
+			char abort[300];
+			snprintf(abort, sizeof(abort), "/sys/fs/fuse/connections/%s/abort", ent->d_name);
+			int fd = open(abort, O_WRONLY);
+			if (fd == -1) {
+				continue;
+			}
+			if (write(fd, abort, 1) < 0) {
+			}
+			close(fd);
+		}
+		closedir(dir);
+	} else {
+	}
+	while (waitpid(-1, status, __WALL) != pid) {
+	}
+}
+
+static void setup_test()
+{
+	prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0);
+	setpgrp();
+	write_file("/proc/self/oom_score_adj", "1000");
+}
+
+static void execute_one(void);
+
+#define WAIT_FLAGS __WALL
+
+static void loop(void)
+{
+	int iter;
+	for (iter = 0;; iter++) {
+		int pid = fork();
+		if (pid < 0)
+	exit(1);
+		if (pid == 0) {
+			setup_test();
+			execute_one();
+			exit(0);
+		}
+		int status = 0;
+		uint64_t start = current_time_ms();
+		for (;;) {
+			if (waitpid(-1, &status, WNOHANG | WAIT_FLAGS) == pid)
+				break;
+			sleep_ms(1);
+			if (current_time_ms() - start < 5 * 1000)
+				continue;
+			kill_and_wait(pid, &status);
+			break;
+		}
+	}
+}
+
+uint64_t r[1] = {0xffffffffffffffff};
+
+void execute_one(void)
+{
+		intptr_t res = 0;
+memcpy((void*)0x20000000, "/dev/sg#\000", 9);
+	res = syz_open_dev(0x20000000, 0, 0);
+	if (res != -1)
+		r[0] = res;
+*(uint32_t*)0x20000080 = 1;
+*(uint32_t*)0x20000084 = 0;
+*(uint32_t*)0x20000088 = 8;
+memcpy((void*)0x2000008c, "\x11", 1);
+	syscall(__NR_ioctl, r[0], 1ul, 0x20000080ul);
+
+}
+int main(void)
+{
+		syscall(__NR_mmap, 0x20000000ul, 0x1000000ul, 3ul, 0x32ul, -1, 0);
+			loop();
+	return 0;
+}
+

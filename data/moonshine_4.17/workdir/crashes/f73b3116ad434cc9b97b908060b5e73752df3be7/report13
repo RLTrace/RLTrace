@@ -1,0 +1,64 @@
+lowmem_reserve[]: 0 0 0 0
+------------[ cut here ]------------
+Node 0 DMA: 1*4kB (M) 2*8kB (UM) 2*16kB (UM) 2*32kB 
+Unexpected user alpha2: Æ
+WARNING: CPU: 0 PID: 37 at net/wireless/reg.c:418 is_user_regdom_saved net/wireless/reg.c:416 [inline]
+WARNING: CPU: 0 PID: 37 at net/wireless/reg.c:418 restore_alpha2 net/wireless/reg.c:3107 [inline]
+WARNING: CPU: 0 PID: 37 at net/wireless/reg.c:418 restore_regulatory_settings+0x180/0xde0 net/wireless/reg.c:3199
+(UM) 
+Kernel panic - not syncing: panic_on_warn set ...
+
+CPU: 0 PID: 37 Comm: kworker/0:1 Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+1*64kB 
+Workqueue: events_power_efficient crda_timeout_work
+(M) 
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+1*128kB 
+ panic+0x1cb/0x3ba kernel/panic.c:184
+(M) 
+1*256kB 
+(M) 
+2*512kB 
+ __warn+0x1d9/0x1f0 kernel/panic.c:536
+ report_bug+0x1ee/0x2b0 lib/bug.c:186
+(UM) 
+ fixup_bug.part.9+0x32/0x80 arch/x86/kernel/traps.c:178
+1*1024kB 
+ fixup_bug arch/x86/kernel/traps.c:247 [inline]
+ do_error_trap+0x1af/0x1f0 arch/x86/kernel/traps.c:296
+(M) 
+0*2048kB 
+1*4096kB 
+(M) 
+ invalid_op+0x14/0x20 arch/x86/entry/entry_64.S:992
+RIP: 0010:is_user_regdom_saved net/wireless/reg.c:416 [inline]
+RIP: 0010:restore_alpha2 net/wireless/reg.c:3107 [inline]
+RIP: 0010:restore_regulatory_settings+0x180/0xde0 net/wireless/reg.c:3199
+= 6708kB
+RSP: 0000:ffff88006c627cc8 EFLAGS: 00010282
+RAX: 0000000000000000 RBX: 0000000000000018 RCX: ffffffffaa013419
+RDX: 0000000000000000 RSI: 0000000000000004 RDI: 0000000000000293
+RBP: 0000000000000001 R08: fffffbfff5aeb758 R09: fffffbfff5aeb758
+R10: 0000000000000001 R11: fffffbfff5aeb758 R12: 00000000000000c6
+Node 0 
+R13: 1ffff1000d8c4f9e R14: 0000000000000018 R15: ffff88006cff3d00
+DMA32: 
+527*4kB 
+(UMEH) 
+141*8kB 
+ crda_timeout_work+0x1b/0x20 net/wireless/reg.c:526
+ process_one_work+0x88c/0x12a0 kernel/workqueue.c:2145
+(UME) 
+ worker_thread+0xd3/0xf80 kernel/workqueue.c:2279
+63*16kB 
+ kthread+0x2f4/0x3b0 kernel/kthread.c:238
+(UM) 
+ ret_from_fork+0x35/0x40 arch/x86/entry/entry_64.S:412
+14*32kB 
+Dumping ftrace buffer:
+   (ftrace buffer empty)
+Kernel Offset: 0x28e00000 from 0xffffffff81000000 (relocation range: 0xffffffff80000000-0xffffffffbfffffff)
+Rebooting in 1 seconds..

@@ -1,0 +1,48 @@
+==================================================================
+BUG: KASAN: use-after-free in do_con_write.part.22+0x1736/0x1990 drivers/tty/vt/vt.c:2397
+Write of size 2 at addr ffff880000114a1a by task syz-executor.11/17164
+
+CPU: 1 PID: 17164 Comm: syz-executor.11 Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_address_description+0x65/0x270 mm/kasan/report.c:256
+ kasan_report_error mm/kasan/report.c:354 [inline]
+ kasan_report+0x253/0x380 mm/kasan/report.c:412
+ do_con_write.part.22+0x1736/0x1990 drivers/tty/vt/vt.c:2397
+ do_con_write drivers/tty/vt/vt.c:2790 [inline]
+ con_write+0xa7/0xc0 drivers/tty/vt/vt.c:2786
+ process_output_block drivers/tty/n_tty.c:579 [inline]
+ n_tty_write+0x4f0/0xd20 drivers/tty/n_tty.c:2308
+ do_tty_write drivers/tty/tty_io.c:958 [inline]
+ tty_write+0x42f/0x890 drivers/tty/tty_io.c:1042
+ do_loop_readv_writev fs/read_write.c:703 [inline]
+ do_iter_write+0x3d0/0x560 fs/read_write.c:961
+ vfs_writev+0x167/0x300 fs/read_write.c:1004
+ do_writev+0xc6/0x220 fs/read_write.c:1039
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007f8fff0d8c58 EFLAGS: 00000246 ORIG_RAX: 0000000000000014
+RAX: ffffffffffffffda RBX: 000000000073bfa8 RCX: 0000000000466039
+RDX: 0000000000000001 RSI: 0000000020001780 RDI: 0000000000000004
+RBP: 0000000000000003 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007f8fff0d96bc
+R13: 00000000004c8010 R14: 0000000000711020 R15: 00000000ffffffff
+
+The buggy address belongs to the page:
+page:ffffea0000004500 count:0 mapcount:0 mapping:0000000000000000 index:0x0
+flags: 0x0()
+raw: 0000000000000000 0000000000000000 0000000000000000 00000000ffffffff
+raw: ffffea0000004520 ffffea0000004520 0000000000000000 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff880000114900: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+ ffff880000114980: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+>ffff880000114a00: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+                            ^
+ ffff880000114a80: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+ ffff880000114b00: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+==================================================================

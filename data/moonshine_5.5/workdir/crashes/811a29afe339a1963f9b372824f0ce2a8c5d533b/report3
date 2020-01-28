@@ -1,0 +1,4 @@
+EXT4-fs warning (device sda): ext4_group_extend:1748: can't shrink FS - resize aborted
+WARNING: stack recursion on stack type 4
+WARNING: can't dereference registers at 000000005217338b for ip swapgs_restore_regs_and_return_to_usermode+0x79/0x80
+syz-executor.10 (2198) used greatest stack depth: 24896 bytes left

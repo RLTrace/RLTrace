@@ -1,0 +1,510 @@
+2020/01/27 15:30:01 reproducing crash 'BUG: Bad page map': 694 programs, 4 VMs, timeouts [15s 1m0s 6m0s]
+2020/01/27 15:30:01 reproducing crash 'BUG: Bad page map': extracting reproducer from 694 programs
+2020/01/27 15:30:01 reproducing crash 'BUG: Bad page map': single: executing 16 programs separately with timeout 15s
+2020/01/27 15:30:12 reproducing crash 'BUG: Bad page map': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): socket$inet_udplite-set_robust_list-sendmmsg$inet
+2020/01/27 15:30:12 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+r0 = socket$inet_udplite(0x2, 0x2, 0x88)
+set_robust_list(&(0x7f00000000c0)={&(0x7f0000000080)={&(0x7f0000000040)}, 0x2}, 0x18)
+sendmmsg$inet(r0, &(0x7f00000020c0)=[{{&(0x7f0000000000)={0x2, 0x4e23, @remote}, 0x10, 0x0, 0x0, &(0x7f0000000100)=ANY=[@ANYBLOB="1400000000000000000000000700000001000000000000003000000000000000000000000700000094040000441c107675f930be4ded7d79170937e801e000000200000000ac1414"], 0x48}}], 0x1, 0x0)
+2020/01/27 15:30:27 reproducing crash 'BUG: Bad page map': program did not crash
+2020/01/27 15:30:28 reproducing crash 'BUG: Bad page map': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): socket$inet6_icmp_raw-sendto
+2020/01/27 15:30:28 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+r0 = socket$inet6_icmp_raw(0xa, 0x3, 0x3a)
+sendto(r0, &(0x7f0000000080)="8154", 0x2, 0x40, &(0x7f0000000100)=@x25={0x9, @remote={[], 0x1}}, 0x39e)
+2020/01/27 15:30:43 reproducing crash 'BUG: Bad page map': program did not crash
+2020/01/27 15:30:43 reproducing crash 'BUG: Bad page map': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): open-ioctl$IOC_PR_REGISTER-gettid-dup-syz_open_procfs-readv-syz_genetlink_get_family_id$nl80211-sendmsg$NL80211_CMD_LEAVE_MESH-ioctl$TIOCL_GETSHIFTSTATE-migrate_pages
+2020/01/27 15:30:43 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+r0 = open(&(0x7f0000000000)='./file0\x00', 0x40840, 0x46)
+ioctl$IOC_PR_REGISTER(r0, 0x401870c8, &(0x7f0000000080)={0x9, 0x6, 0xfffffffd})
+r1 = gettid()
+r2 = dup(r0)
+r3 = syz_open_procfs(0xffffffffffffffff, &(0x7f0000000000)='smaps\x00')
+readv(r3, &(0x7f0000001240)=[{&(0x7f0000000040)=""/4096, 0x1000}], 0x1)
+r4 = syz_genetlink_get_family_id$nl80211(&(0x7f0000000180)='nl80211\x00')
+sendmsg$NL80211_CMD_LEAVE_MESH(r3, &(0x7f0000000240)={&(0x7f0000000140)={0x10, 0x0, 0x0, 0x240000}, 0xc, &(0x7f0000000200)={&(0x7f00000001c0)={0x1c, r4, 0x2, 0x70bd28, 0x25dfdbfe, {}, [@NL80211_ATTR_IFINDEX={0x8}]}, 0x1c}, 0x1, 0x0, 0x0, 0x800}, 0x15d701715b8b55d5)
+ioctl$TIOCL_GETSHIFTSTATE(r2, 0x541c, &(0x7f0000000100)={0x6, 0x1})
+migrate_pages(r1, 0x2, &(0x7f0000000040)=0xe5, &(0x7f00000000c0)=0xffffffffffffffff)
+2020/01/27 15:30:58 reproducing crash 'BUG: Bad page map': program did not crash
+2020/01/27 15:30:58 reproducing crash 'BUG: Bad page map': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): perf_event_open$cgroup-add_key$keyring-add_key$keyring-add_key-request_key
+2020/01/27 15:30:58 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+perf_event_open$cgroup(&(0x7f0000000200)={0x0, 0x70, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, @perf_config_ext}, 0xffffffffffffffff, 0x0, 0xffffffffffffffff, 0x0)
+r0 = add_key$keyring(&(0x7f0000000000)='keyring\x00', &(0x7f0000000080)={'syz', 0x0}, 0x0, 0x0, 0xfffffffffffffffd)
+r1 = add_key$keyring(&(0x7f00000000c0)='keyring\x00', &(0x7f0000000100)={'syz', 0x1}, 0x0, 0x0, r0)
+add_key(&(0x7f0000000140)='keyring\x00', &(0x7f0000000180)={'syz', 0x0}, 0x0, 0x0, r1)
+request_key(&(0x7f0000000000)='cifs.idmap\x00', &(0x7f0000000040)={'syz', 0x0}, &(0x7f0000000080)='(-cgroup\x00', r1)
+2020/01/27 15:31:13 reproducing crash 'BUG: Bad page map': program did not crash
+2020/01/27 15:31:13 reproducing crash 'BUG: Bad page map': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): io_submit-mkdirat-openat$snapshot-socket$nl_generic-syz_genetlink_get_family_id$nl80211-sendmsg$NL80211_CMD_SET_WIPHY-sendmsg$NL80211_CMD_GET_REG-getrlimit-mkdir-mknodat
+2020/01/27 15:31:13 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+io_submit(0x0, 0x7, &(0x7f00000006c0)=[&(0x7f00000000c0)={0x0, 0x0, 0x0, 0x2, 0x8001, 0xffffffffffffffff, &(0x7f0000000000)="23534e4ea39fd5ca064c244962040a2fe75149b75c740fdff1a2dac69f5998e09ea851b06307a912b87b449c15b6b5a5f097b292789ad33d55fa651979a9143215534250e57abc9d4605fbfe18bbbbb846dbb23eb7cf4f1ae7be9aa1a6ad989955ee9056b3755eb2e3d21fb7dff9ba721bba77b7ebf927cc62028f759fbc9b209872af510455a8a41d490b5520db6f8bbf172e107d6dbacd2a34557683850db5760f95", 0xa3, 0x100000000, 0x0, 0x1}, &(0x7f0000000200)={0x0, 0x0, 0x0, 0x1, 0x3, 0xffffffffffffffff, &(0x7f0000000100)="f5b89665a0830c1950913a62f5041cdeb984e3e56f2fd06a8e0ec8482bfda50111c2fb5c23742963d9c4eb64423195025db3efb928d031b8ca3e8c4c33d6c91f2dff3b8272093d480f42367098b91f86626a0a68651c46658dce5eb103b3371be3933105394ed44da5280970c6695ea1fe0c6e3481b47119bd0c940470edc8f8d67defcd32282bfd260002826f5c6aec75ce3ebe8ff714430af89423fbd17853e362a6830f37bdb00bad835425d310123ba9bf77660804226f22721d18cb38433a0f40a72eebb249e1e47237881cb46f5dacdef4e2b2691543d4318c0bf201", 0xdf, 0xa8e, 0x0, 0x4}, &(0x7f00000002c0)={0x0, 0x0, 0x0, 0x3b77ea884f94a046, 0x8000, 0xffffffffffffffff, &(0x7f0000000240)="5780f7c4b72d618174c86ae9b2852a4b81d210b6e3aaa6fdc4330624d3fe975888814def234af2d71e2b183b2141db23e8ee4ae51fb152029f5a1ce419b57733e966ae09c9a2f58f1eb4c86401ebd84d5642ceb08223a8f22412e6a57055e26e0ae043150a3646", 0x67, 0x5, 0x0, 0x2}, &(0x7f0000000340)={0x0, 0x0, 0x0, 0x0, 0x80, 0xffffffffffffffff, &(0x7f0000000300)="d562a74f31b7cb9b69aadf682794d56d3ae2fecfab3846e011c4da9318f2920ddd9ab419d4ffe04844337c", 0x2b, 0xf90c, 0x0, 0x7d2e1a2f77d02966}, &(0x7f0000000400)={0x0, 0x0, 0x0, 0x0, 0x7, 0xffffffffffffffff, &(0x7f0000000380)="b4e0eff9e000d859c0644c1c1f396d9ca2955d848fc132373397e4d1e11b36870a0bbce714da881031d298fe97e6eb46d7ef56e272c45c181d704b56887e2d7cbcfc6012f2127f2ee54c7a9c95cdec41fbca071cf2a92992fcaa536cd8236dde53", 0x61, 0x5}, &(0x7f0000000540)={0x0, 0x0, 0x0, 0x7, 0x2, 0xffffffffffffffff, &(0x7f0000000440)="28843906b031d1a22bdfc61fdc87d9ffe50eda3c09393e08e7226b141b2c233b4119b55d8d2de5db7deaa26488d8dfa4aa07dfaa83f241051bd0ffff9727449d8157ae54422782788602947f5f16108f178345a1133a5ac95b658f8d8d71761950c91b3a302a1961854bdb2aadb66ce9ad320085be8b4d1ea2a9ca078f0a2bc34e51294b77a2dc65041607ff5eee1f8e97e9c0cee2de4581eb0bbf57e92a00a1ea2b651c40df6ec8a597f9b5ff3670539a406be02e2e5e0fcc5508f56a27b3fbe68bdbfc", 0xc4, 0x8000, 0x0, 0x6}, &(0x7f0000000680)={0x0, 0x0, 0x0, 0xd736818b3acdb190, 0x0, 0xffffffffffffffff, &(0x7f0000000580)="6c068b87468563bc49cabecd73db6c4f8a54c5bbdff703f4f549da204732cdf942757ee772771125dc4a0dc36dbbe908cbd2be1f9661dddb635623219c9a9ffd82da2d05e30e447c42f54add69c3efbacba78f26ceb0d1cf95d9e77671b36e0a786a59a7b79e51171d0b364000dd0a9663a0fbf42b29a51c30bd3a04da7e5efdd9f967fe7b9f7ee17f5bd02c21b5860a16de01be1a6de3848d36856482ba8ee122231e555c2ec3ff9077db464c5a3b7bbc01698565b055ffa2c9e4a71bf632c194474808b341d1290c6049b6074cd9a4f916702bf301cf2d4a4d987c69f89d53eeb7752d1dbf73e0e3cf", 0xea, 0x1}])
+mkdirat(0xffffffffffffffff, &(0x7f0000000700)='./file0\x00', 0x5)
+r0 = openat$snapshot(0xffffffffffffff9c, &(0x7f0000000800)='/dev/snapshot\x00', 0x202000, 0x0)
+r1 = socket$nl_generic(0x10, 0x3, 0x10)
+r2 = syz_genetlink_get_family_id$nl80211(&(0x7f0000000080)='nl80211\x00')
+sendmsg$NL80211_CMD_SET_WIPHY(r1, &(0x7f00000001c0)={0x0, 0x0, &(0x7f0000000180)={&(0x7f0000000000)={0x28, r2, 0x909, 0x0, 0x0, {}, [@NL80211_ATTR_WIPHY={0x8}, @NL80211_ATTR_WDEV={0xc}]}, 0x28}}, 0x0)
+sendmsg$NL80211_CMD_GET_REG(r0, &(0x7f0000000980)={&(0x7f0000000840)={0x10, 0x0, 0x0, 0x4000000}, 0xc, &(0x7f0000000940)={&(0x7f0000000880)={0x84, r2, 0x4, 0x70bd26, 0x25dfdbfb, {}, [@NL80211_ATTR_REG_ALPHA2={0x7, 0x21, 'bb\x00'}, @NL80211_ATTR_DFS_REGION={0x5, 0x92, 0x3}, @NL80211_ATTR_DFS_REGION={0x5, 0x92, 0x8}, @NL80211_ATTR_SOCKET_OWNER={0x4}, @NL80211_ATTR_WIPHY={0x8, 0x1, 0xffffffffffffffff}, @NL80211_ATTR_DFS_REGION={0x5, 0x92, 0x8}, @NL80211_ATTR_DFS_REGION={0x5, 0x92, 0xda}, @NL80211_ATTR_REG_RULES={0x3c, 0x22, [@NL80211_ATTR_FREQ_RANGE_START={0x8, 0x2, 0x40}, @NL80211_ATTR_POWER_RULE_MAX_EIRP={0x8, 0x6, 0x8}, @NL80211_ATTR_FREQ_RANGE_MAX_BW={0x8, 0x4, 0x6}, @NL80211_ATTR_POWER_RULE_MAX_EIRP={0x8, 0x6, 0x1000}, @NL80211_ATTR_FREQ_RANGE_START={0x8, 0x2, 0x10001}, @NL80211_ATTR_DFS_CAC_TIME={0x8, 0x7, 0x200}, @NL80211_ATTR_POWER_RULE_MAX_EIRP={0x8, 0x6, 0x101}]}]}, 0x84}, 0x1, 0x0, 0x0, 0x20008001}, 0x3)
+getrlimit(0x5cb18aa54da7823e, &(0x7f0000000740))
+mkdir(&(0x7f0000000780)='./file0\x00', 0x2a)
+mknodat(0xffffffffffffffff, &(0x7f00000007c0)='./file1\x00', 0x8000, 0xfffffff7)
+2020/01/27 15:31:28 reproducing crash 'BUG: Bad page map': program did not crash
+2020/01/27 15:31:28 reproducing crash 'BUG: Bad page map': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): creat-pwrite64-creat-stat-lstat-pivot_root-ioctl$SG_GET_REQUEST_TABLE-setuid-seccomp$SECCOMP_GET_NOTIF_SIZES-mount$9p_virtio-syz_open_procfs-readv-readlinkat
+2020/01/27 15:31:28 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+r0 = creat(&(0x7f0000000000)='./file0\x00', 0x0)
+pwrite64(r0, &(0x7f0000000040)="dc", 0x1, 0x0)
+creat(&(0x7f0000000000)='./file0\x00', 0x0)
+stat(&(0x7f0000000140)='./file0\x00', &(0x7f0000000180)={0x0, 0x0, 0x0, 0x0, 0x0, <r1=>0x0})
+lstat(&(0x7f0000000240)='./file0\x00', &(0x7f0000000280)={0x0, 0x0, 0x0, 0x0, <r2=>0x0})
+pivot_root(&(0x7f00000004c0)='./file0\x00', &(0x7f0000000500)='./file0\x00')
+ioctl$SG_GET_REQUEST_TABLE(r0, 0x2286, &(0x7f0000000300))
+setuid(r2)
+seccomp$SECCOMP_GET_NOTIF_SIZES(0x3, 0x0, &(0x7f0000000480))
+mount$9p_virtio(&(0x7f0000000080)='syz\x00', &(0x7f00000000c0)='./file0\x00', &(0x7f0000000100)='9p\x00', 0x400, &(0x7f0000000200)={'trans=virtio,', {[{@access_client='access=client'}, {@dfltgid={'dfltgid', 0x3d, r1}}, {@debug={'debug', 0x3d, 0x8}}, {@access_any='access=any'}], [{@smackfsdef={'smackfsdef'}}, {@euid_gt={'euid>', r2}}, {@measure='measure'}]}})
+r3 = syz_open_procfs(0xffffffffffffffff, &(0x7f0000000000)='smaps\x00')
+readv(r3, &(0x7f0000001240)=[{&(0x7f0000000040)=""/4096, 0x1000}], 0x1)
+readlinkat(r3, &(0x7f0000000540)='./file0\x00', &(0x7f0000000580)=""/221, 0xdd)
+2020/01/27 15:31:43 reproducing crash 'BUG: Bad page map': program did not crash
+2020/01/27 15:31:43 reproducing crash 'BUG: Bad page map': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): getcwd-mkdir-ioctl$RTC_PLL_GET-mkdir-mkdir-mkdir
+2020/01/27 15:31:43 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+getcwd(&(0x7f0000000000)=""/201, 0xc9)
+mkdir(&(0x7f0000000100)='./file0\x00', 0x18)
+ioctl$RTC_PLL_GET(0xffffffffffffffff, 0x80207011, &(0x7f0000000200))
+mkdir(&(0x7f0000000140)='./file0\x00', 0x20)
+mkdir(&(0x7f0000000180)='./file0\x00', 0x2ea)
+mkdir(&(0x7f00000001c0)='./file0\x00', 0x80)
+2020/01/27 15:31:58 reproducing crash 'BUG: Bad page map': program did not crash
+2020/01/27 15:31:58 reproducing crash 'BUG: Bad page map': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): creat-pwrite64-open-ioctl$RTC_PLL_SET-fdatasync
+2020/01/27 15:31:58 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+r0 = creat(&(0x7f0000000000)='./file0\x00', 0x0)
+pwrite64(r0, &(0x7f0000000200)="1cfbc7d6478402db92a36d30006f028c25ef5e1ef760679ffd9e4feccb859a0100bce8e350602c2c74029f8cf9efef80010028", 0x100000195, 0x4)
+open(0x0, 0xd9254448f3c0d9e, 0x8)
+ioctl$RTC_PLL_SET(r0, 0x40207012, &(0x7f0000000040)={0x0, 0x10000, 0x6, 0xfffffff7, 0xe1, 0x101, 0x9})
+fdatasync(r0)
+2020/01/27 15:32:13 reproducing crash 'BUG: Bad page map': program did not crash
+2020/01/27 15:32:13 reproducing crash 'BUG: Bad page map': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): mount-mknod-syz_open_dev$sndseq-ioctl$TIOCGISO7816-mknod-syz_open_procfs-readv-ioctl$SCSI_IOCTL_BENCHMARK_COMMAND-chmod
+2020/01/27 15:32:13 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+mount(0x0, &(0x7f0000000080)='./file0\x00', &(0x7f0000000280)='hugetlbfs\x00', 0x0, 0x0)
+mknod(&(0x7f00000000c0)='./file0\x00', 0x800, 0x1f)
+syz_open_dev$sndseq(&(0x7f0000000100)='/dev/snd/seq\x00', 0x0, 0x16900)
+ioctl$TIOCGISO7816(0xffffffffffffffff, 0x80285442, &(0x7f0000001040))
+mknod(&(0x7f0000000180)='./file0/file0\x00', 0x0, 0x0)
+r0 = syz_open_procfs(0xffffffffffffffff, &(0x7f00000010c0)='ns\x00')
+readv(r0, &(0x7f0000001240)=[{&(0x7f0000000040)=""/4096, 0x1000}], 0x1)
+ioctl$SCSI_IOCTL_BENCHMARK_COMMAND(r0, 0x3)
+chmod(&(0x7f0000000040)='./file0/file0\x00', 0x2)
+2020/01/27 15:32:28 reproducing crash 'BUG: Bad page map': program did not crash
+2020/01/27 15:32:29 reproducing crash 'BUG: Bad page map': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): socket$inet6_udplite-mkdir-mount-mknod
+2020/01/27 15:32:29 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+socket$inet6_udplite(0xa, 0x2, 0x88)
+mkdir(&(0x7f0000000000)='./file0\x00', 0x0)
+mount(0x0, &(0x7f0000000080)='./file0\x00', &(0x7f0000000280)='hugetlbfs\x00', 0x0, 0x0)
+mknod(&(0x7f0000000180)='./file0/file0\x00', 0xc000, 0x0)
+2020/01/27 15:32:44 reproducing crash 'BUG: Bad page map': program did not crash
+2020/01/27 15:32:44 reproducing crash 'BUG: Bad page map': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_procfs-readv-syz_genetlink_get_family_id$nbd-sendmsg$NBD_CMD_CONNECT-socket$inet_icmp_raw-setsockopt$inet_msfilter
+2020/01/27 15:32:44 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+r0 = syz_open_procfs(0xffffffffffffffff, &(0x7f0000000000)='smaps\x00')
+readv(r0, &(0x7f0000001240)=[{&(0x7f0000000040)=""/4096, 0x1000}], 0x1)
+r1 = syz_genetlink_get_family_id$nbd(&(0x7f0000000040)='nbd\x00')
+sendmsg$NBD_CMD_CONNECT(r0, &(0x7f0000000140)={&(0x7f0000000000)={0x10, 0x0, 0x0, 0xc0100824}, 0xc, &(0x7f0000000100)={&(0x7f0000000080)={0x6c, r1, 0x800, 0x70bd2c, 0x25dfdbfe, {}, [@NBD_ATTR_INDEX={0x8, 0x1, 0x0}, @NBD_ATTR_DEAD_CONN_TIMEOUT={0xc}, @NBD_ATTR_SERVER_FLAGS={0xc, 0x5, 0x43}, @NBD_ATTR_DEAD_CONN_TIMEOUT={0xc, 0x8, 0x98b}, @NBD_ATTR_INDEX={0x8, 0x1, 0x0}, @NBD_ATTR_CLIENT_FLAGS={0xc, 0x6, 0x1}, @NBD_ATTR_CLIENT_FLAGS={0xc, 0x6, 0x2}, @NBD_ATTR_SERVER_FLAGS={0xc, 0x5, 0x2e}]}, 0x6c}, 0x1, 0x0, 0x0, 0x80}, 0x48050)
+r2 = socket$inet_icmp_raw(0x2, 0x3, 0x1)
+setsockopt$inet_msfilter(r2, 0x0, 0x29, 0x0, 0x56)
+2020/01/27 15:32:59 reproducing crash 'BUG: Bad page map': program did not crash
+2020/01/27 15:32:59 reproducing crash 'BUG: Bad page map': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-syz_open_procfs-readv-ioctl$sock_SIOCGIFVLAN_ADD_VLAN_CMD-ioctl$BLKTRACESTOP-sendmsg$TIPC_NL_MON_SET-ioctl$SCSI_IOCTL_SEND_COMMAND-syz_open_procfs-readv-bind$inet6
+2020/01/27 15:32:59 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+r1 = syz_open_procfs(0xffffffffffffffff, &(0x7f0000000000)='smaps\x00')
+readv(r1, &(0x7f0000001240)=[{&(0x7f0000000040)=""/4096, 0x1000}], 0x1)
+ioctl$sock_SIOCGIFVLAN_ADD_VLAN_CMD(r1, 0x8982, &(0x7f00000010c0)={0x0, 'bond0\x00', {0x3}, 0x5})
+ioctl$BLKTRACESTOP(r1, 0x1275, 0x0)
+sendmsg$TIPC_NL_MON_SET(r1, &(0x7f00000011c0)={&(0x7f0000001140)={0x10, 0x0, 0x0, 0x1010000}, 0xc, &(0x7f0000001180)={&(0x7f0000001280)={0x1a8, 0x0, 0x100, 0x70bd26, 0x25dfdbfe, {}, [@TIPC_NLA_LINK={0x74, 0x4, [@TIPC_NLA_LINK_PROP={0x44, 0x7, [@TIPC_NLA_PROP_MTU={0x8, 0x4, 0x5}, @TIPC_NLA_PROP_PRIO={0x8}, @TIPC_NLA_PROP_MTU={0x8, 0x4, 0xffffb75a}, @TIPC_NLA_PROP_PRIO={0x8, 0x1, 0x11}, @TIPC_NLA_PROP_PRIO={0x8, 0x1, 0x18}, @TIPC_NLA_PROP_WIN={0x8, 0x3, 0x200}, @TIPC_NLA_PROP_MTU={0x8, 0x4, 0xffffff01}, @TIPC_NLA_PROP_WIN={0x8, 0x3, 0x5}]}, @TIPC_NLA_LINK_PROP={0x4}, @TIPC_NLA_LINK_NAME={0x13, 0x1, 'broadcast-link\x00'}, @TIPC_NLA_LINK_NAME={0x13, 0x1, 'broadcast-link\x00'}]}, @TIPC_NLA_NODE={0xc, 0x6, 0x0, 0x1, [@TIPC_NLA_NODE_ADDR={0x8, 0x1, 0x7}]}, @TIPC_NLA_MON={0x2c, 0x9, [@TIPC_NLA_MON_REF={0x8, 0x2, 0x80000001}, @TIPC_NLA_MON_REF={0x8, 0x2, 0xe50}, @TIPC_NLA_MON_ACTIVATION_THRESHOLD={0x8, 0x1, 0x10001}, @TIPC_NLA_MON_REF={0x8, 0x2, 0x2b}, @TIPC_NLA_MON_REF={0x8, 0x2, 0x8000}]}, @TIPC_NLA_BEARER={0xb8, 0x1, [@TIPC_NLA_BEARER_PROP={0x1c, 0x2, [@TIPC_NLA_PROP_WIN={0x8, 0x3, 0xffff}, @TIPC_NLA_PROP_TOL={0x8, 0x2, 0x9}, @TIPC_NLA_PROP_TOL={0x8, 0x2, 0x9}]}, @TIPC_NLA_BEARER_PROP={0x44, 0x2, [@TIPC_NLA_PROP_MTU={0x8, 0x4, 0x8}, @TIPC_NLA_PROP_MTU={0x8, 0x4, 0x1}, @TIPC_NLA_PROP_PRIO={0x8, 0x1, 0x12}, @TIPC_NLA_PROP_PRIO={0x8, 0x1, 0xe}, @TIPC_NLA_PROP_TOL={0x8, 0x2, 0xbe0e}, @TIPC_NLA_PROP_TOL={0x8, 0x2, 0x1}, @TIPC_NLA_PROP_TOL={0x8}, @TIPC_NLA_PROP_MTU={0x8, 0x4, 0x1}]}, @TIPC_NLA_BEARER_UDP_OPTS={0x44, 0x4, {{0x20, 0x1, @in6={0xa, 0x4e23, 0x7fff, @initdev={0xfe, 0x88, [], 0x0, 0x0}, 0x8}}, {0x20, 0x2, @in6={0xa, 0x4e23, 0x1, @mcast2, 0x4}}}}, @TIPC_NLA_BEARER_DOMAIN={0x8, 0x3, 0x9}, @TIPC_NLA_BEARER_DOMAIN={0x8, 0x3, 0xffff7fff}]}, @TIPC_NLA_NET={0x30, 0x7, [@TIPC_NLA_NET_NODEID={0xc, 0x3, 0x1}, @TIPC_NLA_NET_ADDR={0x8, 0x2, 0x9}, @TIPC_NLA_NET_ID={0x8, 0x1, 0x2}, @TIPC_NLA_NET_ID={0x8, 0x1, 0x8}, @TIPC_NLA_NET_ADDR={0x8, 0x2, 0xd222}]}]}, 0x1a8}, 0x1, 0x0, 0x0, 0xf6e68184ed9e3933}, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000001040)=ANY=[@ANYBLOB="01000000000000000800000011de1d5e214a547a19ae2ef012cd6da740e9dfdfc373e918166e15614320455fe6465e3829c2d444d6daf2bba78d1a2704175fe80dbef02c5f20e793a4b69c41567a2eb2103a4f9ddaefbca853af59475cd2123c295a"])
+r2 = syz_open_procfs(0xffffffffffffffff, &(0x7f0000000000)='smaps\x00')
+readv(r2, &(0x7f0000001240)=[{&(0x7f0000000040)=""/4096, 0x1000}], 0x1)
+bind$inet6(r2, &(0x7f0000001100)={0xa, 0x4e20, 0x29d, @mcast2, 0x7}, 0x1c)
+2020/01/27 15:33:11 reproducing crash 'BUG: Bad page map': program crashed: general protection fault in set_root
+2020/01/27 15:33:11 reproducing crash 'BUG: Bad page map': single: successfully extracted reproducer
+2020/01/27 15:33:11 reproducing crash 'BUG: Bad page map': found reproducer with 10 syscalls
+2020/01/27 15:33:11 reproducing crash 'BUG: Bad page map': minimizing guilty program
+2020/01/27 15:33:11 reproducing crash 'BUG: Bad page map': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-syz_open_procfs-readv-ioctl$sock_SIOCGIFVLAN_ADD_VLAN_CMD-ioctl$BLKTRACESTOP-sendmsg$TIPC_NL_MON_SET-ioctl$SCSI_IOCTL_SEND_COMMAND-syz_open_procfs-readv
+2020/01/27 15:33:11 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+r1 = syz_open_procfs(0xffffffffffffffff, &(0x7f0000000000)='smaps\x00')
+readv(r1, &(0x7f0000001240)=[{&(0x7f0000000040)=""/4096, 0x1000}], 0x1)
+ioctl$sock_SIOCGIFVLAN_ADD_VLAN_CMD(r1, 0x8982, &(0x7f00000010c0)={0x0, 'bond0\x00', {0x3}, 0x5})
+ioctl$BLKTRACESTOP(r1, 0x1275, 0x0)
+sendmsg$TIPC_NL_MON_SET(r1, &(0x7f00000011c0)={&(0x7f0000001140)={0x10, 0x0, 0x0, 0x1010000}, 0xc, &(0x7f0000001180)={&(0x7f0000001280)={0x1a8, 0x0, 0x100, 0x70bd26, 0x25dfdbfe, {}, [@TIPC_NLA_LINK={0x74, 0x4, [@TIPC_NLA_LINK_PROP={0x44, 0x7, [@TIPC_NLA_PROP_MTU={0x8, 0x4, 0x5}, @TIPC_NLA_PROP_PRIO={0x8}, @TIPC_NLA_PROP_MTU={0x8, 0x4, 0xffffb75a}, @TIPC_NLA_PROP_PRIO={0x8, 0x1, 0x11}, @TIPC_NLA_PROP_PRIO={0x8, 0x1, 0x18}, @TIPC_NLA_PROP_WIN={0x8, 0x3, 0x200}, @TIPC_NLA_PROP_MTU={0x8, 0x4, 0xffffff01}, @TIPC_NLA_PROP_WIN={0x8, 0x3, 0x5}]}, @TIPC_NLA_LINK_PROP={0x4}, @TIPC_NLA_LINK_NAME={0x13, 0x1, 'broadcast-link\x00'}, @TIPC_NLA_LINK_NAME={0x13, 0x1, 'broadcast-link\x00'}]}, @TIPC_NLA_NODE={0xc, 0x6, 0x0, 0x1, [@TIPC_NLA_NODE_ADDR={0x8, 0x1, 0x7}]}, @TIPC_NLA_MON={0x2c, 0x9, [@TIPC_NLA_MON_REF={0x8, 0x2, 0x80000001}, @TIPC_NLA_MON_REF={0x8, 0x2, 0xe50}, @TIPC_NLA_MON_ACTIVATION_THRESHOLD={0x8, 0x1, 0x10001}, @TIPC_NLA_MON_REF={0x8, 0x2, 0x2b}, @TIPC_NLA_MON_REF={0x8, 0x2, 0x8000}]}, @TIPC_NLA_BEARER={0xb8, 0x1, [@TIPC_NLA_BEARER_PROP={0x1c, 0x2, [@TIPC_NLA_PROP_WIN={0x8, 0x3, 0xffff}, @TIPC_NLA_PROP_TOL={0x8, 0x2, 0x9}, @TIPC_NLA_PROP_TOL={0x8, 0x2, 0x9}]}, @TIPC_NLA_BEARER_PROP={0x44, 0x2, [@TIPC_NLA_PROP_MTU={0x8, 0x4, 0x8}, @TIPC_NLA_PROP_MTU={0x8, 0x4, 0x1}, @TIPC_NLA_PROP_PRIO={0x8, 0x1, 0x12}, @TIPC_NLA_PROP_PRIO={0x8, 0x1, 0xe}, @TIPC_NLA_PROP_TOL={0x8, 0x2, 0xbe0e}, @TIPC_NLA_PROP_TOL={0x8, 0x2, 0x1}, @TIPC_NLA_PROP_TOL={0x8}, @TIPC_NLA_PROP_MTU={0x8, 0x4, 0x1}]}, @TIPC_NLA_BEARER_UDP_OPTS={0x44, 0x4, {{0x20, 0x1, @in6={0xa, 0x4e23, 0x7fff, @initdev={0xfe, 0x88, [], 0x0, 0x0}, 0x8}}, {0x20, 0x2, @in6={0xa, 0x4e23, 0x1, @mcast2, 0x4}}}}, @TIPC_NLA_BEARER_DOMAIN={0x8, 0x3, 0x9}, @TIPC_NLA_BEARER_DOMAIN={0x8, 0x3, 0xffff7fff}]}, @TIPC_NLA_NET={0x30, 0x7, [@TIPC_NLA_NET_NODEID={0xc, 0x3, 0x1}, @TIPC_NLA_NET_ADDR={0x8, 0x2, 0x9}, @TIPC_NLA_NET_ID={0x8, 0x1, 0x2}, @TIPC_NLA_NET_ID={0x8, 0x1, 0x8}, @TIPC_NLA_NET_ADDR={0x8, 0x2, 0xd222}]}]}, 0x1a8}, 0x1, 0x0, 0x0, 0xf6e68184ed9e3933}, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000001040)=ANY=[@ANYBLOB="01000000000000000800000011de1d5e214a547a19ae2ef012cd6da740e9dfdfc373e918166e15614320455fe6465e3829c2d444d6daf2bba78d1a2704175fe80dbef02c5f20e793a4b69c41567a2eb2103a4f9ddaefbca853af59475cd2123c295a"])
+r2 = syz_open_procfs(0xffffffffffffffff, &(0x7f0000000000)='smaps\x00')
+readv(r2, &(0x7f0000001240)=[{&(0x7f0000000040)=""/4096, 0x1000}], 0x1)
+2020/01/27 15:33:22 reproducing crash 'BUG: Bad page map': program crashed: BUG: unable to handle kernel paging request in corrupted
+2020/01/27 15:33:23 reproducing crash 'BUG: Bad page map': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-syz_open_procfs-readv-ioctl$sock_SIOCGIFVLAN_ADD_VLAN_CMD-ioctl$BLKTRACESTOP-sendmsg$TIPC_NL_MON_SET-ioctl$SCSI_IOCTL_SEND_COMMAND-syz_open_procfs
+2020/01/27 15:33:23 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+r1 = syz_open_procfs(0xffffffffffffffff, &(0x7f0000000000)='smaps\x00')
+readv(r1, &(0x7f0000001240)=[{&(0x7f0000000040)=""/4096, 0x1000}], 0x1)
+ioctl$sock_SIOCGIFVLAN_ADD_VLAN_CMD(r1, 0x8982, &(0x7f00000010c0)={0x0, 'bond0\x00', {0x3}, 0x5})
+ioctl$BLKTRACESTOP(r1, 0x1275, 0x0)
+sendmsg$TIPC_NL_MON_SET(r1, &(0x7f00000011c0)={&(0x7f0000001140)={0x10, 0x0, 0x0, 0x1010000}, 0xc, &(0x7f0000001180)={&(0x7f0000001280)={0x1a8, 0x0, 0x100, 0x70bd26, 0x25dfdbfe, {}, [@TIPC_NLA_LINK={0x74, 0x4, [@TIPC_NLA_LINK_PROP={0x44, 0x7, [@TIPC_NLA_PROP_MTU={0x8, 0x4, 0x5}, @TIPC_NLA_PROP_PRIO={0x8}, @TIPC_NLA_PROP_MTU={0x8, 0x4, 0xffffb75a}, @TIPC_NLA_PROP_PRIO={0x8, 0x1, 0x11}, @TIPC_NLA_PROP_PRIO={0x8, 0x1, 0x18}, @TIPC_NLA_PROP_WIN={0x8, 0x3, 0x200}, @TIPC_NLA_PROP_MTU={0x8, 0x4, 0xffffff01}, @TIPC_NLA_PROP_WIN={0x8, 0x3, 0x5}]}, @TIPC_NLA_LINK_PROP={0x4}, @TIPC_NLA_LINK_NAME={0x13, 0x1, 'broadcast-link\x00'}, @TIPC_NLA_LINK_NAME={0x13, 0x1, 'broadcast-link\x00'}]}, @TIPC_NLA_NODE={0xc, 0x6, 0x0, 0x1, [@TIPC_NLA_NODE_ADDR={0x8, 0x1, 0x7}]}, @TIPC_NLA_MON={0x2c, 0x9, [@TIPC_NLA_MON_REF={0x8, 0x2, 0x80000001}, @TIPC_NLA_MON_REF={0x8, 0x2, 0xe50}, @TIPC_NLA_MON_ACTIVATION_THRESHOLD={0x8, 0x1, 0x10001}, @TIPC_NLA_MON_REF={0x8, 0x2, 0x2b}, @TIPC_NLA_MON_REF={0x8, 0x2, 0x8000}]}, @TIPC_NLA_BEARER={0xb8, 0x1, [@TIPC_NLA_BEARER_PROP={0x1c, 0x2, [@TIPC_NLA_PROP_WIN={0x8, 0x3, 0xffff}, @TIPC_NLA_PROP_TOL={0x8, 0x2, 0x9}, @TIPC_NLA_PROP_TOL={0x8, 0x2, 0x9}]}, @TIPC_NLA_BEARER_PROP={0x44, 0x2, [@TIPC_NLA_PROP_MTU={0x8, 0x4, 0x8}, @TIPC_NLA_PROP_MTU={0x8, 0x4, 0x1}, @TIPC_NLA_PROP_PRIO={0x8, 0x1, 0x12}, @TIPC_NLA_PROP_PRIO={0x8, 0x1, 0xe}, @TIPC_NLA_PROP_TOL={0x8, 0x2, 0xbe0e}, @TIPC_NLA_PROP_TOL={0x8, 0x2, 0x1}, @TIPC_NLA_PROP_TOL={0x8}, @TIPC_NLA_PROP_MTU={0x8, 0x4, 0x1}]}, @TIPC_NLA_BEARER_UDP_OPTS={0x44, 0x4, {{0x20, 0x1, @in6={0xa, 0x4e23, 0x7fff, @initdev={0xfe, 0x88, [], 0x0, 0x0}, 0x8}}, {0x20, 0x2, @in6={0xa, 0x4e23, 0x1, @mcast2, 0x4}}}}, @TIPC_NLA_BEARER_DOMAIN={0x8, 0x3, 0x9}, @TIPC_NLA_BEARER_DOMAIN={0x8, 0x3, 0xffff7fff}]}, @TIPC_NLA_NET={0x30, 0x7, [@TIPC_NLA_NET_NODEID={0xc, 0x3, 0x1}, @TIPC_NLA_NET_ADDR={0x8, 0x2, 0x9}, @TIPC_NLA_NET_ID={0x8, 0x1, 0x2}, @TIPC_NLA_NET_ID={0x8, 0x1, 0x8}, @TIPC_NLA_NET_ADDR={0x8, 0x2, 0xd222}]}]}, 0x1a8}, 0x1, 0x0, 0x0, 0xf6e68184ed9e3933}, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000001040)=ANY=[@ANYBLOB="01000000000000000800000011de1d5e214a547a19ae2ef012cd6da740e9dfdfc373e918166e15614320455fe6465e3829c2d444d6daf2bba78d1a2704175fe80dbef02c5f20e793a4b69c41567a2eb2103a4f9ddaefbca853af59475cd2123c295a"])
+syz_open_procfs(0xffffffffffffffff, &(0x7f0000000000)='smaps\x00')
+2020/01/27 15:33:34 reproducing crash 'BUG: Bad page map': program crashed: general protection fault in anon_vma_interval_tree_insert
+2020/01/27 15:33:35 reproducing crash 'BUG: Bad page map': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-syz_open_procfs-readv-ioctl$sock_SIOCGIFVLAN_ADD_VLAN_CMD-ioctl$BLKTRACESTOP-sendmsg$TIPC_NL_MON_SET-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:33:35 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+r1 = syz_open_procfs(0xffffffffffffffff, &(0x7f0000000000)='smaps\x00')
+readv(r1, &(0x7f0000001240)=[{&(0x7f0000000040)=""/4096, 0x1000}], 0x1)
+ioctl$sock_SIOCGIFVLAN_ADD_VLAN_CMD(r1, 0x8982, &(0x7f00000010c0)={0x0, 'bond0\x00', {0x3}, 0x5})
+ioctl$BLKTRACESTOP(r1, 0x1275, 0x0)
+sendmsg$TIPC_NL_MON_SET(r1, &(0x7f00000011c0)={&(0x7f0000001140)={0x10, 0x0, 0x0, 0x1010000}, 0xc, &(0x7f0000001180)={&(0x7f0000001280)={0x1a8, 0x0, 0x100, 0x70bd26, 0x25dfdbfe, {}, [@TIPC_NLA_LINK={0x74, 0x4, [@TIPC_NLA_LINK_PROP={0x44, 0x7, [@TIPC_NLA_PROP_MTU={0x8, 0x4, 0x5}, @TIPC_NLA_PROP_PRIO={0x8}, @TIPC_NLA_PROP_MTU={0x8, 0x4, 0xffffb75a}, @TIPC_NLA_PROP_PRIO={0x8, 0x1, 0x11}, @TIPC_NLA_PROP_PRIO={0x8, 0x1, 0x18}, @TIPC_NLA_PROP_WIN={0x8, 0x3, 0x200}, @TIPC_NLA_PROP_MTU={0x8, 0x4, 0xffffff01}, @TIPC_NLA_PROP_WIN={0x8, 0x3, 0x5}]}, @TIPC_NLA_LINK_PROP={0x4}, @TIPC_NLA_LINK_NAME={0x13, 0x1, 'broadcast-link\x00'}, @TIPC_NLA_LINK_NAME={0x13, 0x1, 'broadcast-link\x00'}]}, @TIPC_NLA_NODE={0xc, 0x6, 0x0, 0x1, [@TIPC_NLA_NODE_ADDR={0x8, 0x1, 0x7}]}, @TIPC_NLA_MON={0x2c, 0x9, [@TIPC_NLA_MON_REF={0x8, 0x2, 0x80000001}, @TIPC_NLA_MON_REF={0x8, 0x2, 0xe50}, @TIPC_NLA_MON_ACTIVATION_THRESHOLD={0x8, 0x1, 0x10001}, @TIPC_NLA_MON_REF={0x8, 0x2, 0x2b}, @TIPC_NLA_MON_REF={0x8, 0x2, 0x8000}]}, @TIPC_NLA_BEARER={0xb8, 0x1, [@TIPC_NLA_BEARER_PROP={0x1c, 0x2, [@TIPC_NLA_PROP_WIN={0x8, 0x3, 0xffff}, @TIPC_NLA_PROP_TOL={0x8, 0x2, 0x9}, @TIPC_NLA_PROP_TOL={0x8, 0x2, 0x9}]}, @TIPC_NLA_BEARER_PROP={0x44, 0x2, [@TIPC_NLA_PROP_MTU={0x8, 0x4, 0x8}, @TIPC_NLA_PROP_MTU={0x8, 0x4, 0x1}, @TIPC_NLA_PROP_PRIO={0x8, 0x1, 0x12}, @TIPC_NLA_PROP_PRIO={0x8, 0x1, 0xe}, @TIPC_NLA_PROP_TOL={0x8, 0x2, 0xbe0e}, @TIPC_NLA_PROP_TOL={0x8, 0x2, 0x1}, @TIPC_NLA_PROP_TOL={0x8}, @TIPC_NLA_PROP_MTU={0x8, 0x4, 0x1}]}, @TIPC_NLA_BEARER_UDP_OPTS={0x44, 0x4, {{0x20, 0x1, @in6={0xa, 0x4e23, 0x7fff, @initdev={0xfe, 0x88, [], 0x0, 0x0}, 0x8}}, {0x20, 0x2, @in6={0xa, 0x4e23, 0x1, @mcast2, 0x4}}}}, @TIPC_NLA_BEARER_DOMAIN={0x8, 0x3, 0x9}, @TIPC_NLA_BEARER_DOMAIN={0x8, 0x3, 0xffff7fff}]}, @TIPC_NLA_NET={0x30, 0x7, [@TIPC_NLA_NET_NODEID={0xc, 0x3, 0x1}, @TIPC_NLA_NET_ADDR={0x8, 0x2, 0x9}, @TIPC_NLA_NET_ID={0x8, 0x1, 0x2}, @TIPC_NLA_NET_ID={0x8, 0x1, 0x8}, @TIPC_NLA_NET_ADDR={0x8, 0x2, 0xd222}]}]}, 0x1a8}, 0x1, 0x0, 0x0, 0xf6e68184ed9e3933}, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000001040)=ANY=[@ANYBLOB="01000000000000000800000011de1d5e214a547a19ae2ef012cd6da740e9dfdfc373e918166e15614320455fe6465e3829c2d444d6daf2bba78d1a2704175fe80dbef02c5f20e793a4b69c41567a2eb2103a4f9ddaefbca853af59475cd2123c295a"])
+2020/01/27 15:33:46 reproducing crash 'BUG: Bad page map': program crashed: BUG: unable to handle kernel paging request in qlist_free_all
+2020/01/27 15:33:46 reproducing crash 'BUG: Bad page map': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-syz_open_procfs-readv-ioctl$sock_SIOCGIFVLAN_ADD_VLAN_CMD-ioctl$BLKTRACESTOP-sendmsg$TIPC_NL_MON_SET
+2020/01/27 15:33:46 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+r0 = syz_open_procfs(0xffffffffffffffff, &(0x7f0000000000)='smaps\x00')
+readv(r0, &(0x7f0000001240)=[{&(0x7f0000000040)=""/4096, 0x1000}], 0x1)
+ioctl$sock_SIOCGIFVLAN_ADD_VLAN_CMD(r0, 0x8982, &(0x7f00000010c0)={0x0, 'bond0\x00', {0x3}, 0x5})
+ioctl$BLKTRACESTOP(r0, 0x1275, 0x0)
+sendmsg$TIPC_NL_MON_SET(r0, &(0x7f00000011c0)={&(0x7f0000001140)={0x10, 0x0, 0x0, 0x1010000}, 0xc, &(0x7f0000001180)={&(0x7f0000001280)={0x1a8, 0x0, 0x100, 0x70bd26, 0x25dfdbfe, {}, [@TIPC_NLA_LINK={0x74, 0x4, [@TIPC_NLA_LINK_PROP={0x44, 0x7, [@TIPC_NLA_PROP_MTU={0x8, 0x4, 0x5}, @TIPC_NLA_PROP_PRIO={0x8}, @TIPC_NLA_PROP_MTU={0x8, 0x4, 0xffffb75a}, @TIPC_NLA_PROP_PRIO={0x8, 0x1, 0x11}, @TIPC_NLA_PROP_PRIO={0x8, 0x1, 0x18}, @TIPC_NLA_PROP_WIN={0x8, 0x3, 0x200}, @TIPC_NLA_PROP_MTU={0x8, 0x4, 0xffffff01}, @TIPC_NLA_PROP_WIN={0x8, 0x3, 0x5}]}, @TIPC_NLA_LINK_PROP={0x4}, @TIPC_NLA_LINK_NAME={0x13, 0x1, 'broadcast-link\x00'}, @TIPC_NLA_LINK_NAME={0x13, 0x1, 'broadcast-link\x00'}]}, @TIPC_NLA_NODE={0xc, 0x6, 0x0, 0x1, [@TIPC_NLA_NODE_ADDR={0x8, 0x1, 0x7}]}, @TIPC_NLA_MON={0x2c, 0x9, [@TIPC_NLA_MON_REF={0x8, 0x2, 0x80000001}, @TIPC_NLA_MON_REF={0x8, 0x2, 0xe50}, @TIPC_NLA_MON_ACTIVATION_THRESHOLD={0x8, 0x1, 0x10001}, @TIPC_NLA_MON_REF={0x8, 0x2, 0x2b}, @TIPC_NLA_MON_REF={0x8, 0x2, 0x8000}]}, @TIPC_NLA_BEARER={0xb8, 0x1, [@TIPC_NLA_BEARER_PROP={0x1c, 0x2, [@TIPC_NLA_PROP_WIN={0x8, 0x3, 0xffff}, @TIPC_NLA_PROP_TOL={0x8, 0x2, 0x9}, @TIPC_NLA_PROP_TOL={0x8, 0x2, 0x9}]}, @TIPC_NLA_BEARER_PROP={0x44, 0x2, [@TIPC_NLA_PROP_MTU={0x8, 0x4, 0x8}, @TIPC_NLA_PROP_MTU={0x8, 0x4, 0x1}, @TIPC_NLA_PROP_PRIO={0x8, 0x1, 0x12}, @TIPC_NLA_PROP_PRIO={0x8, 0x1, 0xe}, @TIPC_NLA_PROP_TOL={0x8, 0x2, 0xbe0e}, @TIPC_NLA_PROP_TOL={0x8, 0x2, 0x1}, @TIPC_NLA_PROP_TOL={0x8}, @TIPC_NLA_PROP_MTU={0x8, 0x4, 0x1}]}, @TIPC_NLA_BEARER_UDP_OPTS={0x44, 0x4, {{0x20, 0x1, @in6={0xa, 0x4e23, 0x7fff, @initdev={0xfe, 0x88, [], 0x0, 0x0}, 0x8}}, {0x20, 0x2, @in6={0xa, 0x4e23, 0x1, @mcast2, 0x4}}}}, @TIPC_NLA_BEARER_DOMAIN={0x8, 0x3, 0x9}, @TIPC_NLA_BEARER_DOMAIN={0x8, 0x3, 0xffff7fff}]}, @TIPC_NLA_NET={0x30, 0x7, [@TIPC_NLA_NET_NODEID={0xc, 0x3, 0x1}, @TIPC_NLA_NET_ADDR={0x8, 0x2, 0x9}, @TIPC_NLA_NET_ID={0x8, 0x1, 0x2}, @TIPC_NLA_NET_ID={0x8, 0x1, 0x8}, @TIPC_NLA_NET_ADDR={0x8, 0x2, 0xd222}]}]}, 0x1a8}, 0x1, 0x0, 0x0, 0xf6e68184ed9e3933}, 0x0)
+2020/01/27 15:34:09 reproducing crash 'BUG: Bad page map': program did not crash
+2020/01/27 15:34:09 reproducing crash 'BUG: Bad page map': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-syz_open_procfs-readv-ioctl$sock_SIOCGIFVLAN_ADD_VLAN_CMD-ioctl$BLKTRACESTOP-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:34:09 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+r1 = syz_open_procfs(0xffffffffffffffff, &(0x7f0000000000)='smaps\x00')
+readv(r1, &(0x7f0000001240)=[{&(0x7f0000000040)=""/4096, 0x1000}], 0x1)
+ioctl$sock_SIOCGIFVLAN_ADD_VLAN_CMD(r1, 0x8982, &(0x7f00000010c0)={0x0, 'bond0\x00', {0x3}, 0x5})
+ioctl$BLKTRACESTOP(r1, 0x1275, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000001040)=ANY=[@ANYBLOB="01000000000000000800000011de1d5e214a547a19ae2ef012cd6da740e9dfdfc373e918166e15614320455fe6465e3829c2d444d6daf2bba78d1a2704175fe80dbef02c5f20e793a4b69c41567a2eb2103a4f9ddaefbca853af59475cd2123c295a"])
+2020/01/27 15:34:21 reproducing crash 'BUG: Bad page map': program crashed: general protection fault in netlink_has_listeners
+2020/01/27 15:34:21 reproducing crash 'BUG: Bad page map': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-syz_open_procfs-readv-ioctl$sock_SIOCGIFVLAN_ADD_VLAN_CMD-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:34:21 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+r1 = syz_open_procfs(0xffffffffffffffff, &(0x7f0000000000)='smaps\x00')
+readv(r1, &(0x7f0000001240)=[{&(0x7f0000000040)=""/4096, 0x1000}], 0x1)
+ioctl$sock_SIOCGIFVLAN_ADD_VLAN_CMD(r1, 0x8982, &(0x7f00000010c0)={0x0, 'bond0\x00', {0x3}, 0x5})
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000001040)=ANY=[@ANYBLOB="01000000000000000800000011de1d5e214a547a19ae2ef012cd6da740e9dfdfc373e918166e15614320455fe6465e3829c2d444d6daf2bba78d1a2704175fe80dbef02c5f20e793a4b69c41567a2eb2103a4f9ddaefbca853af59475cd2123c295a"])
+2020/01/27 15:34:33 reproducing crash 'BUG: Bad page map': program crashed: BUG: unable to handle kernel paging request in qlist_free_all
+2020/01/27 15:34:33 reproducing crash 'BUG: Bad page map': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-syz_open_procfs-readv-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:34:33 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+r1 = syz_open_procfs(0xffffffffffffffff, &(0x7f0000000000)='smaps\x00')
+readv(r1, &(0x7f0000001240)=[{&(0x7f0000000040)=""/4096, 0x1000}], 0x1)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000001040)=ANY=[@ANYBLOB="01000000000000000800000011de1d5e214a547a19ae2ef012cd6da740e9dfdfc373e918166e15614320455fe6465e3829c2d444d6daf2bba78d1a2704175fe80dbef02c5f20e793a4b69c41567a2eb2103a4f9ddaefbca853af59475cd2123c295a"])
+2020/01/27 15:34:45 reproducing crash 'BUG: Bad page map': program crashed: BUG: Bad rss-counter state
+2020/01/27 15:34:45 reproducing crash 'BUG: Bad page map': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-syz_open_procfs-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:34:45 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+syz_open_procfs(0xffffffffffffffff, &(0x7f0000000000)='smaps\x00')
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000001040)=ANY=[@ANYBLOB="01000000000000000800000011de1d5e214a547a19ae2ef012cd6da740e9dfdfc373e918166e15614320455fe6465e3829c2d444d6daf2bba78d1a2704175fe80dbef02c5f20e793a4b69c41567a2eb2103a4f9ddaefbca853af59475cd2123c295a"])
+2020/01/27 15:34:56 reproducing crash 'BUG: Bad page map': program crashed: BUG: Bad rss-counter state
+2020/01/27 15:34:57 reproducing crash 'BUG: Bad page map': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:34:57 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000001040)=ANY=[@ANYBLOB="01000000000000000800000011de1d5e214a547a19ae2ef012cd6da740e9dfdfc373e918166e15614320455fe6465e3829c2d444d6daf2bba78d1a2704175fe80dbef02c5f20e793a4b69c41567a2eb2103a4f9ddaefbca853af59475cd2123c295a"])
+2020/01/27 15:35:08 reproducing crash 'BUG: Bad page map': program crashed: BUG: unable to handle kernel paging request in load_elf_binary
+2020/01/27 15:35:08 reproducing crash 'BUG: Bad page map': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:35:08 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+ioctl$SCSI_IOCTL_SEND_COMMAND(0xffffffffffffffff, 0x1, &(0x7f0000001040)=ANY=[@ANYBLOB="01000000000000000800000011de1d5e214a547a19ae2ef012cd6da740e9dfdfc373e918166e15614320455fe6465e3829c2d444d6daf2bba78d1a2704175fe80dbef02c5f20e793a4b69c41567a2eb2103a4f9ddaefbca853af59475cd2123c295a"])
+2020/01/27 15:35:31 reproducing crash 'BUG: Bad page map': program did not crash
+2020/01/27 15:35:31 reproducing crash 'BUG: Bad page map': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:35:31 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(0x0, 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000001040)=ANY=[@ANYBLOB="01000000000000000800000011de1d5e214a547a19ae2ef012cd6da740e9dfdfc373e918166e15614320455fe6465e3829c2d444d6daf2bba78d1a2704175fe80dbef02c5f20e793a4b69c41567a2eb2103a4f9ddaefbca853af59475cd2123c295a"])
+2020/01/27 15:35:54 reproducing crash 'BUG: Bad page map': program did not crash
+2020/01/27 15:35:54 reproducing crash 'BUG: Bad page map': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:35:54 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, 0x0)
+2020/01/27 15:36:16 reproducing crash 'BUG: Bad page map': program did not crash
+2020/01/27 15:36:16 reproducing crash 'BUG: Bad page map': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:36:16 reproducing crash 'BUG: Bad page map': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000001040)=ANY=[@ANYBLOB])
+2020/01/27 15:36:39 reproducing crash 'BUG: Bad page map': program did not crash
+2020/01/27 15:36:39 reproducing crash 'BUG: Bad page map': extracting C reproducer
+2020/01/27 15:36:39 reproducing crash 'BUG: Bad page map': testing compiled C program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:36:51 reproducing crash 'BUG: Bad page map': program crashed: BUG: unable to handle kernel paging request in qlist_free_all
+2020/01/27 15:36:51 reproducing crash 'BUG: Bad page map': simplifying C reproducer
+2020/01/27 15:36:51 reproducing crash 'BUG: Bad page map': testing compiled C program (duration=22.5s, {Threaded:true Collide:false Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:37:03 reproducing crash 'BUG: Bad page map': program crashed: general protection fault in xt_find_table_lock
+2020/01/27 15:37:03 reproducing crash 'BUG: Bad page map': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:37:15 reproducing crash 'BUG: Bad page map': program crashed: BUG: unable to handle kernel paging request in qlist_free_all
+2020/01/27 15:37:15 reproducing crash 'BUG: Bad page map': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:false RepeatTimes:0 Procs:1 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:false Cgroups:false BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:37:26 reproducing crash 'BUG: Bad page map': program did not crash
+2020/01/27 15:37:26 reproducing crash 'BUG: Bad page map': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:true RepeatTimes:0 Procs:1 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:37:42 reproducing crash 'BUG: Bad page map': program crashed: KASAN: slab-out-of-bounds Write in __sigqueue_alloc
+2020/01/27 15:37:42 reproducing crash 'BUG: Bad page map': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:true RepeatTimes:0 Procs:1 Sandbox: Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:false NetDevices:false NetReset:false Cgroups:false BinfmtMisc:false CloseFDs:false KCSAN:false DevlinkPCI:false UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:37:52 reproducing crash 'BUG: Bad page map': program crashed: BUG: unable to handle kernel paging request in qlist_free_all
+2020/01/27 15:37:52 reproducing crash 'BUG: Bad page map': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:true RepeatTimes:0 Procs:1 Sandbox: Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:false NetDevices:false NetReset:false Cgroups:false BinfmtMisc:false CloseFDs:false KCSAN:false DevlinkPCI:false UseTmpDir:false HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:38:02 reproducing crash 'BUG: Bad page map': program crashed: BUG: Bad page map
+2020/01/27 15:38:03 reproducing crash 'BUG: Bad page map': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:true RepeatTimes:0 Procs:1 Sandbox: Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:false NetDevices:false NetReset:false Cgroups:false BinfmtMisc:false CloseFDs:false KCSAN:false DevlinkPCI:false UseTmpDir:false HandleSegv:false Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 15:38:13 reproducing crash 'BUG: Bad page map': program crashed: general protection fault in __handle_mm_fault
+2020/01/27 15:38:13 reproducing crash 'BUG: Bad page map': reproducing took 8m11.790202262s
+2020/01/27 15:38:13 reproducing crash 'BUG: Bad page map': repro crashed as (corrupted=false):
+kasan: CONFIG_KASAN_INLINE enabled
+kasan: GPF could be caused by NULL-ptr deref or user memory access
+general protection fault: 0000 [#1] SMP KASAN PTI
+Dumping ftrace buffer:
+   (ftrace buffer empty)
+Modules linked in:
+CPU: 1 PID: 321 Comm: syz-executor335 Not tainted 4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+RIP: 0010:__handle_mm_fault+0xfb/0x1c50
+RSP: 0000:ffff88003466fd30 EFLAGS: 00010203
+RAX: dffffc0000000000 RBX: 1ffff100068cdfa9 RCX: ffffffffb16a942a
+RDX: 0000000000000010 RSI: 00000000004b0508 RDI: 0000000000000084
+RBP: ffff880031385000 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000000 R12: 00000000004b0508
+R13: 0000000000000000 R14: ffff880032355dc0 R15: ffff880031385000
+FS:  0000000001554880(0000) GS:ffff880036300000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00000000004b0508 CR3: 000000003384e006 CR4: 0000000000360ee0
+Call Trace:
+ handle_mm_fault+0xfc/0x350
+ __do_page_fault+0x5bc/0xb40
+ async_page_fault+0x1e/0x30
+RIP: 0033:0x49404d
+RSP: 002b:00007ffdbf5c1670 EFLAGS: 00010202
+RAX: 0000000000494160 RBX: 0000000000000000 RCX: 0000000000000001
+RDX: 0000000000402560 RSI: 0000000000000000 RDI: 00000000004b0508
+RBP: 00007ffdbf5c1690 R08: 0000000000000004 R09: 00000000bf5c1868
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006be108
+R13: 0000000000000001 R14: 00000000006c49c0 R15: 0000000000000001
+Code: ea 03 80 3c 02 00 0f 85 f3 19 00 00 4d 8b ae f0 00 00 00 48 b8 00 00 00 00 00 fc ff df 49 8d bd 84 00 00 00 48 89 fa 48 c1 ea 03 <0f> b6 14 02 48 89 f8 83 e0 07 83 c0 03 38 d0 7c 08 84 d2 0f 85 
+RIP: __handle_mm_fault+0xfb/0x1c50 RSP: ffff88003466fd30
+---[ end trace ef834ab461b6f048 ]---
+2020/01/27 15:38:13 reproducing crash 'BUG: Bad page map': final repro crashed as (corrupted=false):
+kasan: CONFIG_KASAN_INLINE enabled
+kasan: GPF could be caused by NULL-ptr deref or user memory access
+general protection fault: 0000 [#1] SMP KASAN PTI
+Dumping ftrace buffer:
+   (ftrace buffer empty)
+Modules linked in:
+CPU: 1 PID: 321 Comm: syz-executor335 Not tainted 4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+RIP: 0010:__handle_mm_fault+0xfb/0x1c50
+RSP: 0000:ffff88003466fd30 EFLAGS: 00010203
+RAX: dffffc0000000000 RBX: 1ffff100068cdfa9 RCX: ffffffffb16a942a
+RDX: 0000000000000010 RSI: 00000000004b0508 RDI: 0000000000000084
+RBP: ffff880031385000 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000000 R12: 00000000004b0508
+R13: 0000000000000000 R14: ffff880032355dc0 R15: ffff880031385000
+FS:  0000000001554880(0000) GS:ffff880036300000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00000000004b0508 CR3: 000000003384e006 CR4: 0000000000360ee0
+Call Trace:
+ handle_mm_fault+0xfc/0x350
+ __do_page_fault+0x5bc/0xb40
+ async_page_fault+0x1e/0x30
+RIP: 0033:0x49404d
+RSP: 002b:00007ffdbf5c1670 EFLAGS: 00010202
+RAX: 0000000000494160 RBX: 0000000000000000 RCX: 0000000000000001
+RDX: 0000000000402560 RSI: 0000000000000000 RDI: 00000000004b0508
+RBP: 00007ffdbf5c1690 R08: 0000000000000004 R09: 00000000bf5c1868
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006be108
+R13: 0000000000000001 R14: 00000000006c49c0 R15: 0000000000000001
+Code: ea 03 80 3c 02 00 0f 85 f3 19 00 00 4d 8b ae f0 00 00 00 48 b8 00 00 00 00 00 fc ff df 49 8d bd 84 00 00 00 48 89 fa 48 c1 ea 03 <0f> b6 14 02 48 89 f8 83 e0 07 83 c0 03 38 d0 7c 08 84 d2 0f 85 
+RIP: __handle_mm_fault+0xfb/0x1c50 RSP: ffff88003466fd30
+---[ end trace ef834ab461b6f048 ]---
+Extracting prog: 3m9.506733825s
+Minimizing prog: 3m28.271178077s
+Simplifying prog options: 0s
+Extracting C: 12.023701127s
+Simplifying C: 1m21.988543044s
+opts: {Threaded:false Collide:false Repeat:true RepeatTimes:0 Procs:1 Sandbox: Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:false NetDevices:false NetReset:false Cgroups:false BinfmtMisc:false CloseFDs:false KCSAN:false DevlinkPCI:false UseTmpDir:false HandleSegv:false Repro:false Trace:false} crepro: true
+
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000001040)=ANY=[@ANYBLOB="01000000000000000800000011de1d5e214a547a19ae2ef012cd6da740e9dfdfc373e918166e15614320455fe6465e3829c2d444d6daf2bba78d1a2704175fe80dbef02c5f20e793a4b69c41567a2eb2103a4f9ddaefbca853af59475cd2123c295a"])
+
+// autogenerated by syzkaller (https://github.com/google/syzkaller)
+
+#define _GNU_SOURCE 
+
+#include <dirent.h>
+#include <endian.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <signal.h>
+#include <stdarg.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/prctl.h>
+#include <sys/stat.h>
+#include <sys/syscall.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <time.h>
+#include <unistd.h>
+
+static void sleep_ms(uint64_t ms)
+{
+	usleep(ms * 1000);
+}
+
+static uint64_t current_time_ms(void)
+{
+	struct timespec ts;
+	if (clock_gettime(CLOCK_MONOTONIC, &ts))
+	exit(1);
+	return (uint64_t)ts.tv_sec * 1000 + (uint64_t)ts.tv_nsec / 1000000;
+}
+
+static bool write_file(const char* file, const char* what, ...)
+{
+	char buf[1024];
+	va_list args;
+	va_start(args, what);
+	vsnprintf(buf, sizeof(buf), what, args);
+	va_end(args);
+	buf[sizeof(buf) - 1] = 0;
+	int len = strlen(buf);
+	int fd = open(file, O_WRONLY | O_CLOEXEC);
+	if (fd == -1)
+		return false;
+	if (write(fd, buf, len) != len) {
+		int err = errno;
+		close(fd);
+		errno = err;
+		return false;
+	}
+	close(fd);
+	return true;
+}
+
+static long syz_open_dev(volatile long a0, volatile long a1, volatile long a2)
+{
+	if (a0 == 0xc || a0 == 0xb) {
+		char buf[128];
+		sprintf(buf, "/dev/%s/%d:%d", a0 == 0xc ? "char" : "block", (uint8_t)a1, (uint8_t)a2);
+		return open(buf, O_RDWR, 0);
+	} else {
+		char buf[1024];
+		char* hash;
+strncpy(buf, (char*)a0, sizeof(buf) - 1);
+		buf[sizeof(buf) - 1] = 0;
+		while ((hash = strchr(buf, '#'))) {
+			*hash = '0' + (char)(a1 % 10);
+			a1 /= 10;
+		}
+		return open(buf, a2, 0);
+	}
+}
+
+static void kill_and_wait(int pid, int* status)
+{
+	kill(-pid, SIGKILL);
+	kill(pid, SIGKILL);
+	int i;
+	for (i = 0; i < 100; i++) {
+		if (waitpid(-1, status, WNOHANG | __WALL) == pid)
+			return;
+		usleep(1000);
+	}
+	DIR* dir = opendir("/sys/fs/fuse/connections");
+	if (dir) {
+		for (;;) {
+			struct dirent* ent = readdir(dir);
+			if (!ent)
+				break;
+			if (strcmp(ent->d_name, ".") == 0 || strcmp(ent->d_name, "..") == 0)
+				continue;
+			char abort[300];
+			snprintf(abort, sizeof(abort), "/sys/fs/fuse/connections/%s/abort", ent->d_name);
+			int fd = open(abort, O_WRONLY);
+			if (fd == -1) {
+				continue;
+			}
+			if (write(fd, abort, 1) < 0) {
+			}
+			close(fd);
+		}
+		closedir(dir);
+	} else {
+	}
+	while (waitpid(-1, status, __WALL) != pid) {
+	}
+}
+
+static void setup_test()
+{
+	prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0);
+	setpgrp();
+	write_file("/proc/self/oom_score_adj", "1000");
+}
+
+static void execute_one(void);
+
+#define WAIT_FLAGS __WALL
+
+static void loop(void)
+{
+	int iter;
+	for (iter = 0;; iter++) {
+		int pid = fork();
+		if (pid < 0)
+	exit(1);
+		if (pid == 0) {
+			setup_test();
+			execute_one();
+			exit(0);
+		}
+		int status = 0;
+		uint64_t start = current_time_ms();
+		for (;;) {
+			if (waitpid(-1, &status, WNOHANG | WAIT_FLAGS) == pid)
+				break;
+			sleep_ms(1);
+			if (current_time_ms() - start < 5 * 1000)
+				continue;
+			kill_and_wait(pid, &status);
+			break;
+		}
+	}
+}
+
+uint64_t r[1] = {0xffffffffffffffff};
+
+void execute_one(void)
+{
+		intptr_t res = 0;
+memcpy((void*)0x20000000, "/dev/sg#\000", 9);
+	res = syz_open_dev(0x20000000, 0, 0);
+	if (res != -1)
+		r[0] = res;
+memcpy((void*)0x20001040, "\x01\x00\x00\x00\x00\x00\x00\x00\x08\x00\x00\x00\x11\xde\x1d\x5e\x21\x4a\x54\x7a\x19\xae\x2e\xf0\x12\xcd\x6d\xa7\x40\xe9\xdf\xdf\xc3\x73\xe9\x18\x16\x6e\x15\x61\x43\x20\x45\x5f\xe6\x46\x5e\x38\x29\xc2\xd4\x44\xd6\xda\xf2\xbb\xa7\x8d\x1a\x27\x04\x17\x5f\xe8\x0d\xbe\xf0\x2c\x5f\x20\xe7\x93\xa4\xb6\x9c\x41\x56\x7a\x2e\xb2\x10\x3a\x4f\x9d\xda\xef\xbc\xa8\x53\xaf\x59\x47\x5c\xd2\x12\x3c\x29\x5a", 98);
+	syscall(__NR_ioctl, r[0], 1ul, 0x20001040ul);
+
+}
+int main(void)
+{
+		syscall(__NR_mmap, 0x20000000ul, 0x1000000ul, 3ul, 0x32ul, -1, 0);
+			loop();
+	return 0;
+}
+

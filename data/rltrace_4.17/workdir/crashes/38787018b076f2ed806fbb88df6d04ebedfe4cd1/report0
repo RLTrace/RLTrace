@@ -1,0 +1,39 @@
+kasan: CONFIG_KASAN_INLINE enabled
+kasan: GPF could be caused by NULL-ptr deref or user memory access
+general protection fault: 0000 [#1] SMP KASAN PTI
+Dumping ftrace buffer:
+   (ftrace buffer empty)
+Modules linked in:
+CPU: 1 PID: 2009 Comm: kworker/u4:7 Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Workqueue: netns cleanup_net
+RIP: 0010:fib_sync_down_dev+0x397/0x700 net/ipv4/fib_semantics.c:1532
+RSP: 0018:ffff88003bf37900 EFLAGS: 00010206
+RAX: 000000430000004b RBX: 0000000000000000 RCX: ffffffffb08843b0
+RDX: 0000000000000000 RSI: 0000000000000006 RDI: ffff88006a12d1c0
+RBP: ffff88006a12d1b0 R08: ffffed000da644c3 R09: ffffed000da644c3
+R10: ffff88003bf37a58 R11: ffffed000da644c2 R12: 0000000000000006
+R13: dffffc0000000000 R14: 0000021800000208 R15: ffff88006a12d1a8
+FS:  0000000000000000(0000) GS:ffff88006d300000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f592034fdb8 CR3: 000000000a20e001 CR4: 00000000003606e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ fib_disable_ip+0x20/0xb0 net/ipv4/fib_frontend.c:1165
+ fib_netdev_event+0xc3/0x2e0 net/ipv4/fib_frontend.c:1212
+ notifier_call_chain+0xdc/0x170 kernel/notifier.c:93
+ call_netdevice_notifiers net/core/dev.c:1752 [inline]
+ rollback_registered_many+0x68d/0xb20 net/core/dev.c:7436
+ unregister_netdevice_many.part.120+0x1a/0x220 net/core/dev.c:8539
+ unregister_netdevice_many net/core/dev.c:8538 [inline]
+ default_device_exit_batch+0x322/0x3e0 net/core/dev.c:9005
+ ops_exit_list.isra.10+0xfd/0x150 net/core/net_namespace.c:155
+ cleanup_net+0x347/0x680 net/core/net_namespace.c:523
+ process_one_work+0x88c/0x12a0 kernel/workqueue.c:2145
+ worker_thread+0xd3/0xf80 kernel/workqueue.c:2279
+ kthread+0x2f4/0x3b0 kernel/kthread.c:238
+ ret_from_fork+0x35/0x40 arch/x86/entry/entry_64.S:412
+Code: 50 dc 69 fe 48 8d 7d 10 48 89 f8 48 c1 e8 03 42 80 3c 28 00 0f 85 e6 02 00 00 4c 8b 75 10 49 8d 46 50 48 89 44 24 20 48 c1 e8 03 <42> 0f b6 04 28 84 c0 74 08 3c 03 0f 8e b5 02 00 00 41 8b 56 50 
+RIP: fib_sync_down_dev+0x397/0x700 net/ipv4/fib_semantics.c:1532 RSP: ffff88003bf37900
+---[ end trace 704d02d7430c5f32 ]---

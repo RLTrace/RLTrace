@@ -1,0 +1,29 @@
+EXT4-fs warning (device sda): verify_group_input:105: Cannot add at group 4294967295 (only 32 groups)
+audit: type=1326 audit(1579110526.297:33): auid=0 uid=0 gid=0 ses=4 subj=system_u:system_r:kernel_t:s0 pid=23879 comm="syz-executor.15" exe="/syz-executor.15" sig=31 arch=c000003e syscall=228 compat=0 ip=0x467dc7 code=0x0
+Kernel panic - not syncing: Attempted to kill init! exitcode=0x0000000b
+EXT4-fs warning (device sda): verify_group_input:105: Cannot add at group 4294967295 (only 32 groups)
+CPU: 0 PID: 1 Comm: systemd Not tainted 5.5.0-rc6 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x94/0xce lib/dump_stack.c:118
+ panic+0x234/0x56f kernel/panic.c:221
+ do_exit+0x1855/0x2940 kernel/exit.c:770
+ do_group_exit+0xed/0x310 kernel/exit.c:899
+ get_signal+0x37a/0x1ab0 kernel/signal.c:2734
+ do_signal+0x8f/0x1450 arch/x86/kernel/signal.c:815
+ exit_to_usermode_loop+0x12d/0x170 arch/x86/entry/common.c:160
+ prepare_exit_to_usermode+0x19f/0x1f0 arch/x86/entry/common.c:195
+ ret_from_intr+0x20/0x20
+RIP: 0033:0x7f61cb9ccf10
+Code: Bad RIP value.
+RSP: 002b:00007ffc9f124278 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: 000055aaca56dd10 RCX: 00007f61cb9fd2e3
+RDX: 00007ffc9f124400 RSI: 00007ffc9f124530 RDI: 0000000000000007
+RBP: 0000000000000007 R08: 6c8dd5b344fab9c6 R09: 0000000000000360
+R10: 00000000ffffffff R11: 0000000000000246 R12: 00007ffc9f9218e0
+R13: 0000000000000001 R14: ffffffffffffffff R15: 0000000000000002
+Dumping ftrace buffer:
+   (ftrace buffer empty)
+Kernel Offset: 0x24400000 from 0xffffffff81000000 (relocation range: 0xffffffff80000000-0xffffffffbfffffff)
+Rebooting in 1 seconds..

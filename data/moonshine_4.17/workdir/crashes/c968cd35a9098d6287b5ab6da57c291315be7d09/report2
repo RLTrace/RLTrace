@@ -1,0 +1,56 @@
+==================================================================
+BUG: KASAN: slab-out-of-bounds in pdu_read net/9p/protocol.c:59 [inline]
+BUG: KASAN: slab-out-of-bounds in p9pdu_vreadf net/9p/protocol.c:162 [inline]
+BUG: KASAN: slab-out-of-bounds in p9pdu_readf+0x56f/0x1da0 net/9p/protocol.c:535
+Read of size 29301 at addr ffff88006c65802d by task syz-executor.1/7818
+
+CPU: 1 PID: 7818 Comm: syz-executor.1 Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_address_description+0x65/0x270 mm/kasan/report.c:256
+ kasan_report_error mm/kasan/report.c:354 [inline]
+ kasan_report+0x253/0x380 mm/kasan/report.c:412
+ memcpy+0x1f/0x50 mm/kasan/kasan.c:302
+ pdu_read net/9p/protocol.c:59 [inline]
+ p9pdu_vreadf net/9p/protocol.c:162 [inline]
+ p9pdu_readf+0x56f/0x1da0 net/9p/protocol.c:535
+ p9_client_version net/9p/client.c:989 [inline]
+ p9_client_create+0xa9e/0x1230 net/9p/client.c:1072
+ v9fs_session_init+0x20d/0x1370 fs/9p/v9fs.c:405
+ v9fs_mount+0x7d/0x7e0 fs/9p/vfs_super.c:135
+ mount_fs+0x66/0x2c0 fs/super.c:1267
+ vfs_kern_mount.part.26+0x5e/0x310 fs/namespace.c:1037
+ vfs_kern_mount fs/namespace.c:2515 [inline]
+ do_new_mount fs/namespace.c:2518 [inline]
+ do_mount+0xc30/0x2550 fs/namespace.c:2848
+ ksys_mount+0xa8/0x120 fs/namespace.c:3064
+ __do_sys_mount fs/namespace.c:3078 [inline]
+ __se_sys_mount fs/namespace.c:3075 [inline]
+ __x64_sys_mount+0xba/0x150 fs/namespace.c:3075
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007ff8cd5bcc58 EFLAGS: 00000246 ORIG_RAX: 00000000000000a5
+RAX: ffffffffffffffda RBX: 000000000073bf00 RCX: 0000000000466039
+RDX: 00000000200022c0 RSI: 0000000020002280 RDI: 0000000000000000
+RBP: 0000000000000005 R08: 0000000020002780 R09: 0000000000000000
+R10: 0000000000000800 R11: 0000000000000246 R12: 00007ff8cd5bd6bc
+R13: 00000000004c6f83 R14: 0000000000708f80 R15: 00000000ffffffff
+
+The buggy address belongs to the page:
+page:ffffea0001b19600 count:1 mapcount:0 mapping:0000000000000000 index:0x0 compound_mapcount: 0
+flags: 0x100000000008000(head)
+raw: 0100000000008000 0000000000000000 0000000000000000 00000001ffffffff
+raw: dead000000000100 dead000000000200 0000000000000000 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff88006c659f00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ ffff88006c659f80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>ffff88006c65a000: 00 00 00 00 fe fe fe fe fe fe fe fe fe fe fe fe
+                               ^
+ ffff88006c65a080: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
+ ffff88006c65a100: fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe fe
+==================================================================

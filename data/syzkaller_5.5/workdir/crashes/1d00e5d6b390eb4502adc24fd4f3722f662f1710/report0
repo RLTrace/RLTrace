@@ -1,0 +1,50 @@
+==================================================================
+BUG: KASAN: use-after-free in do_update_region+0x56b/0x5d0 drivers/tty/vt/vt.c:665
+Read of size 2 at addr ffff888000100000 by task systemd/1
+
+CPU: 0 PID: 1 Comm: systemd Not tainted 5.5.0-rc6 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x94/0xce lib/dump_stack.c:118
+ print_address_description.constprop.5+0x16/0x310 mm/kasan/report.c:374
+ __kasan_report+0x149/0x18d mm/kasan/report.c:506
+ kasan_report+0xe/0x20 mm/kasan/common.c:639
+ do_update_region+0x56b/0x5d0 drivers/tty/vt/vt.c:665
+ csi_J+0x2f9/0x9d0 drivers/tty/vt/vt.c:1531
+ do_con_trol+0x36f9/0x5860 drivers/tty/vt/vt.c:2367
+ do_con_write.part.27+0x558/0x1ae0 drivers/tty/vt/vt.c:2797
+ do_con_write drivers/tty/vt/vt.c:3139 [inline]
+ con_write+0xa7/0xc0 drivers/tty/vt/vt.c:3135
+ process_output_block drivers/tty/n_tty.c:595 [inline]
+ n_tty_write+0x4f7/0xd50 drivers/tty/n_tty.c:2333
+ do_tty_write drivers/tty/tty_io.c:962 [inline]
+ tty_write+0x445/0x940 drivers/tty/tty_io.c:1046
+ __vfs_write+0x7c/0x100 fs/read_write.c:494
+ vfs_write+0x168/0x4a0 fs/read_write.c:558
+ ksys_write+0x175/0x200 fs/read_write.c:611
+ do_syscall_64+0x9a/0x360 arch/x86/entry/common.c:294
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x7f15784161b0
+Code: 2e 0f 1f 84 00 00 00 00 00 90 48 8b 05 19 7e 20 00 c3 0f 1f 84 00 00 00 00 00 83 3d 19 c2 20 00 00 75 10 b8 01 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 31 c3 48 83 ec 08 e8 ae fc ff ff 48 89 04 24
+RSP: 002b:00007ffd03376268 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
+RAX: ffffffffffffffda RBX: 000000000000000a RCX: 00007f15784161b0
+RDX: 000000000000000a RSI: 00007f1579881cbe RDI: 0000000000000013
+RBP: 00007f1579881cbe R08: 00007ffd03376220 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000013
+R13: 0000000000000000 R14: ffffffffffffffff R15: 000055bf4a2d2990
+
+The buggy address belongs to the page:
+page:ffffea0000004000 refcount:0 mapcount:-128 mapping:0000000000000000 index:0x0
+raw: 0000000000000000 ffff88807ffdc300 ffff88807ffdc300 0000000000000000
+raw: 0000000000000000 0000000000000008 00000000ffffff7f 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff8880000fff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ ffff8880000fff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>ffff888000100000: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+                   ^
+ ffff888000100080: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+ ffff888000100100: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+==================================================================

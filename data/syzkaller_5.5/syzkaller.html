@@ -1,0 +1,1681 @@
+
+<!doctype html>
+<html>
+<head>
+	<title> syzkaller</title>
+	<style type="text/css" media="screen">
+#topbar {
+	padding: 5px 10px;
+	background: #E0EBF5;
+}
+
+#topbar a {
+	color: #375EAB;
+	text-decoration: none;
+}
+
+h1, h2, h3, h4 {
+	margin: 0;
+	padding: 0;
+	color: #375EAB;
+	font-weight: bold;
+}
+
+table {
+	border: 1px solid #ccc;
+	margin: 20px 5px;
+	border-collapse: collapse;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+table caption {
+	font-weight: bold;
+}
+
+table td, table th {
+	vertical-align: top;
+	padding: 2px 8px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.namespace {
+	font-weight: bold;
+	font-size: large;
+	color: #375EAB;
+}
+
+.position_table {
+	border: 0px;
+	margin: 0px;
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.position_table td, .position_table tr {
+	vertical-align: center;
+	padding: 0px;
+}
+
+.position_table .search {
+	text-align: right;
+}
+
+.list_table td, .list_table th {
+	border-left: 1px solid #ccc;
+}
+
+.list_table th {
+	background: #F4F4F4;
+}
+
+.list_table tr:nth-child(2n) {
+	background: #F4F4F4;
+}
+
+.list_table tr:hover {
+	background: #ffff99;
+}
+
+.list_table .namespace {
+	width: 100pt;
+	max-width: 100pt;
+}
+
+.list_table .title {
+	width: 350pt;
+	max-width: 350pt;
+}
+
+.list_table .commit_list {
+	width: 500pt;
+	max-width: 500pt;
+}
+
+.list_table .tag {
+	font-family: monospace;
+	font-size: 8pt;
+	width: 40pt;
+	max-width: 40pt;
+}
+
+.list_table .opts {
+	width: 40pt;
+	max-width: 40pt;
+}
+
+.list_table .status {
+	width: 250pt;
+	max-width: 250pt;
+}
+
+.list_table .patched {
+	width: 60pt;
+	max-width: 60pt;
+	text-align: center;
+}
+
+.list_table .kernel {
+	width: 80pt;
+	max-width: 80pt;
+}
+
+.list_table .maintainers {
+	width: 150pt;
+	max-width: 150pt;
+}
+
+.list_table .result {
+	width: 60pt;
+	max-width: 60pt;
+}
+
+.list_table .stat {
+	width: 55pt;
+	max-width: 55pt;
+	font-family: monospace;
+	text-align: right;
+}
+
+.list_table .date {
+	width: 60pt;
+	max-width: 60pt;
+	font-family: monospace;
+	text-align: right;
+}
+
+.list_table .stat_name {
+	width: 150pt;
+	max-width: 150pt;
+	font-family: monospace;
+}
+
+.list_table .stat_value {
+	width: 120pt;
+	max-width: 120pt;
+	font-family: monospace;
+}
+
+.bad {
+	color: #f00;
+	font-weight: bold;
+}
+
+.inactive {
+	color: #888;
+}
+
+.plain {
+	text-decoration: none;
+}
+
+textarea {
+	width:100%;
+	font-family: monospace;
+}
+
+.mono {
+	font-family: monospace;
+}
+</style><script>
+
+
+
+function sortTable(item, colName, conv, desc = false) {
+	table = item.parentNode.parentNode.parentNode.parentNode;
+	rows = table.rows;
+	col = findColumnByName(rows[0].getElementsByTagName("th"), colName);
+	values = [];
+	for (i = 1; i < rows.length; i++)
+		values.push([conv(rows[i].getElementsByTagName("td")[col].textContent), rows[i]]);
+	if (desc)
+		desc = !isSorted(values.slice().reverse())
+	else
+		desc = isSorted(values);
+	values.sort(function(a, b) {
+		if (a[0] == b[0]) return 0;
+		if (desc && a[0] > b[0] || !desc && a[0] < b[0]) return -1;
+		return 1;
+	});
+	for (i = 0; i < values.length; i++)
+		table.tBodies[0].appendChild(values[i][1]);
+	return false;
+}
+
+function findColumnByName(headers, colName) {
+	for (i = 0; i < headers.length; i++) {
+		if (headers[i].textContent == colName)
+			return i;
+	}
+	return 0;
+}
+
+function isSorted(values) {
+	for (i = 0; i < values.length - 1; i++) {
+		if (values[i][0] > values[i + 1][0])
+			return false;
+	}
+	return true;
+}
+
+function textSort(v) { return v.toLowerCase(); }
+function numSort(v) { return -parseInt(v); }
+function floatSort(v) { return -parseFloat(v); }
+function reproSort(v) { return v == "C" ? 0 : v == "syz" ? 1 : 2; }
+function patchedSort(v) { return v == "" ? -1 : parseInt(v); }
+
+function timeSort(v) {
+	if (v == "now")
+		return 0;
+	m = v.indexOf('m');
+	h = v.indexOf('h');
+	d = v.indexOf('d');
+	if (m > 0 && h < 0)
+		return parseInt(v);
+	if (h > 0 && m > 0)
+		return parseInt(v) * 60 + parseInt(v.substring(h + 1));
+	if (d > 0 && h > 0)
+		return parseInt(v) * 60 * 24 + parseInt(v.substring(d + 1)) * 60;
+	if (d > 0)
+		return parseInt(v) * 60 * 24;
+	return 1000000000;
+}
+</script>
+</head>
+<body>
+<b> syzkaller</b>
+<br>
+
+<table class="list_table">
+	<caption>Stats:</caption>
+	
+	<tr>
+		<td class="stat_name">revision</td>
+		<td class="stat_value">
+			
+				<a href="https://github.com/google/syzkaller/commits/53faa9fe74062ad0e47ea0269007ad5182252378">53faa9fe</a>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">config</td>
+		<td class="stat_value">
+			
+				<a href="/config"></a>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">uptime</td>
+		<td class="stat_value">
+			
+				3h5m9s
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">fuzzing</td>
+		<td class="stat_value">
+			
+				24h1m0s
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">corpus</td>
+		<td class="stat_value">
+			
+				<a href="/corpus">8009</a>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">triage queue</td>
+		<td class="stat_value">
+			
+				0
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">cover</td>
+		<td class="stat_value">
+			
+				<a href="/cover">72916</a>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">signal</td>
+		<td class="stat_value">
+			
+				110502
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">syscalls</td>
+		<td class="stat_value">
+			
+				<a href="/syscalls">1558</a>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">crash types</td>
+		<td class="stat_value">
+			
+				20 (6/hour)
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">crashes</td>
+		<td class="stat_value">
+			
+				135 (43/hour)
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">exec candidate</td>
+		<td class="stat_value">
+			
+				0 (0/hour)
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">exec fuzz</td>
+		<td class="stat_value">
+			
+				445395 (40/sec)
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">exec gen</td>
+		<td class="stat_value">
+			
+				5910 (31/min)
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">exec hints</td>
+		<td class="stat_value">
+			
+				0 (0/hour)
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">exec minimize</td>
+		<td class="stat_value">
+			
+				447403 (40/sec)
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">exec seeds</td>
+		<td class="stat_value">
+			
+				0 (0/hour)
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">exec smash</td>
+		<td class="stat_value">
+			
+				597685 (53/sec)
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">exec total</td>
+		<td class="stat_value">
+			
+				1553831 (140/sec)
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">exec triage</td>
+		<td class="stat_value">
+			
+				57455 (310/min)
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">executor restarts</td>
+		<td class="stat_value">
+			
+				2380 (12/min)
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">new inputs</td>
+		<td class="stat_value">
+			
+				12460 (67/min)
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">rotated inputs</td>
+		<td class="stat_value">
+			
+				0 (0/hour)
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">suppressed</td>
+		<td class="stat_value">
+			
+				2 (0/hour)
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">vm restarts</td>
+		<td class="stat_value">
+			
+				149 (48/hour)
+			
+		</td>
+	</tr>
+	
+</table>
+
+<table class="list_table">
+	<caption>Crashes:</caption>
+	<tr>
+		<th><a onclick="return sortTable(this, 'Description', textSort)" href="#">Description</a></th>
+		<th><a onclick="return sortTable(this, 'Count', numSort)" href="#">Count</a></th>
+		<th><a onclick="return sortTable(this, 'Last Time', textSort, true)" href="#">Last Time</a></th>
+		<th><a onclick="return sortTable(this, 'Report', textSort)" href="#">Report</a></th>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=6d47928b52a4203b3f3b5eec04a499c25fee27c0">general protection fault in rwsem_mark_wake</a></td>
+		<td class="stat ">1</td>
+		<td class="time ">2019/12/14 22:26</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=f44bb8b57d1476fe1c9e3480960073e809d37d03">INFO: rcu detected stall in tty_ioctl</a></td>
+		<td class="stat ">1</td>
+		<td class="time ">2019/12/14 20:59</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=2a7a9859e0e44d5ce4eaa9acf568bf427eb5c71a">KASAN: slab-out-of-bounds Write in vgacon_scroll</a></td>
+		<td class="stat ">1</td>
+		<td class="time ">2019/12/14 19:59</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=0b1f0fafc59093a9dd4cdad26e5c9bd828416e83">KASAN: stack-out-of-bounds Write in mpol_to_str</a></td>
+		<td class="stat ">2</td>
+		<td class="time ">2019/12/14 21:28</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=5d75cdc2fb31598638d5f6b4d927f1f1f22cdace">KASAN: use-after-free Read in clear_buffer_attributes</a></td>
+		<td class="stat ">7</td>
+		<td class="time ">2019/12/14 22:48</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=3cd25cc0fef50c04175e817130f414e7f7b86925">KASAN: use-after-free Read in complement_pos</a></td>
+		<td class="stat ">1</td>
+		<td class="time ">2019/12/14 21:36</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=1d00e5d6b390eb4502adc24fd4f3722f662f1710">KASAN: use-after-free Read in do_update_region</a></td>
+		<td class="stat ">3</td>
+		<td class="time ">2019/12/14 22:43</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=f7e0bba8c3e53fe21a4a60bc232356b7d704f634">KASAN: use-after-free Read in n_tty_receive_buf_common</a></td>
+		<td class="stat ">2</td>
+		<td class="time ">2019/12/14 20:07</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=0f1e0b5cf56acc5d279dca02909e81d85405a1e5">KASAN: use-after-free Read in screen_glyph</a></td>
+		<td class="stat ">2</td>
+		<td class="time ">2019/12/14 22:44</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=5199451175f5917d378d47b452261b3a38666dd8">KASAN: use-after-free Read in screen_glyph_unicode</a></td>
+		<td class="stat ">3</td>
+		<td class="time ">2019/12/14 22:42</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=b504ba397d9c07a496cad20eee7f592b1ac883d5">KASAN: use-after-free Read in vc_do_resize</a></td>
+		<td class="stat ">4</td>
+		<td class="time ">2019/12/14 22:46</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=0013fbbedcb80b10b39f69a851427ffe7562d19b">KASAN: use-after-free Read in vc_uniscr_check</a></td>
+		<td class="stat ">1</td>
+		<td class="time ">2019/12/14 22:39</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=ba6c17826d8a6437a848f0f8bcc253eb4b5f308c">KASAN: use-after-free Read in vgacon_invert_region</a></td>
+		<td class="stat ">9</td>
+		<td class="time ">2019/12/14 22:48</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=c4a1f8e82cd3acbf6dc18f27e964a86ef9b00e49">KASAN: use-after-free Write in do_con_write</a></td>
+		<td class="stat ">1</td>
+		<td class="time ">2019/12/14 21:24</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=424f2cad4cbb77db7834a34e22b06b0a5e02414e">KASAN: use-after-free Write in release_tty</a></td>
+		<td class="stat ">15</td>
+		<td class="time ">2019/12/14 22:28</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=bb38ce51b3bd4f4e79dc86b853e07d70dafa1582">KASAN: use-after-free Write in vcs_scr_writew</a></td>
+		<td class="stat ">1</td>
+		<td class="time ">2019/12/14 22:41</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=439c37d288d4f26a33a6c7e5c57a97791453a447">lost connection to test machine</a></td>
+		<td class="stat ">1</td>
+		<td class="time ">2019/12/14 19:55</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=e9f5b11984c54cecb386b92bb20c76d5d003719f">no output from test machine</a></td>
+		<td class="stat ">68</td>
+		<td class="time ">2019/12/14 22:48</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=35e19667650e0565c7f9d20e8e9306f919f5ea09">WARNING in __alloc_pages_nodemask</a></td>
+		<td class="stat ">1</td>
+		<td class="time ">2019/12/14 19:54</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=f73b3116ad434cc9b97b908060b5e73752df3be7">WARNING in restore_regulatory_settings</a></td>
+		<td class="stat ">11</td>
+		<td class="time ">2019/12/14 22:38</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+</table>
+
+<b>Log:</b>
+<br>
+<textarea id="log_textarea" readonly rows="20" wrap=off>
+2019/12/14 21:06:02 minimized corpus: 7500 -&gt; 7387
+2019/12/14 21:06:11 VMs 8, executed 1144503, cover 104030, crashes 65, repro 0
+2019/12/14 21:06:21 VMs 8, executed 1144505, cover 104034, crashes 65, repro 0
+2019/12/14 21:06:31 VMs 8, executed 1146383, cover 104034, crashes 65, repro 0
+2019/12/14 21:06:41 VMs 8, executed 1148146, cover 104073, crashes 65, repro 0
+2019/12/14 21:06:51 VMs 8, executed 1149261, cover 104082, crashes 65, repro 0
+2019/12/14 21:07:01 VMs 8, executed 1150051, cover 104105, crashes 65, repro 0
+2019/12/14 21:07:11 VMs 8, executed 1151525, cover 104108, crashes 65, repro 0
+2019/12/14 21:07:21 VMs 8, executed 1152263, cover 104108, crashes 65, repro 0
+2019/12/14 21:07:31 VMs 8, executed 1152556, cover 104128, crashes 65, repro 0
+2019/12/14 21:07:34 loop: instance 7 finished, crash=true
+2019/12/14 21:07:34 vm-7: crash: no output from test machine
+2019/12/14 21:07:34 loop: phase=4 shutdown=false instances=1/8 [7] repro: pending=0 reproducing=0 queued=0
+2019/12/14 21:07:34 loop: starting instance 7
+2019/12/14 21:07:41 VMs 7, executed 1153538, cover 104129, crashes 66, repro 0
+2019/12/14 21:07:51 VMs 8, executed 1153653, cover 104137, crashes 66, repro 0
+2019/12/14 21:07:52 fuzzer vm-7 connected
+2019/12/14 21:08:01 VMs 8, executed 1154523, cover 104143, crashes 66, repro 0
+2019/12/14 21:08:11 VMs 8, executed 1155618, cover 104157, crashes 66, repro 0
+2019/12/14 21:08:21 VMs 8, executed 1155773, cover 104185, crashes 66, repro 0
+2019/12/14 21:08:31 VMs 8, executed 1157495, cover 104198, crashes 66, repro 0
+2019/12/14 21:08:41 VMs 8, executed 1158186, cover 104214, crashes 66, repro 0
+2019/12/14 21:08:51 VMs 8, executed 1159311, cover 104216, crashes 66, repro 0
+2019/12/14 21:09:01 VMs 8, executed 1161257, cover 104224, crashes 66, repro 0
+2019/12/14 21:09:11 VMs 8, executed 1162493, cover 104268, crashes 66, repro 0
+2019/12/14 21:09:21 VMs 8, executed 1163449, cover 104273, crashes 66, repro 0
+2019/12/14 21:09:31 VMs 8, executed 1164983, cover 104334, crashes 66, repro 0
+2019/12/14 21:09:41 VMs 8, executed 1166036, cover 104354, crashes 66, repro 0
+2019/12/14 21:09:51 VMs 8, executed 1166489, cover 104362, crashes 66, repro 0
+2019/12/14 21:09:52 loop: instance 2 finished, crash=true
+2019/12/14 21:09:52 vm-2: crash: no output from test machine
+2019/12/14 21:09:52 loop: phase=4 shutdown=false instances=1/8 [2] repro: pending=0 reproducing=0 queued=0
+2019/12/14 21:09:52 loop: starting instance 2
+2019/12/14 21:10:01 VMs 7, executed 1167989, cover 104381, crashes 67, repro 0
+2019/12/14 21:10:05 fuzzer vm-2 connected
+2019/12/14 21:10:11 VMs 8, executed 1168697, cover 104405, crashes 67, repro 0
+2019/12/14 21:10:21 VMs 8, executed 1170188, cover 104444, crashes 67, repro 0
+2019/12/14 21:10:31 VMs 8, executed 1171243, cover 104497, crashes 67, repro 0
+2019/12/14 21:10:41 VMs 8, executed 1172786, cover 104544, crashes 67, repro 0
+2019/12/14 21:10:51 VMs 8, executed 1174096, cover 104546, crashes 67, repro 0
+2019/12/14 21:11:01 VMs 8, executed 1175562, cover 104553, crashes 67, repro 0
+2019/12/14 21:11:11 VMs 8, executed 1176770, cover 104567, crashes 67, repro 0
+2019/12/14 21:11:21 VMs 8, executed 1177470, cover 104575, crashes 67, repro 0
+2019/12/14 21:11:31 VMs 8, executed 1178557, cover 104665, crashes 67, repro 0
+2019/12/14 21:11:41 VMs 8, executed 1179718, cover 104676, crashes 67, repro 0
+2019/12/14 21:11:51 VMs 8, executed 1180726, cover 104709, crashes 67, repro 0
+2019/12/14 21:12:01 VMs 8, executed 1181447, cover 104715, crashes 67, repro 0
+2019/12/14 21:12:11 VMs 8, executed 1182303, cover 104724, crashes 67, repro 0
+2019/12/14 21:12:21 VMs 8, executed 1182924, cover 104738, crashes 67, repro 0
+2019/12/14 21:12:31 VMs 8, executed 1183606, cover 104762, crashes 67, repro 0
+2019/12/14 21:12:41 VMs 8, executed 1183840, cover 104802, crashes 67, repro 0
+2019/12/14 21:12:51 VMs 8, executed 1184734, cover 104817, crashes 67, repro 0
+2019/12/14 21:13:01 VMs 8, executed 1185137, cover 104827, crashes 67, repro 0
+2019/12/14 21:13:11 VMs 8, executed 1185712, cover 104930, crashes 67, repro 0
+2019/12/14 21:13:21 VMs 8, executed 1186138, cover 104931, crashes 67, repro 0
+2019/12/14 21:13:31 VMs 8, executed 1186368, cover 104957, crashes 67, repro 0
+2019/12/14 21:13:41 VMs 8, executed 1186625, cover 104997, crashes 67, repro 0
+2019/12/14 21:13:51 VMs 8, executed 1186957, cover 105002, crashes 67, repro 0
+2019/12/14 21:14:01 VMs 8, executed 1187056, cover 105053, crashes 67, repro 0
+2019/12/14 21:14:11 VMs 8, executed 1187388, cover 105058, crashes 67, repro 0
+2019/12/14 21:14:21 VMs 8, executed 1187408, cover 105063, crashes 67, repro 0
+2019/12/14 21:14:31 VMs 8, executed 1187603, cover 105063, crashes 67, repro 0
+2019/12/14 21:14:41 VMs 8, executed 1187785, cover 105085, crashes 67, repro 0
+2019/12/14 21:14:51 VMs 8, executed 1188016, cover 105118, crashes 67, repro 0
+2019/12/14 21:15:01 VMs 8, executed 1188081, cover 105125, crashes 67, repro 0
+2019/12/14 21:15:11 VMs 8, executed 1188363, cover 105125, crashes 67, repro 0
+2019/12/14 21:15:21 VMs 8, executed 1188540, cover 105126, crashes 67, repro 0
+2019/12/14 21:15:31 VMs 8, executed 1188663, cover 105133, crashes 67, repro 0
+2019/12/14 21:15:41 VMs 8, executed 1188875, cover 105165, crashes 67, repro 0
+2019/12/14 21:15:51 VMs 8, executed 1189213, cover 105176, crashes 67, repro 0
+2019/12/14 21:16:01 VMs 8, executed 1189262, cover 105196, crashes 67, repro 0
+2019/12/14 21:16:11 VMs 8, executed 1189453, cover 105196, crashes 67, repro 0
+2019/12/14 21:16:14 loop: instance 2 finished, crash=true
+2019/12/14 21:16:14 vm-2: crash: no output from test machine
+2019/12/14 21:16:14 loop: phase=4 shutdown=false instances=1/8 [2] repro: pending=0 reproducing=0 queued=0
+2019/12/14 21:16:14 loop: starting instance 2
+2019/12/14 21:16:21 VMs 7, executed 1189628, cover 105274, crashes 68, repro 0
+2019/12/14 21:16:28 fuzzer vm-2 connected
+2019/12/14 21:16:31 VMs 8, executed 1189730, cover 105274, crashes 68, repro 0
+2019/12/14 21:16:41 VMs 8, executed 1189985, cover 105279, crashes 68, repro 0
+2019/12/14 21:16:51 VMs 8, executed 1190035, cover 105299, crashes 68, repro 0
+2019/12/14 21:17:01 VMs 8, executed 1191104, cover 105307, crashes 68, repro 0
+2019/12/14 21:17:11 VMs 8, executed 1191766, cover 105330, crashes 68, repro 0
+2019/12/14 21:17:21 VMs 8, executed 1192430, cover 105330, crashes 68, repro 0
+2019/12/14 21:17:31 VMs 8, executed 1193638, cover 105332, crashes 68, repro 0
+2019/12/14 21:17:41 VMs 8, executed 1194232, cover 105350, crashes 68, repro 0
+2019/12/14 21:17:51 VMs 8, executed 1195339, cover 105354, crashes 68, repro 0
+2019/12/14 21:18:01 VMs 8, executed 1195994, cover 105364, crashes 68, repro 0
+2019/12/14 21:18:11 VMs 8, executed 1197044, cover 105408, crashes 68, repro 0
+2019/12/14 21:18:21 VMs 8, executed 1197146, cover 105415, crashes 68, repro 0
+2019/12/14 21:18:31 VMs 8, executed 1198473, cover 105420, crashes 68, repro 0
+2019/12/14 21:18:41 VMs 8, executed 1199678, cover 105434, crashes 68, repro 0
+2019/12/14 21:18:51 VMs 8, executed 1200103, cover 105443, crashes 68, repro 0
+2019/12/14 21:19:01 VMs 8, executed 1201078, cover 105450, crashes 68, repro 0
+2019/12/14 21:19:11 VMs 8, executed 1201711, cover 105452, crashes 68, repro 0
+2019/12/14 21:19:21 VMs 8, executed 1203308, cover 105482, crashes 68, repro 0
+2019/12/14 21:19:31 VMs 8, executed 1204146, cover 105484, crashes 68, repro 0
+2019/12/14 21:19:41 VMs 8, executed 1205175, cover 105603, crashes 68, repro 0
+2019/12/14 21:19:51 VMs 8, executed 1206016, cover 105620, crashes 68, repro 0
+2019/12/14 21:20:01 VMs 8, executed 1206409, cover 105642, crashes 68, repro 0
+2019/12/14 21:20:11 VMs 8, executed 1207995, cover 105668, crashes 68, repro 0
+2019/12/14 21:20:21 VMs 8, executed 1208605, cover 105672, crashes 68, repro 0
+2019/12/14 21:20:31 VMs 8, executed 1209507, cover 105678, crashes 68, repro 0
+2019/12/14 21:20:41 VMs 8, executed 1210094, cover 105679, crashes 68, repro 0
+2019/12/14 21:20:51 VMs 8, executed 1210695, cover 105708, crashes 68, repro 0
+2019/12/14 21:21:01 VMs 8, executed 1211205, cover 105788, crashes 68, repro 0
+2019/12/14 21:21:11 VMs 8, executed 1212073, cover 105791, crashes 68, repro 0
+2019/12/14 21:21:20 loop: instance 7 finished, crash=true
+2019/12/14 21:21:20 vm-7: crash: WARNING in restore_regulatory_settings
+2019/12/14 21:21:20 loop: phase=4 shutdown=false instances=1/8 [7] repro: pending=0 reproducing=0 queued=0
+2019/12/14 21:21:20 loop: starting instance 7
+2019/12/14 21:21:21 VMs 7, executed 1212142, cover 105791, crashes 69, repro 0
+2019/12/14 21:21:31 VMs 7, executed 1213044, cover 105798, crashes 69, repro 0
+2019/12/14 21:21:33 fuzzer vm-7 connected
+2019/12/14 21:21:34 minimized corpus: 7661 -&gt; 7570
+2019/12/14 21:21:41 VMs 8, executed 1213800, cover 105798, crashes 69, repro 0
+2019/12/14 21:21:51 VMs 8, executed 1213867, cover 105809, crashes 69, repro 0
+2019/12/14 21:22:01 VMs 8, executed 1214311, cover 105820, crashes 69, repro 0
+2019/12/14 21:22:11 VMs 8, executed 1214987, cover 105833, crashes 69, repro 0
+2019/12/14 21:22:21 VMs 8, executed 1215500, cover 105834, crashes 69, repro 0
+2019/12/14 21:22:31 VMs 8, executed 1216423, cover 105834, crashes 69, repro 0
+2019/12/14 21:22:41 VMs 8, executed 1216608, cover 105861, crashes 69, repro 0
+2019/12/14 21:22:51 VMs 8, executed 1217672, cover 105874, crashes 69, repro 0
+2019/12/14 21:23:01 VMs 8, executed 1218783, cover 105877, crashes 69, repro 0
+2019/12/14 21:23:11 VMs 8, executed 1218877, cover 105878, crashes 69, repro 0
+2019/12/14 21:23:21 VMs 8, executed 1219969, cover 105878, crashes 69, repro 0
+2019/12/14 21:23:31 VMs 8, executed 1220916, cover 105880, crashes 69, repro 0
+2019/12/14 21:23:41 VMs 8, executed 1221073, cover 105905, crashes 69, repro 0
+2019/12/14 21:23:51 VMs 8, executed 1222210, cover 105918, crashes 69, repro 0
+2019/12/14 21:24:01 VMs 8, executed 1222768, cover 105923, crashes 69, repro 0
+2019/12/14 21:24:11 VMs 8, executed 1222792, cover 105925, crashes 69, repro 0
+2019/12/14 21:24:21 VMs 8, executed 1223312, cover 105929, crashes 69, repro 0
+2019/12/14 21:24:31 VMs 8, executed 1223769, cover 105933, crashes 69, repro 0
+2019/12/14 21:24:41 loop: instance 7 finished, crash=true
+2019/12/14 21:24:41 vm-7: crash: KASAN: use-after-free Write in do_con_write
+2019/12/14 21:24:41 VMs 7, executed 1223769, cover 105938, crashes 69, repro 0
+2019/12/14 21:24:45 loop: phase=4 shutdown=false instances=1/8 [7] repro: pending=0 reproducing=0 queued=0
+2019/12/14 21:24:45 loop: starting instance 7
+2019/12/14 21:24:51 VMs 7, executed 1223827, cover 105938, crashes 70, repro 0
+2019/12/14 21:24:58 fuzzer vm-7 connected
+2019/12/14 21:25:01 VMs 8, executed 1223827, cover 105938, crashes 70, repro 0
+2019/12/14 21:25:11 VMs 8, executed 1223881, cover 105938, crashes 70, repro 0
+2019/12/14 21:25:21 VMs 8, executed 1223893, cover 105938, crashes 70, repro 0
+2019/12/14 21:25:31 VMs 8, executed 1224161, cover 105938, crashes 70, repro 0
+2019/12/14 21:25:41 VMs 8, executed 1224339, cover 105938, crashes 70, repro 0
+2019/12/14 21:25:51 VMs 8, executed 1225033, cover 105940, crashes 70, repro 0
+2019/12/14 21:26:01 VMs 8, executed 1225342, cover 105940, crashes 70, repro 0
+2019/12/14 21:26:11 VMs 8, executed 1225433, cover 105940, crashes 70, repro 0
+2019/12/14 21:26:21 VMs 8, executed 1225517, cover 105940, crashes 70, repro 0
+2019/12/14 21:26:31 VMs 8, executed 1225552, cover 105992, crashes 70, repro 0
+2019/12/14 21:26:41 VMs 8, executed 1225590, cover 105992, crashes 70, repro 0
+2019/12/14 21:26:47 loop: instance 2 finished, crash=true
+2019/12/14 21:26:47 vm-2: crash: no output from test machine
+2019/12/14 21:26:47 loop: phase=4 shutdown=false instances=1/8 [2] repro: pending=0 reproducing=0 queued=0
+2019/12/14 21:26:47 loop: starting instance 2
+2019/12/14 21:26:51 VMs 7, executed 1225590, cover 105992, crashes 71, repro 0
+2019/12/14 21:27:00 fuzzer vm-2 connected
+2019/12/14 21:27:01 VMs 8, executed 1225616, cover 105992, crashes 71, repro 0
+2019/12/14 21:27:11 VMs 8, executed 1225664, cover 105992, crashes 71, repro 0
+2019/12/14 21:27:21 VMs 8, executed 1225665, cover 105992, crashes 71, repro 0
+2019/12/14 21:27:31 VMs 8, executed 1225983, cover 105992, crashes 71, repro 0
+2019/12/14 21:27:41 VMs 8, executed 1225983, cover 105995, crashes 71, repro 0
+2019/12/14 21:27:51 VMs 8, executed 1226591, cover 105997, crashes 71, repro 0
+2019/12/14 21:28:01 VMs 8, executed 1227078, cover 105997, crashes 71, repro 0
+2019/12/14 21:28:11 VMs 8, executed 1227078, cover 105997, crashes 71, repro 0
+2019/12/14 21:28:14 loop: instance 2 finished, crash=true
+2019/12/14 21:28:14 vm-2: crash: KASAN: stack-out-of-bounds Write in mpol_to_str
+2019/12/14 21:28:15 loop: phase=4 shutdown=false instances=1/8 [2] repro: pending=0 reproducing=0 queued=0
+2019/12/14 21:28:15 loop: starting instance 2
+2019/12/14 21:28:21 VMs 7, executed 1227078, cover 105997, crashes 72, repro 0
+2019/12/14 21:28:31 VMs 7, executed 1227098, cover 105997, crashes 72, repro 0
+2019/12/14 21:28:33 fuzzer vm-2 connected
+2019/12/14 21:28:40 loop: instance 4 finished, crash=true
+2019/12/14 21:28:40 vm-4: crash: no output from test machine
+2019/12/14 21:28:40 loop: phase=4 shutdown=false instances=1/8 [4] repro: pending=0 reproducing=0 queued=0
+2019/12/14 21:28:40 loop: starting instance 4
+2019/12/14 21:28:41 VMs 7, executed 1227140, cover 105997, crashes 73, repro 0
+2019/12/14 21:28:51 VMs 7, executed 1227140, cover 105997, crashes 73, repro 0
+2019/12/14 21:29:00 fuzzer vm-4 connected
+2019/12/14 21:29:01 VMs 8, executed 1227178, cover 106003, crashes 73, repro 0
+2019/12/14 21:29:11 VMs 8, executed 1227755, cover 106003, crashes 73, repro 0
+2019/12/14 21:29:21 VMs 8, executed 1228416, cover 106003, crashes 73, repro 0
+2019/12/14 21:29:31 VMs 8, executed 1229340, cover 106009, crashes 73, repro 0
+2019/12/14 21:29:41 VMs 8, executed 1229954, cover 106009, crashes 73, repro 0
+2019/12/14 21:29:51 VMs 8, executed 1229976, cover 106013, crashes 73, repro 0
+2019/12/14 21:30:01 VMs 8, executed 1230553, cover 106025, crashes 73, repro 0
+2019/12/14 21:30:11 VMs 8, executed 1231253, cover 106025, crashes 73, repro 0
+2019/12/14 21:30:21 VMs 8, executed 1231290, cover 106029, crashes 73, repro 0
+2019/12/14 21:30:31 VMs 8, executed 1231798, cover 106034, crashes 73, repro 0
+2019/12/14 21:30:41 VMs 8, executed 1232288, cover 106034, crashes 73, repro 0
+2019/12/14 21:30:47 loop: instance 7 finished, crash=true
+2019/12/14 21:30:47 vm-7: crash: no output from test machine
+2019/12/14 21:30:47 loop: phase=4 shutdown=false instances=1/8 [7] repro: pending=0 reproducing=0 queued=0
+2019/12/14 21:30:47 loop: starting instance 7
+2019/12/14 21:30:51 VMs 7, executed 1232785, cover 106035, crashes 74, repro 0
+2019/12/14 21:31:01 VMs 7, executed 1233423, cover 106038, crashes 74, repro 0
+2019/12/14 21:31:06 fuzzer vm-7 connected
+2019/12/14 21:31:11 VMs 8, executed 1233423, cover 106038, crashes 74, repro 0
+2019/12/14 21:31:21 VMs 8, executed 1233901, cover 106038, crashes 74, repro 0
+2019/12/14 21:31:31 VMs 8, executed 1234554, cover 106048, crashes 74, repro 0
+2019/12/14 21:31:41 VMs 8, executed 1235467, cover 106050, crashes 74, repro 0
+2019/12/14 21:31:51 VMs 8, executed 1236157, cover 106063, crashes 74, repro 0
+2019/12/14 21:32:01 VMs 8, executed 1237476, cover 106065, crashes 74, repro 0
+2019/12/14 21:32:11 VMs 8, executed 1238093, cover 106067, crashes 74, repro 0
+2019/12/14 21:32:21 VMs 8, executed 1238696, cover 106069, crashes 74, repro 0
+2019/12/14 21:32:31 VMs 8, executed 1239318, cover 106069, crashes 74, repro 0
+2019/12/14 21:32:41 VMs 8, executed 1240554, cover 106069, crashes 74, repro 0
+2019/12/14 21:32:51 VMs 8, executed 1241389, cover 106076, crashes 74, repro 0
+2019/12/14 21:33:01 VMs 8, executed 1242151, cover 106076, crashes 74, repro 0
+2019/12/14 21:33:11 VMs 8, executed 1243267, cover 106077, crashes 74, repro 0
+2019/12/14 21:33:21 VMs 8, executed 1243914, cover 106077, crashes 74, repro 0
+2019/12/14 21:33:31 VMs 8, executed 1244638, cover 106090, crashes 74, repro 0
+2019/12/14 21:33:41 VMs 8, executed 1245165, cover 106108, crashes 74, repro 0
+2019/12/14 21:33:51 VMs 8, executed 1245465, cover 106108, crashes 74, repro 0
+2019/12/14 21:34:01 VMs 8, executed 1246139, cover 106108, crashes 74, repro 0
+2019/12/14 21:34:11 VMs 8, executed 1246830, cover 106108, crashes 74, repro 0
+2019/12/14 21:34:21 VMs 8, executed 1247184, cover 106108, crashes 74, repro 0
+2019/12/14 21:34:31 VMs 8, executed 1247867, cover 106109, crashes 74, repro 0
+2019/12/14 21:34:39 loop: instance 4 finished, crash=true
+2019/12/14 21:34:39 vm-4: crash: no output from test machine
+2019/12/14 21:34:39 loop: phase=4 shutdown=false instances=1/8 [4] repro: pending=0 reproducing=0 queued=0
+2019/12/14 21:34:39 loop: starting instance 4
+2019/12/14 21:34:41 VMs 7, executed 1247867, cover 106117, crashes 75, repro 0
+2019/12/14 21:34:45 loop: instance 7 finished, crash=true
+2019/12/14 21:34:45 vm-7: crash: KASAN: use-after-free Write in release_tty
+2019/12/14 21:34:49 loop: phase=4 shutdown=false instances=1/8 [7] repro: pending=0 reproducing=0 queued=0
+2019/12/14 21:34:49 loop: starting instance 7
+2019/12/14 21:34:51 VMs 7, executed 1248568, cover 106122, crashes 76, repro 0
+2019/12/14 21:34:52 fuzzer vm-4 connected
+2019/12/14 21:35:01 VMs 7, executed 1249032, cover 106124, crashes 76, repro 0
+2019/12/14 21:35:03 fuzzer vm-7 connected
+2019/12/14 21:35:11 VMs 8, executed 1249507, cover 106124, crashes 76, repro 0
+2019/12/14 21:35:21 VMs 8, executed 1249526, cover 106155, crashes 76, repro 0
+2019/12/14 21:35:31 VMs 8, executed 1250703, cover 106170, crashes 76, repro 0
+2019/12/14 21:35:41 VMs 8, executed 1251327, cover 106170, crashes 76, repro 0
+2019/12/14 21:35:45 loop: instance 4 finished, crash=true
+2019/12/14 21:35:45 vm-4: crash: KASAN: use-after-free Write in release_tty
+2019/12/14 21:35:50 loop: phase=4 shutdown=false instances=1/8 [4] repro: pending=0 reproducing=0 queued=0
+2019/12/14 21:35:50 loop: starting instance 4
+2019/12/14 21:35:51 VMs 7, executed 1251863, cover 106170, crashes 77, repro 0
+2019/12/14 21:35:55 loop: instance 7 finished, crash=true
+2019/12/14 21:35:55 vm-7: crash: KASAN: use-after-free Read in complement_pos
+2019/12/14 21:36:00 loop: phase=4 shutdown=false instances=1/8 [7] repro: pending=0 reproducing=0 queued=0
+2019/12/14 21:36:00 loop: starting instance 7
+2019/12/14 21:36:01 VMs 6, executed 1252559, cover 106170, crashes 78, repro 0
+2019/12/14 21:36:03 fuzzer vm-4 connected
+2019/12/14 21:36:11 VMs 7, executed 1252715, cover 106170, crashes 78, repro 0
+2019/12/14 21:36:13 fuzzer vm-7 connected
+2019/12/14 21:36:21 VMs 8, executed 1253052, cover 106170, crashes 78, repro 0
+2019/12/14 21:36:31 VMs 8, executed 1253077, cover 106175, crashes 78, repro 0
+2019/12/14 21:36:41 VMs 8, executed 1253821, cover 106182, crashes 78, repro 0
+2019/12/14 21:36:51 VMs 8, executed 1255077, cover 106182, crashes 78, repro 0
+2019/12/14 21:37:01 VMs 8, executed 1255510, cover 106182, crashes 78, repro 0
+2019/12/14 21:37:11 VMs 8, executed 1257144, cover 106205, crashes 78, repro 0
+2019/12/14 21:37:21 VMs 8, executed 1258095, cover 106216, crashes 78, repro 0
+2019/12/14 21:37:31 VMs 8, executed 1259569, cover 106217, crashes 78, repro 0
+2019/12/14 21:37:41 VMs 8, executed 1260104, cover 106224, crashes 78, repro 0
+2019/12/14 21:37:51 VMs 8, executed 1261510, cover 106228, crashes 78, repro 0
+2019/12/14 21:38:01 VMs 8, executed 1262189, cover 106228, crashes 78, repro 0
+2019/12/14 21:38:11 VMs 8, executed 1262849, cover 106234, crashes 78, repro 0
+2019/12/14 21:38:21 VMs 8, executed 1264252, cover 106249, crashes 78, repro 0
+2019/12/14 21:38:31 VMs 8, executed 1264356, cover 106249, crashes 78, repro 0
+2019/12/14 21:38:41 VMs 8, executed 1265012, cover 106249, crashes 78, repro 0
+2019/12/14 21:38:51 VMs 8, executed 1265503, cover 106290, crashes 78, repro 0
+2019/12/14 21:39:01 VMs 8, executed 1265682, cover 106309, crashes 78, repro 0
+2019/12/14 21:39:11 VMs 8, executed 1266268, cover 106321, crashes 78, repro 0
+2019/12/14 21:39:21 VMs 8, executed 1266595, cover 106321, crashes 78, repro 0
+2019/12/14 21:39:31 VMs 8, executed 1267131, cover 106330, crashes 78, repro 0
+2019/12/14 21:39:41 VMs 8, executed 1267140, cover 106376, crashes 78, repro 0
+2019/12/14 21:39:51 VMs 8, executed 1267366, cover 106383, crashes 78, repro 0
+2019/12/14 21:40:01 VMs 8, executed 1267485, cover 106383, crashes 78, repro 0
+2019/12/14 21:40:11 VMs 8, executed 1267582, cover 106383, crashes 78, repro 0
+2019/12/14 21:40:21 VMs 8, executed 1268075, cover 106387, crashes 78, repro 0
+2019/12/14 21:40:31 VMs 8, executed 1268108, cover 106387, crashes 78, repro 0
+2019/12/14 21:40:41 VMs 8, executed 1268277, cover 106424, crashes 78, repro 0
+2019/12/14 21:40:51 VMs 8, executed 1268304, cover 106429, crashes 78, repro 0
+2019/12/14 21:40:54 vm-1: running for 1h0m0.000818293s, restarting
+2019/12/14 21:40:54 loop: instance 1 finished, crash=false
+2019/12/14 21:40:54 loop: phase=4 shutdown=false instances=1/8 [1] repro: pending=0 reproducing=0 queued=0
+2019/12/14 21:40:54 loop: starting instance 1
+2019/12/14 21:41:01 VMs 7, executed 1268379, cover 106433, crashes 78, repro 0
+2019/12/14 21:41:11 VMs 7, executed 1268426, cover 106433, crashes 78, repro 0
+2019/12/14 21:41:13 fuzzer vm-1 connected
+2019/12/14 21:41:21 VMs 8, executed 1268550, cover 106433, crashes 78, repro 0
+2019/12/14 21:41:31 VMs 8, executed 1268758, cover 106433, crashes 78, repro 0
+2019/12/14 21:41:41 VMs 8, executed 1268859, cover 106433, crashes 78, repro 0
+2019/12/14 21:41:51 VMs 8, executed 1269438, cover 106433, crashes 78, repro 0
+2019/12/14 21:42:01 VMs 8, executed 1270448, cover 106433, crashes 78, repro 0
+2019/12/14 21:42:11 VMs 8, executed 1270642, cover 106433, crashes 78, repro 0
+2019/12/14 21:42:21 VMs 8, executed 1271957, cover 106433, crashes 78, repro 0
+2019/12/14 21:42:31 VMs 8, executed 1272681, cover 106435, crashes 78, repro 0
+2019/12/14 21:42:41 VMs 8, executed 1273187, cover 106437, crashes 78, repro 0
+2019/12/14 21:42:51 VMs 8, executed 1273740, cover 106446, crashes 78, repro 0
+2019/12/14 21:43:01 VMs 8, executed 1274432, cover 106450, crashes 78, repro 0
+2019/12/14 21:43:11 VMs 8, executed 1275133, cover 106450, crashes 78, repro 0
+2019/12/14 21:43:21 VMs 8, executed 1275413, cover 106579, crashes 78, repro 0
+2019/12/14 21:43:23 loop: instance 7 finished, crash=true
+2019/12/14 21:43:23 vm-7: crash: no output from test machine
+2019/12/14 21:43:23 loop: phase=4 shutdown=false instances=1/8 [7] repro: pending=0 reproducing=0 queued=0
+2019/12/14 21:43:23 loop: starting instance 7
+2019/12/14 21:43:23 loop: instance 2 finished, crash=true
+2019/12/14 21:43:23 vm-2: crash: no output from test machine
+2019/12/14 21:43:23 loop: phase=4 shutdown=false instances=1/8 [2] repro: pending=0 reproducing=0 queued=0
+2019/12/14 21:43:23 loop: starting instance 2
+2019/12/14 21:43:31 VMs 6, executed 1275851, cover 106590, crashes 80, repro 0
+2019/12/14 21:43:41 fuzzer vm-7 connected
+2019/12/14 21:43:41 VMs 8, executed 1276092, cover 106594, crashes 80, repro 0
+2019/12/14 21:43:41 fuzzer vm-2 connected
+2019/12/14 21:43:51 VMs 8, executed 1277215, cover 106631, crashes 80, repro 0
+2019/12/14 21:44:01 VMs 8, executed 1277500, cover 106737, crashes 80, repro 0
+2019/12/14 21:44:10 vm-0: running for 1h0m0.000751237s, restarting
+2019/12/14 21:44:10 loop: instance 0 finished, crash=false
+2019/12/14 21:44:10 loop: phase=4 shutdown=false instances=1/8 [0] repro: pending=0 reproducing=0 queued=0
+2019/12/14 21:44:10 loop: starting instance 0
+2019/12/14 21:44:11 VMs 7, executed 1278307, cover 106749, crashes 80, repro 0
+2019/12/14 21:44:21 VMs 7, executed 1280221, cover 106762, crashes 80, repro 0
+2019/12/14 21:44:28 fuzzer vm-0 connected
+2019/12/14 21:44:31 VMs 8, executed 1281621, cover 106768, crashes 80, repro 0
+2019/12/14 21:44:41 VMs 8, executed 1283084, cover 106900, crashes 80, repro 0
+2019/12/14 21:44:51 VMs 8, executed 1284652, cover 106965, crashes 80, repro 0
+2019/12/14 21:45:01 VMs 8, executed 1285951, cover 106987, crashes 80, repro 0
+2019/12/14 21:45:11 VMs 8, executed 1287570, cover 106995, crashes 80, repro 0
+2019/12/14 21:45:21 VMs 8, executed 1288553, cover 107004, crashes 80, repro 0
+2019/12/14 21:45:26 loop: instance 2 finished, crash=true
+2019/12/14 21:45:26 vm-2: crash: WARNING in restore_regulatory_settings
+2019/12/14 21:45:27 loop: phase=4 shutdown=false instances=1/8 [2] repro: pending=0 reproducing=0 queued=0
+2019/12/14 21:45:27 loop: starting instance 2
+2019/12/14 21:45:31 VMs 7, executed 1288832, cover 107005, crashes 81, repro 0
+2019/12/14 21:45:41 VMs 7, executed 1289852, cover 107038, crashes 81, repro 0
+2019/12/14 21:45:45 fuzzer vm-2 connected
+2019/12/14 21:45:51 VMs 8, executed 1290539, cover 107041, crashes 81, repro 0
+2019/12/14 21:46:01 VMs 8, executed 1291464, cover 107062, crashes 81, repro 0
+2019/12/14 21:46:11 VMs 8, executed 1292162, cover 107070, crashes 81, repro 0
+2019/12/14 21:46:21 VMs 8, executed 1293167, cover 107078, crashes 81, repro 0
+2019/12/14 21:46:31 VMs 8, executed 1293762, cover 107201, crashes 81, repro 0
+2019/12/14 21:46:41 VMs 8, executed 1294674, cover 107207, crashes 81, repro 0
+2019/12/14 21:46:51 VMs 8, executed 1295727, cover 107213, crashes 81, repro 0
+2019/12/14 21:47:01 VMs 8, executed 1296409, cover 107213, crashes 81, repro 0
+2019/12/14 21:47:11 VMs 8, executed 1297610, cover 107236, crashes 81, repro 0
+2019/12/14 21:47:21 VMs 8, executed 1298028, cover 107236, crashes 81, repro 0
+2019/12/14 21:47:31 VMs 8, executed 1299188, cover 107237, crashes 81, repro 0
+2019/12/14 21:47:41 VMs 8, executed 1300097, cover 107238, crashes 81, repro 0
+2019/12/14 21:47:51 VMs 8, executed 1300712, cover 107242, crashes 81, repro 0
+2019/12/14 21:48:01 VMs 8, executed 1301057, cover 107245, crashes 81, repro 0
+2019/12/14 21:48:11 VMs 8, executed 1302000, cover 107245, crashes 81, repro 0
+2019/12/14 21:48:21 VMs 8, executed 1302204, cover 107245, crashes 81, repro 0
+2019/12/14 21:48:31 VMs 8, executed 1303086, cover 107249, crashes 81, repro 0
+2019/12/14 21:48:41 VMs 8, executed 1303964, cover 107276, crashes 81, repro 0
+2019/12/14 21:48:51 VMs 8, executed 1304581, cover 107283, crashes 81, repro 0
+2019/12/14 21:49:01 VMs 8, executed 1305000, cover 107283, crashes 81, repro 0
+2019/12/14 21:49:11 VMs 8, executed 1305259, cover 107283, crashes 81, repro 0
+2019/12/14 21:49:21 VMs 8, executed 1305658, cover 107291, crashes 81, repro 0
+2019/12/14 21:49:31 VMs 8, executed 1306098, cover 107295, crashes 81, repro 0
+2019/12/14 21:49:41 VMs 8, executed 1306696, cover 107295, crashes 81, repro 0
+2019/12/14 21:49:50 loop: instance 7 finished, crash=true
+2019/12/14 21:49:50 vm-7: crash: no output from test machine
+2019/12/14 21:49:50 loop: phase=4 shutdown=false instances=1/8 [7] repro: pending=0 reproducing=0 queued=0
+2019/12/14 21:49:50 loop: starting instance 7
+2019/12/14 21:49:51 VMs 7, executed 1307215, cover 107295, crashes 82, repro 0
+2019/12/14 21:50:01 VMs 7, executed 1308263, cover 107295, crashes 82, repro 0
+2019/12/14 21:50:03 fuzzer vm-7 connected
+2019/12/14 21:50:11 VMs 8, executed 1308901, cover 107313, crashes 82, repro 0
+2019/12/14 21:50:21 VMs 8, executed 1309733, cover 107359, crashes 82, repro 0
+2019/12/14 21:50:31 VMs 8, executed 1310687, cover 107381, crashes 82, repro 0
+2019/12/14 21:50:41 VMs 8, executed 1311378, cover 107394, crashes 82, repro 0
+2019/12/14 21:50:51 VMs 8, executed 1312298, cover 107396, crashes 82, repro 0
+2019/12/14 21:51:01 VMs 8, executed 1313058, cover 107402, crashes 82, repro 0
+2019/12/14 21:51:11 VMs 8, executed 1313284, cover 107403, crashes 82, repro 0
+2019/12/14 21:51:21 VMs 8, executed 1314405, cover 107442, crashes 82, repro 0
+2019/12/14 21:51:31 VMs 8, executed 1314942, cover 107465, crashes 82, repro 0
+2019/12/14 21:51:41 VMs 8, executed 1315090, cover 107468, crashes 82, repro 0
+2019/12/14 21:51:51 VMs 8, executed 1315660, cover 107468, crashes 82, repro 0
+2019/12/14 21:52:01 VMs 8, executed 1316196, cover 107469, crashes 82, repro 0
+2019/12/14 21:52:11 VMs 8, executed 1316630, cover 107469, crashes 82, repro 0
+2019/12/14 21:52:21 VMs 8, executed 1317011, cover 107487, crashes 82, repro 0
+2019/12/14 21:52:31 VMs 8, executed 1317108, cover 107487, crashes 82, repro 0
+2019/12/14 21:52:41 VMs 8, executed 1317506, cover 107487, crashes 82, repro 0
+2019/12/14 21:52:51 VMs 8, executed 1318107, cover 107487, crashes 82, repro 0
+2019/12/14 21:53:01 VMs 8, executed 1318512, cover 107487, crashes 82, repro 0
+2019/12/14 21:53:11 VMs 8, executed 1318744, cover 107487, crashes 82, repro 0
+2019/12/14 21:53:21 VMs 8, executed 1319348, cover 107487, crashes 82, repro 0
+2019/12/14 21:53:31 VMs 8, executed 1319673, cover 107487, crashes 82, repro 0
+2019/12/14 21:53:41 VMs 8, executed 1320690, cover 107490, crashes 82, repro 0
+2019/12/14 21:53:51 VMs 8, executed 1321130, cover 107512, crashes 82, repro 0
+2019/12/14 21:54:01 VMs 8, executed 1322265, cover 107520, crashes 82, repro 0
+2019/12/14 21:54:11 VMs 8, executed 1323102, cover 107520, crashes 82, repro 0
+2019/12/14 21:54:21 VMs 8, executed 1323511, cover 107521, crashes 82, repro 0
+2019/12/14 21:54:31 VMs 8, executed 1324028, cover 107521, crashes 82, repro 0
+2019/12/14 21:54:41 VMs 8, executed 1324230, cover 107523, crashes 82, repro 0
+2019/12/14 21:54:51 VMs 8, executed 1324801, cover 107523, crashes 82, repro 0
+2019/12/14 21:54:52 vm-3: running for 1h0m0.000817124s, restarting
+2019/12/14 21:54:52 loop: instance 3 finished, crash=false
+2019/12/14 21:54:52 loop: phase=4 shutdown=false instances=1/8 [3] repro: pending=0 reproducing=0 queued=0
+2019/12/14 21:54:52 loop: starting instance 3
+2019/12/14 21:55:01 VMs 7, executed 1325436, cover 107557, crashes 82, repro 0
+2019/12/14 21:55:10 fuzzer vm-3 connected
+2019/12/14 21:55:11 VMs 8, executed 1325673, cover 107559, crashes 82, repro 0
+2019/12/14 21:55:21 VMs 8, executed 1326281, cover 107559, crashes 82, repro 0
+2019/12/14 21:55:31 VMs 8, executed 1326931, cover 107573, crashes 82, repro 0
+2019/12/14 21:55:41 VMs 8, executed 1327407, cover 107573, crashes 82, repro 0
+2019/12/14 21:55:51 VMs 8, executed 1328025, cover 107573, crashes 82, repro 0
+2019/12/14 21:56:01 VMs 8, executed 1328572, cover 107578, crashes 82, repro 0
+2019/12/14 21:56:11 VMs 8, executed 1329390, cover 107587, crashes 82, repro 0
+2019/12/14 21:56:21 VMs 8, executed 1329807, cover 107589, crashes 82, repro 0
+2019/12/14 21:56:31 VMs 8, executed 1330408, cover 107590, crashes 82, repro 0
+2019/12/14 21:56:41 VMs 8, executed 1331181, cover 107590, crashes 82, repro 0
+2019/12/14 21:56:51 VMs 8, executed 1331587, cover 107593, crashes 82, repro 0
+2019/12/14 21:57:01 VMs 8, executed 1331902, cover 107595, crashes 82, repro 0
+2019/12/14 21:57:11 VMs 8, executed 1332636, cover 107599, crashes 82, repro 0
+2019/12/14 21:57:21 VMs 8, executed 1333230, cover 107609, crashes 82, repro 0
+2019/12/14 21:57:31 VMs 8, executed 1333743, cover 107610, crashes 82, repro 0
+2019/12/14 21:57:41 VMs 8, executed 1334837, cover 107610, crashes 82, repro 0
+2019/12/14 21:57:51 VMs 8, executed 1335457, cover 107700, crashes 82, repro 0
+2019/12/14 21:58:01 VMs 8, executed 1336007, cover 107702, crashes 82, repro 0
+2019/12/14 21:58:11 VMs 8, executed 1336336, cover 107702, crashes 82, repro 0
+2019/12/14 21:58:21 VMs 8, executed 1337156, cover 107702, crashes 82, repro 0
+2019/12/14 21:58:31 VMs 8, executed 1337343, cover 107703, crashes 82, repro 0
+2019/12/14 21:58:41 VMs 8, executed 1337915, cover 107703, crashes 82, repro 0
+2019/12/14 21:58:51 VMs 8, executed 1338315, cover 107703, crashes 82, repro 0
+2019/12/14 21:59:01 VMs 8, executed 1338362, cover 107703, crashes 82, repro 0
+2019/12/14 21:59:11 VMs 8, executed 1338652, cover 107703, crashes 82, repro 0
+2019/12/14 21:59:21 VMs 8, executed 1338930, cover 107703, crashes 82, repro 0
+2019/12/14 21:59:31 VMs 8, executed 1339046, cover 107703, crashes 82, repro 0
+2019/12/14 21:59:41 VMs 8, executed 1339359, cover 107703, crashes 82, repro 0
+2019/12/14 21:59:51 VMs 8, executed 1339384, cover 107703, crashes 82, repro 0
+2019/12/14 22:00:01 VMs 8, executed 1339566, cover 107703, crashes 82, repro 0
+2019/12/14 22:00:11 VMs 8, executed 1339838, cover 107705, crashes 82, repro 0
+2019/12/14 22:00:21 VMs 8, executed 1339880, cover 107721, crashes 82, repro 0
+2019/12/14 22:00:31 VMs 8, executed 1340095, cover 107721, crashes 82, repro 0
+2019/12/14 22:00:41 VMs 8, executed 1340155, cover 107748, crashes 82, repro 0
+2019/12/14 22:00:51 VMs 8, executed 1340225, cover 107749, crashes 82, repro 0
+2019/12/14 22:01:01 VMs 8, executed 1340354, cover 107749, crashes 82, repro 0
+2019/12/14 22:01:11 VMs 8, executed 1340569, cover 107749, crashes 82, repro 0
+2019/12/14 22:01:15 loop: instance 2 finished, crash=true
+2019/12/14 22:01:15 vm-2: crash: no output from test machine
+2019/12/14 22:01:15 loop: phase=4 shutdown=false instances=1/8 [2] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:01:15 loop: starting instance 2
+2019/12/14 22:01:21 VMs 7, executed 1340897, cover 107749, crashes 83, repro 0
+2019/12/14 22:01:31 VMs 7, executed 1341209, cover 107763, crashes 83, repro 0
+2019/12/14 22:01:33 loop: instance 7 finished, crash=true
+2019/12/14 22:01:33 vm-7: crash: no output from test machine
+2019/12/14 22:01:33 loop: phase=4 shutdown=false instances=1/8 [7] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:01:33 loop: starting instance 7
+2019/12/14 22:01:33 fuzzer vm-2 connected
+2019/12/14 22:01:34 minimized corpus: 7819 -&gt; 7699
+2019/12/14 22:01:41 VMs 7, executed 1341231, cover 107763, crashes 84, repro 0
+2019/12/14 22:01:51 VMs 8, executed 1341609, cover 107763, crashes 84, repro 0
+2019/12/14 22:01:51 fuzzer vm-7 connected
+2019/12/14 22:02:01 VMs 8, executed 1341823, cover 107763, crashes 84, repro 0
+2019/12/14 22:02:07 vm-6: running for 1h0m0.001973526s, restarting
+2019/12/14 22:02:07 loop: instance 6 finished, crash=false
+2019/12/14 22:02:07 loop: phase=4 shutdown=false instances=1/8 [6] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:02:07 loop: starting instance 6
+2019/12/14 22:02:11 VMs 7, executed 1342480, cover 107763, crashes 84, repro 0
+2019/12/14 22:02:21 VMs 8, executed 1342739, cover 107764, crashes 84, repro 0
+2019/12/14 22:02:22 fuzzer vm-6 connected
+2019/12/14 22:02:31 VMs 8, executed 1344807, cover 107775, crashes 84, repro 0
+2019/12/14 22:02:41 VMs 8, executed 1345930, cover 107778, crashes 84, repro 0
+2019/12/14 22:02:51 VMs 8, executed 1346631, cover 107778, crashes 84, repro 0
+2019/12/14 22:03:01 VMs 8, executed 1348839, cover 107783, crashes 84, repro 0
+2019/12/14 22:03:11 VMs 8, executed 1350437, cover 107804, crashes 84, repro 0
+2019/12/14 22:03:21 VMs 8, executed 1351585, cover 107826, crashes 84, repro 0
+2019/12/14 22:03:31 VMs 8, executed 1352289, cover 107832, crashes 84, repro 0
+2019/12/14 22:03:32 loop: instance 1 finished, crash=true
+2019/12/14 22:03:32 vm-1: crash: no output from test machine
+2019/12/14 22:03:32 loop: phase=4 shutdown=false instances=1/8 [1] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:03:32 loop: starting instance 1
+2019/12/14 22:03:41 VMs 7, executed 1352889, cover 107915, crashes 85, repro 0
+2019/12/14 22:03:46 fuzzer vm-1 connected
+2019/12/14 22:03:51 VMs 8, executed 1353633, cover 107915, crashes 85, repro 0
+2019/12/14 22:04:01 VMs 8, executed 1353977, cover 107932, crashes 85, repro 0
+2019/12/14 22:04:11 VMs 8, executed 1354539, cover 107938, crashes 85, repro 0
+2019/12/14 22:04:21 VMs 8, executed 1355222, cover 107958, crashes 85, repro 0
+2019/12/14 22:04:31 VMs 8, executed 1355981, cover 107960, crashes 85, repro 0
+2019/12/14 22:04:41 VMs 8, executed 1357155, cover 108094, crashes 85, repro 0
+2019/12/14 22:04:51 VMs 8, executed 1358071, cover 108094, crashes 85, repro 0
+2019/12/14 22:05:01 VMs 8, executed 1358790, cover 108102, crashes 85, repro 0
+2019/12/14 22:05:11 VMs 8, executed 1359024, cover 108102, crashes 85, repro 0
+2019/12/14 22:05:18 loop: instance 1 finished, crash=true
+2019/12/14 22:05:18 vm-1: crash: KASAN: use-after-free Read in vc_do_resize
+2019/12/14 22:05:21 VMs 7, executed 1359206, cover 108106, crashes 85, repro 0
+2019/12/14 22:05:25 loop: phase=4 shutdown=false instances=1/8 [1] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:05:25 loop: starting instance 1
+2019/12/14 22:05:31 VMs 7, executed 1359647, cover 108106, crashes 86, repro 0
+2019/12/14 22:05:38 fuzzer vm-1 connected
+2019/12/14 22:05:41 VMs 8, executed 1359717, cover 108110, crashes 86, repro 0
+2019/12/14 22:05:51 VMs 8, executed 1359902, cover 108110, crashes 86, repro 0
+2019/12/14 22:06:01 vm-5: running for 1h0m0.001169552s, restarting
+2019/12/14 22:06:01 loop: instance 5 finished, crash=false
+2019/12/14 22:06:01 loop: phase=4 shutdown=false instances=1/8 [5] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:06:01 loop: starting instance 5
+2019/12/14 22:06:01 VMs 7, executed 1360140, cover 108143, crashes 86, repro 0
+2019/12/14 22:06:11 VMs 7, executed 1360536, cover 108148, crashes 86, repro 0
+2019/12/14 22:06:14 fuzzer vm-5 connected
+2019/12/14 22:06:21 VMs 8, executed 1361113, cover 108160, crashes 86, repro 0
+2019/12/14 22:06:31 VMs 8, executed 1362065, cover 108160, crashes 86, repro 0
+2019/12/14 22:06:41 VMs 8, executed 1362444, cover 108160, crashes 86, repro 0
+2019/12/14 22:06:51 VMs 8, executed 1363449, cover 108162, crashes 86, repro 0
+2019/12/14 22:07:01 VMs 8, executed 1364303, cover 108162, crashes 86, repro 0
+2019/12/14 22:07:11 VMs 8, executed 1365716, cover 108162, crashes 86, repro 0
+2019/12/14 22:07:20 loop: instance 1 finished, crash=true
+2019/12/14 22:07:20 vm-1: crash: KASAN: use-after-free Write in release_tty
+2019/12/14 22:07:20 loop: phase=4 shutdown=false instances=1/8 [1] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:07:20 loop: starting instance 1
+2019/12/14 22:07:21 VMs 7, executed 1365994, cover 108172, crashes 87, repro 0
+2019/12/14 22:07:31 VMs 7, executed 1366943, cover 108175, crashes 87, repro 0
+2019/12/14 22:07:40 fuzzer vm-1 connected
+2019/12/14 22:07:41 VMs 8, executed 1367080, cover 108175, crashes 87, repro 0
+2019/12/14 22:07:51 VMs 8, executed 1367844, cover 108175, crashes 87, repro 0
+2019/12/14 22:08:01 VMs 8, executed 1368429, cover 108175, crashes 87, repro 0
+2019/12/14 22:08:11 VMs 8, executed 1369128, cover 108175, crashes 87, repro 0
+2019/12/14 22:08:21 VMs 8, executed 1369753, cover 108177, crashes 87, repro 0
+2019/12/14 22:08:23 loop: instance 2 finished, crash=true
+2019/12/14 22:08:23 vm-2: crash: no output from test machine
+2019/12/14 22:08:23 loop: phase=4 shutdown=false instances=1/8 [2] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:08:23 loop: starting instance 2
+2019/12/14 22:08:31 VMs 7, executed 1370443, cover 108177, crashes 88, repro 0
+2019/12/14 22:08:41 fuzzer vm-2 connected
+2019/12/14 22:08:41 VMs 7, executed 1370776, cover 108177, crashes 88, repro 0
+2019/12/14 22:08:41 loop: instance 6 finished, crash=true
+2019/12/14 22:08:41 vm-6: crash: no output from test machine
+2019/12/14 22:08:41 loop: phase=4 shutdown=false instances=1/8 [6] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:08:41 loop: starting instance 6
+2019/12/14 22:08:51 VMs 7, executed 1371630, cover 108177, crashes 89, repro 0
+2019/12/14 22:08:55 fuzzer vm-6 connected
+2019/12/14 22:09:01 VMs 8, executed 1372245, cover 108178, crashes 89, repro 0
+2019/12/14 22:09:11 VMs 8, executed 1372818, cover 108178, crashes 89, repro 0
+2019/12/14 22:09:21 VMs 8, executed 1374226, cover 108228, crashes 89, repro 0
+2019/12/14 22:09:31 VMs 8, executed 1375581, cover 108243, crashes 89, repro 0
+2019/12/14 22:09:41 VMs 8, executed 1377406, cover 108248, crashes 89, repro 0
+2019/12/14 22:09:51 VMs 8, executed 1378876, cover 108248, crashes 89, repro 0
+2019/12/14 22:10:01 VMs 8, executed 1379789, cover 108250, crashes 89, repro 0
+2019/12/14 22:10:11 VMs 8, executed 1380715, cover 108262, crashes 89, repro 0
+2019/12/14 22:10:21 VMs 8, executed 1381360, cover 108292, crashes 89, repro 0
+2019/12/14 22:10:31 VMs 8, executed 1382833, cover 108297, crashes 89, repro 0
+2019/12/14 22:10:41 VMs 8, executed 1383533, cover 108297, crashes 89, repro 0
+2019/12/14 22:10:51 VMs 8, executed 1383880, cover 108297, crashes 89, repro 0
+2019/12/14 22:11:01 VMs 8, executed 1384633, cover 108297, crashes 89, repro 0
+2019/12/14 22:11:11 VMs 8, executed 1384784, cover 108297, crashes 89, repro 0
+2019/12/14 22:11:21 VMs 8, executed 1385302, cover 108297, crashes 89, repro 0
+2019/12/14 22:11:31 VMs 8, executed 1385639, cover 108297, crashes 89, repro 0
+2019/12/14 22:11:41 VMs 8, executed 1385947, cover 108297, crashes 89, repro 0
+2019/12/14 22:11:51 VMs 8, executed 1386109, cover 108299, crashes 89, repro 0
+2019/12/14 22:12:01 VMs 8, executed 1387037, cover 108299, crashes 89, repro 0
+2019/12/14 22:12:11 VMs 8, executed 1387282, cover 108299, crashes 89, repro 0
+2019/12/14 22:12:21 VMs 8, executed 1388057, cover 108299, crashes 89, repro 0
+2019/12/14 22:12:31 loop: instance 7 finished, crash=true
+2019/12/14 22:12:31 vm-7: crash: no output from test machine
+2019/12/14 22:12:31 loop: phase=4 shutdown=false instances=1/8 [7] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:12:31 loop: starting instance 7
+2019/12/14 22:12:31 VMs 7, executed 1388555, cover 108387, crashes 90, repro 0
+2019/12/14 22:12:41 VMs 7, executed 1389155, cover 108391, crashes 90, repro 0
+2019/12/14 22:12:51 fuzzer vm-7 connected
+2019/12/14 22:12:51 VMs 8, executed 1389423, cover 108404, crashes 90, repro 0
+2019/12/14 22:13:01 VMs 8, executed 1390262, cover 108413, crashes 90, repro 0
+2019/12/14 22:13:11 VMs 8, executed 1390627, cover 108418, crashes 90, repro 0
+2019/12/14 22:13:21 VMs 8, executed 1391764, cover 108508, crashes 90, repro 0
+2019/12/14 22:13:22 loop: instance 4 finished, crash=true
+2019/12/14 22:13:22 vm-4: crash: no output from test machine
+2019/12/14 22:13:22 loop: phase=4 shutdown=false instances=1/8 [4] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:13:22 loop: starting instance 4
+2019/12/14 22:13:31 VMs 7, executed 1392655, cover 108516, crashes 91, repro 0
+2019/12/14 22:13:40 fuzzer vm-4 connected
+2019/12/14 22:13:41 VMs 8, executed 1393292, cover 108523, crashes 91, repro 0
+2019/12/14 22:13:51 VMs 8, executed 1394683, cover 108534, crashes 91, repro 0
+2019/12/14 22:14:01 VMs 8, executed 1395645, cover 108546, crashes 91, repro 0
+2019/12/14 22:14:11 VMs 8, executed 1396343, cover 108569, crashes 91, repro 0
+2019/12/14 22:14:21 VMs 8, executed 1397873, cover 108575, crashes 91, repro 0
+2019/12/14 22:14:31 VMs 8, executed 1399352, cover 108578, crashes 91, repro 0
+2019/12/14 22:14:41 VMs 8, executed 1401120, cover 108619, crashes 91, repro 0
+2019/12/14 22:14:51 VMs 8, executed 1402024, cover 108628, crashes 91, repro 0
+2019/12/14 22:15:01 VMs 8, executed 1403255, cover 108631, crashes 91, repro 0
+2019/12/14 22:15:11 VMs 8, executed 1403859, cover 108631, crashes 91, repro 0
+2019/12/14 22:15:21 VMs 8, executed 1404666, cover 108642, crashes 91, repro 0
+2019/12/14 22:15:31 VMs 8, executed 1406054, cover 108645, crashes 91, repro 0
+2019/12/14 22:15:40 loop: instance 1 finished, crash=true
+2019/12/14 22:15:40 vm-1: crash: no output from test machine
+2019/12/14 22:15:40 loop: phase=4 shutdown=false instances=1/8 [1] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:15:40 loop: starting instance 1
+2019/12/14 22:15:41 VMs 7, executed 1407490, cover 108672, crashes 92, repro 0
+2019/12/14 22:15:51 VMs 7, executed 1408531, cover 108681, crashes 92, repro 0
+2019/12/14 22:16:00 fuzzer vm-1 connected
+2019/12/14 22:16:01 VMs 8, executed 1409343, cover 108683, crashes 92, repro 0
+2019/12/14 22:16:11 VMs 8, executed 1410575, cover 108685, crashes 92, repro 0
+2019/12/14 22:16:21 VMs 8, executed 1410959, cover 108685, crashes 92, repro 0
+2019/12/14 22:16:31 VMs 8, executed 1411893, cover 108687, crashes 92, repro 0
+2019/12/14 22:16:41 VMs 8, executed 1412922, cover 108694, crashes 92, repro 0
+2019/12/14 22:16:51 VMs 8, executed 1413763, cover 108702, crashes 92, repro 0
+2019/12/14 22:17:01 VMs 8, executed 1414502, cover 108715, crashes 92, repro 0
+2019/12/14 22:17:11 VMs 8, executed 1415025, cover 108715, crashes 92, repro 0
+2019/12/14 22:17:21 VMs 8, executed 1415709, cover 108715, crashes 92, repro 0
+2019/12/14 22:17:31 VMs 8, executed 1416283, cover 108717, crashes 92, repro 0
+2019/12/14 22:17:41 VMs 8, executed 1417315, cover 108717, crashes 92, repro 0
+2019/12/14 22:17:51 VMs 8, executed 1418101, cover 108731, crashes 92, repro 0
+2019/12/14 22:18:01 VMs 8, executed 1419031, cover 108733, crashes 92, repro 0
+2019/12/14 22:18:11 VMs 8, executed 1419621, cover 108734, crashes 92, repro 0
+2019/12/14 22:18:21 VMs 8, executed 1420858, cover 108738, crashes 92, repro 0
+2019/12/14 22:18:31 VMs 8, executed 1421102, cover 108740, crashes 92, repro 0
+2019/12/14 22:18:41 VMs 8, executed 1422062, cover 108743, crashes 92, repro 0
+2019/12/14 22:18:51 VMs 8, executed 1422829, cover 108744, crashes 92, repro 0
+2019/12/14 22:18:56 loop: instance 7 finished, crash=true
+2019/12/14 22:18:56 vm-7: crash: WARNING in restore_regulatory_settings
+2019/12/14 22:18:57 loop: phase=4 shutdown=false instances=1/8 [7] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:18:57 loop: starting instance 7
+2019/12/14 22:19:01 VMs 7, executed 1423128, cover 108744, crashes 93, repro 0
+2019/12/14 22:19:11 VMs 7, executed 1423554, cover 108750, crashes 93, repro 0
+2019/12/14 22:19:15 fuzzer vm-7 connected
+2019/12/14 22:19:21 VMs 8, executed 1424085, cover 108752, crashes 93, repro 0
+2019/12/14 22:19:31 VMs 8, executed 1424551, cover 108752, crashes 93, repro 0
+2019/12/14 22:19:41 VMs 8, executed 1425339, cover 108754, crashes 93, repro 0
+2019/12/14 22:19:51 VMs 8, executed 1426036, cover 108754, crashes 93, repro 0
+2019/12/14 22:20:01 VMs 8, executed 1426589, cover 108761, crashes 93, repro 0
+2019/12/14 22:20:11 VMs 8, executed 1426901, cover 108761, crashes 93, repro 0
+2019/12/14 22:20:19 loop: instance 7 finished, crash=true
+2019/12/14 22:20:19 vm-7: crash: KASAN: use-after-free Read in clear_buffer_attributes
+2019/12/14 22:20:21 VMs 7, executed 1427311, cover 108765, crashes 93, repro 0
+2019/12/14 22:20:23 loop: phase=4 shutdown=false instances=1/8 [7] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:20:23 loop: starting instance 7
+2019/12/14 22:20:31 VMs 7, executed 1427767, cover 108773, crashes 94, repro 0
+2019/12/14 22:20:41 VMs 7, executed 1428331, cover 108773, crashes 94, repro 0
+2019/12/14 22:20:42 fuzzer vm-7 connected
+2019/12/14 22:20:51 VMs 8, executed 1428461, cover 108786, crashes 94, repro 0
+2019/12/14 22:21:01 VMs 8, executed 1428955, cover 108786, crashes 94, repro 0
+2019/12/14 22:21:11 VMs 8, executed 1429207, cover 108801, crashes 94, repro 0
+2019/12/14 22:21:21 VMs 8, executed 1430076, cover 108801, crashes 94, repro 0
+2019/12/14 22:21:31 VMs 8, executed 1430474, cover 108801, crashes 94, repro 0
+2019/12/14 22:21:34 loop: instance 5 finished, crash=true
+2019/12/14 22:21:34 vm-5: crash: no output from test machine
+2019/12/14 22:21:34 loop: phase=4 shutdown=false instances=1/8 [5] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:21:34 loop: starting instance 5
+2019/12/14 22:21:39 loop: instance 1 finished, crash=true
+2019/12/14 22:21:39 vm-1: crash: no output from test machine
+2019/12/14 22:21:39 loop: phase=4 shutdown=false instances=1/8 [1] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:21:39 loop: starting instance 1
+2019/12/14 22:21:41 VMs 6, executed 1431635, cover 108811, crashes 96, repro 0
+2019/12/14 22:21:51 VMs 6, executed 1432025, cover 108814, crashes 96, repro 0
+2019/12/14 22:21:54 fuzzer vm-5 connected
+2019/12/14 22:21:58 fuzzer vm-1 connected
+2019/12/14 22:22:01 VMs 8, executed 1432823, cover 108814, crashes 96, repro 0
+2019/12/14 22:22:11 VMs 8, executed 1433225, cover 108827, crashes 96, repro 0
+2019/12/14 22:22:21 VMs 8, executed 1434342, cover 108827, crashes 96, repro 0
+2019/12/14 22:22:31 VMs 8, executed 1435550, cover 108827, crashes 96, repro 0
+2019/12/14 22:22:41 VMs 8, executed 1437302, cover 108834, crashes 96, repro 0
+2019/12/14 22:22:51 VMs 8, executed 1438741, cover 108840, crashes 96, repro 0
+2019/12/14 22:23:01 VMs 8, executed 1439841, cover 108845, crashes 96, repro 0
+2019/12/14 22:23:11 VMs 8, executed 1441375, cover 108848, crashes 96, repro 0
+2019/12/14 22:23:21 VMs 8, executed 1442130, cover 108848, crashes 96, repro 0
+2019/12/14 22:23:31 VMs 8, executed 1442915, cover 108848, crashes 96, repro 0
+2019/12/14 22:23:41 VMs 8, executed 1444140, cover 108848, crashes 96, repro 0
+2019/12/14 22:23:51 VMs 8, executed 1444865, cover 108851, crashes 96, repro 0
+2019/12/14 22:24:01 VMs 8, executed 1445499, cover 108851, crashes 96, repro 0
+2019/12/14 22:24:11 VMs 8, executed 1446137, cover 108858, crashes 96, repro 0
+2019/12/14 22:24:21 VMs 8, executed 1446780, cover 108860, crashes 96, repro 0
+2019/12/14 22:24:31 VMs 8, executed 1446846, cover 108886, crashes 96, repro 0
+2019/12/14 22:24:41 VMs 8, executed 1447450, cover 108890, crashes 96, repro 0
+2019/12/14 22:24:51 VMs 8, executed 1448018, cover 108899, crashes 96, repro 0
+2019/12/14 22:25:01 VMs 8, executed 1448244, cover 108903, crashes 96, repro 0
+2019/12/14 22:25:11 VMs 8, executed 1448799, cover 108903, crashes 96, repro 0
+2019/12/14 22:25:21 VMs 8, executed 1449482, cover 108915, crashes 96, repro 0
+2019/12/14 22:25:31 VMs 8, executed 1449706, cover 108920, crashes 96, repro 0
+2019/12/14 22:25:41 VMs 8, executed 1450039, cover 108945, crashes 96, repro 0
+2019/12/14 22:25:51 VMs 8, executed 1450460, cover 108953, crashes 96, repro 0
+2019/12/14 22:26:01 VMs 8, executed 1450978, cover 108958, crashes 96, repro 0
+2019/12/14 22:26:11 VMs 8, executed 1451093, cover 109004, crashes 96, repro 0
+2019/12/14 22:26:21 VMs 8, executed 1451901, cover 109004, crashes 96, repro 0
+2019/12/14 22:26:31 VMs 8, executed 1452522, cover 109007, crashes 96, repro 0
+2019/12/14 22:26:41 VMs 8, executed 1452800, cover 109015, crashes 96, repro 0
+2019/12/14 22:26:48 loop: instance 7 finished, crash=true
+2019/12/14 22:26:48 vm-7: crash: general protection fault in rwsem_mark_wake
+2019/12/14 22:26:51 VMs 7, executed 1452879, cover 109075, crashes 96, repro 0
+2019/12/14 22:26:52 loop: phase=4 shutdown=false instances=1/8 [7] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:26:52 loop: starting instance 7
+2019/12/14 22:27:01 VMs 7, executed 1453305, cover 109075, crashes 97, repro 0
+2019/12/14 22:27:08 fuzzer vm-7 connected
+2019/12/14 22:27:11 VMs 8, executed 1453732, cover 109091, crashes 97, repro 0
+2019/12/14 22:27:20 loop: instance 3 finished, crash=true
+2019/12/14 22:27:20 vm-3: crash: no output from test machine
+2019/12/14 22:27:20 loop: phase=4 shutdown=false instances=1/8 [3] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:27:20 loop: starting instance 3
+2019/12/14 22:27:21 VMs 7, executed 1453942, cover 109093, crashes 98, repro 0
+2019/12/14 22:27:31 VMs 7, executed 1454020, cover 109101, crashes 98, repro 0
+2019/12/14 22:27:33 fuzzer vm-3 connected
+2019/12/14 22:27:41 VMs 8, executed 1454371, cover 109105, crashes 98, repro 0
+2019/12/14 22:27:51 VMs 8, executed 1454640, cover 109115, crashes 98, repro 0
+2019/12/14 22:28:01 VMs 8, executed 1455345, cover 109117, crashes 98, repro 0
+2019/12/14 22:28:03 loop: instance 5 finished, crash=true
+2019/12/14 22:28:03 vm-5: crash: no output from test machine
+2019/12/14 22:28:03 loop: phase=4 shutdown=false instances=1/8 [5] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:28:03 loop: starting instance 5
+2019/12/14 22:28:11 VMs 7, executed 1456204, cover 109121, crashes 99, repro 0
+2019/12/14 22:28:20 loop: instance 6 finished, crash=true
+2019/12/14 22:28:20 vm-6: crash: KASAN: use-after-free Write in release_tty
+2019/12/14 22:28:21 VMs 6, executed 1457083, cover 109133, crashes 99, repro 0
+2019/12/14 22:28:23 fuzzer vm-5 connected
+2019/12/14 22:28:24 loop: phase=4 shutdown=false instances=1/8 [6] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:28:24 loop: starting instance 6
+2019/12/14 22:28:24 loop: instance 3 finished, crash=true
+2019/12/14 22:28:24 vm-3: crash: KASAN: use-after-free Read in clear_buffer_attributes
+2019/12/14 22:28:28 loop: phase=4 shutdown=false instances=1/8 [3] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:28:28 loop: starting instance 3
+2019/12/14 22:28:31 VMs 6, executed 1457167, cover 109138, crashes 101, repro 0
+2019/12/14 22:28:37 loop: instance 7 finished, crash=true
+2019/12/14 22:28:37 vm-7: crash: KASAN: use-after-free Read in vc_do_resize
+2019/12/14 22:28:41 loop: phase=4 shutdown=false instances=1/8 [7] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:28:41 loop: starting instance 7
+2019/12/14 22:28:41 VMs 5, executed 1457362, cover 109138, crashes 102, repro 0
+2019/12/14 22:28:45 fuzzer vm-6 connected
+2019/12/14 22:28:47 fuzzer vm-3 connected
+2019/12/14 22:28:51 VMs 7, executed 1457647, cover 109143, crashes 102, repro 0
+2019/12/14 22:29:01 VMs 8, executed 1458074, cover 109162, crashes 102, repro 0
+2019/12/14 22:29:01 fuzzer vm-7 connected
+2019/12/14 22:29:02 minimized corpus: 7931 -&gt; 7811
+2019/12/14 22:29:07 loop: instance 1 finished, crash=true
+2019/12/14 22:29:07 vm-1: crash: no output from test machine
+2019/12/14 22:29:07 loop: phase=4 shutdown=false instances=1/8 [1] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:29:07 loop: starting instance 1
+2019/12/14 22:29:11 VMs 7, executed 1458438, cover 109162, crashes 103, repro 0
+2019/12/14 22:29:21 VMs 7, executed 1459524, cover 109162, crashes 103, repro 0
+2019/12/14 22:29:27 fuzzer vm-1 connected
+2019/12/14 22:29:31 VMs 8, executed 1460094, cover 109162, crashes 103, repro 0
+2019/12/14 22:29:41 VMs 8, executed 1461202, cover 109162, crashes 103, repro 0
+2019/12/14 22:29:51 VMs 8, executed 1462214, cover 109162, crashes 103, repro 0
+2019/12/14 22:30:01 VMs 8, executed 1464060, cover 109164, crashes 103, repro 0
+2019/12/14 22:30:10 loop: instance 3 finished, crash=true
+2019/12/14 22:30:10 vm-3: crash: WARNING in restore_regulatory_settings
+2019/12/14 22:30:11 loop: phase=4 shutdown=false instances=1/8 [3] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:30:11 loop: starting instance 3
+2019/12/14 22:30:11 VMs 7, executed 1464559, cover 109164, crashes 104, repro 0
+2019/12/14 22:30:21 VMs 7, executed 1465462, cover 109164, crashes 104, repro 0
+2019/12/14 22:30:24 fuzzer vm-3 connected
+2019/12/14 22:30:31 VMs 8, executed 1465908, cover 109164, crashes 104, repro 0
+2019/12/14 22:30:38 loop: instance 7 finished, crash=true
+2019/12/14 22:30:38 vm-7: crash: KASAN: use-after-free Read in clear_buffer_attributes
+2019/12/14 22:30:41 loop: phase=4 shutdown=false instances=1/8 [7] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:30:41 loop: starting instance 7
+2019/12/14 22:30:41 VMs 7, executed 1466200, cover 109164, crashes 105, repro 0
+2019/12/14 22:30:51 VMs 7, executed 1466265, cover 109164, crashes 105, repro 0
+2019/12/14 22:30:54 fuzzer vm-7 connected
+2019/12/14 22:31:01 VMs 8, executed 1467017, cover 109164, crashes 105, repro 0
+2019/12/14 22:31:11 VMs 8, executed 1467892, cover 109170, crashes 105, repro 0
+2019/12/14 22:31:21 VMs 8, executed 1468561, cover 109170, crashes 105, repro 0
+2019/12/14 22:31:31 VMs 8, executed 1469363, cover 109174, crashes 105, repro 0
+2019/12/14 22:31:41 VMs 8, executed 1470240, cover 109177, crashes 105, repro 0
+2019/12/14 22:31:51 VMs 8, executed 1470764, cover 109185, crashes 105, repro 0
+2019/12/14 22:32:01 VMs 8, executed 1471553, cover 109192, crashes 105, repro 0
+2019/12/14 22:32:11 VMs 8, executed 1472620, cover 109199, crashes 105, repro 0
+2019/12/14 22:32:21 VMs 8, executed 1473178, cover 109247, crashes 105, repro 0
+2019/12/14 22:32:31 VMs 8, executed 1474072, cover 109247, crashes 105, repro 0
+2019/12/14 22:32:41 VMs 8, executed 1474814, cover 109251, crashes 105, repro 0
+2019/12/14 22:32:51 VMs 8, executed 1475184, cover 109255, crashes 105, repro 0
+2019/12/14 22:33:01 VMs 8, executed 1475920, cover 109255, crashes 105, repro 0
+2019/12/14 22:33:11 VMs 8, executed 1476195, cover 109256, crashes 105, repro 0
+2019/12/14 22:33:14 loop: instance 7 finished, crash=true
+2019/12/14 22:33:14 vm-7: crash: KASAN: use-after-free Read in screen_glyph_unicode
+2019/12/14 22:33:18 loop: phase=4 shutdown=false instances=1/8 [7] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:33:18 loop: starting instance 7
+2019/12/14 22:33:21 VMs 7, executed 1476247, cover 109256, crashes 106, repro 0
+2019/12/14 22:33:31 VMs 7, executed 1476404, cover 109256, crashes 106, repro 0
+2019/12/14 22:33:36 fuzzer vm-7 connected
+2019/12/14 22:33:41 VMs 8, executed 1476828, cover 109256, crashes 106, repro 0
+2019/12/14 22:33:51 VMs 8, executed 1477111, cover 109256, crashes 106, repro 0
+2019/12/14 22:34:01 VMs 8, executed 1477582, cover 109267, crashes 106, repro 0
+2019/12/14 22:34:11 VMs 8, executed 1477864, cover 109269, crashes 106, repro 0
+2019/12/14 22:34:21 VMs 8, executed 1478822, cover 109269, crashes 106, repro 0
+2019/12/14 22:34:24 loop: instance 6 finished, crash=true
+2019/12/14 22:34:24 vm-6: crash: no output from test machine
+2019/12/14 22:34:24 loop: phase=4 shutdown=false instances=1/8 [6] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:34:24 loop: starting instance 6
+2019/12/14 22:34:31 VMs 7, executed 1479905, cover 109271, crashes 107, repro 0
+2019/12/14 22:34:41 VMs 7, executed 1480125, cover 109271, crashes 107, repro 0
+2019/12/14 22:34:46 fuzzer vm-6 connected
+2019/12/14 22:34:51 VMs 8, executed 1481241, cover 109279, crashes 107, repro 0
+2019/12/14 22:35:01 loop: instance 2 finished, crash=true
+2019/12/14 22:35:01 vm-2: crash: no output from test machine
+2019/12/14 22:35:01 loop: phase=4 shutdown=false instances=1/8 [2] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:35:01 loop: starting instance 2
+2019/12/14 22:35:01 VMs 7, executed 1481785, cover 109279, crashes 108, repro 0
+2019/12/14 22:35:06 loop: instance 1 finished, crash=true
+2019/12/14 22:35:06 vm-1: crash: no output from test machine
+2019/12/14 22:35:06 loop: phase=4 shutdown=false instances=1/8 [1] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:35:06 loop: starting instance 1
+2019/12/14 22:35:11 VMs 6, executed 1481983, cover 109279, crashes 109, repro 0
+2019/12/14 22:35:14 fuzzer vm-2 connected
+2019/12/14 22:35:21 VMs 7, executed 1482457, cover 109279, crashes 109, repro 0
+2019/12/14 22:35:25 fuzzer vm-1 connected
+2019/12/14 22:35:31 VMs 8, executed 1482828, cover 109289, crashes 109, repro 0
+2019/12/14 22:35:41 VMs 8, executed 1483669, cover 109303, crashes 109, repro 0
+2019/12/14 22:35:51 VMs 8, executed 1484913, cover 109305, crashes 109, repro 0
+2019/12/14 22:36:01 VMs 8, executed 1485502, cover 109305, crashes 109, repro 0
+2019/12/14 22:36:11 VMs 8, executed 1486435, cover 109305, crashes 109, repro 0
+2019/12/14 22:36:21 VMs 8, executed 1488123, cover 109450, crashes 109, repro 0
+2019/12/14 22:36:23 loop: instance 3 finished, crash=true
+2019/12/14 22:36:23 vm-3: crash: no output from test machine
+2019/12/14 22:36:23 loop: phase=4 shutdown=false instances=1/8 [3] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:36:23 loop: starting instance 3
+2019/12/14 22:36:31 VMs 7, executed 1489014, cover 109490, crashes 110, repro 0
+2019/12/14 22:36:41 VMs 7, executed 1489833, cover 109507, crashes 110, repro 0
+2019/12/14 22:36:43 fuzzer vm-3 connected
+2019/12/14 22:36:51 VMs 8, executed 1491456, cover 109524, crashes 110, repro 0
+2019/12/14 22:37:01 VMs 8, executed 1491993, cover 109529, crashes 110, repro 0
+2019/12/14 22:37:06 loop: instance 1 finished, crash=true
+2019/12/14 22:37:06 vm-1: crash: KASAN: use-after-free Read in vc_do_resize
+2019/12/14 22:37:10 loop: phase=4 shutdown=false instances=1/8 [1] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:37:10 loop: starting instance 1
+2019/12/14 22:37:11 VMs 7, executed 1492320, cover 109529, crashes 111, repro 0
+2019/12/14 22:37:21 VMs 7, executed 1492570, cover 109529, crashes 111, repro 0
+2019/12/14 22:37:23 loop: instance 5 finished, crash=true
+2019/12/14 22:37:23 vm-5: crash: no output from test machine
+2019/12/14 22:37:23 loop: phase=4 shutdown=false instances=1/8 [5] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:37:23 loop: starting instance 5
+2019/12/14 22:37:24 fuzzer vm-1 connected
+2019/12/14 22:37:28 loop: instance 3 finished, crash=true
+2019/12/14 22:37:28 vm-3: crash: KASAN: use-after-free Read in vgacon_invert_region
+2019/12/14 22:37:31 loop: phase=4 shutdown=false instances=1/8 [3] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:37:31 loop: starting instance 3
+2019/12/14 22:37:31 VMs 6, executed 1492767, cover 109529, crashes 113, repro 0
+2019/12/14 22:37:36 fuzzer vm-5 connected
+2019/12/14 22:37:41 VMs 7, executed 1492827, cover 109530, crashes 113, repro 0
+2019/12/14 22:37:44 fuzzer vm-3 connected
+2019/12/14 22:37:51 VMs 8, executed 1493074, cover 109530, crashes 113, repro 0
+2019/12/14 22:38:01 loop: instance 0 finished, crash=true
+2019/12/14 22:38:01 vm-0: crash: WARNING in restore_regulatory_settings
+2019/12/14 22:38:01 loop: phase=4 shutdown=false instances=1/8 [0] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:38:01 loop: starting instance 0
+2019/12/14 22:38:01 VMs 7, executed 1493644, cover 109532, crashes 114, repro 0
+2019/12/14 22:38:11 VMs 7, executed 1493962, cover 109533, crashes 114, repro 0
+2019/12/14 22:38:14 fuzzer vm-0 connected
+2019/12/14 22:38:21 VMs 8, executed 1495353, cover 109536, crashes 114, repro 0
+2019/12/14 22:38:31 VMs 8, executed 1497413, cover 109589, crashes 114, repro 0
+2019/12/14 22:38:37 loop: instance 5 finished, crash=true
+2019/12/14 22:38:37 vm-5: crash: KASAN: use-after-free Read in do_update_region
+2019/12/14 22:38:41 loop: phase=4 shutdown=false instances=1/8 [5] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:38:41 loop: starting instance 5
+2019/12/14 22:38:41 VMs 7, executed 1497563, cover 109589, crashes 115, repro 0
+2019/12/14 22:38:48 loop: instance 1 finished, crash=true
+2019/12/14 22:38:48 vm-1: crash: KASAN: use-after-free Read in clear_buffer_attributes
+2019/12/14 22:38:51 VMs 6, executed 1499009, cover 109605, crashes 115, repro 0
+2019/12/14 22:38:53 loop: phase=4 shutdown=false instances=1/8 [1] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:38:53 loop: starting instance 1
+2019/12/14 22:38:59 fuzzer vm-5 connected
+2019/12/14 22:39:01 VMs 7, executed 1499934, cover 109612, crashes 116, repro 0
+2019/12/14 22:39:05 loop: instance 3 finished, crash=true
+2019/12/14 22:39:05 vm-3: crash: KASAN: use-after-free Read in vgacon_invert_region
+2019/12/14 22:39:06 fuzzer vm-1 connected
+2019/12/14 22:39:08 loop: phase=4 shutdown=false instances=1/8 [3] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:39:08 loop: starting instance 3
+2019/12/14 22:39:11 VMs 7, executed 1499934, cover 109618, crashes 117, repro 0
+2019/12/14 22:39:13 loop: instance 0 finished, crash=true
+2019/12/14 22:39:13 vm-0: crash: KASAN: use-after-free Read in vc_uniscr_check
+2019/12/14 22:39:17 loop: phase=4 shutdown=false instances=1/8 [0] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:39:17 loop: starting instance 0
+2019/12/14 22:39:21 VMs 6, executed 1499943, cover 109627, crashes 118, repro 0
+2019/12/14 22:39:29 fuzzer vm-3 connected
+2019/12/14 22:39:31 VMs 7, executed 1499951, cover 109630, crashes 118, repro 0
+2019/12/14 22:39:36 fuzzer vm-0 connected
+2019/12/14 22:39:41 VMs 8, executed 1500783, cover 109638, crashes 118, repro 0
+2019/12/14 22:39:51 VMs 8, executed 1501242, cover 109640, crashes 118, repro 0
+2019/12/14 22:40:01 VMs 8, executed 1502040, cover 109640, crashes 118, repro 0
+2019/12/14 22:40:11 VMs 8, executed 1504154, cover 109722, crashes 118, repro 0
+2019/12/14 22:40:19 loop: instance 1 finished, crash=true
+2019/12/14 22:40:19 vm-1: crash: KASAN: use-after-free Read in vgacon_invert_region
+2019/12/14 22:40:21 VMs 7, executed 1505364, cover 109765, crashes 118, repro 0
+2019/12/14 22:40:22 loop: phase=4 shutdown=false instances=1/8 [1] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:40:22 loop: starting instance 1
+2019/12/14 22:40:27 loop: instance 5 finished, crash=true
+2019/12/14 22:40:27 vm-5: crash: KASAN: use-after-free Read in vgacon_invert_region
+2019/12/14 22:40:31 loop: phase=4 shutdown=false instances=1/8 [5] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:40:31 loop: starting instance 5
+2019/12/14 22:40:31 VMs 6, executed 1506328, cover 109778, crashes 120, repro 0
+2019/12/14 22:40:35 fuzzer vm-1 connected
+2019/12/14 22:40:41 VMs 7, executed 1506926, cover 109778, crashes 120, repro 0
+2019/12/14 22:40:51 fuzzer vm-5 connected
+2019/12/14 22:40:51 VMs 8, executed 1507886, cover 109790, crashes 120, repro 0
+2019/12/14 22:40:53 loop: instance 2 finished, crash=true
+2019/12/14 22:40:53 vm-2: crash: no output from test machine
+2019/12/14 22:40:53 loop: phase=4 shutdown=false instances=1/8 [2] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:40:53 loop: starting instance 2
+2019/12/14 22:41:01 VMs 7, executed 1509354, cover 109790, crashes 121, repro 0
+2019/12/14 22:41:07 fuzzer vm-2 connected
+2019/12/14 22:41:11 VMs 8, executed 1510402, cover 109839, crashes 121, repro 0
+2019/12/14 22:41:21 VMs 8, executed 1512251, cover 109849, crashes 121, repro 0
+2019/12/14 22:41:27 loop: instance 1 finished, crash=true
+2019/12/14 22:41:27 vm-1: crash: KASAN: use-after-free Read in vgacon_invert_region
+2019/12/14 22:41:31 VMs 7, executed 1513436, cover 109930, crashes 121, repro 0
+2019/12/14 22:41:31 loop: phase=4 shutdown=false instances=1/8 [1] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:41:31 loop: starting instance 1
+2019/12/14 22:41:39 loop: instance 5 finished, crash=true
+2019/12/14 22:41:39 vm-5: crash: KASAN: use-after-free Write in vcs_scr_writew
+2019/12/14 22:41:41 VMs 6, executed 1515403, cover 109964, crashes 122, repro 0
+2019/12/14 22:41:43 loop: phase=4 shutdown=false instances=1/8 [5] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:41:43 loop: starting instance 5
+2019/12/14 22:41:45 fuzzer vm-1 connected
+2019/12/14 22:41:51 VMs 7, executed 1517006, cover 109979, crashes 123, repro 0
+2019/12/14 22:42:01 VMs 8, executed 1518017, cover 110007, crashes 123, repro 0
+2019/12/14 22:42:01 fuzzer vm-5 connected
+2019/12/14 22:42:05 loop: instance 6 finished, crash=true
+2019/12/14 22:42:05 vm-6: crash: no output from test machine
+2019/12/14 22:42:05 loop: phase=4 shutdown=false instances=1/8 [6] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:42:05 loop: starting instance 6
+2019/12/14 22:42:11 VMs 7, executed 1519442, cover 110023, crashes 124, repro 0
+2019/12/14 22:42:21 VMs 7, executed 1521724, cover 110049, crashes 124, repro 0
+2019/12/14 22:42:26 fuzzer vm-6 connected
+2019/12/14 22:42:31 VMs 8, executed 1522546, cover 110176, crashes 124, repro 0
+2019/12/14 22:42:41 VMs 8, executed 1524497, cover 110209, crashes 124, repro 0
+2019/12/14 22:42:44 loop: instance 1 finished, crash=true
+2019/12/14 22:42:44 vm-1: crash: KASAN: use-after-free Read in screen_glyph_unicode
+2019/12/14 22:42:48 loop: phase=4 shutdown=false instances=1/8 [1] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:42:48 loop: starting instance 1
+2019/12/14 22:42:51 VMs 7, executed 1525822, cover 110213, crashes 125, repro 0
+2019/12/14 22:42:58 loop: instance 0 finished, crash=true
+2019/12/14 22:42:58 vm-0: crash: KASAN: use-after-free Read in clear_buffer_attributes
+2019/12/14 22:43:01 VMs 7, executed 1526338, cover 110221, crashes 125, repro 0
+2019/12/14 22:43:02 fuzzer vm-1 connected
+2019/12/14 22:43:03 loop: phase=4 shutdown=false instances=1/8 [0] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:43:03 loop: starting instance 0
+2019/12/14 22:43:11 VMs 7, executed 1526385, cover 110221, crashes 126, repro 0
+2019/12/14 22:43:12 loop: instance 5 finished, crash=true
+2019/12/14 22:43:12 vm-5: suppressed crash lost connection to test machine
+2019/12/14 22:43:12 loop: phase=4 shutdown=false instances=1/8 [5] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:43:12 loop: starting instance 5
+2019/12/14 22:43:16 fuzzer vm-0 connected
+2019/12/14 22:43:21 VMs 7, executed 1526646, cover 110221, crashes 126, repro 0
+2019/12/14 22:43:31 fuzzer vm-5 connected
+2019/12/14 22:43:31 VMs 8, executed 1526806, cover 110221, crashes 126, repro 0
+2019/12/14 22:43:41 VMs 8, executed 1527118, cover 110221, crashes 126, repro 0
+2019/12/14 22:43:42 loop: instance 1 finished, crash=true
+2019/12/14 22:43:42 vm-1: crash: KASAN: use-after-free Read in do_update_region
+2019/12/14 22:43:45 loop: phase=4 shutdown=false instances=1/8 [1] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:43:45 loop: starting instance 1
+2019/12/14 22:43:51 VMs 7, executed 1527517, cover 110252, crashes 127, repro 0
+2019/12/14 22:43:58 fuzzer vm-1 connected
+2019/12/14 22:44:01 VMs 8, executed 1527885, cover 110252, crashes 127, repro 0
+2019/12/14 22:44:11 VMs 8, executed 1529540, cover 110253, crashes 127, repro 0
+2019/12/14 22:44:21 VMs 8, executed 1531065, cover 110266, crashes 127, repro 0
+2019/12/14 22:44:31 VMs 8, executed 1532082, cover 110273, crashes 127, repro 0
+2019/12/14 22:44:41 VMs 8, executed 1533242, cover 110276, crashes 127, repro 0
+2019/12/14 22:44:45 loop: instance 5 finished, crash=true
+2019/12/14 22:44:45 vm-5: crash: KASAN: use-after-free Read in screen_glyph
+2019/12/14 22:44:48 loop: phase=4 shutdown=false instances=1/8 [5] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:44:48 loop: starting instance 5
+2019/12/14 22:44:51 VMs 7, executed 1534042, cover 110276, crashes 128, repro 0
+2019/12/14 22:45:01 VMs 8, executed 1535038, cover 110278, crashes 128, repro 0
+2019/12/14 22:45:02 fuzzer vm-5 connected
+2019/12/14 22:45:06 loop: instance 7 finished, crash=true
+2019/12/14 22:45:06 vm-7: crash: no output from test machine
+2019/12/14 22:45:06 loop: phase=4 shutdown=false instances=1/8 [7] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:45:06 loop: starting instance 7
+2019/12/14 22:45:11 VMs 7, executed 1535657, cover 110282, crashes 129, repro 0
+2019/12/14 22:45:21 VMs 7, executed 1536385, cover 110289, crashes 129, repro 0
+2019/12/14 22:45:24 fuzzer vm-7 connected
+2019/12/14 22:45:31 VMs 8, executed 1537042, cover 110289, crashes 129, repro 0
+2019/12/14 22:45:41 VMs 8, executed 1537972, cover 110289, crashes 129, repro 0
+2019/12/14 22:45:51 VMs 8, executed 1538920, cover 110290, crashes 129, repro 0
+2019/12/14 22:46:01 VMs 8, executed 1540035, cover 110296, crashes 129, repro 0
+2019/12/14 22:46:02 loop: instance 5 finished, crash=true
+2019/12/14 22:46:02 vm-5: crash: KASAN: use-after-free Read in vc_do_resize
+2019/12/14 22:46:05 loop: phase=4 shutdown=false instances=1/8 [5] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:46:05 loop: starting instance 5
+2019/12/14 22:46:11 VMs 7, executed 1541044, cover 110296, crashes 130, repro 0
+2019/12/14 22:46:21 VMs 7, executed 1541713, cover 110301, crashes 130, repro 0
+2019/12/14 22:46:26 fuzzer vm-5 connected
+2019/12/14 22:46:31 VMs 8, executed 1542617, cover 110310, crashes 130, repro 0
+2019/12/14 22:46:41 VMs 8, executed 1543479, cover 110310, crashes 130, repro 0
+2019/12/14 22:46:51 VMs 8, executed 1544414, cover 110315, crashes 130, repro 0
+2019/12/14 22:47:01 VMs 8, executed 1545506, cover 110342, crashes 130, repro 0
+2019/12/14 22:47:11 VMs 8, executed 1546760, cover 110344, crashes 130, repro 0
+2019/12/14 22:47:20 loop: instance 5 finished, crash=true
+2019/12/14 22:47:20 vm-5: crash: KASAN: use-after-free Read in clear_buffer_attributes
+2019/12/14 22:47:21 VMs 7, executed 1547151, cover 110344, crashes 130, repro 0
+2019/12/14 22:47:23 loop: phase=4 shutdown=false instances=1/8 [5] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:47:23 loop: starting instance 5
+2019/12/14 22:47:26 loop: instance 2 finished, crash=true
+2019/12/14 22:47:26 vm-2: crash: no output from test machine
+2019/12/14 22:47:26 loop: phase=4 shutdown=false instances=1/8 [2] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:47:26 loop: starting instance 2
+2019/12/14 22:47:31 VMs 6, executed 1548095, cover 110345, crashes 132, repro 0
+2019/12/14 22:47:37 fuzzer vm-5 connected
+2019/12/14 22:47:41 fuzzer vm-2 connected
+2019/12/14 22:47:41 VMs 8, executed 1548676, cover 110367, crashes 132, repro 0
+2019/12/14 22:47:51 VMs 8, executed 1549075, cover 110375, crashes 132, repro 0
+2019/12/14 22:48:01 VMs 8, executed 1549523, cover 110432, crashes 132, repro 0
+2019/12/14 22:48:05 loop: instance 6 finished, crash=true
+2019/12/14 22:48:05 vm-6: crash: no output from test machine
+2019/12/14 22:48:05 loop: phase=4 shutdown=false instances=1/8 [6] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:48:05 loop: starting instance 6
+2019/12/14 22:48:11 VMs 7, executed 1550399, cover 110435, crashes 133, repro 0
+2019/12/14 22:48:18 fuzzer vm-6 connected
+2019/12/14 22:48:20 loop: instance 5 finished, crash=true
+2019/12/14 22:48:20 vm-5: crash: KASAN: use-after-free Read in vgacon_invert_region
+2019/12/14 22:48:21 VMs 7, executed 1551461, cover 110462, crashes 133, repro 0
+2019/12/14 22:48:24 loop: phase=4 shutdown=false instances=1/8 [5] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:48:24 loop: starting instance 5
+2019/12/14 22:48:31 VMs 7, executed 1552072, cover 110471, crashes 134, repro 0
+2019/12/14 22:48:35 loop: instance 2 finished, crash=true
+2019/12/14 22:48:35 vm-2: crash: KASAN: use-after-free Read in clear_buffer_attributes
+2019/12/14 22:48:39 loop: phase=4 shutdown=false instances=1/8 [2] repro: pending=0 reproducing=0 queued=0
+2019/12/14 22:48:39 loop: starting instance 2
+2019/12/14 22:48:41 VMs 6, executed 1552681, cover 110473, crashes 135, repro 0
+2019/12/14 22:48:46 fuzzer vm-5 connected
+2019/12/14 22:48:51 VMs 7, executed 1553353, cover 110497, crashes 135, repro 0
+
+</textarea>
+<script>
+	var textarea = document.getElementById("log_textarea");
+	textarea.scrollTop = textarea.scrollHeight;
+</script>
+</body></html>

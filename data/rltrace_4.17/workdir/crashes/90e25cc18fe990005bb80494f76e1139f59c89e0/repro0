@@ -1,0 +1,1208 @@
+2020/01/26 22:30:28 reproducing crash 'general protection fault in arch_tlb_finish_mmu': 692 programs, 4 VMs, timeouts [15s 1m0s 6m0s]
+2020/01/26 22:30:28 reproducing crash 'general protection fault in arch_tlb_finish_mmu': extracting reproducer from 692 programs
+2020/01/26 22:30:28 reproducing crash 'general protection fault in arch_tlb_finish_mmu': single: executing 16 programs separately with timeout 15s
+2020/01/26 22:30:39 reproducing crash 'general protection fault in arch_tlb_finish_mmu': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): creat-pwrite64-setsockopt$inet_tcp_int-fallocate-removexattr-syncfs-write$nbd-socket$inet_tcp-getpid-ptrace$setopts-sched_setscheduler-setsockopt$inet_tcp_TLS_TX-fcntl$setsig
+2020/01/26 22:30:39 reproducing crash 'general protection fault in arch_tlb_finish_mmu': detailed listing:
+executing program 0:
+r0 = creat(&(0x7f0000000000)='./file0\x00', 0x0)
+pwrite64(r0, &(0x7f0000000480)='\x00', 0x1, 0x0)
+setsockopt$inet_tcp_int(0xffffffffffffffff, 0x6, 0x4, &(0x7f0000000040)=0x9, 0x4)
+fallocate(r0, 0x0, 0x0, 0x1007)
+removexattr(&(0x7f0000000080)='./file0/file0\x00', &(0x7f00000000c0)=@known='com.apple.system.Security\x00')
+syncfs(r0)
+write$nbd(r0, &(0x7f000001a280)=ANY=[@ANYBLOB="67446698000000000000000000000000ac25368fcb6fff30cc8c812eafe9908de1bf8e333c427a0f5a71baec4db8217f1ae9c06f08d2d701380731767cf2b752d250b4991841a351c3c835e7365940dd7c6ec3fe33ba6c712fa3a0d67bf1054ea52976867e8928ae5e538e5f756455600752e80e6498a98034f509a4a47a0f7c7047f1e96a43969c0995fa41c06514f1dd7b1b6d178482f8f21639e20289a5e33f744f453a79c8e463225fcb8c54666bb228c10caa38c9d8c08dbedb119c922f0c7a32c4a20c0d6dbcafe1093bb0d1b8c6ebcd06bfde71f3f9e5a3b91cb36f7a91df1dce43c6462d0da6c6d3e64a24cae980b219489dc324916c845d2bc75b63731193f7b413398938aa3e4f155619573ad63b445eb2217966a121584f473f03f1e0a8fd98daad1dc908ac7cfe73bc153d0a10a03f024fa508ae04420f310cd7f7b421460d1ad70f7296276a3d04d13cfbd51790c672f6ae1c6755e1514ef159e02f7d16bebca49d2bac24f84a466df98d088b48bf22f30ba90afec1557be6e1f4b50c929009d23c5499103dd32aea7fb8862401a9c195b468f74f1f93d3edb3f6d678222b59d99e0c9a57e9071e184aa6f2863fd49795a03de2e3009821d75f90903648683c176cdf185f99dbf8e005ac855e07462a200c208ab97f5a75d6594c96741373a3a617923d31d0b501a6c3c64e0527d3cb93f64ff71079a8b018ba1ef29a760918571d0323ae9a02bb82aee73ac94b57854ea4c4e4bd2c6f8a439fe154de93a817dbd612b96f8d8ca7ed42f5a50cfd47547dd314f95bf9e015ae9c0fe6f4e14e6880c9ac55e3e8f44cd7336c5084a0d9ecfe89e35f4543d73a7e0e78c3548c68b1f4f79f898d2db2cdc59e7e16be4886bdec712aaddad3e2dad44fb91c3bc78a39314d7d64f74b7a77fa01cab5241464670a0a4385108c308a7dbccf6d1f3c424c12597c9edf8678d4b06a22b9d4acdd97cb0941ac70d2da0c6cbe731c7805c9fc46f4f3cb425864ee81dfb1789e9ae011bd4c61e9bd0414eb75514c9d6fc84bdcc729a21bcb79e56f67b4d468038b98f59c982dcc20335a5be5e638159340a09cb0f619aec29ccd0f1ccae3dfff45afd3f117aac1febf3795eb8e2919fe6b5764f20a54a6edf8dd41430a8baf5a9e71190ad4bbb5738b40fc217e2113734fc48d828a7adbcd414305df981cc1003d7f118d113531b20eaf4faf4b44004739b41276373322ae5a9af192b9e4b308b33f8a2a5a99c1e1dc74f2d0b67e2713562334dbb67ad629d9479ff01159c9bc7bc9dadf3afc81a7067d864ff1b6ebfc322f3c767ca16af04d9102c77892e6fde5ae39fb2fc1d17f30d46a2d91999fd093688234f6b565a5bb194706fac6fe653827bc08effef18d98d34bcf7695be0b2ea3b34e12e57127912ffe6a2dd7709f1989e0903021f23a5f4dd2235e8a4c8a2ee57193a93385b6275173a58bd8bf5568d8353dedd9fcaf5bbea56fac5a19286782c63fd130095bdab8189a971387214496777113950d26486eb39a90a0ffc3ce4218319d12ec86288de6c0e8cd273a471b5784d1818a5576f25bc0fe8ab7370a55d62f9035e3ccb5ca31fd96850d4c9fbe02b73b1cf14e1de5de91740dc346b0ca1a613c14094e6e846134c65c8b255aaba007f0b0d5cf09eef63cfff84dab0be349a38c8fdf699b5255b9bc423a8cd51e2dc55adce6aec88710103f3ce6736597a3319bb84efe32fd9908aca758e8565155f35fa48f398896ee97bf1602c5f07259098554f53d0710cd4c992bbad36f95adbe9198f5fe571cacbb399af6ace2669c3a0cce0078b233fe3d45175ff968c6b17ad456a3589034be3119a750c51f651e2930b91c54134940852125f8b309793f13a1bbee0d6fc52d69e73583506c215da1142f60870bb7d6686ef8a48b5bc3f6b15f693320e18373ccf8fd6167dbe4cb4e9d80442723850e25a3de8afce7dd47eed95234a3044ab5bf27af8379a403b10d0be209ea2c5f29e81d236861b8cad5ef1cf288958e6aa6e056d9cfdae9e82d2b82cb7d16130fce8e58c1f88a2a1d715bd9be42ee18ea02a0fdbc897441e79465f97c8a4148ba19c9f4f24599b2f0c2fecb5c9a2b7324ce5087d3bbaf0c8a2c0c6d36cd6881278600f088d37d8eca52930606fbfcba8d60bf028527ec02ac0c2a5ffc89429059e3254d1f97dc5b1c61cbfbde4e314c1c608fd6e5e7f262eafaa72f3afb5e71d83ab9f8170d89eddb6d0e282246b5285f18b71bdf302656bdc752f812e27f3c6e2f5a4058d49cd94db28dc20669c0d5dedb34f2bb83d371cd5788e4e41f5a725429fea4b853c93f1121b9279a2fa0e5c9f4bb80bc06f17ead1d191fe3ad0e5b1ce54cd3aed1c80f1c75c4a219085258e0f9b9881de736a3d0fb72020979b022752a8ead7e1417f6416cffad0c21f3086ed0cc190ff903e0014c0290bd8af7b84ae898250a092833439fcf81eacba727264b8dd6b739f664cd51ff13d4aa08afd55994ac12f9155bac921cbc4305d757776386f83d33de61d86dde23e670964f10461c013d12fd0a3071660646aa51caa06a22613493fd73fe4dfd834add802ee5250c372fce3e43b7dd5a4bbf7483f5606ffacffaddfdfb46e5f3621e604dc6f6acb2e2d5b2a0bc047b59eaed113a9be92968f53604b6037687bf5bc37f1cf3d31b204c51b4eb9922482cde883cb08f318642a6f57d722e5e3a527244ef43e9264e16e0786f106abec0bed40df11dd38885cd8257fe3dea6cbd8af303a1130a2f4868b22ca843f982815bdc352a5a349541238c0ee5effbc28f0a7ff1334479179473aaa30ce0e028ef2554c4608f426d090f48a983ad2ce451abb18bd4f707500e68b13e19f1c039bc6ef19b69397355b6af6e7bede2fd88d714e8395a18e72506bc47f1c85efbd333479d65d4888151b044d88bb253e59f956ae29188f20be4005e15a7ce45ee35fd195a1d7551a5fc35ace0f2dedac870c34b901928f5ab7b606082a2786cc74ddaebfa5d1b1adb26b5af380ac2b54cc82fdb557330a2947e0e76888d1360d36442839daaf4cb395362f206344416d594ca7867dae7ae89c9ea7e5ab37e6b4e9c6c6375b9f917a202dd6af5119fc6cd3210b9d1b68d2d8b03e3c52557f4d88a9cfa80915dc376f2e5633a2336ff1a10510a653ffb909cae5e94e6dcdfd825001d7bb6a4ae92190d6ed21430b1948a8efe410e0902d2bbab28badcbe1a7293c9a2a9f3c5b9dd2dd7000a97859974bcc2bcacbe776a4c8cae9de3632d8293e4236a8884200a2d6287b7f21fcc41f4a85f48d5c304275d8dd269ead54fe1b4e597846f1655ad39af19577240164e9d32133f3410ee04262426fe91e2bed90839865a8d808e96f07f6d0e01589eb681da44352cfdd16af46a2b2142b7ec4a07cce5bd2e362200c5fa43fea170ab1b8b875f2162c5cd7b2a23b15e609921d47288ceb3ee1637db5edc0ef9c4b97937b07ab1338fce82d506bf0d4eb4c03fa8b15bcb498bfaa6e3f12817b46bd8fc290ef74f125b56441079b6490d06af8cd821993c587de9ed7bac1fcd34a03adc5a5206843b70eefb94f17c405c84b38ca0c1ff484fbc151cfa1fa64431f53d34bd575c00872c9cf666cde75c1f68bdc32edc6e3f431888f4a1c58022efc16f7213728ea6b2740776544ea67a1b2a9cc3d821d5d04f6e2a8864b79ffbdc79337ed38fe1c9e83020a229a540ff27c0237e2f405e6ccfad26ab573d997addadff5eacbc06c25e6e76b9e8aed7a473cb494a66157dad777cc962a6f375bcdb661b439f9dec6c7a2811c7aaf3d0dead5db617796179bd5c3abce343cccf20e70a418cffae3af992ff7e2f5fd109576e59475cf2a378c78c1e8a2c9df0e2e6c3fdeccb015dfd24fa25e16ed78585a7252bf466108ae15b9196f90038dcb30aacff0c00d1eef72d06d1e4c3d42a35e9b8b3faed5bc5a0a2f09fe5a8f5ac937e1ec679c42c668f3158088ecca928aaa927f71a942896e2f9fa08bdfabaddbfcdc05a8cf3c348ecbf4aa95784843e73dfb6d69d4f4a3873ac226918b6096e5c144c2f5a4e5762b0d3125e772c5a2062c8b6b9374df066588372dcf5da80577d400abe45bdf3ec021b188e2591f7e4ec375d40da81f190e0704ae38f80e74b358e9692978a3e0f75c5823b81f1c033c6dea7b0b5fdf8843571db917dbf005a0c2750ed7304b4ab74b8f16c28c10a67f3cdb1c9c91b9438359586128d1520df3e1859c7f7fddecce5adf489f0f420081b03287bea37d2ce42bb533147e133d1c8844995d60ff197ea02be5764742a5c8e116b4621e05659bdab1b1c08c021b0382ead712d319ed577d432bf21baafb4bae233de0622758731d8bd53af71bdd23f5e1400f344a21f03f654504ccd747027cdd36fe764145c85453d3396d330a30ca87ff1b2f8a251bdaf1c1165ada785afb899ffbcfb1057abff90277a714c006493bdf3edf5a54d66e0af0fd25ca867b39ca9c7827499622c4533a182c7567806dcf8cdb3edf4803693e4525ae4ce8ec551b933556fac14e0c433adc3e5a8602fa258db2f888cd94d1ea1fb34a664405933e7746ca34413184466181780ffa3e2d07bb02776d89bfb9304fccc76c3f883b2e3a2115e135b795f29bdec96e896c4f66a43be89d5bf3abde364f8f2d404b075e1ffad4f716b54463c7a3ba740fa7c751cacd2208e90524faa9a4c68912b08a788f4ce1fd5169d03f3bcecbeaa919b7ddf20a9077f73ac2cfe9ec286f7437a648a096604cf837b768b4d5085aa277bd3cddf53b8530c8a8b1621f76bfd668dc45c7adf0dbd43f4ad4f01b95a593b03cd7f12c4e8619f8904081ef4249af6a98c8bd887158b884660e86d098c39683473f736ba46bd862276ee8b250605ca57bdb2961dfe26682c59fdfd0863532ba312801482add25ce7f222aada1e060a28e55c902920eee55cc0fa97d6b4fde18164f22d31608f472e30d38ba90f64ebda3f1155321806b80b4577937cb3c2f9871a447b2d506d8820fc9aaaaeadcaae756ca71f40b60d0a31154f6024f94ce12c0163550462fbe62446b3653c450f33c82d3fe6c76759c326d96137af6d47d043626e80f2acebbdc3918de3b10dc6c694c3f9ca577cd6c22eff5d467ff558c0c8c3fa6018589bb98539ceefc27be13839e61aeebfa91211b7a6a81fe1181c36953b3689ac7de33517266d70bc680f131e36ab8534397093784657b790b2f6d955be8c7e1c2934717d9bb1343b7efd603508e3df9bcfa342cc5faa855e56aa1172d6ae658ebf4fe317496a62aab0e802e43c123d0f92057d5b781a9d1c261e6a9ee6d84a85ce6d55c50ccfcdf37e1cb17e2b2b74a2cbc2bb8c61d25552ff876ac7d30dc44327993d4bf097d1774b41874b404d9aead9644e4d53a95e90560df951cd47d7a7cd905b29d3118307883aa6151475cff84975132a8a5ecbe53be8f10443dd665c9f0255572ad52dae7365cb8227047fde0508641ced4e7a7a99a38bbdff07b7532c3c10801264553854fa0836a9c2a7b08ac3ef00c2b4099602765dae5692ec0f4e3a64606141f588734325dd1e2f04a8819480390ae3592f67f9aa91fe57558db4ac1cc077e41a3e87f5713edfc7f382ebadafe809e802b9e5a5783402e73697eedc2dcde381a1f15cbd38d5cf518d734c024391674a23bc04ecebcf634ed62571328e8163970ec1b61dc8f729be605f1157b4b6ae7ad9592de651257662e6ba5f51e4327becf85c58cade287a692ac36a8fc59649eda034cb77e49acb55cf48bc35"], 0x1001)
+r1 = socket$inet_tcp(0x2, 0x1, 0x0)
+r2 = getpid()
+ptrace$setopts(0x4206, r2, 0xdb06, 0x0)
+sched_setscheduler(r2, 0x2, &(0x7f0000000100)=0x5)
+setsockopt$inet_tcp_TLS_TX(r1, 0x6, 0x1, &(0x7f0000000000)=@ccm_128={{}, "b1f765884aa3bc7c", "b5fab26ba4235a6cdbfecd203afe8693", "291ad5d0", "ffb4328575f1b71f"}, 0x28)
+fcntl$setsig(r1, 0xa, 0x3a)
+2020/01/26 22:30:54 reproducing crash 'general protection fault in arch_tlb_finish_mmu': program did not crash
+2020/01/26 22:30:54 reproducing crash 'general protection fault in arch_tlb_finish_mmu': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): socket$netlink-sendmsg$nl_generic-creat-pwrite64-ioctl$LOOP_CLR_FD-accept4$packet-ioctl$sock_SIOCGIFVLAN_GET_VLAN_VID_CMD
+2020/01/26 22:30:54 reproducing crash 'general protection fault in arch_tlb_finish_mmu': detailed listing:
+executing program 0:
+r0 = socket$netlink(0x10, 0x3, 0x0)
+sendmsg$nl_generic(r0, &(0x7f0000000000)={0x0, 0x0, &(0x7f0000000080)={&(0x7f00000000c0)={0x30, 0x11, 0x100, 0x0, 0x0, {}, [@typed={0xc, 0x0, 0x0, 0x0, @u64=0x2}, @nested={0x10, 0x0, 0x0, 0x1, [@typed={0xc, 0x30, 0x0, 0x0, @u64}]}]}, 0x30}}, 0x0)
+r1 = creat(&(0x7f0000000000)='./file0\x00', 0x0)
+pwrite64(r1, &(0x7f0000000480)='\x00', 0x1, 0x0)
+ioctl$LOOP_CLR_FD(r1, 0x4c01)
+r2 = accept4$packet(0xffffffffffffffff, &(0x7f0000000040)={0x11, 0x0, 0x0, 0x1, 0x0, 0x6, @local}, &(0x7f0000000100)=0x14, 0x80000)
+ioctl$sock_SIOCGIFVLAN_GET_VLAN_VID_CMD(r2, 0x8982, &(0x7f0000000140))
+2020/01/26 22:31:09 reproducing crash 'general protection fault in arch_tlb_finish_mmu': program did not crash
+2020/01/26 22:31:09 reproducing crash 'general protection fault in arch_tlb_finish_mmu': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_procfs-ioctl$EVIOCSKEYCODE
+2020/01/26 22:31:09 reproducing crash 'general protection fault in arch_tlb_finish_mmu': detailed listing:
+executing program 0:
+r0 = syz_open_procfs(0x0, &(0x7f0000000000)='net/snmp6\x00')
+ioctl$EVIOCSKEYCODE(r0, 0x40084504, &(0x7f0000000040)=[0x35, 0x8])
+2020/01/26 22:31:24 reproducing crash 'general protection fault in arch_tlb_finish_mmu': program did not crash
+2020/01/26 22:31:25 reproducing crash 'general protection fault in arch_tlb_finish_mmu': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): socket$inet_icmp_raw-ioctl$sock_TIOCOUTQ-socket$inet_tcp-setsockopt$inet_tcp_TLS_TX-ioctl$sock_FIOGETOWN-creat-pwrite64-openat$zero-epoll_ctl$EPOLL_CTL_MOD-ioctl$TIOCGPGRP-ptrace$PTRACE_SECCOMP_GET_METADATA
+2020/01/26 22:31:25 reproducing crash 'general protection fault in arch_tlb_finish_mmu': detailed listing:
+executing program 0:
+r0 = socket$inet_icmp_raw(0x2, 0x3, 0x1)
+ioctl$sock_TIOCOUTQ(r0, 0x5411, &(0x7f0000000040))
+r1 = socket$inet_tcp(0x2, 0x1, 0x0)
+setsockopt$inet_tcp_TLS_TX(r1, 0x6, 0x1, &(0x7f0000000000)=@ccm_128={{}, "b1f765884aa3bc7c", "b5fab26ba4235a6cdbfecd203afe8693", "291ad5d0", "ffb4328575f1b71f"}, 0x28)
+ioctl$sock_FIOGETOWN(r1, 0x8903, &(0x7f0000000000))
+r2 = creat(&(0x7f0000000000)='./file0\x00', 0x0)
+pwrite64(r2, &(0x7f0000000480)='\x00', 0x1, 0x0)
+r3 = openat$zero(0xffffffffffffff9c, &(0x7f0000000100)='/dev/zero\x00', 0x12000, 0x0)
+epoll_ctl$EPOLL_CTL_MOD(r3, 0x3, r2, &(0x7f0000000140)={0x50001003})
+ioctl$TIOCGPGRP(r2, 0x540f, &(0x7f00000000c0))
+ptrace$PTRACE_SECCOMP_GET_METADATA(0x420d, 0x0, 0xfeda, &(0x7f0000000080)={0xffffffffffffffff})
+2020/01/26 22:31:40 reproducing crash 'general protection fault in arch_tlb_finish_mmu': program did not crash
+2020/01/26 22:31:40 reproducing crash 'general protection fault in arch_tlb_finish_mmu': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND-unshare-creat-syncfs-creat-setxattr$security_selinux-getsockopt$packet_int-creat-pwrite64-ioctl$PTP_SYS_OFFSET_EXTENDED
+2020/01/26 22:31:40 reproducing crash 'general protection fault in arch_tlb_finish_mmu': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000000080)={0x1, 0x0, 0x8, "11"})
+unshare(0x400)
+r1 = creat(&(0x7f00000003c0)='./file0\x00', 0x0)
+syncfs(r1)
+creat(&(0x7f0000000100)='./file0\x00', 0x0)
+setxattr$security_selinux(&(0x7f0000000080)='./file0\x00', &(0x7f0000000000)='security.selinux\x00', &(0x7f0000000ac0)='unconfined_u:system_r:insmod_t:s0-s0:c0.c1023\x00', 0x22, 0x0)
+getsockopt$packet_int(r1, 0x107, 0x10, &(0x7f0000000000), &(0x7f0000000040)=0x4)
+r2 = creat(&(0x7f0000000000)='./file0\x00', 0x0)
+pwrite64(r2, &(0x7f0000000480)='\x00', 0x1, 0x0)
+ioctl$PTP_SYS_OFFSET_EXTENDED(r2, 0xc4c03d09, &(0x7f0000000400)={0x9})
+2020/01/26 22:31:51 reproducing crash 'general protection fault in arch_tlb_finish_mmu': program crashed: general protection fault in xt_find_table_lock
+2020/01/26 22:31:51 reproducing crash 'general protection fault in arch_tlb_finish_mmu': single: successfully extracted reproducer
+2020/01/26 22:31:51 reproducing crash 'general protection fault in arch_tlb_finish_mmu': found reproducer with 11 syscalls
+2020/01/26 22:31:51 reproducing crash 'general protection fault in arch_tlb_finish_mmu': minimizing guilty program
+2020/01/26 22:31:52 reproducing crash 'general protection fault in arch_tlb_finish_mmu': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND-unshare-creat-syncfs-creat-setxattr$security_selinux-getsockopt$packet_int-creat-pwrite64
+2020/01/26 22:31:52 reproducing crash 'general protection fault in arch_tlb_finish_mmu': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000000080)={0x1, 0x0, 0x8, "11"})
+unshare(0x400)
+r1 = creat(&(0x7f00000003c0)='./file0\x00', 0x0)
+syncfs(r1)
+creat(&(0x7f0000000100)='./file0\x00', 0x0)
+setxattr$security_selinux(&(0x7f0000000080)='./file0\x00', &(0x7f0000000000)='security.selinux\x00', &(0x7f0000000ac0)='unconfined_u:system_r:insmod_t:s0-s0:c0.c1023\x00', 0x22, 0x0)
+getsockopt$packet_int(r1, 0x107, 0x10, &(0x7f0000000000), &(0x7f0000000040)=0x4)
+r2 = creat(&(0x7f0000000000)='./file0\x00', 0x0)
+pwrite64(r2, &(0x7f0000000480)='\x00', 0x1, 0x0)
+2020/01/26 22:32:03 reproducing crash 'general protection fault in arch_tlb_finish_mmu': program crashed: general protection fault in selinux_file_alloc_security
+2020/01/26 22:32:03 reproducing crash 'general protection fault in arch_tlb_finish_mmu': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND-unshare-creat-syncfs-creat-setxattr$security_selinux-getsockopt$packet_int-creat
+2020/01/26 22:32:03 reproducing crash 'general protection fault in arch_tlb_finish_mmu': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000000080)={0x1, 0x0, 0x8, "11"})
+unshare(0x400)
+r1 = creat(&(0x7f00000003c0)='./file0\x00', 0x0)
+syncfs(r1)
+creat(&(0x7f0000000100)='./file0\x00', 0x0)
+setxattr$security_selinux(&(0x7f0000000080)='./file0\x00', &(0x7f0000000000)='security.selinux\x00', &(0x7f0000000ac0)='unconfined_u:system_r:insmod_t:s0-s0:c0.c1023\x00', 0x22, 0x0)
+getsockopt$packet_int(r1, 0x107, 0x10, &(0x7f0000000000), &(0x7f0000000040)=0x4)
+creat(&(0x7f0000000000)='./file0\x00', 0x0)
+2020/01/26 22:32:15 reproducing crash 'general protection fault in arch_tlb_finish_mmu': program crashed: BUG: unable to handle kernel paging request in qlist_free_all
+2020/01/26 22:32:15 reproducing crash 'general protection fault in arch_tlb_finish_mmu': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND-unshare-creat-syncfs-creat-setxattr$security_selinux-getsockopt$packet_int
+2020/01/26 22:32:15 reproducing crash 'general protection fault in arch_tlb_finish_mmu': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000000080)={0x1, 0x0, 0x8, "11"})
+unshare(0x400)
+r1 = creat(&(0x7f00000003c0)='./file0\x00', 0x0)
+syncfs(r1)
+creat(&(0x7f0000000100)='./file0\x00', 0x0)
+setxattr$security_selinux(&(0x7f0000000080)='./file0\x00', &(0x7f0000000000)='security.selinux\x00', &(0x7f0000000ac0)='unconfined_u:system_r:insmod_t:s0-s0:c0.c1023\x00', 0x22, 0x0)
+getsockopt$packet_int(r1, 0x107, 0x10, &(0x7f0000000000), &(0x7f0000000040)=0x4)
+2020/01/26 22:32:27 reproducing crash 'general protection fault in arch_tlb_finish_mmu': program crashed: BUG: unable to handle kernel paging request in qlist_free_all
+2020/01/26 22:32:27 reproducing crash 'general protection fault in arch_tlb_finish_mmu': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND-unshare-creat-syncfs-creat-setxattr$security_selinux
+2020/01/26 22:32:27 reproducing crash 'general protection fault in arch_tlb_finish_mmu': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000000080)={0x1, 0x0, 0x8, "11"})
+unshare(0x400)
+r1 = creat(&(0x7f00000003c0)='./file0\x00', 0x0)
+syncfs(r1)
+creat(&(0x7f0000000100)='./file0\x00', 0x0)
+setxattr$security_selinux(&(0x7f0000000080)='./file0\x00', &(0x7f0000000000)='security.selinux\x00', &(0x7f0000000ac0)='unconfined_u:system_r:insmod_t:s0-s0:c0.c1023\x00', 0x22, 0x0)
+2020/01/26 22:32:39 reproducing crash 'general protection fault in arch_tlb_finish_mmu': program crashed: BUG: unable to handle kernel paging request in qlist_free_all
+2020/01/26 22:32:39 reproducing crash 'general protection fault in arch_tlb_finish_mmu': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND-unshare-creat-syncfs-creat
+2020/01/26 22:32:39 reproducing crash 'general protection fault in arch_tlb_finish_mmu': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000000080)={0x1, 0x0, 0x8, "11"})
+unshare(0x400)
+r1 = creat(&(0x7f00000003c0)='./file0\x00', 0x0)
+syncfs(r1)
+creat(&(0x7f0000000100)='./file0\x00', 0x0)
+2020/01/26 22:32:51 reproducing crash 'general protection fault in arch_tlb_finish_mmu': program crashed: general protection fault in kmem_cache_alloc
+2020/01/26 22:32:51 reproducing crash 'general protection fault in arch_tlb_finish_mmu': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND-unshare-creat-syncfs
+2020/01/26 22:32:51 reproducing crash 'general protection fault in arch_tlb_finish_mmu': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000000080)={0x1, 0x0, 0x8, "11"})
+unshare(0x400)
+r1 = creat(&(0x7f00000003c0)='./file0\x00', 0x0)
+syncfs(r1)
+2020/01/26 22:33:03 reproducing crash 'general protection fault in arch_tlb_finish_mmu': program crashed: general protection fault in sidtab_context_to_sid
+2020/01/26 22:33:03 reproducing crash 'general protection fault in arch_tlb_finish_mmu': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND-unshare-creat
+2020/01/26 22:33:03 reproducing crash 'general protection fault in arch_tlb_finish_mmu': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000000080)={0x1, 0x0, 0x8, "11"})
+unshare(0x400)
+creat(&(0x7f00000003c0)='./file0\x00', 0x0)
+2020/01/26 22:33:15 reproducing crash 'general protection fault in arch_tlb_finish_mmu': program crashed: kernel panic: Fatal exception
+2020/01/26 22:33:15 reproducing crash 'general protection fault in arch_tlb_finish_mmu': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND-unshare
+2020/01/26 22:33:15 reproducing crash 'general protection fault in arch_tlb_finish_mmu': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000000080)={0x1, 0x0, 0x8, "11"})
+unshare(0x400)
+2020/01/26 22:33:26 reproducing crash 'general protection fault in arch_tlb_finish_mmu': program crashed: BUG: unable to handle kernel paging request in qlist_free_all
+2020/01/26 22:33:27 reproducing crash 'general protection fault in arch_tlb_finish_mmu': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/26 22:33:27 reproducing crash 'general protection fault in arch_tlb_finish_mmu': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000000080)={0x1, 0x0, 0x8, "11"})
+2020/01/26 22:33:38 reproducing crash 'general protection fault in arch_tlb_finish_mmu': program crashed: BUG: Bad rss-counter state
+2020/01/26 22:33:38 reproducing crash 'general protection fault in arch_tlb_finish_mmu': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg
+2020/01/26 22:33:38 reproducing crash 'general protection fault in arch_tlb_finish_mmu': detailed listing:
+executing program 0:
+syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+2020/01/26 22:34:01 reproducing crash 'general protection fault in arch_tlb_finish_mmu': program did not crash
+2020/01/26 22:34:01 reproducing crash 'general protection fault in arch_tlb_finish_mmu': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/26 22:34:01 reproducing crash 'general protection fault in arch_tlb_finish_mmu': detailed listing:
+executing program 0:
+ioctl$SCSI_IOCTL_SEND_COMMAND(0xffffffffffffffff, 0x1, &(0x7f0000000080)={0x1, 0x0, 0x8, "11"})
+2020/01/26 22:34:23 reproducing crash 'general protection fault in arch_tlb_finish_mmu': program did not crash
+2020/01/26 22:34:24 reproducing crash 'general protection fault in arch_tlb_finish_mmu': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/26 22:34:24 reproducing crash 'general protection fault in arch_tlb_finish_mmu': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(0x0, 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000000080)={0x1, 0x0, 0x8, "11"})
+2020/01/26 22:34:46 reproducing crash 'general protection fault in arch_tlb_finish_mmu': program did not crash
+2020/01/26 22:34:46 reproducing crash 'general protection fault in arch_tlb_finish_mmu': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/26 22:34:46 reproducing crash 'general protection fault in arch_tlb_finish_mmu': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, 0x0)
+2020/01/26 22:35:09 reproducing crash 'general protection fault in arch_tlb_finish_mmu': program did not crash
+2020/01/26 22:35:09 reproducing crash 'general protection fault in arch_tlb_finish_mmu': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/26 22:35:09 reproducing crash 'general protection fault in arch_tlb_finish_mmu': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000000080)={0x0, 0x0, 0x8})
+2020/01/26 22:35:31 reproducing crash 'general protection fault in arch_tlb_finish_mmu': program did not crash
+2020/01/26 22:35:31 reproducing crash 'general protection fault in arch_tlb_finish_mmu': extracting C reproducer
+2020/01/26 22:35:32 reproducing crash 'general protection fault in arch_tlb_finish_mmu': testing compiled C program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/26 22:35:43 reproducing crash 'general protection fault in arch_tlb_finish_mmu': program crashed: BUG: unable to handle kernel paging request in qlist_free_all
+2020/01/26 22:35:43 reproducing crash 'general protection fault in arch_tlb_finish_mmu': simplifying C reproducer
+2020/01/26 22:35:44 reproducing crash 'general protection fault in arch_tlb_finish_mmu': testing compiled C program (duration=22.5s, {Threaded:true Collide:false Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/26 22:35:55 reproducing crash 'general protection fault in arch_tlb_finish_mmu': program crashed: BUG: Bad rss-counter state
+2020/01/26 22:35:56 reproducing crash 'general protection fault in arch_tlb_finish_mmu': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/26 22:36:07 reproducing crash 'general protection fault in arch_tlb_finish_mmu': program crashed: general protection fault in corrupted
+2020/01/26 22:36:07 reproducing crash 'general protection fault in arch_tlb_finish_mmu': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:false RepeatTimes:0 Procs:1 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:false Cgroups:false BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/26 22:36:18 reproducing crash 'general protection fault in arch_tlb_finish_mmu': program crashed: general protection fault in unlink_anon_vmas
+2020/01/26 22:36:18 reproducing crash 'general protection fault in arch_tlb_finish_mmu': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:false RepeatTimes:0 Procs:1 Sandbox: Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:false NetDevices:false NetReset:false Cgroups:false BinfmtMisc:false CloseFDs:false KCSAN:false DevlinkPCI:false UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/26 22:36:28 reproducing crash 'general protection fault in arch_tlb_finish_mmu': program did not crash
+2020/01/26 22:36:29 reproducing crash 'general protection fault in arch_tlb_finish_mmu': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:false RepeatTimes:0 Procs:1 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:false NetDevices:true NetReset:false Cgroups:false BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/26 22:36:39 reproducing crash 'general protection fault in arch_tlb_finish_mmu': program did not crash
+2020/01/26 22:36:39 reproducing crash 'general protection fault in arch_tlb_finish_mmu': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:false RepeatTimes:0 Procs:1 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:false NetReset:false Cgroups:false BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/26 22:36:50 reproducing crash 'general protection fault in arch_tlb_finish_mmu': program did not crash
+2020/01/26 22:36:50 reproducing crash 'general protection fault in arch_tlb_finish_mmu': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:false RepeatTimes:0 Procs:1 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:false Cgroups:false BinfmtMisc:false CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/26 22:37:01 reproducing crash 'general protection fault in arch_tlb_finish_mmu': program did not crash
+2020/01/26 22:37:01 reproducing crash 'general protection fault in arch_tlb_finish_mmu': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:false RepeatTimes:0 Procs:1 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:false Cgroups:false BinfmtMisc:true CloseFDs:false KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/26 22:37:11 reproducing crash 'general protection fault in arch_tlb_finish_mmu': program did not crash
+2020/01/26 22:37:12 reproducing crash 'general protection fault in arch_tlb_finish_mmu': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:false RepeatTimes:0 Procs:1 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:false Cgroups:false BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:false UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/26 22:37:22 reproducing crash 'general protection fault in arch_tlb_finish_mmu': program did not crash
+2020/01/26 22:37:23 reproducing crash 'general protection fault in arch_tlb_finish_mmu': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:false RepeatTimes:0 Procs:1 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:false Cgroups:false BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:false HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/26 22:37:33 reproducing crash 'general protection fault in arch_tlb_finish_mmu': program did not crash
+2020/01/26 22:37:33 reproducing crash 'general protection fault in arch_tlb_finish_mmu': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:false RepeatTimes:0 Procs:1 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:false Cgroups:false BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:false Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/26 22:37:44 reproducing crash 'general protection fault in arch_tlb_finish_mmu': program did not crash
+2020/01/26 22:37:44 reproducing crash 'general protection fault in arch_tlb_finish_mmu': reproducing took 7m16.035385359s
+2020/01/26 22:37:44 reproducing crash 'general protection fault in arch_tlb_finish_mmu': repro crashed as (corrupted=false):
+kasan: CONFIG_KASAN_INLINE enabled
+kasan: GPF could be caused by NULL-ptr deref or user memory access
+general protection fault: 0000 [#1] SMP KASAN PTI
+Dumping ftrace buffer:
+   (ftrace buffer empty)
+Modules linked in:
+CPU: 0 PID: 305 Comm: syz-executor513 Not tainted 4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+RIP: 0010:unlink_anon_vmas+0xb5/0x650
+RSP: 0018:ffff88003548fb98 EFLAGS: 00010207
+RAX: 0000000000000006 RBX: 0000000000000000 RCX: ffffffff96ed437f
+RDX: 0000000000000000 RSI: ffff8800337288c0 RDI: 0000000000000034
+RBP: dffffc0000000000 R08: ffffed000681fd1d R09: ffffed000681fd1d
+R10: 0000000000000001 R11: ffffed000681fd1c R12: ffff880033bf1070
+R13: ffff880033728840 R14: 0000000000000000 R15: ffff880033bf10b0
+FS:  0000000000000000(0000) GS:ffff880036200000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000020000008 CR3: 000000002d20e005 CR4: 0000000000360ef0
+Call Trace:
+ free_pgtables+0xe3/0x330
+ exit_mmap+0x24b/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44fc06
+RSP: 002b:00007ffca6247d48 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c7450 RCX: 000000000044fc06
+RDX: 0000000000000001 RSI: 000000000000003c RDI: 0000000000000001
+RBP: 0000000000000001 R08: 00000000000000e7 R09: ffffffffffffffc4
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c7450
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+Code: e8 01 52 e5 ff 49 8d 7c 24 38 48 89 f8 48 c1 e8 03 80 3c 28 00 0f 85 7d 05 00 00 49 8b 5c 24 38 48 8d 7b 34 48 89 f8 48 c1 e8 03 <0f> b6 14 28 48 89 f8 83 e0 07 83 c0 03 38 d0 7c 08 84 d2 0f 85 
+RIP: unlink_anon_vmas+0xb5/0x650 RSP: ffff88003548fb98
+---[ end trace b31172cb11a6365f ]---
+2020/01/26 22:37:44 reproducing crash 'general protection fault in arch_tlb_finish_mmu': final repro crashed as (corrupted=false):
+kasan: CONFIG_KASAN_INLINE enabled
+kasan: GPF could be caused by NULL-ptr deref or user memory access
+general protection fault: 0000 [#1] SMP KASAN PTI
+Dumping ftrace buffer:
+   (ftrace buffer empty)
+Modules linked in:
+CPU: 0 PID: 305 Comm: syz-executor513 Not tainted 4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+RIP: 0010:unlink_anon_vmas+0xb5/0x650
+RSP: 0018:ffff88003548fb98 EFLAGS: 00010207
+RAX: 0000000000000006 RBX: 0000000000000000 RCX: ffffffff96ed437f
+RDX: 0000000000000000 RSI: ffff8800337288c0 RDI: 0000000000000034
+RBP: dffffc0000000000 R08: ffffed000681fd1d R09: ffffed000681fd1d
+R10: 0000000000000001 R11: ffffed000681fd1c R12: ffff880033bf1070
+R13: ffff880033728840 R14: 0000000000000000 R15: ffff880033bf10b0
+FS:  0000000000000000(0000) GS:ffff880036200000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000020000008 CR3: 000000002d20e005 CR4: 0000000000360ef0
+Call Trace:
+ free_pgtables+0xe3/0x330
+ exit_mmap+0x24b/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44fc06
+RSP: 002b:00007ffca6247d48 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c7450 RCX: 000000000044fc06
+RDX: 0000000000000001 RSI: 000000000000003c RDI: 0000000000000001
+RBP: 0000000000000001 R08: 00000000000000e7 R09: ffffffffffffffc4
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c7450
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+Code: e8 01 52 e5 ff 49 8d 7c 24 38 48 89 f8 48 c1 e8 03 80 3c 28 00 0f 85 7d 05 00 00 49 8b 5c 24 38 48 8d 7b 34 48 89 f8 48 c1 e8 03 <0f> b6 14 28 48 89 f8 83 e0 07 83 c0 03 38 d0 7c 08 84 d2 0f 85 
+RIP: unlink_anon_vmas+0xb5/0x650 RSP: ffff88003548fb98
+---[ end trace b31172cb11a6365f ]---
+Extracting prog: 1m23.532937825s
+Minimizing prog: 3m39.950939989s
+Simplifying prog options: 0s
+Extracting C: 11.951366481s
+Simplifying C: 2m0.600033962s
+opts: {Threaded:false Collide:false Repeat:false RepeatTimes:0 Procs:1 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:false Cgroups:false BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:false Trace:false} crepro: true
+
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000000080)={0x1, 0x0, 0x8, "11"})
+
+// autogenerated by syzkaller (https://github.com/google/syzkaller)
+
+#define _GNU_SOURCE 
+
+#include <arpa/inet.h>
+#include <endian.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <net/if.h>
+#include <net/if_arp.h>
+#include <netinet/in.h>
+#include <sched.h>
+#include <setjmp.h>
+#include <signal.h>
+#include <stdarg.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/ioctl.h>
+#include <sys/mount.h>
+#include <sys/prctl.h>
+#include <sys/resource.h>
+#include <sys/socket.h>
+#include <sys/stat.h>
+#include <sys/syscall.h>
+#include <sys/time.h>
+#include <sys/types.h>
+#include <sys/uio.h>
+#include <sys/wait.h>
+#include <unistd.h>
+
+#include <linux/capability.h>
+#include <linux/genetlink.h>
+#include <linux/if_addr.h>
+#include <linux/if_ether.h>
+#include <linux/if_link.h>
+#include <linux/if_tun.h>
+#include <linux/in6.h>
+#include <linux/ip.h>
+#include <linux/neighbour.h>
+#include <linux/net.h>
+#include <linux/netlink.h>
+#include <linux/rtnetlink.h>
+#include <linux/tcp.h>
+#include <linux/veth.h>
+
+unsigned long long procid;
+
+static __thread int skip_segv;
+static __thread jmp_buf segv_env;
+
+static void segv_handler(int sig, siginfo_t* info, void* ctx)
+{
+	uintptr_t addr = (uintptr_t)info->si_addr;
+	const uintptr_t prog_start = 1 << 20;
+	const uintptr_t prog_end = 100 << 20;
+	if (__atomic_load_n(&skip_segv, __ATOMIC_RELAXED) && (addr < prog_start || addr > prog_end)) {
+		_longjmp(segv_env, 1);
+	}
+	exit(sig);
+}
+
+static void install_segv_handler(void)
+{
+	struct sigaction sa;
+	memset(&sa, 0, sizeof(sa));
+	sa.sa_handler = SIG_IGN;
+	syscall(SYS_rt_sigaction, 0x20, &sa, NULL, 8);
+	syscall(SYS_rt_sigaction, 0x21, &sa, NULL, 8);
+	memset(&sa, 0, sizeof(sa));
+	sa.sa_sigaction = segv_handler;
+	sa.sa_flags = SA_NODEFER | SA_SIGINFO;
+	sigaction(SIGSEGV, &sa, NULL);
+	sigaction(SIGBUS, &sa, NULL);
+}
+
+#define NONFAILING(...) { __atomic_fetch_add(&skip_segv, 1, __ATOMIC_SEQ_CST); if (_setjmp(segv_env) == 0) { __VA_ARGS__; } __atomic_fetch_sub(&skip_segv, 1, __ATOMIC_SEQ_CST); }
+
+static void use_temporary_dir(void)
+{
+	char tmpdir_template[] = "./syzkaller.XXXXXX";
+	char* tmpdir = mkdtemp(tmpdir_template);
+	if (!tmpdir)
+	exit(1);
+	if (chmod(tmpdir, 0777))
+	exit(1);
+	if (chdir(tmpdir))
+	exit(1);
+}
+
+static bool write_file(const char* file, const char* what, ...)
+{
+	char buf[1024];
+	va_list args;
+	va_start(args, what);
+	vsnprintf(buf, sizeof(buf), what, args);
+	va_end(args);
+	buf[sizeof(buf) - 1] = 0;
+	int len = strlen(buf);
+	int fd = open(file, O_WRONLY | O_CLOEXEC);
+	if (fd == -1)
+		return false;
+	if (write(fd, buf, len) != len) {
+		int err = errno;
+		close(fd);
+		errno = err;
+		return false;
+	}
+	close(fd);
+	return true;
+}
+
+struct nlmsg {
+	char* pos;
+	int nesting;
+	struct nlattr* nested[8];
+	char buf[1024];
+};
+
+static struct nlmsg nlmsg;
+
+static void netlink_init(struct nlmsg* nlmsg, int typ, int flags,
+			 const void* data, int size)
+{
+	memset(nlmsg, 0, sizeof(*nlmsg));
+	struct nlmsghdr* hdr = (struct nlmsghdr*)nlmsg->buf;
+	hdr->nlmsg_type = typ;
+	hdr->nlmsg_flags = NLM_F_REQUEST | NLM_F_ACK | flags;
+	memcpy(hdr + 1, data, size);
+	nlmsg->pos = (char*)(hdr + 1) + NLMSG_ALIGN(size);
+}
+
+static void netlink_attr(struct nlmsg* nlmsg, int typ,
+			 const void* data, int size)
+{
+	struct nlattr* attr = (struct nlattr*)nlmsg->pos;
+	attr->nla_len = sizeof(*attr) + size;
+	attr->nla_type = typ;
+	memcpy(attr + 1, data, size);
+	nlmsg->pos += NLMSG_ALIGN(attr->nla_len);
+}
+
+static void netlink_nest(struct nlmsg* nlmsg, int typ)
+{
+	struct nlattr* attr = (struct nlattr*)nlmsg->pos;
+	attr->nla_type = typ;
+	nlmsg->pos += sizeof(*attr);
+	nlmsg->nested[nlmsg->nesting++] = attr;
+}
+
+static void netlink_done(struct nlmsg* nlmsg)
+{
+	struct nlattr* attr = nlmsg->nested[--nlmsg->nesting];
+	attr->nla_len = nlmsg->pos - (char*)attr;
+}
+
+static int netlink_send_ext(struct nlmsg* nlmsg, int sock,
+			    uint16_t reply_type, int* reply_len)
+{
+	if (nlmsg->pos > nlmsg->buf + sizeof(nlmsg->buf) || nlmsg->nesting)
+	exit(1);
+	struct nlmsghdr* hdr = (struct nlmsghdr*)nlmsg->buf;
+	hdr->nlmsg_len = nlmsg->pos - nlmsg->buf;
+	struct sockaddr_nl addr;
+	memset(&addr, 0, sizeof(addr));
+	addr.nl_family = AF_NETLINK;
+	unsigned n = sendto(sock, nlmsg->buf, hdr->nlmsg_len, 0, (struct sockaddr*)&addr, sizeof(addr));
+	if (n != hdr->nlmsg_len)
+	exit(1);
+	n = recv(sock, nlmsg->buf, sizeof(nlmsg->buf), 0);
+	if (hdr->nlmsg_type == NLMSG_DONE) {
+		*reply_len = 0;
+		return 0;
+	}
+	if (n < sizeof(struct nlmsghdr))
+	exit(1);
+	if (reply_len && hdr->nlmsg_type == reply_type) {
+		*reply_len = n;
+		return 0;
+	}
+	if (n < sizeof(struct nlmsghdr) + sizeof(struct nlmsgerr))
+	exit(1);
+	if (hdr->nlmsg_type != NLMSG_ERROR)
+	exit(1);
+	return -((struct nlmsgerr*)(hdr + 1))->error;
+}
+
+static int netlink_send(struct nlmsg* nlmsg, int sock)
+{
+	return netlink_send_ext(nlmsg, sock, 0, NULL);
+}
+
+static int netlink_next_msg(struct nlmsg* nlmsg, unsigned int offset,
+			    unsigned int total_len)
+{
+	struct nlmsghdr* hdr = (struct nlmsghdr*)(nlmsg->buf + offset);
+	if (offset == total_len || offset + hdr->nlmsg_len > total_len)
+		return -1;
+	return hdr->nlmsg_len;
+}
+
+static void netlink_add_device_impl(struct nlmsg* nlmsg, const char* type,
+				    const char* name)
+{
+	struct ifinfomsg hdr;
+	memset(&hdr, 0, sizeof(hdr));
+	netlink_init(nlmsg, RTM_NEWLINK, NLM_F_EXCL | NLM_F_CREATE, &hdr, sizeof(hdr));
+	if (name)
+		netlink_attr(nlmsg, IFLA_IFNAME, name, strlen(name));
+	netlink_nest(nlmsg, IFLA_LINKINFO);
+	netlink_attr(nlmsg, IFLA_INFO_KIND, type, strlen(type));
+}
+
+static void netlink_add_device(struct nlmsg* nlmsg, int sock, const char* type,
+			       const char* name)
+{
+	netlink_add_device_impl(nlmsg, type, name);
+	netlink_done(nlmsg);
+	int err = netlink_send(nlmsg, sock);
+	(void)err;
+}
+
+static void netlink_add_veth(struct nlmsg* nlmsg, int sock, const char* name,
+			     const char* peer)
+{
+	netlink_add_device_impl(nlmsg, "veth", name);
+	netlink_nest(nlmsg, IFLA_INFO_DATA);
+	netlink_nest(nlmsg, VETH_INFO_PEER);
+	nlmsg->pos += sizeof(struct ifinfomsg);
+	netlink_attr(nlmsg, IFLA_IFNAME, peer, strlen(peer));
+	netlink_done(nlmsg);
+	netlink_done(nlmsg);
+	netlink_done(nlmsg);
+	int err = netlink_send(nlmsg, sock);
+	(void)err;
+}
+
+static void netlink_add_hsr(struct nlmsg* nlmsg, int sock, const char* name,
+			    const char* slave1, const char* slave2)
+{
+	netlink_add_device_impl(nlmsg, "hsr", name);
+	netlink_nest(nlmsg, IFLA_INFO_DATA);
+	int ifindex1 = if_nametoindex(slave1);
+	netlink_attr(nlmsg, IFLA_HSR_SLAVE1, &ifindex1, sizeof(ifindex1));
+	int ifindex2 = if_nametoindex(slave2);
+	netlink_attr(nlmsg, IFLA_HSR_SLAVE2, &ifindex2, sizeof(ifindex2));
+	netlink_done(nlmsg);
+	netlink_done(nlmsg);
+	int err = netlink_send(nlmsg, sock);
+	(void)err;
+}
+
+static void netlink_add_virt_wifi(struct nlmsg* nlmsg, int sock, const char* name, const char* link)
+{
+	netlink_add_device_impl(nlmsg, "virt_wifi", name);
+	netlink_done(nlmsg);
+	int ifindex = if_nametoindex(link);
+	netlink_attr(nlmsg, IFLA_LINK, &ifindex, sizeof(ifindex));
+	int err = netlink_send(nlmsg, sock);
+	(void)err;
+}
+
+static void netlink_add_vlan(struct nlmsg* nlmsg, int sock, const char* name, const char* link, uint16_t id, uint16_t proto)
+{
+	netlink_add_device_impl(nlmsg, "vlan", name);
+	netlink_nest(nlmsg, IFLA_INFO_DATA);
+	netlink_attr(nlmsg, IFLA_VLAN_ID, &id, sizeof(id));
+	netlink_attr(nlmsg, IFLA_VLAN_PROTOCOL, &proto, sizeof(proto));
+	netlink_done(nlmsg);
+	netlink_done(nlmsg);
+	int ifindex = if_nametoindex(link);
+	netlink_attr(nlmsg, IFLA_LINK, &ifindex, sizeof(ifindex));
+	int err = netlink_send(nlmsg, sock);
+	(void)err;
+}
+
+static void netlink_add_macvlan(struct nlmsg* nlmsg, int sock, const char* name, const char* link)
+{
+	netlink_add_device_impl(nlmsg, "macvlan", name);
+	netlink_nest(nlmsg, IFLA_INFO_DATA);
+	uint32_t mode = MACVLAN_MODE_BRIDGE;
+	netlink_attr(nlmsg, IFLA_MACVLAN_MODE, &mode, sizeof(mode));
+	netlink_done(nlmsg);
+	netlink_done(nlmsg);
+	int ifindex = if_nametoindex(link);
+	netlink_attr(nlmsg, IFLA_LINK, &ifindex, sizeof(ifindex));
+	int err = netlink_send(nlmsg, sock);
+	(void)err;
+}
+
+#define IFLA_IPVLAN_FLAGS 2
+#define IPVLAN_MODE_L3S 2
+#undef IPVLAN_F_VEPA
+#define IPVLAN_F_VEPA 2
+
+static void netlink_add_ipvlan(struct nlmsg* nlmsg, int sock, const char* name, const char* link, uint16_t mode, uint16_t flags)
+{
+	netlink_add_device_impl(nlmsg, "ipvlan", name);
+	netlink_nest(nlmsg, IFLA_INFO_DATA);
+	netlink_attr(nlmsg, IFLA_IPVLAN_MODE, &mode, sizeof(mode));
+	netlink_attr(nlmsg, IFLA_IPVLAN_FLAGS, &flags, sizeof(flags));
+	netlink_done(nlmsg);
+	netlink_done(nlmsg);
+	int ifindex = if_nametoindex(link);
+	netlink_attr(nlmsg, IFLA_LINK, &ifindex, sizeof(ifindex));
+	int err = netlink_send(nlmsg, sock);
+	(void)err;
+}
+
+static void netlink_device_change(struct nlmsg* nlmsg, int sock, const char* name, bool up,
+				  const char* master, const void* mac, int macsize,
+				  const char* new_name)
+{
+	struct ifinfomsg hdr;
+	memset(&hdr, 0, sizeof(hdr));
+	if (up)
+		hdr.ifi_flags = hdr.ifi_change = IFF_UP;
+	hdr.ifi_index = if_nametoindex(name);
+	netlink_init(nlmsg, RTM_NEWLINK, 0, &hdr, sizeof(hdr));
+	if (new_name)
+		netlink_attr(nlmsg, IFLA_IFNAME, new_name, strlen(new_name));
+	if (master) {
+		int ifindex = if_nametoindex(master);
+		netlink_attr(nlmsg, IFLA_MASTER, &ifindex, sizeof(ifindex));
+	}
+	if (macsize)
+		netlink_attr(nlmsg, IFLA_ADDRESS, mac, macsize);
+	int err = netlink_send(nlmsg, sock);
+	(void)err;
+}
+
+static int netlink_add_addr(struct nlmsg* nlmsg, int sock, const char* dev,
+			    const void* addr, int addrsize)
+{
+	struct ifaddrmsg hdr;
+	memset(&hdr, 0, sizeof(hdr));
+	hdr.ifa_family = addrsize == 4 ? AF_INET : AF_INET6;
+	hdr.ifa_prefixlen = addrsize == 4 ? 24 : 120;
+	hdr.ifa_scope = RT_SCOPE_UNIVERSE;
+	hdr.ifa_index = if_nametoindex(dev);
+	netlink_init(nlmsg, RTM_NEWADDR, NLM_F_CREATE | NLM_F_REPLACE, &hdr, sizeof(hdr));
+	netlink_attr(nlmsg, IFA_LOCAL, addr, addrsize);
+	netlink_attr(nlmsg, IFA_ADDRESS, addr, addrsize);
+	return netlink_send(nlmsg, sock);
+}
+
+static void netlink_add_addr4(struct nlmsg* nlmsg, int sock,
+			      const char* dev, const char* addr)
+{
+	struct in_addr in_addr;
+	inet_pton(AF_INET, addr, &in_addr);
+	int err = netlink_add_addr(nlmsg, sock, dev, &in_addr, sizeof(in_addr));
+	(void)err;
+}
+
+static void netlink_add_addr6(struct nlmsg* nlmsg, int sock,
+			      const char* dev, const char* addr)
+{
+	struct in6_addr in6_addr;
+	inet_pton(AF_INET6, addr, &in6_addr);
+	int err = netlink_add_addr(nlmsg, sock, dev, &in6_addr, sizeof(in6_addr));
+	(void)err;
+}
+
+static void netlink_add_neigh(struct nlmsg* nlmsg, int sock, const char* name,
+			      const void* addr, int addrsize, const void* mac, int macsize)
+{
+	struct ndmsg hdr;
+	memset(&hdr, 0, sizeof(hdr));
+	hdr.ndm_family = addrsize == 4 ? AF_INET : AF_INET6;
+	hdr.ndm_ifindex = if_nametoindex(name);
+	hdr.ndm_state = NUD_PERMANENT;
+	netlink_init(nlmsg, RTM_NEWNEIGH, NLM_F_EXCL | NLM_F_CREATE, &hdr, sizeof(hdr));
+	netlink_attr(nlmsg, NDA_DST, addr, addrsize);
+	netlink_attr(nlmsg, NDA_LLADDR, mac, macsize);
+	int err = netlink_send(nlmsg, sock);
+	(void)err;
+}
+
+static int tunfd = -1;
+static int tun_frags_enabled;
+
+#define TUN_IFACE "syz_tun"
+
+#define LOCAL_MAC 0xaaaaaaaaaaaa
+#define REMOTE_MAC 0xaaaaaaaaaabb
+
+#define LOCAL_IPV4 "172.20.20.170"
+#define REMOTE_IPV4 "172.20.20.187"
+
+#define LOCAL_IPV6 "fe80::aa"
+#define REMOTE_IPV6 "fe80::bb"
+
+#define IFF_NAPI 0x0010
+#define IFF_NAPI_FRAGS 0x0020
+
+static void initialize_tun(void)
+{
+	tunfd = open("/dev/net/tun", O_RDWR | O_NONBLOCK);
+	if (tunfd == -1) {
+		printf("tun: can't open /dev/net/tun: please enable CONFIG_TUN=y\n");
+		printf("otherwise fuzzing or reproducing might not work as intended\n");
+		return;
+	}
+	const int kTunFd = 240;
+	if (dup2(tunfd, kTunFd) < 0)
+	exit(1);
+	close(tunfd);
+	tunfd = kTunFd;
+	struct ifreq ifr;
+	memset(&ifr, 0, sizeof(ifr));
+	strncpy(ifr.ifr_name, TUN_IFACE, IFNAMSIZ);
+	ifr.ifr_flags = IFF_TAP | IFF_NO_PI | IFF_NAPI | IFF_NAPI_FRAGS;
+	if (ioctl(tunfd, TUNSETIFF, (void*)&ifr) < 0) {
+		ifr.ifr_flags = IFF_TAP | IFF_NO_PI;
+		if (ioctl(tunfd, TUNSETIFF, (void*)&ifr) < 0)
+	exit(1);
+	}
+	if (ioctl(tunfd, TUNGETIFF, (void*)&ifr) < 0)
+	exit(1);
+	tun_frags_enabled = (ifr.ifr_flags & IFF_NAPI_FRAGS) != 0;
+	char sysctl[64];
+	sprintf(sysctl, "/proc/sys/net/ipv6/conf/%s/accept_dad", TUN_IFACE);
+	write_file(sysctl, "0");
+	sprintf(sysctl, "/proc/sys/net/ipv6/conf/%s/router_solicitations", TUN_IFACE);
+	write_file(sysctl, "0");
+	int sock = socket(AF_NETLINK, SOCK_RAW, NETLINK_ROUTE);
+	if (sock == -1)
+	exit(1);
+	netlink_add_addr4(&nlmsg, sock, TUN_IFACE, LOCAL_IPV4);
+	netlink_add_addr6(&nlmsg, sock, TUN_IFACE, LOCAL_IPV6);
+	uint64_t macaddr = REMOTE_MAC;
+	struct in_addr in_addr;
+	inet_pton(AF_INET, REMOTE_IPV4, &in_addr);
+	netlink_add_neigh(&nlmsg, sock, TUN_IFACE, &in_addr, sizeof(in_addr), &macaddr, ETH_ALEN);
+	struct in6_addr in6_addr;
+	inet_pton(AF_INET6, REMOTE_IPV6, &in6_addr);
+	netlink_add_neigh(&nlmsg, sock, TUN_IFACE, &in6_addr, sizeof(in6_addr), &macaddr, ETH_ALEN);
+	macaddr = LOCAL_MAC;
+	netlink_device_change(&nlmsg, sock, TUN_IFACE, true, 0, &macaddr, ETH_ALEN, NULL);
+	close(sock);
+}
+
+const int kInitNetNsFd = 239;
+
+#define DEVLINK_FAMILY_NAME "devlink"
+
+#define DEVLINK_CMD_PORT_GET 5
+#define DEVLINK_CMD_RELOAD 37
+#define DEVLINK_ATTR_BUS_NAME 1
+#define DEVLINK_ATTR_DEV_NAME 2
+#define DEVLINK_ATTR_NETDEV_NAME 7
+#define DEVLINK_ATTR_NETNS_FD 138
+
+static int netlink_devlink_id_get(struct nlmsg* nlmsg, int sock)
+{
+	struct genlmsghdr genlhdr;
+	struct nlattr* attr;
+	int err, n;
+	uint16_t id = 0;
+	memset(&genlhdr, 0, sizeof(genlhdr));
+	genlhdr.cmd = CTRL_CMD_GETFAMILY;
+	netlink_init(nlmsg, GENL_ID_CTRL, 0, &genlhdr, sizeof(genlhdr));
+	netlink_attr(nlmsg, CTRL_ATTR_FAMILY_NAME, DEVLINK_FAMILY_NAME, strlen(DEVLINK_FAMILY_NAME) + 1);
+	err = netlink_send_ext(nlmsg, sock, GENL_ID_CTRL, &n);
+	if (err) {
+		return -1;
+	}
+	attr = (struct nlattr*)(nlmsg->buf + NLMSG_HDRLEN + NLMSG_ALIGN(sizeof(genlhdr)));
+	for (; (char*)attr < nlmsg->buf + n; attr = (struct nlattr*)((char*)attr + NLMSG_ALIGN(attr->nla_len))) {
+		if (attr->nla_type == CTRL_ATTR_FAMILY_ID) {
+			id = *(uint16_t*)(attr + 1);
+			break;
+		}
+	}
+	if (!id) {
+		return -1;
+	}
+	recv(sock, nlmsg->buf, sizeof(nlmsg->buf), 0); /* recv ack */
+	return id;
+}
+
+static void netlink_devlink_netns_move(const char* bus_name, const char* dev_name, int netns_fd)
+{
+	struct genlmsghdr genlhdr;
+	int sock;
+	int id, err;
+	sock = socket(AF_NETLINK, SOCK_RAW, NETLINK_GENERIC);
+	if (sock == -1)
+	exit(1);
+	id = netlink_devlink_id_get(&nlmsg, sock);
+	if (id == -1)
+		goto error;
+	memset(&genlhdr, 0, sizeof(genlhdr));
+	genlhdr.cmd = DEVLINK_CMD_RELOAD;
+	netlink_init(&nlmsg, id, 0, &genlhdr, sizeof(genlhdr));
+	netlink_attr(&nlmsg, DEVLINK_ATTR_BUS_NAME, bus_name, strlen(bus_name) + 1);
+	netlink_attr(&nlmsg, DEVLINK_ATTR_DEV_NAME, dev_name, strlen(dev_name) + 1);
+	netlink_attr(&nlmsg, DEVLINK_ATTR_NETNS_FD, &netns_fd, sizeof(netns_fd));
+	err = netlink_send(&nlmsg, sock);
+	if (err) {
+	}
+error:
+	close(sock);
+}
+
+static struct nlmsg nlmsg2;
+
+static void initialize_devlink_ports(const char* bus_name, const char* dev_name,
+				     const char* netdev_prefix)
+{
+	struct genlmsghdr genlhdr;
+	int len, total_len, id, err, offset;
+	uint16_t netdev_index;
+	int sock = socket(AF_NETLINK, SOCK_RAW, NETLINK_GENERIC);
+	if (sock == -1)
+	exit(1);
+	int rtsock = socket(AF_NETLINK, SOCK_RAW, NETLINK_ROUTE);
+	if (rtsock == -1)
+	exit(1);
+	id = netlink_devlink_id_get(&nlmsg, sock);
+	if (id == -1)
+		goto error;
+	memset(&genlhdr, 0, sizeof(genlhdr));
+	genlhdr.cmd = DEVLINK_CMD_PORT_GET;
+	netlink_init(&nlmsg, id, NLM_F_DUMP, &genlhdr, sizeof(genlhdr));
+	netlink_attr(&nlmsg, DEVLINK_ATTR_BUS_NAME, bus_name, strlen(bus_name) + 1);
+	netlink_attr(&nlmsg, DEVLINK_ATTR_DEV_NAME, dev_name, strlen(dev_name) + 1);
+	err = netlink_send_ext(&nlmsg, sock, id, &total_len);
+	if (err) {
+		goto error;
+	}
+	offset = 0;
+	netdev_index = 0;
+	while ((len = netlink_next_msg(&nlmsg, offset, total_len)) != -1) {
+		struct nlattr* attr = (struct nlattr*)(nlmsg.buf + offset + NLMSG_HDRLEN + NLMSG_ALIGN(sizeof(genlhdr)));
+		for (; (char*)attr < nlmsg.buf + offset + len; attr = (struct nlattr*)((char*)attr + NLMSG_ALIGN(attr->nla_len))) {
+			if (attr->nla_type == DEVLINK_ATTR_NETDEV_NAME) {
+				char* port_name;
+				char netdev_name[IFNAMSIZ];
+				port_name = (char*)(attr + 1);
+				snprintf(netdev_name, sizeof(netdev_name), "%s%d", netdev_prefix, netdev_index);
+				netlink_device_change(&nlmsg2, rtsock, port_name, true, 0, 0, 0, netdev_name);
+				break;
+			}
+		}
+		offset += len;
+		netdev_index++;
+	}
+error:
+	close(rtsock);
+	close(sock);
+}
+
+static void initialize_devlink_pci(void)
+{
+	int netns = open("/proc/self/ns/net", O_RDONLY);
+	if (netns == -1)
+	exit(1);
+	int ret = setns(kInitNetNsFd, 0);
+	if (ret == -1)
+	exit(1);
+	netlink_devlink_netns_move("pci", "0000:00:10.0", netns);
+	ret = setns(netns, 0);
+	if (ret == -1)
+	exit(1);
+	close(netns);
+	initialize_devlink_ports("pci", "0000:00:10.0", "netpci");
+}
+
+#define DEV_IPV4 "172.20.20.%d"
+#define DEV_IPV6 "fe80::%02x"
+#define DEV_MAC 0x00aaaaaaaaaa
+
+static void netdevsim_add(unsigned int addr, unsigned int port_count)
+{
+	char buf[16];
+	sprintf(buf, "%u %u", addr, port_count);
+	if (write_file("/sys/bus/netdevsim/new_device", buf)) {
+		snprintf(buf, sizeof(buf), "netdevsim%d", addr);
+		initialize_devlink_ports("netdevsim", buf, "netdevsim");
+	}
+}
+static void initialize_netdevices(void)
+{
+	char netdevsim[16];
+	sprintf(netdevsim, "netdevsim%d", (int)procid);
+	struct {
+		const char* type;
+		const char* dev;
+	} devtypes[] = {
+	    {"ip6gretap", "ip6gretap0"},
+	    {"bridge", "bridge0"},
+	    {"vcan", "vcan0"},
+	    {"bond", "bond0"},
+	    {"team", "team0"},
+	    {"dummy", "dummy0"},
+	    {"nlmon", "nlmon0"},
+	    {"caif", "caif0"},
+	    {"batadv", "batadv0"},
+	    {"vxcan", "vxcan1"},
+	    {"netdevsim", netdevsim},
+	    {"veth", 0},
+	    {"xfrm", "xfrm0"},
+	};
+	const char* devmasters[] = {"bridge", "bond", "team"};
+	struct {
+		const char* name;
+		int macsize;
+		bool noipv6;
+	} devices[] = {
+	    {"lo", ETH_ALEN},
+	    {"sit0", 0},
+	    {"bridge0", ETH_ALEN},
+	    {"vcan0", 0, true},
+	    {"tunl0", 0},
+	    {"gre0", 0},
+	    {"gretap0", ETH_ALEN},
+	    {"ip_vti0", 0},
+	    {"ip6_vti0", 0},
+	    {"ip6tnl0", 0},
+	    {"ip6gre0", 0},
+	    {"ip6gretap0", ETH_ALEN},
+	    {"erspan0", ETH_ALEN},
+	    {"bond0", ETH_ALEN},
+	    {"veth0", ETH_ALEN},
+	    {"veth1", ETH_ALEN},
+	    {"team0", ETH_ALEN},
+	    {"veth0_to_bridge", ETH_ALEN},
+	    {"veth1_to_bridge", ETH_ALEN},
+	    {"veth0_to_bond", ETH_ALEN},
+	    {"veth1_to_bond", ETH_ALEN},
+	    {"veth0_to_team", ETH_ALEN},
+	    {"veth1_to_team", ETH_ALEN},
+	    {"veth0_to_hsr", ETH_ALEN},
+	    {"veth1_to_hsr", ETH_ALEN},
+	    {"hsr0", 0},
+	    {"dummy0", ETH_ALEN},
+	    {"nlmon0", 0},
+	    {"vxcan0", 0, true},
+	    {"vxcan1", 0, true},
+	    {"caif0", ETH_ALEN},
+	    {"batadv0", ETH_ALEN},
+	    {netdevsim, ETH_ALEN},
+	    {"xfrm0", ETH_ALEN},
+	    {"veth0_virt_wifi", ETH_ALEN},
+	    {"veth1_virt_wifi", ETH_ALEN},
+	    {"virt_wifi0", ETH_ALEN},
+	    {"veth0_vlan", ETH_ALEN},
+	    {"veth1_vlan", ETH_ALEN},
+	    {"vlan0", ETH_ALEN},
+	    {"vlan1", ETH_ALEN},
+	    {"macvlan0", ETH_ALEN},
+	    {"macvlan1", ETH_ALEN},
+	    {"ipvlan0", ETH_ALEN},
+	    {"ipvlan1", ETH_ALEN},
+	};
+	int sock = socket(AF_NETLINK, SOCK_RAW, NETLINK_ROUTE);
+	if (sock == -1)
+	exit(1);
+	unsigned i;
+	for (i = 0; i < sizeof(devtypes) / sizeof(devtypes[0]); i++)
+		netlink_add_device(&nlmsg, sock, devtypes[i].type, devtypes[i].dev);
+	for (i = 0; i < sizeof(devmasters) / (sizeof(devmasters[0])); i++) {
+		char master[32], slave0[32], veth0[32], slave1[32], veth1[32];
+		sprintf(slave0, "%s_slave_0", devmasters[i]);
+		sprintf(veth0, "veth0_to_%s", devmasters[i]);
+		netlink_add_veth(&nlmsg, sock, slave0, veth0);
+		sprintf(slave1, "%s_slave_1", devmasters[i]);
+		sprintf(veth1, "veth1_to_%s", devmasters[i]);
+		netlink_add_veth(&nlmsg, sock, slave1, veth1);
+		sprintf(master, "%s0", devmasters[i]);
+		netlink_device_change(&nlmsg, sock, slave0, false, master, 0, 0, NULL);
+		netlink_device_change(&nlmsg, sock, slave1, false, master, 0, 0, NULL);
+	}
+	netlink_device_change(&nlmsg, sock, "bridge_slave_0", true, 0, 0, 0, NULL);
+	netlink_device_change(&nlmsg, sock, "bridge_slave_1", true, 0, 0, 0, NULL);
+	netlink_add_veth(&nlmsg, sock, "hsr_slave_0", "veth0_to_hsr");
+	netlink_add_veth(&nlmsg, sock, "hsr_slave_1", "veth1_to_hsr");
+	netlink_add_hsr(&nlmsg, sock, "hsr0", "hsr_slave_0", "hsr_slave_1");
+	netlink_device_change(&nlmsg, sock, "hsr_slave_0", true, 0, 0, 0, NULL);
+	netlink_device_change(&nlmsg, sock, "hsr_slave_1", true, 0, 0, 0, NULL);
+	netlink_add_veth(&nlmsg, sock, "veth0_virt_wifi", "veth1_virt_wifi");
+	netlink_add_virt_wifi(&nlmsg, sock, "virt_wifi0", "veth1_virt_wifi");
+	netlink_add_veth(&nlmsg, sock, "veth0_vlan", "veth1_vlan");
+	netlink_add_vlan(&nlmsg, sock, "vlan0", "veth0_vlan", 0, htons(ETH_P_8021Q));
+	netlink_add_vlan(&nlmsg, sock, "vlan1", "veth0_vlan", 1, htons(ETH_P_8021AD));
+	netlink_add_macvlan(&nlmsg, sock, "macvlan0", "veth1_vlan");
+	netlink_add_macvlan(&nlmsg, sock, "macvlan1", "veth1_vlan");
+	netlink_add_ipvlan(&nlmsg, sock, "ipvlan0", "veth0_vlan", IPVLAN_MODE_L2, 0);
+	netlink_add_ipvlan(&nlmsg, sock, "ipvlan1", "veth0_vlan", IPVLAN_MODE_L3S, IPVLAN_F_VEPA);
+	netdevsim_add((int)procid, 4);
+	for (i = 0; i < sizeof(devices) / (sizeof(devices[0])); i++) {
+		char addr[32];
+		sprintf(addr, DEV_IPV4, i + 10);
+		netlink_add_addr4(&nlmsg, sock, devices[i].name, addr);
+		if (!devices[i].noipv6) {
+			sprintf(addr, DEV_IPV6, i + 10);
+			netlink_add_addr6(&nlmsg, sock, devices[i].name, addr);
+		}
+		uint64_t macaddr = DEV_MAC + ((i + 10ull) << 40);
+		netlink_device_change(&nlmsg, sock, devices[i].name, true, 0, &macaddr, devices[i].macsize, NULL);
+	}
+	close(sock);
+}
+static void initialize_netdevices_init(void)
+{
+	int sock = socket(AF_NETLINK, SOCK_RAW, NETLINK_ROUTE);
+	if (sock == -1)
+	exit(1);
+	struct {
+		const char* type;
+		int macsize;
+		bool noipv6;
+		bool noup;
+	} devtypes[] = {
+	    {"nr", 7, true},
+	    {"rose", 5, true, true},
+	};
+	unsigned i;
+	for (i = 0; i < sizeof(devtypes) / sizeof(devtypes[0]); i++) {
+		char dev[32], addr[32];
+		sprintf(dev, "%s%d", devtypes[i].type, (int)procid);
+		sprintf(addr, "172.30.%d.%d", i, (int)procid + 1);
+		netlink_add_addr4(&nlmsg, sock, dev, addr);
+		if (!devtypes[i].noipv6) {
+			sprintf(addr, "fe88::%02x:%02x", i, (int)procid + 1);
+			netlink_add_addr6(&nlmsg, sock, dev, addr);
+		}
+		int macsize = devtypes[i].macsize;
+		uint64_t macaddr = 0xbbbbbb + ((unsigned long long)i << (8 * (macsize - 2))) +
+				 (procid << (8 * (macsize - 1)));
+		netlink_device_change(&nlmsg, sock, dev, !devtypes[i].noup, 0, &macaddr, macsize, NULL);
+	}
+	close(sock);
+}
+
+#define MAX_FDS 30
+
+static long syz_open_dev(volatile long a0, volatile long a1, volatile long a2)
+{
+	if (a0 == 0xc || a0 == 0xb) {
+		char buf[128];
+		sprintf(buf, "/dev/%s/%d:%d", a0 == 0xc ? "char" : "block", (uint8_t)a1, (uint8_t)a2);
+		return open(buf, O_RDWR, 0);
+	} else {
+		char buf[1024];
+		char* hash;
+		NONFAILING(strncpy(buf, (char*)a0, sizeof(buf) - 1));
+		buf[sizeof(buf) - 1] = 0;
+		while ((hash = strchr(buf, '#'))) {
+			*hash = '0' + (char)(a1 % 10);
+			a1 /= 10;
+		}
+		return open(buf, a2, 0);
+	}
+}
+
+static void setup_common()
+{
+	if (mount(0, "/sys/fs/fuse/connections", "fusectl", 0, 0)) {
+	}
+}
+
+static void loop();
+
+static void sandbox_common()
+{
+	prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0);
+	setpgrp();
+	setsid();
+	int netns = open("/proc/self/ns/net", O_RDONLY);
+	if (netns == -1)
+	exit(1);
+	if (dup2(netns, kInitNetNsFd) < 0)
+	exit(1);
+	close(netns);
+	struct rlimit rlim;
+	rlim.rlim_cur = rlim.rlim_max = (200 << 20);
+	setrlimit(RLIMIT_AS, &rlim);
+	rlim.rlim_cur = rlim.rlim_max = 32 << 20;
+	setrlimit(RLIMIT_MEMLOCK, &rlim);
+	rlim.rlim_cur = rlim.rlim_max = 136 << 20;
+	setrlimit(RLIMIT_FSIZE, &rlim);
+	rlim.rlim_cur = rlim.rlim_max = 1 << 20;
+	setrlimit(RLIMIT_STACK, &rlim);
+	rlim.rlim_cur = rlim.rlim_max = 0;
+	setrlimit(RLIMIT_CORE, &rlim);
+	rlim.rlim_cur = rlim.rlim_max = 256;
+	setrlimit(RLIMIT_NOFILE, &rlim);
+	if (unshare(CLONE_NEWNS)) {
+	}
+	if (unshare(CLONE_NEWIPC)) {
+	}
+	if (unshare(0x02000000)) {
+	}
+	if (unshare(CLONE_NEWUTS)) {
+	}
+	if (unshare(CLONE_SYSVSEM)) {
+	}
+	typedef struct {
+		const char* name;
+		const char* value;
+	} sysctl_t;
+	static const sysctl_t sysctls[] = {
+	    {"/proc/sys/kernel/shmmax", "16777216"},
+	    {"/proc/sys/kernel/shmall", "536870912"},
+	    {"/proc/sys/kernel/shmmni", "1024"},
+	    {"/proc/sys/kernel/msgmax", "8192"},
+	    {"/proc/sys/kernel/msgmni", "1024"},
+	    {"/proc/sys/kernel/msgmnb", "1024"},
+	    {"/proc/sys/kernel/sem", "1024 1048576 500 1024"},
+	};
+	unsigned i;
+	for (i = 0; i < sizeof(sysctls) / sizeof(sysctls[0]); i++)
+		write_file(sysctls[i].name, sysctls[i].value);
+}
+
+int wait_for_loop(int pid)
+{
+	if (pid < 0)
+	exit(1);
+	int status = 0;
+	while (waitpid(-1, &status, __WALL) != pid) {
+	}
+	return WEXITSTATUS(status);
+}
+
+static void drop_caps(void)
+{
+	struct __user_cap_header_struct cap_hdr = {};
+	struct __user_cap_data_struct cap_data[2] = {};
+	cap_hdr.version = _LINUX_CAPABILITY_VERSION_3;
+	cap_hdr.pid = getpid();
+	if (syscall(SYS_capget, &cap_hdr, &cap_data))
+	exit(1);
+	const int drop = (1 << CAP_SYS_PTRACE) | (1 << CAP_SYS_NICE);
+	cap_data[0].effective &= ~drop;
+	cap_data[0].permitted &= ~drop;
+	cap_data[0].inheritable &= ~drop;
+	if (syscall(SYS_capset, &cap_hdr, &cap_data))
+	exit(1);
+}
+
+static int do_sandbox_none(void)
+{
+	if (unshare(CLONE_NEWPID)) {
+	}
+	int pid = fork();
+	if (pid != 0)
+		return wait_for_loop(pid);
+	setup_common();
+	sandbox_common();
+	drop_caps();
+	initialize_netdevices_init();
+	if (unshare(CLONE_NEWNET)) {
+	}
+	initialize_devlink_pci();
+	initialize_tun();
+	initialize_netdevices();
+	loop();
+	exit(1);
+}
+
+static void close_fds()
+{
+	int fd;
+	for (fd = 3; fd < MAX_FDS; fd++)
+		close(fd);
+}
+
+static void setup_binfmt_misc()
+{
+	if (mount(0, "/proc/sys/fs/binfmt_misc", "binfmt_misc", 0, 0)) {
+	}
+	write_file("/proc/sys/fs/binfmt_misc/register", ":syz0:M:0:\x01::./file0:");
+	write_file("/proc/sys/fs/binfmt_misc/register", ":syz1:M:1:\x02::./file0:POC");
+}
+
+uint64_t r[1] = {0xffffffffffffffff};
+
+void loop(void)
+{
+		intptr_t res = 0;
+	NONFAILING(memcpy((void*)0x20000000, "/dev/sg#\000", 9));
+	res = syz_open_dev(0x20000000, 0, 0);
+	if (res != -1)
+		r[0] = res;
+	NONFAILING(*(uint32_t*)0x20000080 = 1);
+	NONFAILING(*(uint32_t*)0x20000084 = 0);
+	NONFAILING(*(uint32_t*)0x20000088 = 8);
+	NONFAILING(memcpy((void*)0x2000008c, "\x11", 1));
+	syscall(__NR_ioctl, r[0], 1ul, 0x20000080ul);
+	close_fds();
+}
+int main(void)
+{
+		syscall(__NR_mmap, 0x20000000ul, 0x1000000ul, 3ul, 0x32ul, -1, 0);
+	setup_binfmt_misc();
+	install_segv_handler();
+			use_temporary_dir();
+			do_sandbox_none();
+	return 0;
+}
+

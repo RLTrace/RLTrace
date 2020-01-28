@@ -1,0 +1,66 @@
+EXT4-fs warning (device sda): ext4_resize_begin:45: There are errors in the filesystem, so online resizing is not allowed
+BUG: Bad page map in process syz-executor.6  pte:21100000201 pmd:2daa8067
+addr:00000000f7a33f36 vm_flags:00100077 anon_vma:000000003c9fabdb mapping:          (null) index:20000
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 19877 Comm: syz-executor.6 Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+ _vm_normal_page+0x101/0x1b0 mm/memory.c:861
+ do_wp_page+0xdf/0x16a0 mm/memory.c:2712
+ handle_pte_fault mm/memory.c:3979 [inline]
+ __handle_mm_fault+0xd62/0x1ab0 mm/memory.c:4087
+ handle_mm_fault+0xfc/0x350 mm/memory.c:4124
+ __do_page_fault+0x4f8/0xb20 arch/x86/mm/fault.c:1399
+ async_page_fault+0x1e/0x30 arch/x86/entry/entry_64.S:1163
+RIP: 0033:0x461f5b
+RSP: 002b:00007fff2c1244a8 EFLAGS: 00010206
+RAX: 0000000020000180 RBX: 0000000000000000 RCX: 0030656c69662f30
+RDX: 000000000000000e RSI: 2f30656c69662f2e RDI: 0000000020000180
+RBP: 0000000000000000 R08: 0000000000740260 R09: 0000000400000000
+R10: 00007fff2c1245b0 R11: 0000000000000246 R12: 0000000000740260
+R13: 0000000000740260 R14: 0000000000740268 R15: 00000000006fe420
+syz-executor.6: Corrupted page table at address 20000000
+PGD 800000006c635067 P4D 800000006c635067 PUD 61bef067 PMD 2daa8067 PTE 21100000201
+Bad pagetable: 0009 [#1] SMP KASAN PTI
+Dumping ftrace buffer:
+   (ftrace buffer empty)
+Modules linked in:
+CPU: 1 PID: 19877 Comm: syz-executor.6 Tainted: G    B             4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+RIP: 0010:copy_user_enhanced_fast_string+0xe/0x20 arch/x86/lib/copy_user_64.S:181
+RSP: 0018:ffff880037dc7bd0 EFLAGS: 00050206
+RAX: ffffed000b1d1800 RBX: ffff880037dc7d68 RCX: 0000000000001000
+RDX: 0000000000001000 RSI: 0000000020000000 RDI: ffff880058e8b000
+RBP: ffff880063ff5f00 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000200 R11: ffffed000b1d17ff R12: 0000000000000000
+R13: 0000000020000000 R14: 0000000020000000 R15: ffff880058e8b000
+FS:  0000000001d17940(0000) GS:ffff88006d300000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000020000000 CR3: 000000006010a004 CR4: 00000000003606e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ copy_user_generic arch/x86/include/asm/uaccess_64.h:37 [inline]
+ raw_copy_from_user arch/x86/include/asm/uaccess_64.h:102 [inline]
+ __copy_from_user_inatomic include/linux/uaccess.h:66 [inline]
+ cow_user_page mm/memory.c:2335 [inline]
+ wp_page_copy+0xf67/0x13b0 mm/memory.c:2494
+ do_wp_page+0x24d/0x16a0 mm/memory.c:2776
+ handle_pte_fault mm/memory.c:3979 [inline]
+ __handle_mm_fault+0xd62/0x1ab0 mm/memory.c:4087
+ handle_mm_fault+0xfc/0x350 mm/memory.c:4124
+ __do_page_fault+0x4f8/0xb20 arch/x86/mm/fault.c:1399
+ async_page_fault+0x1e/0x30 arch/x86/entry/entry_64.S:1163
+RIP: 0033:0x461f5b
+RSP: 002b:00007fff2c1244a8 EFLAGS: 00010206
+RAX: 0000000020000180 RBX: 0000000000000000 RCX: 0030656c69662f30
+RDX: 000000000000000e RSI: 2f30656c69662f2e RDI: 0000000020000180
+RBP: 0000000000000000 R08: 0000000000740260 R09: 0000000400000000
+R10: 00007fff2c1245b0 R11: 0000000000000246 R12: 0000000000740260
+R13: 0000000000740260 R14: 0000000000740268 R15: 00000000006fe420
+Code: f2 89 d1 c1 e9 03 83 e2 07 f3 48 a5 89 d1 f3 a4 31 c0 0f 01 ca c3 0f 1f 80 00 00 00 00 0f 01 cb 83 fa 40 0f 82 70 ff ff ff 89 d1 <f3> a4 31 c0 0f 01 ca c3 66 2e 0f 1f 84 00 00 00 00 00 0f 01 cb 
+RIP: copy_user_enhanced_fast_string+0xe/0x20 arch/x86/lib/copy_user_64.S:181 RSP: ffff880037dc7bd0
+---[ end trace 43196115f36f6f40 ]---

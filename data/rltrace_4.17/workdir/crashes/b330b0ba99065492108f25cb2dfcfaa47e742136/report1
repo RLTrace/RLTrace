@@ -1,0 +1,63 @@
+SELinux: unrecognized netlink message: protocol=9 nlmsg_type=0 sclass=netlink_audit_socket pig=8632 comm=syz-executor.6
+SELinux: unrecognized netlink message: protocol=9 nlmsg_type=0 sclass=netlink_audit_socket pig=8632 comm=syz-executor.6
+EXT4-fs (loop5): VFS: Can't find ext4 filesystem
+hrtimer: interrupt took 38893963 ns
+INFO: rcu_sched detected stalls on CPUs/tasks:
+	(detected by 0, t=21006 jiffies, g=5147, c=5146, q=1189)
+All QSes seen, last rcu_sched kthread activity 21007 (4294728487-4294707480), jiffies_till_next_fqs=3, root ->qsmask 0x0
+syz-executor.3  R  running task    25440  1974   1939 0x00000008
+Call Trace:
+ <IRQ>
+ sched_show_task+0x304/0x3e0 kernel/sched/core.c:5325
+ print_other_cpu_stall kernel/rcu/tree.c:1481 [inline]
+ check_cpu_stall kernel/rcu/tree.c:1599 [inline]
+ __rcu_pending kernel/rcu/tree.c:3356 [inline]
+ rcu_pending kernel/rcu/tree.c:3401 [inline]
+ rcu_check_callbacks+0x171b/0x1ba0 kernel/rcu/tree.c:2763
+ update_process_times+0x28/0x60 kernel/time/timer.c:1636
+ tick_sched_handle+0xe6/0x150 kernel/time/tick-sched.c:164
+ tick_sched_timer+0x40/0x110 kernel/time/tick-sched.c:1274
+ __run_hrtimer kernel/time/hrtimer.c:1398 [inline]
+ __hrtimer_run_queues+0x31a/0x780 kernel/time/hrtimer.c:1460
+ hrtimer_interrupt+0x2af/0x6f0 kernel/time/hrtimer.c:1518
+ local_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1025 [inline]
+ smp_apic_timer_interrupt+0xb9/0x2e0 arch/x86/kernel/apic/apic.c:1050
+ apic_timer_interrupt+0xf/0x20 arch/x86/entry/entry_64.S:863
+ </IRQ>
+RIP: 0010:memory_is_poisoned_n mm/kasan/kasan.c:211 [inline]
+RIP: 0010:memory_is_poisoned mm/kasan/kasan.c:241 [inline]
+RIP: 0010:check_memory_region_inline mm/kasan/kasan.c:257 [inline]
+RIP: 0010:check_memory_region+0x21/0x190 mm/kasan/kasan.c:267
+RSP: 0018:ffff8800431bfc88 EFLAGS: 00000216 ORIG_RAX: ffffffffffffff13
+RAX: ffff7fffffffffff RBX: ffff880065338d58 RCX: ffffffffa33d648e
+RDX: 0000000000000001 RSI: 0000000000000004 RDI: ffff880065338d58
+RBP: dffffc0000000000 R08: ffffed000ca671cc R09: ffffed000ca671cc
+R10: 0000000000000001 R11: ffffed000ca671cb R12: ffff880065338d00
+R13: ffff8800653240a0 R14: ffff880065324000 R15: ffff880065338d58
+ atomic_cmpxchg include/asm-generic/atomic-instrumented.h:57 [inline]
+ queued_spin_lock include/asm-generic/qspinlock.h:87 [inline]
+ do_raw_spin_lock include/linux/spinlock.h:161 [inline]
+ __raw_spin_lock include/linux/spinlock_api_smp.h:143 [inline]
+ _raw_spin_lock+0xe/0x30 kernel/locking/spinlock.c:144
+ d_walk+0x13c/0x5a0 fs/dcache.c:1274
+ shrink_dcache_parent+0xa6/0xf0 fs/dcache.c:1486
+ vfs_rmdir+0x1cc/0x440 fs/namei.c:3850
+ do_rmdir+0x2dc/0x380 fs/namei.c:3911
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x465c87
+RSP: 002b:00007fff152a8b58 EFLAGS: 00000207 ORIG_RAX: 0000000000000054
+RAX: ffffffffffffffda RBX: 0000000000000065 RCX: 0000000000465c87
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 00007fff152a9cb0
+RBP: 0000000000000000 R08: 000000000224fc7b R09: 000000000000000f
+R10: 00000000fffffff6 R11: 0000000000000207 R12: 00007fff152a9cb0
+R13: 000000000224fbe0 R14: 000000000000000f R15: 00000000ffffffff
+rcu_sched kthread starved for 21049 jiffies! g5147 c5146 f0x2 RCU_GP_WAIT_FQS(3) ->state=0x0 ->cpu=0
+RCU grace-period kthread stack dump:
+rcu_sched       R  running task    29816     9      2 0x80000000
+Call Trace:
+ schedule+0x70/0x190 kernel/sched/core.c:3549
+ schedule_timeout+0x333/0x9b0 kernel/time/timer.c:1801
+ rcu_gp_kthread+0xe2e/0x2c80 kernel/rcu/tree.c:2231
+ kthread+0x2f4/0x3b0 kernel/kthread.c:238
+ ret_from_fork+0x35/0x40 arch/x86/entry/entry_64.S:412

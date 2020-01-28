@@ -1,0 +1,59 @@
+==================================================================
+BUG: KASAN: use-after-free in do_con_write.part.22+0x1736/0x1990 drivers/tty/vt/vt.c:2397
+Write of size 2 at addr ffff880000113e7a by task syz-executor.11/9430
+
+CPU: 1 PID: 9430 Comm: syz-executor.11 Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_address_description+0x65/0x270 mm/kasan/report.c:256
+ kasan_report_error mm/kasan/report.c:354 [inline]
+ kasan_report+0x253/0x380 mm/kasan/report.c:412
+ do_con_write.part.22+0x1736/0x1990 drivers/tty/vt/vt.c:2397
+ do_con_write drivers/tty/vt/vt.c:2790 [inline]
+ con_write+0xa7/0xc0 drivers/tty/vt/vt.c:2786
+ process_output_block drivers/tty/n_tty.c:579 [inline]
+ n_tty_write+0x4f0/0xd20 drivers/tty/n_tty.c:2308
+ do_tty_write drivers/tty/tty_io.c:958 [inline]
+ tty_write+0x42f/0x890 drivers/tty/tty_io.c:1042
+ __vfs_write+0xea/0x640 fs/read_write.c:485
+ __kernel_write+0xf3/0x320 fs/read_write.c:506
+ write_pipe_buf+0x181/0x220 fs/splice.c:797
+ splice_from_pipe_feed fs/splice.c:502 [inline]
+ __splice_from_pipe+0x2fb/0x6e0 fs/splice.c:626
+ splice_from_pipe+0xd0/0x130 fs/splice.c:661
+ default_file_splice_write+0x3d/0x90 fs/splice.c:809
+ do_splice_from fs/splice.c:851 [inline]
+ direct_splice_actor+0x116/0x160 fs/splice.c:1018
+ splice_direct_to_actor+0x28a/0x730 fs/splice.c:973
+ do_splice_direct+0x17c/0x230 fs/splice.c:1061
+ do_sendfile+0x4ce/0xbc0 fs/read_write.c:1440
+ __do_sys_sendfile64 fs/read_write.c:1501 [inline]
+ __se_sys_sendfile64 fs/read_write.c:1487 [inline]
+ __x64_sys_sendfile64+0x191/0x1d0 fs/read_write.c:1487
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fa463811c58 EFLAGS: 00000246 ORIG_RAX: 0000000000000028
+RAX: ffffffffffffffda RBX: 000000000073bf00 RCX: 0000000000466039
+RDX: 0000000000000000 RSI: 0000000000000003 RDI: 0000000000000005
+RBP: 0000000000000004 R08: 0000000000000000 R09: 0000000000000000
+R10: 400000000000000d R11: 0000000000000246 R12: 00007fa4638126bc
+R13: 00000000004c85bd R14: 000000000070b350 R15: 00000000ffffffff
+
+The buggy address belongs to the page:
+page:ffffea00000044c0 count:0 mapcount:0 mapping:0000000000000000 index:0x0
+flags: 0x0()
+raw: 0000000000000000 0000000000000000 0000000000000000 00000000ffffffff
+raw: ffffea00000044e0 ffffea00000044e0 0000000000000000 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff880000113d00: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+ ffff880000113d80: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+>ffff880000113e00: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+                                                                ^
+ ffff880000113e80: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+ ffff880000113f00: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+==================================================================

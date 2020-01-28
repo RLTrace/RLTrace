@@ -1,0 +1,3 @@
+audit: type=1326 audit(1579115465.344:534): auid=0 uid=0 gid=0 ses=4 subj=system_u:system_r:kernel_t:s0 pid=20136 comm="syz-executor.10" exe="/syz-executor.10" sig=31 arch=c000003e syscall=228 compat=0 ip=0x467dc7 code=0x0
+WARNING: stack recursion on stack type 4
+WARNING: can't dereference registers at 000000009d4ee2f2 for ip swapgs_restore_regs_and_return_to_usermode+0x79/0x80

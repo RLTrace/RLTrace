@@ -1,0 +1,47 @@
+SELinux: unrecognized netlink message: protocol=9 nlmsg_type=65535 sclass=netlink_audit_socket pig=9050 comm=syz-executor.3
+kasan: CONFIG_KASAN_INLINE enabled
+kasan: GPF could be caused by NULL-ptr deref or user memory access
+general protection fault: 0000 [#1] SMP KASAN PTI
+Dumping ftrace buffer:
+   (ftrace buffer empty)
+Modules linked in:
+CPU: 0 PID: 9049 Comm: syz-executor.1 Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+RIP: 0010:strlen+0x1a/0xa0 lib/string.c:482
+RSP: 0018:ffff88006686f7a0 EFLAGS: 00010286
+RAX: 0000000000000000 RBX: 1ffff1000cd0def8 RCX: 0000000000000000
+RDX: dffffc0000000000 RSI: ffffc9000141a000 RDI: 0000000000000000
+RBP: dffffc0000000000 R08: ffff88006686f658 R09: ffff88006670f558
+R10: 00000000c7662e51 R11: ffffed000da444c2 R12: 0000000000000000
+R13: ffff880030f7e600 R14: 0000000000000000 R15: 1ffff1000cd0df2a
+FS:  00007f7692aad700(0000) GS:ffff88006d200000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000020001000 CR3: 000000006a76c004 CR4: 00000000003606f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ p9_fd_create_unix+0x88/0x350 net/9p/trans_fd.c:1003
+ p9_client_create+0x7fd/0x1230 net/9p/client.c:1065
+ v9fs_session_init+0x20d/0x1370 fs/9p/v9fs.c:405
+ v9fs_mount+0x7d/0x7e0 fs/9p/vfs_super.c:135
+ mount_fs+0x66/0x2c0 fs/super.c:1267
+ vfs_kern_mount.part.26+0x5e/0x310 fs/namespace.c:1037
+ vfs_kern_mount fs/namespace.c:2515 [inline]
+ do_new_mount fs/namespace.c:2518 [inline]
+ do_mount+0xc30/0x2550 fs/namespace.c:2848
+ ksys_mount+0xa8/0x120 fs/namespace.c:3064
+ __do_sys_mount fs/namespace.c:3078 [inline]
+ __se_sys_mount fs/namespace.c:3075 [inline]
+ __x64_sys_mount+0xba/0x150 fs/namespace.c:3075
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007f7692aacc58 EFLAGS: 00000246 ORIG_RAX: 00000000000000a5
+RAX: ffffffffffffffda RBX: 000000000073bf00 RCX: 0000000000466039
+RDX: 0000000020000180 RSI: 0000000020000100 RDI: 0000000000000000
+RBP: 0000000000000005 R08: 0000000020000300 R09: 0000000000000000
+R10: 0000000002800000 R11: 0000000000000246 R12: 00007f7692aad6bc
+R13: 00000000004c6faa R14: 0000000000708fc8 R15: 00000000ffffffff
+Code: 24 e8 3b 31 37 fe 48 8b 04 24 eb 8b 0f 1f 44 00 00 55 48 89 f9 53 48 c1 e9 03 48 ba 00 00 00 00 00 fc ff df 48 89 f8 48 83 ec 08 <0f> b6 14 11 48 89 f9 83 e1 07 38 ca 7f 04 84 d2 75 47 80 38 00 
+RIP: strlen+0x1a/0xa0 lib/string.c:482 RSP: ffff88006686f7a0
+---[ end trace adb8608c238eda95 ]---

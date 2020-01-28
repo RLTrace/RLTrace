@@ -1,0 +1,87 @@
+SELinux:  Context EL is not valid (left unmapped).
+==================================================================
+BUG: KASAN: slab-out-of-bounds in simple_xattr_alloc+0x66/0x80 fs/xattr.c:827
+Read of size 88 at addr ffff88006bcf0480 by task syz-executor.10/8513
+
+CPU: 0 PID: 8513 Comm: syz-executor.10 Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_address_description+0x65/0x270 mm/kasan/report.c:256
+ kasan_report_error mm/kasan/report.c:354 [inline]
+ kasan_report+0x253/0x380 mm/kasan/report.c:412
+ memcpy+0x1f/0x50 mm/kasan/kasan.c:302
+ simple_xattr_alloc+0x66/0x80 fs/xattr.c:827
+ shmem_initxattrs+0x144/0x1e0 mm/shmem.c:3331
+ security_inode_init_security+0x172/0x300 security/security.c:497
+ shmem_mknod+0x9b/0x1b0 mm/shmem.c:3021
+ lookup_open fs/namei.c:3186 [inline]
+ do_last fs/namei.c:3277 [inline]
+ path_openat+0x32f6/0x4490 fs/namei.c:3500
+ do_filp_open+0x1a5/0x2b0 fs/namei.c:3535
+ do_sys_open+0x302/0x460 fs/open.c:1093
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x41558e
+RSP: 002b:00007f4b9b55a710 EFLAGS: 00000293 ORIG_RAX: 0000000000000101
+RAX: ffffffffffffffda RBX: 6666666666666667 RCX: 000000000041558e
+RDX: 000000000000c040 RSI: 00007f4b9b55a820 RDI: 00000000ffffff9c
+RBP: 00007f4b9b55a820 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000293 R12: 00007f4b9b55b6bc
+R13: 00000000004cac07 R14: 000000000070f700 R15: 00000000ffffffff
+
+Allocated by task 8513:
+ set_track mm/kasan/kasan.c:460 [inline]
+ kasan_kmalloc+0xa0/0xd0 mm/kasan/kasan.c:553
+ slab_post_alloc_hook mm/slab.h:444 [inline]
+ slab_alloc_node mm/slub.c:2741 [inline]
+ slab_alloc mm/slub.c:2749 [inline]
+ __kmalloc_track_caller+0x13a/0x1a0 mm/slub.c:4334
+ kstrdup+0x35/0x70 mm/util.c:56
+ context_struct_to_string+0x13e/0x7a0 security/selinux/ss/services.c:1238
+ security_sid_to_context_core.isra.14+0x201/0x320 security/selinux/ss/services.c:1331
+ selinux_inode_init_security+0x448/0x690 security/selinux/hooks.c:3050
+ security_inode_init_security+0x131/0x300 security/security.c:486
+ shmem_mknod+0x9b/0x1b0 mm/shmem.c:3021
+ lookup_open fs/namei.c:3186 [inline]
+ do_last fs/namei.c:3277 [inline]
+ path_openat+0x32f6/0x4490 fs/namei.c:3500
+ do_filp_open+0x1a5/0x2b0 fs/namei.c:3535
+ do_sys_open+0x302/0x460 fs/open.c:1093
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+
+Freed by task 1007:
+ set_track mm/kasan/kasan.c:460 [inline]
+ __kasan_slab_free+0x130/0x180 mm/kasan/kasan.c:521
+ slab_free_hook mm/slub.c:1388 [inline]
+ slab_free_freelist_hook mm/slub.c:1415 [inline]
+ slab_free mm/slub.c:2988 [inline]
+ kfree+0x8b/0x1a0 mm/slub.c:3944
+ key_gc_unused_keys.constprop.4+0x103/0x480 security/keys/gc.c:159
+ key_garbage_collector+0x2ef/0x870 security/keys/gc.c:297
+ process_one_work+0x88c/0x12a0 kernel/workqueue.c:2145
+ worker_thread+0xd3/0xf80 kernel/workqueue.c:2279
+ kthread+0x2f4/0x3b0 kernel/kthread.c:238
+ ret_from_fork+0x35/0x40 arch/x86/entry/entry_64.S:412
+
+The buggy address belongs to the object at ffff88006bcf0480
+ which belongs to the cache kmalloc-8 of size 8
+The buggy address is located 0 bytes inside of
+ 8-byte region [ffff88006bcf0480, ffff88006bcf0488)
+The buggy address belongs to the page:
+page:ffffea0001af3c00 count:1 mapcount:0 mapping:0000000000000000 index:0xffff88006bcf0750
+flags: 0x100000000000100(slab)
+raw: 0100000000000100 0000000000000000 ffff88006bcf0750 0000000180aa00a9
+raw: ffffea0000ccb980 0000000700000007 ffff88006cc01c80 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff88006bcf0380: fc fc 00 fc fc 00 fc fc 00 fc fc 00 fc fc fb fc
+ ffff88006bcf0400: fc fb fc fc 00 fc fc fb fc fc fb fc fc 00 fc fc
+>ffff88006bcf0480: 00 fc fc 00 fc fc 00 fc fc 00 fc fc fb fc fc 00
+                      ^
+ ffff88006bcf0500: fc fc 00 fc fc fb fc fc 00 fc fc 00 fc fc 00 fc
+ ffff88006bcf0580: fc 00 fc fc fb fc fc fb fc fc 00 fc fc 00 fc fc
+==================================================================

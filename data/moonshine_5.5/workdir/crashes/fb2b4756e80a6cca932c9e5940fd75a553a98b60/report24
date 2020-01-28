@@ -1,0 +1,27 @@
+audit: type=1400 audit(1579113132.059:41): avc:  denied  { write } for  pid=2077 comm="syz-executor.7" path="pipe:[12010]" dev="pipefs" ino=12010 scontext=system_u:system_r:kernel_t:s0 tcontext=system_u:object_r:usb_device_t:s0 tclass=fifo_file permissive=1
+Kernel panic - not syncing: Attempted to kill init! exitcode=0x0000000b
+CPU: 1 PID: 1 Comm: systemd Not tainted 5.5.0-rc6 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x94/0xce lib/dump_stack.c:118
+ panic+0x234/0x56f kernel/panic.c:221
+ do_exit+0x1855/0x2940 kernel/exit.c:770
+ do_group_exit+0xed/0x310 kernel/exit.c:899
+ get_signal+0x37a/0x1ab0 kernel/signal.c:2734
+ do_signal+0x8f/0x1450 arch/x86/kernel/signal.c:815
+ exit_to_usermode_loop+0x12d/0x170 arch/x86/entry/common.c:160
+ prepare_exit_to_usermode+0x19f/0x1f0 arch/x86/entry/common.c:195
+ ret_from_intr+0x20/0x20
+RIP: 0033:0x7fb44fbd2f10
+Code: Bad RIP value.
+RSP: 002b:00007ffe328163f8 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: 000055fcea11bd10 RCX: 00007fb44fc032e3
+RDX: 00007ffe32816580 RSI: 00007ffe328166b0 RDI: 0000000000000007
+RBP: 0000000000000007 R08: 9569588cf1be49e8 R09: 0000000000000160
+R10: 00000000ffffffff R11: 0000000000000246 R12: 00007ffe330148f0
+R13: 0000000000000001 R14: ffffffffffffffff R15: 0000000000000002
+Dumping ftrace buffer:
+   (ftrace buffer empty)
+Kernel Offset: 0x2fc00000 from 0xffffffff81000000 (relocation range: 0xffffffff80000000-0xffffffffbfffffff)
+Rebooting in 1 seconds..

@@ -1,0 +1,145 @@
+SELinux: unrecognized netlink message: protocol=0 nlmsg_type=64338 sclass=netlink_route_socket pig=11705 comm=syz-executor.0
+9pnet: Insufficient options for proto=fd
+9pnet: Insufficient options for proto=fd
+SELinux: unrecognized netlink message: protocol=0 nlmsg_type=64338 sclass=netlink_route_socket pig=11705 comm=syz-executor.0
+INFO: rcu_sched self-detected stall on CPU
+INFO: rcu_sched detected stalls on CPUs/tasks:
+	0-....: (21000 ticks this GP) idle=72e/1/4611686018427387906 softirq=24401/24401 fqs=5241 
+	 (t=21002 jiffies g=7719 c=7718 q=3363)
+	0-....: (21000 ticks this GP) idle=72e/1/4611686018427387906 softirq=24401/24401 fqs=5241 
+	
+NMI backtrace for cpu 0
+(detected by 1, t=21002 jiffies, g=7719, c=7718, q=3363)
+CPU: 0 PID: 11575 Comm: syz-executor.7 Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ <IRQ>
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ nmi_cpu_backtrace+0x153/0x170 lib/nmi_backtrace.c:103
+ nmi_trigger_cpumask_backtrace+0xf9/0x150 lib/nmi_backtrace.c:62
+ trigger_single_cpu_backtrace include/linux/nmi.h:156 [inline]
+ rcu_dump_cpu_stacks+0x17d/0x1cb kernel/rcu/tree.c:1376
+ print_cpu_stall kernel/rcu/tree.c:1525 [inline]
+ check_cpu_stall kernel/rcu/tree.c:1593 [inline]
+ __rcu_pending kernel/rcu/tree.c:3356 [inline]
+ rcu_pending kernel/rcu/tree.c:3401 [inline]
+ rcu_check_callbacks+0xd6f/0x1ba0 kernel/rcu/tree.c:2763
+ update_process_times+0x28/0x60 kernel/time/timer.c:1636
+ tick_sched_handle+0xe6/0x150 kernel/time/tick-sched.c:164
+ tick_sched_timer+0x40/0x110 kernel/time/tick-sched.c:1274
+ __run_hrtimer kernel/time/hrtimer.c:1398 [inline]
+ __hrtimer_run_queues+0x31a/0x780 kernel/time/hrtimer.c:1460
+ hrtimer_interrupt+0x2af/0x6f0 kernel/time/hrtimer.c:1518
+ local_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1025 [inline]
+ smp_apic_timer_interrupt+0xb9/0x2e0 arch/x86/kernel/apic/apic.c:1050
+ apic_timer_interrupt+0xf/0x20 arch/x86/entry/entry_64.S:863
+ </IRQ>
+RIP: 0010:echo_buf drivers/tty/n_tty.c:144 [inline]
+RIP: 0010:__process_echoes+0x5cc/0x760 drivers/tty/n_tty.c:732
+RSP: 0018:ffff880026cdf6a0 EFLAGS: 00000296 ORIG_RAX: ffffffffffffff13
+RAX: ffffffff2704c6e9 RBX: ffffc900004ff000 RCX: ffffffff86fee977
+RDX: 0000000000040000 RSI: ffffc90007a4d000 RDI: ffffc90000500c76
+RBP: 00000000d8fb3a17 R08: 0000000000000000 R09: fffffbfff13737c4
+R10: 0000000000000001 R11: fffffbfff13737c4 R12: dffffc0000000000
+R13: 00000000d8fb3a17 R14: 00000000d8fb3a17 R15: 0000000000000100
+ commit_echoes+0x12f/0x1a0 drivers/tty/n_tty.c:764
+ n_tty_receive_char_fast drivers/tty/n_tty.c:1416 [inline]
+ n_tty_receive_buf_fast drivers/tty/n_tty.c:1576 [inline]
+ __receive_buf drivers/tty/n_tty.c:1611 [inline]
+ n_tty_receive_buf_common+0xed1/0x20a0 drivers/tty/n_tty.c:1709
+ tty_ldisc_receive_buf+0xa0/0x160 drivers/tty/tty_buffer.c:456
+ paste_selection+0x201/0x310 drivers/tty/vt/selection.c:348
+ tioclinux+0x10e/0x3b0 drivers/tty/vt/vt.c:2695
+ vt_ioctl+0x1508/0x24a0 drivers/tty/vt/vt_ioctl.c:362
+ tty_ioctl+0x26f/0x1330 drivers/tty/tty_io.c:2646
+ vfs_ioctl fs/ioctl.c:46 [inline]
+ do_vfs_ioctl+0x1a0/0xf50 fs/ioctl.c:686
+ ksys_ioctl+0x84/0x90 fs/ioctl.c:701
+ __do_sys_ioctl fs/ioctl.c:708 [inline]
+ __se_sys_ioctl fs/ioctl.c:706 [inline]
+ __x64_sys_ioctl+0x6f/0xb0 fs/ioctl.c:706
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007f2c23bb1c58 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+RAX: ffffffffffffffda RBX: 000000000073bf00 RCX: 0000000000466039
+RDX: 0000000020000200 RSI: 000000000000541c RDI: 0000000000000003
+RBP: 0000000000000003 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007f2c23bb26bc
+R13: 00000000004c4f2d R14: 0000000000706358 R15: 00000000ffffffff
+Sending NMI from CPU 1 to CPUs 0:
+NMI backtrace for cpu 0
+CPU: 0 PID: 11575 Comm: syz-executor.7 Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+RIP: 0010:rep_nop arch/x86/include/asm/processor.h:667 [inline]
+RIP: 0010:cpu_relax arch/x86/include/asm/processor.h:672 [inline]
+RIP: 0010:virt_spin_lock arch/x86/include/asm/qspinlock.h:69 [inline]
+RIP: 0010:queued_spin_lock_slowpath+0x89/0x670 kernel/locking/qspinlock.c:305
+RSP: 0018:ffff88006d207cc8 EFLAGS: 00000002
+RAX: 0000000000000000 RBX: ffffffff88ec6d40 RCX: ffffffff863f1548
+RDX: 0000000000000000 RSI: 0000000000000004 RDI: ffffffff88ec6d40
+RBP: 0000000000000001 R08: fffffbfff11d8da9 R09: fffffbfff11d8da9
+R10: 0000000000000001 R11: fffffbfff11d8da8 R12: 0000000000000003
+R13: fffffbfff11d8da8 R14: 0000000000000001 R15: ffffffff88ec6d40
+FS:  00007f2c23bb2700(0000) GS:ffff88006d200000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000020240000 CR3: 000000006c19e006 CR4: 00000000003606f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <IRQ>
+ queued_spin_lock include/asm-generic/qspinlock.h:90 [inline]
+ do_raw_spin_lock_flags include/linux/spinlock.h:172 [inline]
+ __raw_spin_lock_irqsave include/linux/spinlock_api_smp.h:119 [inline]
+ _raw_spin_lock_irqsave+0x3f/0x50 kernel/locking/spinlock.c:152
+ print_cpu_stall kernel/rcu/tree.c:1527 [inline]
+ check_cpu_stall kernel/rcu/tree.c:1593 [inline]
+ __rcu_pending kernel/rcu/tree.c:3356 [inline]
+ rcu_pending kernel/rcu/tree.c:3401 [inline]
+ rcu_check_callbacks+0xd77/0x1ba0 kernel/rcu/tree.c:2763
+ update_process_times+0x28/0x60 kernel/time/timer.c:1636
+ tick_sched_handle+0xe6/0x150 kernel/time/tick-sched.c:164
+ tick_sched_timer+0x40/0x110 kernel/time/tick-sched.c:1274
+ __run_hrtimer kernel/time/hrtimer.c:1398 [inline]
+ __hrtimer_run_queues+0x31a/0x780 kernel/time/hrtimer.c:1460
+ hrtimer_interrupt+0x2af/0x6f0 kernel/time/hrtimer.c:1518
+ local_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1025 [inline]
+ smp_apic_timer_interrupt+0xb9/0x2e0 arch/x86/kernel/apic/apic.c:1050
+ apic_timer_interrupt+0xf/0x20 arch/x86/entry/entry_64.S:863
+ </IRQ>
+RIP: 0010:echo_buf drivers/tty/n_tty.c:144 [inline]
+RIP: 0010:__process_echoes+0x5cc/0x760 drivers/tty/n_tty.c:732
+RSP: 0018:ffff880026cdf6a0 EFLAGS: 00000296 ORIG_RAX: ffffffffffffff13
+RAX: ffffffff2704c6e9 RBX: ffffc900004ff000 RCX: ffffffff86fee977
+RDX: 0000000000040000 RSI: ffffc90007a4d000 RDI: ffffc90000500c76
+RBP: 00000000d8fb3a17 R08: 0000000000000000 R09: fffffbfff13737c4
+R10: 0000000000000001 R11: fffffbfff13737c4 R12: dffffc0000000000
+R13: 00000000d8fb3a17 R14: 00000000d8fb3a17 R15: 0000000000000100
+ commit_echoes+0x12f/0x1a0 drivers/tty/n_tty.c:764
+ n_tty_receive_char_fast drivers/tty/n_tty.c:1416 [inline]
+ n_tty_receive_buf_fast drivers/tty/n_tty.c:1576 [inline]
+ __receive_buf drivers/tty/n_tty.c:1611 [inline]
+ n_tty_receive_buf_common+0xed1/0x20a0 drivers/tty/n_tty.c:1709
+ tty_ldisc_receive_buf+0xa0/0x160 drivers/tty/tty_buffer.c:456
+ paste_selection+0x201/0x310 drivers/tty/vt/selection.c:348
+ tioclinux+0x10e/0x3b0 drivers/tty/vt/vt.c:2695
+ vt_ioctl+0x1508/0x24a0 drivers/tty/vt/vt_ioctl.c:362
+ tty_ioctl+0x26f/0x1330 drivers/tty/tty_io.c:2646
+ vfs_ioctl fs/ioctl.c:46 [inline]
+ do_vfs_ioctl+0x1a0/0xf50 fs/ioctl.c:686
+ ksys_ioctl+0x84/0x90 fs/ioctl.c:701
+ __do_sys_ioctl fs/ioctl.c:708 [inline]
+ __se_sys_ioctl fs/ioctl.c:706 [inline]
+ __x64_sys_ioctl+0x6f/0xb0 fs/ioctl.c:706
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007f2c23bb1c58 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+RAX: ffffffffffffffda RBX: 000000000073bf00 RCX: 0000000000466039
+RDX: 0000000020000200 RSI: 000000000000541c RDI: 0000000000000003
+RBP: 0000000000000003 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007f2c23bb26bc
+R13: 00000000004c4f2d R14: 0000000000706358 R15: 00000000ffffffff
+Code: 75 27 be 04 00 00 00 48 89 df e8 83 89 32 00 89 e8 f0 44 0f b1 33 85 c0 75 c3 48 83 c4 08 5b 5d 41 5c 41 5d 41 5e 41 5f c3 f3 90 <eb> b0 81 fe 00 01 00 00 89 f5 0f 84 06 03 00 00 41 bd 01 01 00 
+perf: interrupt took too long (4182 > 4166), lowering kernel.perf_event_max_sample_rate to 47000

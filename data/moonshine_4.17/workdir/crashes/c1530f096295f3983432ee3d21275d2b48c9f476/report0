@@ -1,0 +1,43 @@
+9pnet: Insufficient options for proto=fd
+==================================================================
+BUG: KASAN: use-after-free in vcs_scr_readw+0x93/0xa0 drivers/tty/vt/vt.c:4286
+Read of size 2 at addr ffff880000100000 by task syz-executor.1/26618
+
+CPU: 1 PID: 26618 Comm: syz-executor.1 Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_address_description+0x65/0x270 mm/kasan/report.c:256
+ kasan_report_error mm/kasan/report.c:354 [inline]
+ kasan_report+0x253/0x380 mm/kasan/report.c:412
+ vcs_scr_readw+0x93/0xa0 drivers/tty/vt/vt.c:4286
+ vcs_read+0x708/0x900 drivers/tty/vt/vc_screen.c:274
+ __vfs_read+0xea/0x640 fs/read_write.c:416
+ vfs_read+0x103/0x300 fs/read_write.c:452
+ ksys_read+0xbb/0x190 fs/read_write.c:578
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fe4a6180c58 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
+RAX: ffffffffffffffda RBX: 000000000073bf00 RCX: 0000000000466039
+RDX: 00000000fffffe7d RSI: 0000000020000100 RDI: 0000000000000003
+RBP: 0000000000000003 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007fe4a61816bc
+R13: 00000000004c8130 R14: 000000000070aab0 R15: 00000000ffffffff
+
+The buggy address belongs to the page:
+page:ffffea0000004000 count:0 mapcount:-127 mapping:0000000000000000 index:0x0
+flags: 0x0()
+raw: 0000000000000000 0000000000000000 0000000000000000 00000000ffffff80
+raw: ffff88007ffdc300 ffff88007ffdc300 0000000000000008 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff8800000fff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ ffff8800000fff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>ffff880000100000: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+                   ^
+ ffff880000100080: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+ ffff880000100100: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+==================================================================

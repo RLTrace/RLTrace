@@ -1,0 +1,58 @@
+SELinux: unrecognized netlink message: protocol=9 nlmsg_type=0 sclass=netlink_audit_socket pig=9449 comm=syz-executor.15
+EXT4-fs warning (device sda): verify_group_input:104: Cannot add at group 32767 (only 32 groups)
+==================================================================
+BUG: KASAN: use-after-free in do_con_write.part.22+0x1736/0x1990 drivers/tty/vt/vt.c:2397
+Write of size 2 at addr ffff880000238042 by task syz-executor.11/9438
+
+CPU: 0 PID: 9438 Comm: syz-executor.11 Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_address_description+0x65/0x270 mm/kasan/report.c:256
+ kasan_report_error mm/kasan/report.c:354 [inline]
+ kasan_report+0x253/0x380 mm/kasan/report.c:412
+ do_con_write.part.22+0x1736/0x1990 drivers/tty/vt/vt.c:2397
+ do_con_write drivers/tty/vt/vt.c:2797 [inline]
+ con_put_char+0x60/0x70 drivers/tty/vt/vt.c:2796
+ tty_put_char+0x6e/0xf0 drivers/tty/tty_io.c:2864
+ __process_echoes+0x17f/0x760 drivers/tty/n_tty.c:721
+ flush_echoes drivers/tty/n_tty.c:799 [inline]
+ __receive_buf drivers/tty/n_tty.c:1615 [inline]
+ n_tty_receive_buf_common+0x10b1/0x20a0 drivers/tty/n_tty.c:1709
+ tty_ldisc_receive_buf+0xa0/0x160 drivers/tty/tty_buffer.c:456
+ paste_selection+0x201/0x310 drivers/tty/vt/selection.c:348
+ tioclinux+0x10e/0x3b0 drivers/tty/vt/vt.c:2695
+ vt_ioctl+0x1508/0x24a0 drivers/tty/vt/vt_ioctl.c:362
+ tty_ioctl+0x26f/0x1330 drivers/tty/tty_io.c:2646
+ vfs_ioctl fs/ioctl.c:46 [inline]
+ do_vfs_ioctl+0x1a0/0xf50 fs/ioctl.c:686
+ ksys_ioctl+0x84/0x90 fs/ioctl.c:701
+ __do_sys_ioctl fs/ioctl.c:708 [inline]
+ __se_sys_ioctl fs/ioctl.c:706 [inline]
+ __x64_sys_ioctl+0x6f/0xb0 fs/ioctl.c:706
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fe5253d0c58 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+RAX: ffffffffffffffda RBX: 000000000073c050 RCX: 0000000000466039
+RDX: 00000000200000c0 RSI: 000000000000541c RDI: 0000000000000005
+RBP: 0000000000000003 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007fe5253d16bc
+R13: 00000000004c4f2d R14: 0000000000706358 R15: 00000000ffffffff
+
+The buggy address belongs to the page:
+page:ffffea0000008e00 count:0 mapcount:0 mapping:0000000000000000 index:0x0
+flags: 0x0()
+raw: 0000000000000000 0000000000000000 0000000000000000 00000000ffffffff
+raw: ffffea0000008e20 ffffea0000008e20 0000000000000000 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff880000237f00: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+ ffff880000237f80: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+>ffff880000238000: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+                                           ^
+ ffff880000238080: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+ ffff880000238100: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+==================================================================

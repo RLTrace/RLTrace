@@ -1,0 +1,42 @@
+kasan: CONFIG_KASAN_INLINE enabled
+kasan: GPF could be caused by NULL-ptr deref or user memory access
+general protection fault: 0000 [#1] SMP KASAN PTI
+Dumping ftrace buffer:
+   (ftrace buffer empty)
+Modules linked in:
+CPU: 0 PID: 10462 Comm: syz-executor.14 Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+RIP: 0010:mnt_add_count fs/namespace.c:168 [inline]
+RIP: 0010:__legitimize_mnt+0x4c/0xf0 fs/namespace.c:661
+RSP: 0018:ffff880067a07980 EFLAGS: 00010246
+RAX: 2010364d00001229 RBX: ffff8800318a01e0 RCX: ffffffff8159f24d
+RDX: 1ffff10006314041 RSI: ffffc900142b1000 RDI: ffff8800318a01e0
+RBP: 00000000000013e2 R08: ffffed000cf40f25 R09: ffffed000cf40f26
+R10: 0000000000000003 R11: ffffed000cf40f25 R12: ffff8800318a0208
+R13: ffff88002b99ad00 R14: ffff880067a07d38 R15: ffff880067a07bc8
+FS:  00007f9dd7ced700(0000) GS:ffff88006d200000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00000000203ba13b CR3: 000000006a3ac006 CR4: 00000000003606f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ legitimize_path.isra.36+0x3a/0x1a0 fs/namei.c:618
+ unlazy_walk+0xea/0x390 fs/namei.c:677
+ lookup_fast+0x4aa/0xca0 fs/namei.c:1532
+ do_last fs/namei.c:3237 [inline]
+ path_openat+0x3ec/0x4490 fs/namei.c:3500
+ do_filp_open+0x1a5/0x2b0 fs/namei.c:3535
+ do_sys_open+0x302/0x460 fs/open.c:1093
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007f9dd7cecc58 EFLAGS: 00000246 ORIG_RAX: 0000000000000101
+RAX: ffffffffffffffda RBX: 000000000073bf00 RCX: 0000000000466039
+RDX: 0000000000002000 RSI: 0000000020000000 RDI: ffffffffffffff9c
+RBP: 0000000000000004 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000100 R11: 0000000000000246 R12: 00007f9dd7ced6bc
+R13: 00000000004c7170 R14: 0000000000709388 R15: 00000000ffffffff
+Code: db 74 33 4c 8d 63 28 e8 b3 2d d8 ff 4c 89 e2 48 b8 00 00 00 00 00 fc ff df 48 c1 ea 03 80 3c 02 00 0f 85 90 00 00 00 48 8b 43 28 <65> ff 00 3b 2d 4b d3 66 02 75 0e 31 db e8 82 2d d8 ff 89 d8 5b 
+RIP: mnt_add_count fs/namespace.c:168 [inline] RSP: ffff880067a07980
+RIP: __legitimize_mnt+0x4c/0xf0 fs/namespace.c:661 RSP: ffff880067a07980
+---[ end trace 52b6a45a5de0c80e ]---

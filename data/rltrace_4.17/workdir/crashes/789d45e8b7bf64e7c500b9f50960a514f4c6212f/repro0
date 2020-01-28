@@ -1,0 +1,3503 @@
+2020/01/26 22:12:27 reproducing crash 'general protection fault in __legitimize_mnt': 557 programs, 4 VMs, timeouts [15s 1m0s 6m0s]
+2020/01/26 22:12:27 reproducing crash 'general protection fault in __legitimize_mnt': extracting reproducer from 557 programs
+2020/01/26 22:12:27 reproducing crash 'general protection fault in __legitimize_mnt': single: executing 16 programs separately with timeout 15s
+2020/01/26 22:12:38 reproducing crash 'general protection fault in __legitimize_mnt': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): execveat-mkdir-syz_open_dev$evdev-ioctl$EVIOCSKEYCODE_V2-dup3-socket$unix-epoll_ctl$EPOLL_CTL_MOD-mkdir-mkdir-mkdir
+2020/01/26 22:12:38 reproducing crash 'general protection fault in __legitimize_mnt': detailed listing:
+executing program 0:
+execveat(0xffffffffffffffff, &(0x7f0000000000)='./file0\x00', &(0x7f00000000c0)=[&(0x7f0000000040)='security\x00', &(0x7f0000000080)='),\x00'], &(0x7f0000000140)=[&(0x7f0000000100)='$$\x00'], 0x1000)
+mkdir(&(0x7f0000000180)='./file0\x00', 0x10)
+r0 = syz_open_dev$evdev(&(0x7f00000000c0)='/dev/input/event#\x00', 0x1, 0x0)
+ioctl$EVIOCSKEYCODE_V2(r0, 0x40284504, &(0x7f0000000000)={0x0, 0x0, 0x0, 0x0, "e24d45ba684cc3cfa8c0eb65151eff966b4c887fe1a52859ed5329b62287a613"})
+r1 = dup3(r0, 0xffffffffffffffff, 0xc0000)
+r2 = socket$unix(0x1, 0x2, 0x0)
+epoll_ctl$EPOLL_CTL_MOD(r1, 0x3, r2, &(0x7f0000000280)={0x20000000})
+mkdir(&(0x7f0000000300)='./file0\x00', 0x42)
+mkdir(&(0x7f0000000200)='./file0\x00', 0x82)
+mkdir(&(0x7f0000000240)='./file0\x00', 0x40)
+2020/01/26 22:12:53 reproducing crash 'general protection fault in __legitimize_mnt': program did not crash
+2020/01/26 22:12:53 reproducing crash 'general protection fault in __legitimize_mnt': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-add_key$keyring-keyctl$set_timeout-add_key$user-keyctl$get_security-write$binfmt_misc
+2020/01/26 22:12:53 reproducing crash 'general protection fault in __legitimize_mnt': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x8001)
+r1 = add_key$keyring(&(0x7f0000002e00)='keyring\x00', &(0x7f0000002f00)={'syz', 0x2}, 0x0, 0x0, 0xffffffffffffffff)
+keyctl$set_timeout(0xf, r1, 0xffffffff)
+r2 = add_key$user(&(0x7f0000000080)='user\x00', &(0x7f00000000c0)={'syz', 0x2}, &(0x7f0000000100)="ef05c23d137b184552ba457cdede9f9e74ad45ab9122461d87afa8e809c2334c4b0670bd553c99468574cb308e34824fadad6a30dc9abf7c5495a05e9bb5bae38530cdf585b879fbb7cdd1cc3ea4e03759ce1977f6f0d7b5400d796dfeec922dfdce4087377398bc531d78664a681bdda5806ae94a772cf0019fbc25c5d84d6aeba3a182f731d4cd98f1fccbb324a419ec24a45f9871ebb58a05223a43da17a8bcb627c331baba4af5f83cc713aaa43372df5579f1040283e69721e8619fc6320f54658e8f1784a7ae2b68b373e47cbd89381aa97dbc899adf08e7bebeb836f6c022983e2f3ccd7bdd70b575c7a2f1f15e17192ff9fedbc4b304dbc1c709c6aec89cafc8fc4b2d6722e442e9dcc4b2bd1a580e77fa722142f6b833f07c13e0fe3c2a0c87dad92311f718b1226cc0dc5e646cb17226de590b8a6a24aa614b5e822470c30540387fa00a206e1c3de50c18111f6a04bf09104a0139f0e96208fe7a4742f81e4809002442b3cd238919ef19a723ed3d167faf9133a4605e885b2f4fed03c2ecc1220cf00bb4206bc792471897da083debe5157f81fc2dc42767e0768634f842f2a7ea6c26f31b36bcf2cdb44178b063b6e4c9b57db619c29b44e76cd94ca4b5631e6e0dd1a9b25f735663b334fb8ecf01f8195bfbc4fcbe89df32449ec0442834401982898f4b57b86ebdfe2191e492cffe804ef5bf540d1bee6cd3ae3201ee5e11834d290a716c47584769d6053ae1339957e5b522671a0ffbb293ec0d6eaeca78fdd1184cdb7b26cf05a894ec123c754fe6a4e823e3ead98703d1420dbe1cbcb6888975cddbf577f8faf175c0ebb73485fd20223b9241657a3ffc1dd45d7d7fd74f630447b6cfc801a673288cee89418f2788d3ea9cd7e6bc653a1f17e04279afc53505ffd4ee920aaaddfd57339f87819f6085ab12bb218175cc4865d08df664e1cc4d52c96b69089f3944a0abef33c95c2b79a06119224e1fca8382ffe8d74ea01cd2f51d632ab7218dec4336ee2d900e6fac8ece7837c1c04e57d57d8600d5c6b24df890b0e32ef81e69421fdc9920f5a488acc98e32cf1679b44955164d89497546318667b8c021deb303abf2f2619469e54bf2d30c0d8a57be3b94caf9b84005111dd5dbff8bb93bcc07b6eb6a5413dcd9000b99345cc5c6cb2c2b427843cac4159e98aa8dcb7862e95b3cb71b987b3b8d508ea3ff3da7c28d2588e80361ed200464246e06183759542c4c57f0a01a461b383832e2a800e39d3414c86364a01fa0840d0997c21bcaa7d18a0720d2bb4f9f2aa93639f08dce4dc05d74d80621aa81f4c850a02d9a87ecb369909706aee3063d3c2c746783e77c3cbef4f933ed9fdf47c3ea321268c6ed70bf166786dfd4c03254a5bf5a070e90af30f71139801924ccf9960a7fd958295f13696b165547af7abdb817c4a47f5261851183848c1c98a3e28680ff8458f265ac0bfa163fc72c60f322ab9f2cfa2b58b90f10606e661297aa66296fc1be524c0a95c312133cca0edc5fba31d057fb102feb2b84d69c6c2557c308f15be757afbffb40f991bf8369abb498fa9f2794ea499bc99ee5a445ffbcd5fc47a77dc8c806bc815b47a2426c7f346ab9ac2366c2da16d0ed723393f7b45e02e85194d0af708a1849098942836fe7909a945dd766ee46bda85b301d7b20202f34e2038e397891fad52644e513362ecae029b85b4930e968e669b32bbc0c052d1bdaab746ac6ff8321bbc08a7b1ea9a7984d87deceb239c52dbbe5d39520e6b06a380466c44eb778b19906c537881a187f4b22bdfaed09cd4de2a29a79e627c0b7fee81ffe51b8dbe0af06bcf9bc05d5a0ca07daf24d83599b3211bd49c41ed9cd2c193e6147e69f1fd01bf4e10fe227eabe1894d0d20b6b89c560355bbebf8db34f399a1becc90b21295f4836b48a931e6b1031adc60c858a6ed8f10ad16375bad8522a40dd3cfd5e08cbef38d2c9e2869e65b85c930074c26059c018487ec024f4782b1cae456ae3ca4b339e91e8bbc8ae1cc0fcf1e9cde30d1e27db2efdb209fc7eb9141e09de39e3e980ab1e1f5ed6f6702817217bf3e7f52ba90a823d4601397ee4a8a1218a822d84ec63efefae2efe78df8833296424405c459784b66bc262f55868d5d30b807d5b0f7ccc5ad73d3985c5c33826be9a5c1bfb8e872948b20737d5268b840f7c31e9e0d6a55a8f449e7a25def24aebc97f8e4e80e3ef173d67b8779908b50a396ff34311ee8479e0dcbdc86e59591f2038f4e8ee771a610042e878a8393e21c0d074daf213d6833232a29b1f2d704d983dc1022bbd348917775e75deb8c122c4519a38e42c7d03a2b504aae44fee9d6cc41b629a9efc38a445f0b2c3f1561288fe2b689c7802af917cf0885a07dac9418037718b6299d916b006cc80f732e25ea29188d38fc7f75130916802b0e7a8c4dd29e83d811a660654bf392fd4a3d73b8a3898283fedf6f3259f41bfbe710ffdb5c07ba0c1f2d7ffc2cf2850124b736dad82e0b57f155100203a5b46af937b67b09ad62f9dfb8eba41c8bf3d5532fce5de422e31bc5109726b63810610f36b792f5ca5eddcd3756aef12e5ecde756ca789090a6d298b8864c545862ad2cde3c61e438964f79feeb1e442811725d20bb927fe2b7009909aad23ffe365b2068c04636bedc11ad48d821a52a0edd80950fd9ffabbbf3092d5541e5150c262125c55d50ee3fd03064a30bbf366f2caef0d6d87b9fc727dc5e6f6bcdac185ce5ddfd7e93486275c06b6ffcb170c752413fbf3a0c86e2515f5b84526e1b3928d7cbc5136949c59370482d0a35bd1463ead46b08fcd61bb0664a1056b0c1bcc2f486537944a51e0a6ff11eb6b50bcef042954d949e95f0d887cbb851c83cb1a3ae02e818cd45d0eb2311e4d7ed94f794f8ecc5f503045f54ffcd2852a69e0e1b9481af110884db16e025342f1500b22279b7698fd1bbf95dc8b0174e2cf9a1916429aac03cfa18e23954dea591dae5bfdde4e60212ec055bfcfdd2836a905ba3ee36d67d4228cb2995243a1e4f8266ee9c283bded4442931ba9182bfc3f309238c3d2cf8ced7a9fae47d03c0c96ea58786c4bcc49191fd2817ce626ed8462bf4bea0f46616fa7748cdec628de3483fac3f01eb04cc4279afde038e8a166363ae571ab39b4a2f32b5a9f0c2fa39bc06b54b0410eeb6f79c9d63aa637d44e3f2134db190accf26800b73e08e7f61dd00d2242d16463fde7c9e356918edcf4abc4cace6bd511ba74c1a662936b8ce803c34c1d3fd11314a7edd6aa824edfe7dcff61f753aa88396ec610b60226446399b4849083a42aa9b08c9e65f579e2320fca9336982b5979bc8087b38ac4430b20ad6489b0482ee38420a474956e25b5645def7846fefaf75d5e514d891ef1f6e65aed3ac84caa03544803a3c4ae0466ff3762553bb31993311e669113073ee22b0f08a46b5cd9965aa42a36ac958192c0bd265b326a0fd37e1772702ecb686f9b879256a436448ce0b004278cea28c29a35014ff5821b3a85416e8b62533b42530f43366e4b34706223bd2ff32b80f35e227eb105161ccf6d7ccf206a622b3a400a104149a1c4c964e5c69d35c5c2b7a29f6a021aba98e92444d099555ca5e86acfd8c5c10b9d7fdf8ab65ea8b94d3f7b913f096e7565af6ddef2587a26aab02d1bada7a8e277eaf4742ab2bb6d335f2fc9fde9c818ef7b8a568cb05061c99f2213f3e810e115b88645fd4239a7470f255a8e930b3c1c8cf23751c2c21348742eb4ecbbd8962f40edad5a24d3b488d1d7a0a3072cd9d4f7b4c24b57e6b6fe108826d2d8ed39ced8280da96805f6d7d9fb4151a3506f2b7a257d39782106b22feebd9c74bb5398cf293de74f9965746e2ada6bffbe7859d13f7a0247c871e24f3084f7840de2c65ecda0ea87b75f936cd58bd31606fa38ae0f106b8e6b00c16b4cd78eca7d4f303ca2eef9b54758e68efa8cf52088aa116b3df1c48dc614fa46b1668f89b3667ebf8322250982f7c2dc23504184ff76ae91aa392ac38e4b550dabcf41801759e5df78441999904f75e9d262f7c6b274d5dfebabb3339ab18b036c520bce4e2b15d7446ead1e3e2c567563ece15ebd219b89792da790aec58f4bd27278cd651f50c47ac9e1d411a1fb24738fac3f6560d09d07fd635c4a181721865b3027ac56838484532741d0c8e80dda1c5d6a0446b38b59b0c1342c4901f78760cb02eb7f53b09ac9f2cfe646bc178ddd36e272b64bf62d7a8b706d8a5b5bc91714344b687cad19431dc7f6cdd7e28692d933372676f77c3431fe8ef542bf7bdd2f3e72df9192523a471823ed9281297233c1348d22ae53145f2780b0c782158ce29957cc37f11c42185077efd6947bb3b6850bcfa00300f2ad875cbd3916eb6786b0cf33e610b568681eee0e3fb42f298147973429525b486484fbbc89b6f4e2a34068763e39c5b149e8f85c682ea2d7542689e615391b1507027ae315c0453cb2a36a5ba07a14308c504afb050bdc127ce643cbcfbea36c225cfbbb52283f20375422dd4bc41131af1fca7e7747eb8445f83f9cd20ddb110478a29a670a21ce046d4c19fe3ad057f3fadc7458265215f4d73e070c45e8ec8cb5e32ebbeacb79980e79a2f638a3889f5f24f65b32fb6d1f410d20603170659a037df4dd5f09596ac66c06ff9f05269c37f466ce3e01cd8080ad9e59b6108cb2681fd61d803ec5e6ee14cc5d4beb3a63f88cf51ff25c818ca012b09e766b1e8ae1c15a3e07187337c368d12d6ea4eb7965e7ef2a0ea2be7d8daa07e1f62120f6d41eaf7a8c8cbdf3fe96c770cb4154feacdce24a8342e9032bea79e17c2b893e10fdf2a21a943260078d08a6995b401e8af93dbf381086c0b11919ec4bb33ef41a9b9f08b0db1d93934028aa4702bd05b3ab71a4258a36e7e9c9f7bd3670c46549d05681e499f75393245573177b882f42a4f80fcbf7032cc28fe7a2786778e7a1c06bbf2a98cae259f68fcc860fc9c19d57de532f7a77b9fe6f493ffd3607e5e9773c18e28d2c94cc9891a5e48498a66acc6602b77b66c36e0d1f915950c65bc980f55d569ecdcf6bff004ef480035c99afdbedab5d75a759a460c38bc677abd183e751e80971b5d8098f5db8ba89e681ae993cc599f1a66feadec9a9a2d6e9085a29afa5ecd2fcef6c3c993430683819c2b030a3febf7f278cb976c4dfa17c7e5ca465601025835af8226bfebf43d9b5ffd4861ecd4bb76cd62d0ca78b09c87a483354ab9f97368fe4ff29a1b31c5ce229db5438da5c652ac8697b05906741016f342799082e76505f073183e7baad5da6398424bcee1ddc7a398f8e2c838baa26b9b95407a9a6971d3062b6a9f3c8319dc6779c3d14b02524c54d70f33125bd58aa079250b1ccdcdcbb0e512fe626af68ef830366d225d3686a9f81f6891049043470248580d40f880c5962b043c1373dd91cb06b93a40d730b4636e10cb83fc76ac5b825f68420fb9b99671365d6d0c7df194d5529b3c3f869c0cd1d548c63768bf8451e04b81375ea7ecfd03f0dde6e2967b0726d52aa8dc6f3aac1e2d157efe0316f69e5ad94f4e90562ff429a08747b96c2e19dc6950a9699d71c49249b0f3ddb9f92050e1f3e039cb093056eaf6a7242f6691c24e196c6f64bc2aaf17a92a367e0f6cd5bfbf23934bd5a8e131ee4bab86a820b5a61ca41845d0c26caab50495319571df5aae420d2ebcf4a0d85e7e6f1cadbc85ac0b00a7b15f59d0d64d1a67652bad0a8f04ecf0d4f2df9e4d02efdcf92", 0x1000, r1)
+keyctl$get_security(0x11, r2, &(0x7f0000001100)=""/28, 0x1c)
+write$binfmt_misc(r0, &(0x7f0000000040)=ANY=[@ANYBLOB="73f97a31030017007d8aac9fa5bda5ad601efcdac2fc52451fb1f8c140377b", @ANYRESHEX], 0x31)
+2020/01/26 22:13:08 reproducing crash 'general protection fault in __legitimize_mnt': program did not crash
+2020/01/26 22:13:08 reproducing crash 'general protection fault in __legitimize_mnt': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): sync-mknod-mkdir-mkdir-mkdir
+2020/01/26 22:13:08 reproducing crash 'general protection fault in __legitimize_mnt': detailed listing:
+executing program 0:
+sync()
+mknod(&(0x7f0000000000)='./file0\x00', 0x0, 0x10001)
+mkdir(&(0x7f0000000040)='./file0\x00', 0x1)
+mkdir(&(0x7f0000000080)='./file0\x00', 0x128)
+mkdir(&(0x7f00000000c0)='./file0\x00', 0x40)
+2020/01/26 22:13:23 reproducing crash 'general protection fault in __legitimize_mnt': program did not crash
+2020/01/26 22:13:23 reproducing crash 'general protection fault in __legitimize_mnt': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$tty1-write$binfmt_elf32
+2020/01/26 22:13:23 reproducing crash 'general protection fault in __legitimize_mnt': detailed listing:
+executing program 0:
+r0 = syz_open_dev$tty1(0xc, 0x4, 0x1)
+write$binfmt_elf32(r0, &(0x7f0000000580)={{0x7f, 0x45, 0x4c, 0x46, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x38, 0x0, 0x0, 0x0, 0x20, 0x0, 0x0, 0x4}, [{0x2}], "0b2eac2175357fcd8615544230fe85c9ec1237c81e0e5dd8a94b47b9d6f479e5ec7437743cd3b45bdb18e6a5cf86600d48d3ff8ca730a78f0b591d2c6336c4b40cb7e061d1f370753347ad8897d7c1ddd379704eb08143bb6b35eaab8f5b5539fd6d237775896fc6d6926756e6d58ff08c2fe6eed54945358c560df373597cd2773b122d46ddb111bd99e2c49c3b983a617d3b8fad3062cce548c93956ca992251d31b00f587239ea06b85d93f7e2132e588436383cf81b596057192cca5d91190436406c7ccc01ca51d25314646d6593badd5a230d326c3806fadc64f6a24a207bc9fe2afe4099afc2b46a6faf04fd634e3bc184538d2a6b0d0b3852a55ac24c11bf3a3cb8fa917c5de415c024dd3e2fb1bc28e7a337aaa2dec35de3c73386176a08c1dac643a4fd906b0e8e8a6e8347eb2217fe78575d07f28c6431dc9becde51c94e0c843acfa6e34c628de7d73ac32abf895d0c69321ec32776246d04542a4caa952d789dd1bfb749ba0717e47462f3450857bd4798af52f9af8a138475b20cabcc9065ff5929405858a9c8398bae73452646cf76e85e5c2fd263c5ce89554cc0d009d155d5bb813ee062ad38b3d856881ebef6284170841e923aa463608905d47aa938d8aa8b47e618aabf92490ac1e71a041342abe73c6fbea233c9c47600d2ff76e1ff2f9ba9d5a8a9110ea6616ba1c1f3e75f445d899ea4e3141e159c54bb6faf7cc3a039e36fdcaceadc5145e9181111675caecc2171a0fcfa29b6d6c42e3fda16e616ed8e0a7b3a63d53a9e512f57a533baeed138a2cd3d29c74cb349e1a3ecddcd15f629f2d62bc370d9bcfbc035e4da4f3d452eef37722236d7edadecd6ecb4f941a364175a861cb993254db93c76034618667432e7294eb6333bb66a98c582f3055a3dcd5697e0245902f205664f9aeee01ecb231e8c06037a572c8952458dd6da1cc924b94fdfd3abb0ec41bbe81e1d1c891a3be7d61800d89aaa9e0f6755e295aa96f97cff93937c338774b1cf4d9c317fec271d4e327cc9bccbf4cb77ef246e858568b9826bb77fdc49b9ddc27d1ebd84284d6b0542a333c3931ba11a6611395b15e722acc5273c6e208ae3ac97882d0080fc9ca70a8bf5658c39748ddd6927009e8496055a6fbd71a41e414d1c732e1de86a7f61dcae05a6684f4a45f5dd6ab18593126c42273a8aef0b76076a0828230162558b7685bcfb6c260cfedf7bbb9b3944bf5c4f50569999d6c47a146f9c1066c20b21c992d10d2e1f83f2c9b833b8d172b17187d1fe1e6dce69111ceffaf7d691ff3323dd02bacc3001fa7a6a85d36b3da0f66340d69516b5e65ebebfe5ad444f591644240de86b817f2475efccc3c2d4330fca9c63dbefa2f5bcbefe81f8a436839084095588df441527be96b581c834d0e587ce2b4d01e23b8afec772bab557cc7f50e50cbcad29b3bf2842ca4eb308a0184e068b9a4bb1ca9732a781cd69b811d70035a042429b341c85420374f6a9975c494396b74c963d87d0895053605d26c9df2ed5be44a385333c4c1ed7f381038060831f61482a3331953a3ae4403a86267a57b38f465ebae2db0a320b92ee0f4057c7db96038d37644b8e37dd1cea31b975f6271ac7d9b0db602b5d2a2ad1fc7ef6f431222c85b4c7bda8996c5b9ebfdb38d485480011ab36de32e624faaccdb2a40d89fe8af214ec39a7bfb4c292afc33d4b2e8471ed929b47f05359c4aec575dfe7594b91a807827a9e563106b9fd81b5fdc81a36787878bfb448bfb5fade63c4dd1c478e4593a006aeb580a4d6c0d6f9021547c66437b951c8e44bef6ea7ac52fca5f90e5911d1cc34cbe47a9aeec81916a136284b292089d85228b6e6b7b57a8c6927c7046a71a8b6b1ff9c13f7c9d9030052ac181e2cbc3f0ed5cc29df82815efb2f7822760241e9c037156e9656339446a27ce934a942de9540cb72d75b5db6c5e41a2a0b427af81ac3083f8509cc4d2d57cf881b14dd628ed651a2ef9c193377db391916cd5e8e493584aa33d92cfc9a997176cbaa95185a2f0f7e0b01f2735f74438619154f0665e787402834485108f61487e0f457f542f8f971feef1383d4c85b4657a70ae410ba1bcfc09f18b0e4775b259ac13aae4727b3b82b8553b41c35e89f899568babc1f51a53e0230c797d88790300e1a9c7210be45dd2417cfa72bfdacb2e6794766389b3874ebc050d5017a8d8d87c189089eb8ad9aa9548ce280e92e07d81f1bc0f65f4a873bcec005387bdc2c29186e388a346cf97f97f4400244d7a30cf43ee9b42d989920778e1b98492bd19e451c38734fb576d46cbf3e925447807750d49bff08ed49e7910e09187f5e3680948e6d016c9f8bde5d530479fe0d0feb9e2dc5ff23786ccebaeee1cc7ece4c43096d563cc6983aa46c3c6de2c3a4a860e4d00c9a5995a48569b60"}, 0x717)
+2020/01/26 22:13:38 reproducing crash 'general protection fault in __legitimize_mnt': program did not crash
+2020/01/26 22:13:38 reproducing crash 'general protection fault in __legitimize_mnt': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_mount_image$tmpfs-umount2
+2020/01/26 22:13:38 reproducing crash 'general protection fault in __legitimize_mnt': detailed listing:
+executing program 0:
+syz_mount_image$tmpfs(&(0x7f0000000140)='tmpfs\x00', &(0x7f00000001c0)='./file0\x00', 0x448, 0x0, 0x0, 0x40000, 0x0)
+umount2(&(0x7f0000000000)='./file0\x00', 0x0)
+2020/01/26 22:13:53 reproducing crash 'general protection fault in __legitimize_mnt': program did not crash
+2020/01/26 22:13:53 reproducing crash 'general protection fault in __legitimize_mnt': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): mkdir-open$dir-socketpair-clock_gettime-recvmmsg
+2020/01/26 22:13:53 reproducing crash 'general protection fault in __legitimize_mnt': detailed listing:
+executing program 0:
+mkdir(&(0x7f0000000000)='./file0\x00', 0x0)
+open$dir(&(0x7f0000000040)='./file0\x00', 0x52212db785714826, 0x0)
+socketpair(0x5, 0x1, 0x1, &(0x7f0000000080)={0xffffffffffffffff, <r0=>0xffffffffffffffff})
+clock_gettime(0x0, &(0x7f0000003840)={<r1=>0x0, <r2=>0x0})
+recvmmsg(r0, &(0x7f0000003700)=[{{0x0, 0x0, &(0x7f0000001280)=[{&(0x7f00000000c0)=""/4096, 0x1000}, {&(0x7f00000010c0)=""/197, 0xc5}, {&(0x7f00000011c0)=""/145, 0x91}], 0x3, &(0x7f00000012c0)=""/253, 0xfd}, 0x2}, {{&(0x7f00000013c0)=@ll={0x11, 0x0, 0x0, 0x1, 0x0, 0x6, @link_local}, 0x80, &(0x7f0000001b00)=[{&(0x7f0000001440)=""/68, 0x44}, {&(0x7f00000014c0)=""/10, 0xa}, {&(0x7f0000001500)=""/239, 0xef}, {&(0x7f0000001600)}, {&(0x7f0000001640)=""/224, 0xe0}, {&(0x7f0000001740)=""/192, 0xc0}, {&(0x7f0000001800)=""/184, 0xb8}, {&(0x7f00000018c0)=""/255, 0xff}, {&(0x7f00000019c0)=""/1, 0x1}, {&(0x7f0000001a00)=""/212, 0xd4}], 0xa, &(0x7f0000001bc0)=""/30, 0x1e}, 0x2}, {{&(0x7f0000001c00)=@x25={0x9, @remote}, 0x80, &(0x7f0000001cc0)=[{&(0x7f0000001c80)=""/17, 0x11}], 0x1, &(0x7f0000001d00)=""/175, 0xaf}, 0x1}, {{&(0x7f0000001dc0)=@phonet, 0x80, &(0x7f0000003480)=[{&(0x7f0000001e40)=""/218, 0xda}, {&(0x7f0000001f40)=""/118, 0x76}, {&(0x7f0000001fc0)=""/165, 0xa5}, {&(0x7f0000002080)=""/201, 0xc9}, {&(0x7f0000002180)=""/148, 0x94}, {&(0x7f0000002240)=""/204, 0xcc}, {&(0x7f0000002340)=""/4096, 0x1000}, {&(0x7f0000003340)=""/175, 0xaf}, {&(0x7f0000003400)=""/101, 0x65}], 0x9}, 0x5}, {{&(0x7f0000003540)=@rxrpc=@in6={0x21, 0x0, 0x2, 0x1c}, 0x80, &(0x7f00000036c0)=[{&(0x7f00000035c0)=""/16, 0x10}, {&(0x7f0000003600)=""/129, 0x81}], 0x2}, 0x3}], 0x5, 0x10002, &(0x7f0000003880)={r1, r2+10000000})
+2020/01/26 22:14:08 reproducing crash 'general protection fault in __legitimize_mnt': program did not crash
+2020/01/26 22:14:09 reproducing crash 'general protection fault in __legitimize_mnt': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/26 22:14:09 reproducing crash 'general protection fault in __legitimize_mnt': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000000040)={0x1, 0x0, 0x8, "11"})
+2020/01/26 22:14:20 reproducing crash 'general protection fault in __legitimize_mnt': program crashed: BUG: unable to handle kernel paging request in qlist_free_all
+2020/01/26 22:14:20 reproducing crash 'general protection fault in __legitimize_mnt': single: successfully extracted reproducer
+2020/01/26 22:14:20 reproducing crash 'general protection fault in __legitimize_mnt': found reproducer with 2 syscalls
+2020/01/26 22:14:20 reproducing crash 'general protection fault in __legitimize_mnt': minimizing guilty program
+2020/01/26 22:14:20 reproducing crash 'general protection fault in __legitimize_mnt': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg
+2020/01/26 22:14:20 reproducing crash 'general protection fault in __legitimize_mnt': detailed listing:
+executing program 0:
+syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+2020/01/26 22:14:43 reproducing crash 'general protection fault in __legitimize_mnt': program did not crash
+2020/01/26 22:14:43 reproducing crash 'general protection fault in __legitimize_mnt': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/26 22:14:43 reproducing crash 'general protection fault in __legitimize_mnt': detailed listing:
+executing program 0:
+ioctl$SCSI_IOCTL_SEND_COMMAND(0xffffffffffffffff, 0x1, &(0x7f0000000040)={0x1, 0x0, 0x8, "11"})
+2020/01/26 22:15:06 reproducing crash 'general protection fault in __legitimize_mnt': program did not crash
+2020/01/26 22:15:06 reproducing crash 'general protection fault in __legitimize_mnt': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/26 22:15:06 reproducing crash 'general protection fault in __legitimize_mnt': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(0x0, 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000000040)={0x1, 0x0, 0x8, "11"})
+2020/01/26 22:15:28 reproducing crash 'general protection fault in __legitimize_mnt': program did not crash
+2020/01/26 22:15:28 reproducing crash 'general protection fault in __legitimize_mnt': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/26 22:15:28 reproducing crash 'general protection fault in __legitimize_mnt': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, 0x0)
+2020/01/26 22:15:51 reproducing crash 'general protection fault in __legitimize_mnt': program did not crash
+2020/01/26 22:15:51 reproducing crash 'general protection fault in __legitimize_mnt': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/26 22:15:51 reproducing crash 'general protection fault in __legitimize_mnt': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000000040)={0x0, 0x0, 0x8})
+2020/01/26 22:16:13 reproducing crash 'general protection fault in __legitimize_mnt': program did not crash
+2020/01/26 22:16:13 reproducing crash 'general protection fault in __legitimize_mnt': extracting C reproducer
+2020/01/26 22:16:14 reproducing crash 'general protection fault in __legitimize_mnt': testing compiled C program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/26 22:16:25 reproducing crash 'general protection fault in __legitimize_mnt': program crashed: general protection fault in __handle_mm_fault
+2020/01/26 22:16:25 reproducing crash 'general protection fault in __legitimize_mnt': simplifying C reproducer
+2020/01/26 22:16:26 reproducing crash 'general protection fault in __legitimize_mnt': testing compiled C program (duration=22.5s, {Threaded:true Collide:false Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/26 22:16:58 reproducing crash 'general protection fault in __legitimize_mnt': program crashed: INFO: rcu detected stall in do_sys_open
+2020/01/26 22:16:59 reproducing crash 'general protection fault in __legitimize_mnt': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/26 22:17:10 reproducing crash 'general protection fault in __legitimize_mnt': program crashed: BUG: unable to handle kernel paging request in clear_page_erms
+2020/01/26 22:17:11 reproducing crash 'general protection fault in __legitimize_mnt': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:false RepeatTimes:0 Procs:1 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:false Cgroups:false BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/26 22:17:21 reproducing crash 'general protection fault in __legitimize_mnt': program did not crash
+2020/01/26 22:17:22 reproducing crash 'general protection fault in __legitimize_mnt': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:true RepeatTimes:0 Procs:1 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/26 22:17:32 reproducing crash 'general protection fault in __legitimize_mnt': program crashed: BUG: unable to handle kernel paging request in qlist_free_all
+2020/01/26 22:17:32 reproducing crash 'general protection fault in __legitimize_mnt': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:true RepeatTimes:0 Procs:1 Sandbox: Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:false NetDevices:false NetReset:false Cgroups:false BinfmtMisc:false CloseFDs:false KCSAN:false DevlinkPCI:false UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/26 22:17:42 reproducing crash 'general protection fault in __legitimize_mnt': program crashed: BUG: Bad page map
+2020/01/26 22:17:43 reproducing crash 'general protection fault in __legitimize_mnt': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:true RepeatTimes:0 Procs:1 Sandbox: Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:false NetDevices:false NetReset:false Cgroups:false BinfmtMisc:false CloseFDs:false KCSAN:false DevlinkPCI:false UseTmpDir:false HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/26 22:17:53 reproducing crash 'general protection fault in __legitimize_mnt': program crashed: BUG: Bad page map
+2020/01/26 22:17:53 reproducing crash 'general protection fault in __legitimize_mnt': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:true RepeatTimes:0 Procs:1 Sandbox: Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:false NetDevices:false NetReset:false Cgroups:false BinfmtMisc:false CloseFDs:false KCSAN:false DevlinkPCI:false UseTmpDir:false HandleSegv:false Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/26 22:18:03 reproducing crash 'general protection fault in __legitimize_mnt': program crashed: BUG: Bad page map
+2020/01/26 22:18:03 reproducing crash 'general protection fault in __legitimize_mnt': reproducing took 5m36.607077468s
+2020/01/26 22:18:03 reproducing crash 'general protection fault in __legitimize_mnt': repro crashed as (corrupted=false):
+BUG: Bad page map in process syz-executor330  pte:11100000101 pmd:34b2a067
+addr:00000000c6d651c2 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20000
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Not tainted 4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:588600000121 pmd:34b2a067
+addr:00000000ec38b6a2 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20001
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:000403f2 pmd:34b2a067
+addr:00000000223e55ef vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20002
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:b5e90000bb1a7fe4 pmd:34b2a067
+addr:00000000e828044f vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20003
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:6f87ad0e pmd:34b2a067
+addr:00000000349653e9 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20007
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:11200000102 pmd:34b2a067
+addr:000000005ba990f3 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20008
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:461000000000321 pmd:34b2a067
+addr:00000000cb8606b1 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20009
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:0004022b pmd:34b2a067
+addr:00000000dad22343 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:2000a
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:ea4a0461ebb4468f pmd:34b2a067
+addr:000000005b6fccca vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:2000b
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:334de75d pmd:34b2a067
+addr:00000000b2f45964 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:2000f
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:11300000103 pmd:34b2a067
+addr:0000000062c10914 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20010
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 00000010
+BUG: Bad page map in process syz-executor330  pte:00040010 pmd:34b2a067
+addr:00000000dacae772 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20012
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:2fca1ff0d734468f pmd:34b2a067
+addr:0000000099abc03b vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20013
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:26f7e75d pmd:34b2a067
+addr:00000000ad42ad49 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20017
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:11400000104 pmd:34b2a067
+addr:0000000023c83c97 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20018
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:2000000000000721 pmd:34b2a067
+addr:0000000084fa37a5 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20019
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 00000014
+BUG: Bad page map in process syz-executor330  pte:00050000 pmd:34b2a067
+addr:00000000eafefe39 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:2001a
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:52f820000000468f pmd:34b2a067
+addr:00000000cec9bd22 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:2001b
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:0000e75d pmd:34b2a067
+addr:00000000727ead5e vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:2001f
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:11500000105 pmd:34b2a067
+addr:00000000a8d27fb8 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20020
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:20003c6d00000921 pmd:34b2a067
+addr:000000004720fb20 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20021
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 00000014
+BUG: Bad page map in process syz-executor330  pte:00050000 pmd:34b2a067
+addr:000000002c8a70db vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20022
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 36036d0880000000
+BUG: Bad page map in process syz-executor330  pte:db422000000036f0 pmd:34b2a067
+addr:00000000700ce72e vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20023
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 2000000000000003
+BUG: Bad page map in process syz-executor330  pte:0000e064 pmd:34b2a067
+addr:00000000ffe38369 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20027
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:11600000106 pmd:34b2a067
+addr:000000005e0407b0 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20028
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:20007eff00000b21 pmd:34b2a067
+addr:00000000b67bb335 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20029
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 0000001c
+BUG: Bad page map in process syz-executor330  pte:00070000 pmd:34b2a067
+addr:00000000cd7bb119 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:2002a
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 3b60080000000
+BUG: Bad page map in process syz-executor330  pte:ed80200000000000 pmd:34b2a067
+addr:00000000dd686180 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:2002b
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:11700000107 pmd:34b2a067
+addr:00000000d67ef5fc vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20030
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:2000800000000d21 pmd:34b2a067
+addr:000000001dc84e57 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20031
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 0000001c
+BUG: Bad page map in process syz-executor330  pte:00070000 pmd:34b2a067
+addr:0000000015b866b8 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20032
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 526480000000
+BUG: Bad page map in process syz-executor330  pte:1499200000000000 pmd:34b2a067
+addr:00000000139f680c vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20033
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:11800000108 pmd:34b2a067
+addr:00000000ad700594 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20038
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:20007eff00000f21 pmd:34b2a067
+addr:0000000072d40bc0 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20039
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 0000001c
+BUG: Bad page map in process syz-executor330  pte:00070000 pmd:34b2a067
+addr:0000000034a33452 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:2003a
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 3422c80000000
+BUG: Bad page map in process syz-executor330  pte:d08b200000000000 pmd:34b2a067
+addr:0000000015880a00 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:2003b
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:11900000109 pmd:34b2a067
+addr:0000000039f6e3ec vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20040
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:2000400000001121 pmd:34b2a067
+addr:0000000021074596 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20041
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 00000014
+BUG: Bad page map in process syz-executor330  pte:00050000 pmd:34b2a067
+addr:0000000015127745 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20042
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 1e033c3480000002
+BUG: Bad page map in process syz-executor330  pte:cf0d200000009e0c pmd:34b2a067
+addr:00000000a1d60f62 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20043
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:0000b592 pmd:34b2a067
+page:ffffea00000002c0 count:1 mapcount:-1 mapping:0000000000000000 index:0x0
+flags: 0x800(reserved)
+raw: 0000000000000800 0000000000000000 0000000000000000 00000001fffffffe
+raw: ffffea00000002e0 ffffea00000002e0 0000000000000000 0000000000000000
+page dumped because: bad pte
+addr:00000000b6d145e6 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20047
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0xec4/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:11a0000010a pmd:34b2a067
+addr:000000007ce42cab vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20048
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:20007eff00001321 pmd:34b2a067
+addr:0000000000ee383d vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20049
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 0000001c
+BUG: Bad page map in process syz-executor330  pte:00070000 pmd:34b2a067
+addr:00000000aed8e771 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:2004a
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 928c80000000
+BUG: Bad page map in process syz-executor330  pte:24a3200000000000 pmd:34b2a067
+addr:00000000e250fa7e vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:2004b
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:11b0000010b pmd:34b2a067
+addr:000000007e4f53ea vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20050
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:2000800000001521 pmd:34b2a067
+addr:00000000e7ce009e vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20051
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 0000001c
+BUG: Bad page map in process syz-executor330  pte:00070000 pmd:34b2a067
+addr:0000000056b0a7a4 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20052
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 376e880000000
+BUG: Bad page map in process syz-executor330  pte:ddba200000000000 pmd:34b2a067
+addr:0000000038589050 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20053
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:11c0000010c pmd:34b2a067
+addr:000000006ffb816e vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20058
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:2000800000001721 pmd:34b2a067
+addr:000000000efd7c2a vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20059
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 0000001c
+BUG: Bad page map in process syz-executor330  pte:00070000 pmd:34b2a067
+addr:00000000866aa186 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:2005a
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 1e11c80000000
+BUG: Bad page map in process syz-executor330  pte:7847200000000000 pmd:34b2a067
+addr:0000000021d3072e vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:2005b
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:11d0000010d pmd:34b2a067
+addr:0000000034ee1b57 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20060
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:2000800000001921 pmd:34b2a067
+addr:0000000038aa3814 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20061
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 0000001c
+BUG: Bad page map in process syz-executor330  pte:00070000 pmd:34b2a067
+addr:00000000a5166cd4 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20062
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 94c80000000
+BUG: Bad page map in process syz-executor330  pte:253200000000000 pmd:34b2a067
+addr:00000000192101a3 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20063
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:11e0000010e pmd:34b2a067
+addr:00000000058e452b vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20068
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:2000800000001b21 pmd:34b2a067
+addr:00000000c19164dc vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20069
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 0000001c
+BUG: Bad page map in process syz-executor330  pte:00070000 pmd:34b2a067
+addr:000000008121980d vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:2006a
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 22b2880000000
+swap_info_get: Bad swap file entry 0000001c
+swap_info_get: Bad swap file entry 123d080000000
+swap_info_get: Bad swap file entry 00000014
+BUG: Bad page state in process syz-executor330  pfn:0000b
+page:ffffea00000002c0 count:0 mapcount:-1 mapping:0000000000000000 index:0x0
+flags: 0x0()
+raw: 0000000000000000 0000000000000000 0000000000000000 00000000fffffffe
+raw: dead000000000100 dead000000000200 0000000000000000 0000000000000000
+page dumped because: nonzero mapcount
+Modules linked in:
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ bad_page+0x190/0x220
+ free_pcppages_bulk+0x3b8/0x1020
+ free_unref_page_list+0x24d/0x420
+ release_pages+0x54c/0x8f0
+ tlb_flush_mmu_free+0x9c/0x130
+ arch_tlb_finish_mmu+0x9f/0x140
+ tlb_finish_mmu+0x8b/0xf0
+ exit_mmap+0x25f/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad rss-counter state mm:000000006359b5b7 idx:0 val:-2
+BUG: Bad rss-counter state mm:000000006359b5b7 idx:1 val:1
+BUG: Bad rss-counter state mm:000000006359b5b7 idx:2 val:-26
+2020/01/26 22:18:03 reproducing crash 'general protection fault in __legitimize_mnt': final repro crashed as (corrupted=false):
+BUG: Bad page map in process syz-executor330  pte:11100000101 pmd:34b2a067
+addr:00000000c6d651c2 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20000
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Not tainted 4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:588600000121 pmd:34b2a067
+addr:00000000ec38b6a2 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20001
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:000403f2 pmd:34b2a067
+addr:00000000223e55ef vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20002
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:b5e90000bb1a7fe4 pmd:34b2a067
+addr:00000000e828044f vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20003
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:6f87ad0e pmd:34b2a067
+addr:00000000349653e9 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20007
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:11200000102 pmd:34b2a067
+addr:000000005ba990f3 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20008
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:461000000000321 pmd:34b2a067
+addr:00000000cb8606b1 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20009
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:0004022b pmd:34b2a067
+addr:00000000dad22343 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:2000a
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:ea4a0461ebb4468f pmd:34b2a067
+addr:000000005b6fccca vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:2000b
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:334de75d pmd:34b2a067
+addr:00000000b2f45964 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:2000f
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:11300000103 pmd:34b2a067
+addr:0000000062c10914 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20010
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 00000010
+BUG: Bad page map in process syz-executor330  pte:00040010 pmd:34b2a067
+addr:00000000dacae772 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20012
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:2fca1ff0d734468f pmd:34b2a067
+addr:0000000099abc03b vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20013
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:26f7e75d pmd:34b2a067
+addr:00000000ad42ad49 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20017
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:11400000104 pmd:34b2a067
+addr:0000000023c83c97 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20018
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:2000000000000721 pmd:34b2a067
+addr:0000000084fa37a5 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20019
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 00000014
+BUG: Bad page map in process syz-executor330  pte:00050000 pmd:34b2a067
+addr:00000000eafefe39 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:2001a
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:52f820000000468f pmd:34b2a067
+addr:00000000cec9bd22 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:2001b
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:0000e75d pmd:34b2a067
+addr:00000000727ead5e vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:2001f
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:11500000105 pmd:34b2a067
+addr:00000000a8d27fb8 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20020
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:20003c6d00000921 pmd:34b2a067
+addr:000000004720fb20 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20021
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 00000014
+BUG: Bad page map in process syz-executor330  pte:00050000 pmd:34b2a067
+addr:000000002c8a70db vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20022
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 36036d0880000000
+BUG: Bad page map in process syz-executor330  pte:db422000000036f0 pmd:34b2a067
+addr:00000000700ce72e vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20023
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 2000000000000003
+BUG: Bad page map in process syz-executor330  pte:0000e064 pmd:34b2a067
+addr:00000000ffe38369 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20027
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:11600000106 pmd:34b2a067
+addr:000000005e0407b0 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20028
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:20007eff00000b21 pmd:34b2a067
+addr:00000000b67bb335 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20029
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 0000001c
+BUG: Bad page map in process syz-executor330  pte:00070000 pmd:34b2a067
+addr:00000000cd7bb119 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:2002a
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 3b60080000000
+BUG: Bad page map in process syz-executor330  pte:ed80200000000000 pmd:34b2a067
+addr:00000000dd686180 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:2002b
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:11700000107 pmd:34b2a067
+addr:00000000d67ef5fc vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20030
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:2000800000000d21 pmd:34b2a067
+addr:000000001dc84e57 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20031
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 0000001c
+BUG: Bad page map in process syz-executor330  pte:00070000 pmd:34b2a067
+addr:0000000015b866b8 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20032
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 526480000000
+BUG: Bad page map in process syz-executor330  pte:1499200000000000 pmd:34b2a067
+addr:00000000139f680c vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20033
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:11800000108 pmd:34b2a067
+addr:00000000ad700594 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20038
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:20007eff00000f21 pmd:34b2a067
+addr:0000000072d40bc0 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20039
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 0000001c
+BUG: Bad page map in process syz-executor330  pte:00070000 pmd:34b2a067
+addr:0000000034a33452 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:2003a
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 3422c80000000
+BUG: Bad page map in process syz-executor330  pte:d08b200000000000 pmd:34b2a067
+addr:0000000015880a00 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:2003b
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:11900000109 pmd:34b2a067
+addr:0000000039f6e3ec vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20040
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:2000400000001121 pmd:34b2a067
+addr:0000000021074596 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20041
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 00000014
+BUG: Bad page map in process syz-executor330  pte:00050000 pmd:34b2a067
+addr:0000000015127745 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20042
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 1e033c3480000002
+BUG: Bad page map in process syz-executor330  pte:cf0d200000009e0c pmd:34b2a067
+addr:00000000a1d60f62 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20043
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:0000b592 pmd:34b2a067
+page:ffffea00000002c0 count:1 mapcount:-1 mapping:0000000000000000 index:0x0
+flags: 0x800(reserved)
+raw: 0000000000000800 0000000000000000 0000000000000000 00000001fffffffe
+raw: ffffea00000002e0 ffffea00000002e0 0000000000000000 0000000000000000
+page dumped because: bad pte
+addr:00000000b6d145e6 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20047
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0xec4/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:11a0000010a pmd:34b2a067
+addr:000000007ce42cab vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20048
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:20007eff00001321 pmd:34b2a067
+addr:0000000000ee383d vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20049
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 0000001c
+BUG: Bad page map in process syz-executor330  pte:00070000 pmd:34b2a067
+addr:00000000aed8e771 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:2004a
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 928c80000000
+BUG: Bad page map in process syz-executor330  pte:24a3200000000000 pmd:34b2a067
+addr:00000000e250fa7e vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:2004b
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:11b0000010b pmd:34b2a067
+addr:000000007e4f53ea vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20050
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:2000800000001521 pmd:34b2a067
+addr:00000000e7ce009e vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20051
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 0000001c
+BUG: Bad page map in process syz-executor330  pte:00070000 pmd:34b2a067
+addr:0000000056b0a7a4 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20052
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 376e880000000
+BUG: Bad page map in process syz-executor330  pte:ddba200000000000 pmd:34b2a067
+addr:0000000038589050 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20053
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:11c0000010c pmd:34b2a067
+addr:000000006ffb816e vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20058
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:2000800000001721 pmd:34b2a067
+addr:000000000efd7c2a vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20059
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 0000001c
+BUG: Bad page map in process syz-executor330  pte:00070000 pmd:34b2a067
+addr:00000000866aa186 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:2005a
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 1e11c80000000
+BUG: Bad page map in process syz-executor330  pte:7847200000000000 pmd:34b2a067
+addr:0000000021d3072e vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:2005b
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:11d0000010d pmd:34b2a067
+addr:0000000034ee1b57 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20060
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:2000800000001921 pmd:34b2a067
+addr:0000000038aa3814 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20061
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 0000001c
+BUG: Bad page map in process syz-executor330  pte:00070000 pmd:34b2a067
+addr:00000000a5166cd4 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20062
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 94c80000000
+BUG: Bad page map in process syz-executor330  pte:253200000000000 pmd:34b2a067
+addr:00000000192101a3 vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20063
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:11e0000010e pmd:34b2a067
+addr:00000000058e452b vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20068
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad page map in process syz-executor330  pte:2000800000001b21 pmd:34b2a067
+addr:00000000c19164dc vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:20069
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ _vm_normal_page+0x101/0x1b0
+ unmap_page_range+0x87b/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 0000001c
+BUG: Bad page map in process syz-executor330  pte:00070000 pmd:34b2a067
+addr:000000008121980d vm_flags:00100073 anon_vma:00000000e2f6f5ab mapping:          (null) index:2006a
+file:          (null) fault:          (null) mmap:          (null) readpage:          (null)
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ print_bad_pte+0x661/0x8d0
+ unmap_page_range+0x10b6/0x16f0
+ unmap_single_vma+0x14f/0x2c0
+ unmap_vmas+0xe2/0x1a0
+ exit_mmap+0x1f9/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+swap_info_get: Bad swap file entry 22b2880000000
+swap_info_get: Bad swap file entry 0000001c
+swap_info_get: Bad swap file entry 123d080000000
+swap_info_get: Bad swap file entry 00000014
+BUG: Bad page state in process syz-executor330  pfn:0000b
+page:ffffea00000002c0 count:0 mapcount:-1 mapping:0000000000000000 index:0x0
+flags: 0x0()
+raw: 0000000000000000 0000000000000000 0000000000000000 00000000fffffffe
+raw: dead000000000100 dead000000000200 0000000000000000 0000000000000000
+page dumped because: nonzero mapcount
+Modules linked in:
+CPU: 1 PID: 310 Comm: syz-executor330 Tainted: G    B             4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ dump_stack+0x8c/0xce
+ bad_page+0x190/0x220
+ free_pcppages_bulk+0x3b8/0x1020
+ free_unref_page_list+0x24d/0x420
+ release_pages+0x54c/0x8f0
+ tlb_flush_mmu_free+0x9c/0x130
+ arch_tlb_finish_mmu+0x9f/0x140
+ tlb_finish_mmu+0x8b/0xf0
+ exit_mmap+0x25f/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de66
+RSP: 002b:00007fffafdf9aa8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de66
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+BUG: Bad rss-counter state mm:000000006359b5b7 idx:0 val:-2
+BUG: Bad rss-counter state mm:000000006359b5b7 idx:1 val:1
+BUG: Bad rss-counter state mm:000000006359b5b7 idx:2 val:-26
+Extracting prog: 1m53.727307528s
+Minimizing prog: 1m53.120513365s
+Simplifying prog options: 0s
+Extracting C: 11.995562644s
+Simplifying C: 1m37.763599s
+opts: {Threaded:false Collide:false Repeat:true RepeatTimes:0 Procs:1 Sandbox: Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:false NetDevices:false NetReset:false Cgroups:false BinfmtMisc:false CloseFDs:false KCSAN:false DevlinkPCI:false UseTmpDir:false HandleSegv:false Repro:false Trace:false} crepro: true
+
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000000040)={0x1, 0x0, 0x8, "11"})
+
+// autogenerated by syzkaller (https://github.com/google/syzkaller)
+
+#define _GNU_SOURCE 
+
+#include <dirent.h>
+#include <endian.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <signal.h>
+#include <stdarg.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/prctl.h>
+#include <sys/stat.h>
+#include <sys/syscall.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <time.h>
+#include <unistd.h>
+
+static void sleep_ms(uint64_t ms)
+{
+	usleep(ms * 1000);
+}
+
+static uint64_t current_time_ms(void)
+{
+	struct timespec ts;
+	if (clock_gettime(CLOCK_MONOTONIC, &ts))
+	exit(1);
+	return (uint64_t)ts.tv_sec * 1000 + (uint64_t)ts.tv_nsec / 1000000;
+}
+
+static bool write_file(const char* file, const char* what, ...)
+{
+	char buf[1024];
+	va_list args;
+	va_start(args, what);
+	vsnprintf(buf, sizeof(buf), what, args);
+	va_end(args);
+	buf[sizeof(buf) - 1] = 0;
+	int len = strlen(buf);
+	int fd = open(file, O_WRONLY | O_CLOEXEC);
+	if (fd == -1)
+		return false;
+	if (write(fd, buf, len) != len) {
+		int err = errno;
+		close(fd);
+		errno = err;
+		return false;
+	}
+	close(fd);
+	return true;
+}
+
+static long syz_open_dev(volatile long a0, volatile long a1, volatile long a2)
+{
+	if (a0 == 0xc || a0 == 0xb) {
+		char buf[128];
+		sprintf(buf, "/dev/%s/%d:%d", a0 == 0xc ? "char" : "block", (uint8_t)a1, (uint8_t)a2);
+		return open(buf, O_RDWR, 0);
+	} else {
+		char buf[1024];
+		char* hash;
+strncpy(buf, (char*)a0, sizeof(buf) - 1);
+		buf[sizeof(buf) - 1] = 0;
+		while ((hash = strchr(buf, '#'))) {
+			*hash = '0' + (char)(a1 % 10);
+			a1 /= 10;
+		}
+		return open(buf, a2, 0);
+	}
+}
+
+static void kill_and_wait(int pid, int* status)
+{
+	kill(-pid, SIGKILL);
+	kill(pid, SIGKILL);
+	int i;
+	for (i = 0; i < 100; i++) {
+		if (waitpid(-1, status, WNOHANG | __WALL) == pid)
+			return;
+		usleep(1000);
+	}
+	DIR* dir = opendir("/sys/fs/fuse/connections");
+	if (dir) {
+		for (;;) {
+			struct dirent* ent = readdir(dir);
+			if (!ent)
+				break;
+			if (strcmp(ent->d_name, ".") == 0 || strcmp(ent->d_name, "..") == 0)
+				continue;
+			char abort[300];
+			snprintf(abort, sizeof(abort), "/sys/fs/fuse/connections/%s/abort", ent->d_name);
+			int fd = open(abort, O_WRONLY);
+			if (fd == -1) {
+				continue;
+			}
+			if (write(fd, abort, 1) < 0) {
+			}
+			close(fd);
+		}
+		closedir(dir);
+	} else {
+	}
+	while (waitpid(-1, status, __WALL) != pid) {
+	}
+}
+
+static void setup_test()
+{
+	prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0);
+	setpgrp();
+	write_file("/proc/self/oom_score_adj", "1000");
+}
+
+static void execute_one(void);
+
+#define WAIT_FLAGS __WALL
+
+static void loop(void)
+{
+	int iter;
+	for (iter = 0;; iter++) {
+		int pid = fork();
+		if (pid < 0)
+	exit(1);
+		if (pid == 0) {
+			setup_test();
+			execute_one();
+			exit(0);
+		}
+		int status = 0;
+		uint64_t start = current_time_ms();
+		for (;;) {
+			if (waitpid(-1, &status, WNOHANG | WAIT_FLAGS) == pid)
+				break;
+			sleep_ms(1);
+			if (current_time_ms() - start < 5 * 1000)
+				continue;
+			kill_and_wait(pid, &status);
+			break;
+		}
+	}
+}
+
+uint64_t r[1] = {0xffffffffffffffff};
+
+void execute_one(void)
+{
+		intptr_t res = 0;
+memcpy((void*)0x20000000, "/dev/sg#\000", 9);
+	res = syz_open_dev(0x20000000, 0, 0);
+	if (res != -1)
+		r[0] = res;
+*(uint32_t*)0x20000040 = 1;
+*(uint32_t*)0x20000044 = 0;
+*(uint32_t*)0x20000048 = 8;
+memcpy((void*)0x2000004c, "\x11", 1);
+	syscall(__NR_ioctl, r[0], 1ul, 0x20000040ul);
+
+}
+int main(void)
+{
+		syscall(__NR_mmap, 0x20000000ul, 0x1000000ul, 3ul, 0x32ul, -1, 0);
+			loop();
+	return 0;
+}
+

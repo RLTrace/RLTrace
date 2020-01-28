@@ -1,0 +1,56 @@
+rcu: INFO: rcu_sched self-detected stall on CPU
+rcu: 	1-....: (20997 ticks this GP) idle=6ce/1/0x4000000000000002 softirq=38360/38360 fqs=5225 
+	(t=21006 jiffies g=44997 q=2729)
+NMI backtrace for cpu 1
+CPU: 1 PID: 14185 Comm: syz-executor.5 Not tainted 5.5.0-rc6 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ <IRQ>
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x94/0xce lib/dump_stack.c:118
+ nmi_cpu_backtrace+0x123/0x140 lib/nmi_backtrace.c:101
+ nmi_trigger_cpumask_backtrace+0x174/0x1e0 lib/nmi_backtrace.c:62
+ trigger_single_cpu_backtrace include/linux/nmi.h:164 [inline]
+ rcu_dump_cpu_stacks+0x16c/0x1c9 kernel/rcu/tree_stall.h:254
+ print_cpu_stall kernel/rcu/tree_stall.h:455 [inline]
+ check_cpu_stall kernel/rcu/tree_stall.h:529 [inline]
+ rcu_pending kernel/rcu/tree.c:2827 [inline]
+ rcu_sched_clock_irq+0xd99/0x15f0 kernel/rcu/tree.c:2271
+ update_process_times+0x24/0x50 kernel/time/timer.c:1726
+ tick_sched_handle+0xe6/0x150 kernel/time/tick-sched.c:167
+ tick_sched_timer+0x40/0x110 kernel/time/tick-sched.c:1310
+ __run_hrtimer kernel/time/hrtimer.c:1517 [inline]
+ __hrtimer_run_queues+0x31a/0x7f0 kernel/time/hrtimer.c:1579
+ hrtimer_interrupt+0x2af/0x6f0 kernel/time/hrtimer.c:1641
+ local_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1110 [inline]
+ smp_apic_timer_interrupt+0xd4/0x340 arch/x86/kernel/apic/apic.c:1135
+ apic_timer_interrupt+0xf/0x20 arch/x86/entry/entry_64.S:829
+ </IRQ>
+RIP: 0010:tty_ldisc_receive_buf+0x2f/0x160 drivers/tty/tty_buffer.c:460
+Code: 89 d7 41 55 41 54 49 89 f6 55 53 48 89 fb 89 cd e8 06 9a 46 ff 48 89 da 48 b8 00 00 00 00 00 fc ff df 48 c1 ea 03 80 3c 02 00 <0f> 85 0d 01 00 00 4c 8b 23 48 b8 00 00 00 00 00 fc ff df 49 8d bc
+RSP: 0018:ffff8880650ef7c8 EFLAGS: 00000246 ORIG_RAX: ffffffffffffff13
+RAX: dffffc0000000000 RBX: ffff888065299480 RCX: ffffffff928fa59a
+RDX: 1ffff1100ca53290 RSI: ffffc90000fb2000 RDI: ffff888065299480
+RBP: 0000000000000003 R08: ffffed10026efe39 R09: ffffed10026efe39
+R10: 0000000000000001 R11: ffffed10026efe38 R12: ffffed10026efe38
+R13: ffff88801377f1c0 R14: ffff88802190f168 R15: 0000000000000000
+ paste_selection+0x223/0x340 drivers/tty/vt/selection.c:372
+ tioclinux+0x201/0x430 drivers/tty/vt/vt.c:3044
+ vt_ioctl+0x1306/0x2500 drivers/tty/vt/vt_ioctl.c:364
+ tty_ioctl+0x27d/0x1370 drivers/tty/tty_io.c:2660
+ vfs_ioctl fs/ioctl.c:47 [inline]
+ do_vfs_ioctl+0x1a0/0x1010 fs/ioctl.c:734
+ ksys_ioctl+0x84/0x90 fs/ioctl.c:749
+ __do_sys_ioctl fs/ioctl.c:756 [inline]
+ __se_sys_ioctl fs/ioctl.c:754 [inline]
+ __x64_sys_ioctl+0x6f/0xb0 fs/ioctl.c:754
+ do_syscall_64+0x9a/0x360 arch/x86/entry/common.c:294
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+Code: f7 d8 64 89 02 b8 ff ff ff ff c3 66 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 bc ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007fadbfc43c58 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+RAX: ffffffffffffffda RBX: 000000000073bf00 RCX: 0000000000466039
+RDX: 0000000020000040 RSI: 000000000000541c RDI: 0000000000000003
+RBP: 0000000000000003 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007fadbfc446bc
+R13: 00000000004c4f2d R14: 0000000000706358 R15: 00000000ffffffff

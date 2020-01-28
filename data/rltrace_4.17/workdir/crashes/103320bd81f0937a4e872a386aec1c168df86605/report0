@@ -1,0 +1,8 @@
+Code: 0f 01 ca c3 66 0f 1f 44 00 00 48 83 c0 07 72 25 65 48 8b 14 25 00 dd 01 00 48 3b 82 d8 09 00 00 73 13 48 19 d2 48 21 d0 0f 01 cb <48> 8b 50 f9 31 c0 0f 01 ca c3 31 d2 48 c7 c0 f2 ff ff ff 0f 01 
+RIP: __get_user_8+0x21/0x2b arch/x86/lib/getuser.S:95 RSP: ffff8800675dfa48
+---[ end trace 24194ef3a4f0b37a ]---
+Kernel panic - not syncing: Fatal exception
+Dumping ftrace buffer:
+   (ftrace buffer empty)
+Kernel Offset: 0x37400000 from 0xffffffff81000000 (relocation range: 0xffffffff80000000-0xffffffffbfffffff)
+Rebooting in 1 seconds..

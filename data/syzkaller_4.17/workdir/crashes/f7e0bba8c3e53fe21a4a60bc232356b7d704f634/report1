@@ -1,0 +1,93 @@
+SELinux: unrecognized netlink message: protocol=0 nlmsg_type=8660 sclass=netlink_route_socket pig=22183 comm=syz-executor.3
+9pnet: Insufficient options for proto=fd
+==================================================================
+BUG: KASAN: use-after-free in n_tty_receive_buf_fast drivers/tty/n_tty.c:1571 [inline]
+BUG: KASAN: use-after-free in __receive_buf drivers/tty/n_tty.c:1611 [inline]
+BUG: KASAN: use-after-free in n_tty_receive_buf_common+0x1c89/0x20a0 drivers/tty/n_tty.c:1709
+Read of size 1 at addr ffff88006161007f by task syz-executor.11/22178
+
+CPU: 0 PID: 22178 Comm: syz-executor.11 Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_address_description+0x65/0x270 mm/kasan/report.c:256
+ kasan_report_error mm/kasan/report.c:354 [inline]
+ kasan_report+0x253/0x380 mm/kasan/report.c:412
+ n_tty_receive_buf_fast drivers/tty/n_tty.c:1571 [inline]
+ __receive_buf drivers/tty/n_tty.c:1611 [inline]
+ n_tty_receive_buf_common+0x1c89/0x20a0 drivers/tty/n_tty.c:1709
+ tty_ldisc_receive_buf+0xa0/0x160 drivers/tty/tty_buffer.c:456
+ paste_selection+0x201/0x310 drivers/tty/vt/selection.c:348
+ tioclinux+0x10e/0x3b0 drivers/tty/vt/vt.c:2695
+ vt_ioctl+0x1508/0x24a0 drivers/tty/vt/vt_ioctl.c:362
+ tty_ioctl+0x26f/0x1330 drivers/tty/tty_io.c:2646
+ vfs_ioctl fs/ioctl.c:46 [inline]
+ do_vfs_ioctl+0x1a0/0xf50 fs/ioctl.c:686
+ ksys_ioctl+0x84/0x90 fs/ioctl.c:701
+ __do_sys_ioctl fs/ioctl.c:708 [inline]
+ __se_sys_ioctl fs/ioctl.c:706 [inline]
+ __x64_sys_ioctl+0x6f/0xb0 fs/ioctl.c:706
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007f04712b2c58 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+RAX: ffffffffffffffda RBX: 000000000073bf00 RCX: 0000000000466039
+RDX: 0000000020000000 RSI: 000000000000541c RDI: 0000000000000003
+RBP: 0000000000000003 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007f04712b36bc
+R13: 00000000004c4f2d R14: 0000000000706358 R15: 00000000ffffffff
+
+Allocated by task 22102:
+ set_track mm/kasan/kasan.c:460 [inline]
+ kasan_kmalloc+0xa0/0xd0 mm/kasan/kasan.c:553
+ slab_post_alloc_hook mm/slab.h:444 [inline]
+ slab_alloc_node mm/slub.c:2741 [inline]
+ slab_alloc mm/slub.c:2749 [inline]
+ kmem_cache_alloc+0xbf/0x190 mm/slub.c:2754
+ __sigqueue_alloc+0x14b/0x320 kernel/signal.c:388
+ __send_signal+0x1c2/0xac0 kernel/signal.c:1047
+ specific_send_sig_info kernel/signal.c:1160 [inline]
+ force_sig_info+0x23b/0x330 kernel/signal.c:1212
+ force_sig_info_fault.constprop.26+0x1e4/0x2b0 arch/x86/mm/fault.c:224
+ __bad_area_nosemaphore+0x197/0x3a0 arch/x86/mm/fault.c:897
+ __do_page_fault+0x6dd/0xb20 arch/x86/mm/fault.c:1369
+ async_page_fault+0x1e/0x30 arch/x86/entry/entry_64.S:1163
+
+Freed by task 22102:
+ set_track mm/kasan/kasan.c:460 [inline]
+ __kasan_slab_free+0x130/0x180 mm/kasan/kasan.c:521
+ slab_free_hook mm/slub.c:1388 [inline]
+ slab_free_freelist_hook mm/slub.c:1415 [inline]
+ slab_free mm/slub.c:2988 [inline]
+ kmem_cache_free+0x6e/0x190 mm/slub.c:3004
+ __sigqueue_free kernel/signal.c:407 [inline]
+ collect_signal kernel/signal.c:547 [inline]
+ __dequeue_signal+0x2f8/0x580 kernel/signal.c:569
+ dequeue_signal+0x88/0x4a0 kernel/signal.c:587
+ get_signal+0x24b/0x1140 kernel/signal.c:2362
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+ prepare_exit_to_usermode+0x120/0x150 arch/x86/entry/common.c:196
+ swapgs_restore_regs_and_return_to_usermode+0x0/0x87
+
+The buggy address belongs to the object at ffff880061610000
+ which belongs to the cache sigqueue of size 160
+The buggy address is located 127 bytes inside of
+ 160-byte region [ffff880061610000, ffff8800616100a0)
+The buggy address belongs to the page:
+page:ffffea0001858400 count:1 mapcount:0 mapping:0000000000000000 index:0x0
+flags: 0x100000000000100(slab)
+raw: 0100000000000100 0000000000000000 0000000000000000 0000000100120012
+raw: dead000000000100 dead000000000200 ffff88006cfd2140 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff88006160ff00: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+ ffff88006160ff80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+>ffff880061610000: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                                                                ^
+ ffff880061610080: fb fb fb fb fc fc fc fc fc fc fc fc fb fb fb fb
+ ffff880061610100: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+==================================================================
+hpet1: lost 6 rtc interrupts

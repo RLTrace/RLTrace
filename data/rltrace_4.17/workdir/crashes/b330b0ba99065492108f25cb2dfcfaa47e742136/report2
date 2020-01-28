@@ -1,0 +1,68 @@
+INFO: rcu_sched self-detected stall on CPU
+	1-...!: (20999 ticks this GP) idle=1e2/1/4611686018427387906 softirq=122756/122756 fqs=4 
+	 (t=21000 jiffies g=55507 c=55506 q=337)
+rcu_sched kthread starved for 20984 jiffies! g55507 c55506 f0x0 RCU_GP_WAIT_FQS(3) ->state=0x0 ->cpu=1
+RCU grace-period kthread stack dump:
+rcu_sched       R  running task    29816     9      2 0x80000000
+Call Trace:
+ schedule+0x70/0x190 kernel/sched/core.c:3549
+ schedule_timeout+0x333/0x9b0 kernel/time/timer.c:1801
+ rcu_gp_kthread+0xe2e/0x2c80 kernel/rcu/tree.c:2231
+ kthread+0x2f4/0x3b0 kernel/kthread.c:238
+ ret_from_fork+0x35/0x40 arch/x86/entry/entry_64.S:412
+NMI backtrace for cpu 1
+CPU: 1 PID: 1915 Comm: syz-executor.1 Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ <IRQ>
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ nmi_cpu_backtrace+0x153/0x170 lib/nmi_backtrace.c:103
+ nmi_trigger_cpumask_backtrace+0xf9/0x150 lib/nmi_backtrace.c:62
+ trigger_single_cpu_backtrace include/linux/nmi.h:156 [inline]
+ rcu_dump_cpu_stacks+0x17d/0x1cb kernel/rcu/tree.c:1376
+ print_cpu_stall kernel/rcu/tree.c:1525 [inline]
+ check_cpu_stall kernel/rcu/tree.c:1593 [inline]
+ __rcu_pending kernel/rcu/tree.c:3356 [inline]
+ rcu_pending kernel/rcu/tree.c:3401 [inline]
+ rcu_check_callbacks+0xd6f/0x1ba0 kernel/rcu/tree.c:2763
+ update_process_times+0x28/0x60 kernel/time/timer.c:1636
+ tick_sched_handle+0xe6/0x150 kernel/time/tick-sched.c:164
+ tick_sched_timer+0x40/0x110 kernel/time/tick-sched.c:1274
+ __run_hrtimer kernel/time/hrtimer.c:1398 [inline]
+ __hrtimer_run_queues+0x31a/0x780 kernel/time/hrtimer.c:1460
+ hrtimer_interrupt+0x2af/0x6f0 kernel/time/hrtimer.c:1518
+ local_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1025 [inline]
+ smp_apic_timer_interrupt+0xb9/0x2e0 arch/x86/kernel/apic/apic.c:1050
+ apic_timer_interrupt+0xf/0x20 arch/x86/entry/entry_64.S:863
+ </IRQ>
+RIP: 0010:bytes_is_nonzero mm/kasan/kasan.c:167 [inline]
+RIP: 0010:memory_is_nonzero mm/kasan/kasan.c:184 [inline]
+RIP: 0010:memory_is_poisoned_n mm/kasan/kasan.c:210 [inline]
+RIP: 0010:memory_is_poisoned mm/kasan/kasan.c:241 [inline]
+RIP: 0010:check_memory_region_inline mm/kasan/kasan.c:257 [inline]
+RIP: 0010:check_memory_region+0x60/0x190 mm/kasan/kasan.c:267
+RSP: 0018:ffff88005072fc88 EFLAGS: 00000246 ORIG_RAX: ffffffffffffff13
+RAX: ffffed0003b39c6b RBX: ffff88001d9ce35b RCX: ffffffffac1d648e
+RDX: 0000000000000001 RSI: 0000000000000004 RDI: ffff88001d9ce358
+RBP: ffffed0003b39c6c R08: 1ffff10003b39c6b R09: ffffed0003b39c6b
+R10: 0000000000000001 R11: ffffed0003b39c6b R12: ffff88001d9ce300
+R13: ffff8800609d1aa0 R14: ffff8800609d1a00 R15: ffff88001d9ce358
+ atomic_cmpxchg include/asm-generic/atomic-instrumented.h:57 [inline]
+ queued_spin_lock include/asm-generic/qspinlock.h:87 [inline]
+ do_raw_spin_lock include/linux/spinlock.h:161 [inline]
+ __raw_spin_lock include/linux/spinlock_api_smp.h:143 [inline]
+ _raw_spin_lock+0xe/0x30 kernel/locking/spinlock.c:144
+ d_walk+0x13c/0x5a0 fs/dcache.c:1274
+ shrink_dcache_parent+0xa6/0xf0 fs/dcache.c:1486
+ vfs_rmdir+0x1cc/0x440 fs/namei.c:3850
+ do_rmdir+0x2dc/0x380 fs/namei.c:3911
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x465c87
+RSP: 002b:00007ffea037a5d8 EFLAGS: 00000207 ORIG_RAX: 0000000000000054
+RAX: ffffffffffffffda RBX: 0000000000000065 RCX: 0000000000465c87
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 00007ffea037b730
+RBP: 0000000000000000 R08: 0000000000bdac9b R09: 000000000000000b
+R10: 00000000fffffffb R11: 0000000000000207 R12: 00007ffea037b730
+R13: 0000000000bdabe0 R14: 000000000000000c R15: 00000000ffffffff

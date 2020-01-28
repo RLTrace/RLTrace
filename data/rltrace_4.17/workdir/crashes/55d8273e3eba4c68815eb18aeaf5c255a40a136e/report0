@@ -1,0 +1,45 @@
+sysctl link missing during unregister: 
+kasan: CONFIG_KASAN_INLINE enabled
+kasan: GPF could be caused by NULL-ptr deref or user memory access
+general protection fault: 0000 [#1] SMP KASAN PTI
+Dumping ftrace buffer:
+   (ftrace buffer empty)
+Modules linked in:
+CPU: 1 PID: 2055 Comm: kworker/u4:14 Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Workqueue: netns cleanup_net
+RIP: 0010:sysctl_print_dir.isra.12+0x42/0xb0 fs/proc/proc_sysctl.c:85
+RSP: 0018:ffff880034a37748 EFLAGS: 00010246
+RAX: dffffc0000000000 RBX: 0000000000000000 RCX: ffffffffb38a7207
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff8800699e28c0
+RBP: 0000000000000000 R08: fffffbfff6d737c4 R09: fffffbfff6d737c4
+R10: 0000000000000001 R11: fffffbfff6d737c4 R12: dffffc0000000000
+R13: ffffffffb5f4ca88 R14: ffff88006c2f7700 R15: 0000000000000000
+FS:  0000000000000000(0000) GS:ffff88006d300000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 000000002000e13b CR3: 000000002380e005 CR4: 00000000003606e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000600
+Call Trace:
+ put_links+0x303/0x400 fs/proc/proc_sysctl.c:1608
+ drop_sysctl_table+0xcf/0x530 fs/proc/proc_sysctl.c:1621
+ unregister_sysctl_table+0xa7/0x180 fs/proc/proc_sysctl.c:1662
+ __devinet_sysctl_unregister.isra.23+0x60/0xa0 net/ipv4/devinet.c:2332
+ devinet_sysctl_unregister+0x88/0xe0 net/ipv4/devinet.c:2360
+ inetdev_destroy net/ipv4/devinet.c:310 [inline]
+ inetdev_event+0x548/0x1080 net/ipv4/devinet.c:1524
+ notifier_call_chain+0xdc/0x170 kernel/notifier.c:93
+ call_netdevice_notifiers net/core/dev.c:1752 [inline]
+ rollback_registered_many+0x68d/0xb20 net/core/dev.c:7436
+ unregister_netdevice_many.part.120+0x1a/0x220 net/core/dev.c:8539
+ unregister_netdevice_many+0x35/0x50 net/core/dev.c:8538
+ sit_exit_batch_net+0x2e2/0x3e0 net/ipv6/sit.c:1884
+ ops_exit_list.isra.10+0xfd/0x150 net/core/net_namespace.c:155
+ cleanup_net+0x347/0x680 net/core/net_namespace.c:523
+ process_one_work+0x88c/0x12a0 kernel/workqueue.c:2145
+ worker_thread+0xd3/0xf80 kernel/workqueue.c:2279
+ kthread+0x2f4/0x3b0 kernel/kthread.c:238
+ ret_from_fork+0x35/0x40 arch/x86/entry/entry_64.S:412
+Code: 48 89 da 48 b8 00 00 00 00 00 fc ff df 48 c1 ea 03 80 3c 02 00 75 6a 48 8b 1b 48 b8 00 00 00 00 00 fc ff df 48 89 da 48 c1 ea 03 <80> 3c 02 00 75 46 48 8b 33 48 c7 c7 60 d2 8b b5 5b 5d e9 c0 b6 
+RIP: sysctl_print_dir.isra.12+0x42/0xb0 fs/proc/proc_sysctl.c:85 RSP: ffff880034a37748
+---[ end trace f9b7747522a65c37 ]---

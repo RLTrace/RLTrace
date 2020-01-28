@@ -1,0 +1,147 @@
+EXT4-fs warning (device sda): ext4_resize_begin:45: There are errors in the filesystem, so online resizing is not allowed
+9pnet_virtio: no channels available for device (null)
+EXT4-fs warning (device sda): ext4_resize_begin:45: There are errors in the filesystem, so online resizing is not allowed
+INFO: rcu_sched self-detected stall on CPU
+INFO: rcu_sched detected stalls on CPUs/tasks:
+	0-....: (20982 ticks this GP) idle=9ce/1/4611686018427387906 softirq=256204/256204 fqs=5185 
+	 (t=21002 jiffies g=124855 c=124854 q=2600)
+	0-....: (20982 ticks this GP) idle=9ce/1/4611686018427387906 softirq=256204/256204 fqs=5185 
+	
+NMI backtrace for cpu 0
+(detected by 1, t=21002 jiffies, g=124855, c=124854, q=2600)
+CPU: 0 PID: 19493 Comm: syz-executor.3 Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ <IRQ>
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ nmi_cpu_backtrace+0x153/0x170 lib/nmi_backtrace.c:103
+ nmi_trigger_cpumask_backtrace+0xf9/0x150 lib/nmi_backtrace.c:62
+ trigger_single_cpu_backtrace include/linux/nmi.h:156 [inline]
+ rcu_dump_cpu_stacks+0x17d/0x1cb kernel/rcu/tree.c:1376
+ print_cpu_stall kernel/rcu/tree.c:1525 [inline]
+ check_cpu_stall kernel/rcu/tree.c:1593 [inline]
+ __rcu_pending kernel/rcu/tree.c:3356 [inline]
+ rcu_pending kernel/rcu/tree.c:3401 [inline]
+ rcu_check_callbacks+0xd6f/0x1ba0 kernel/rcu/tree.c:2763
+ update_process_times+0x28/0x60 kernel/time/timer.c:1636
+ tick_sched_handle+0xe6/0x150 kernel/time/tick-sched.c:164
+ tick_sched_timer+0x40/0x110 kernel/time/tick-sched.c:1274
+ __run_hrtimer kernel/time/hrtimer.c:1398 [inline]
+ __hrtimer_run_queues+0x31a/0x780 kernel/time/hrtimer.c:1460
+ hrtimer_interrupt+0x2af/0x6f0 kernel/time/hrtimer.c:1518
+ local_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1025 [inline]
+ smp_apic_timer_interrupt+0xb9/0x2e0 arch/x86/kernel/apic/apic.c:1050
+ apic_timer_interrupt+0xf/0x20 arch/x86/entry/entry_64.S:863
+ </IRQ>
+RIP: 0010:echo_buf drivers/tty/n_tty.c:144 [inline]
+RIP: 0010:__process_echoes+0x5d8/0x760 drivers/tty/n_tty.c:732
+RSP: 0018:ffff8800192f7610 EFLAGS: 00000246 ORIG_RAX: ffffffffffffff13
+RAX: 0000000000040000 RBX: ffffc9002c68e000 RCX: ffffffffa97ee998
+RDX: 0000000000040000 RSI: ffffc90006844000 RDI: ffffc9002c68fdb6
+RBP: 00000000ab8f4b57 R08: 0000000000000000 R09: fffffbfff58737c4
+R10: 0000000000000001 R11: fffffbfff58737c4 R12: dffffc0000000000
+R13: 00000000ab8f4b57 R14: 0000000000000b57 R15: 00000000000008a6
+ commit_echoes+0x12f/0x1a0 drivers/tty/n_tty.c:764
+ n_tty_receive_char_special+0x1e58/0x2890 drivers/tty/n_tty.c:1315
+ n_tty_receive_buf_fast drivers/tty/n_tty.c:1577 [inline]
+ __receive_buf drivers/tty/n_tty.c:1611 [inline]
+ n_tty_receive_buf_common+0x1128/0x20a0 drivers/tty/n_tty.c:1709
+ tty_ldisc_receive_buf+0xa0/0x160 drivers/tty/tty_buffer.c:456
+ paste_selection+0x201/0x310 drivers/tty/vt/selection.c:348
+ tioclinux+0x10e/0x3b0 drivers/tty/vt/vt.c:2695
+ vt_ioctl+0x1508/0x24a0 drivers/tty/vt/vt_ioctl.c:362
+ tty_ioctl+0x26f/0x1330 drivers/tty/tty_io.c:2646
+ vfs_ioctl fs/ioctl.c:46 [inline]
+ do_vfs_ioctl+0x1a0/0xf50 fs/ioctl.c:686
+ ksys_ioctl+0x84/0x90 fs/ioctl.c:701
+ __do_sys_ioctl fs/ioctl.c:708 [inline]
+ __se_sys_ioctl fs/ioctl.c:706 [inline]
+ __x64_sys_ioctl+0x6f/0xb0 fs/ioctl.c:706
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007ff26b65fc58 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+RAX: ffffffffffffffda RBX: 000000000073bf00 RCX: 0000000000466039
+RDX: 0000000020000000 RSI: 000000000000541c RDI: 0000000000000003
+RBP: 0000000000000003 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007ff26b6606bc
+R13: 00000000004c4f2d R14: 0000000000706358 R15: 00000000ffffffff
+Sending NMI from CPU 1 to CPUs 0:
+NMI backtrace for cpu 0
+CPU: 0 PID: 19493 Comm: syz-executor.3 Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+RIP: 0010:kasan_mem_to_shadow include/linux/kasan.h:29 [inline]
+RIP: 0010:memory_is_poisoned_n mm/kasan/kasan.c:210 [inline]
+RIP: 0010:memory_is_poisoned mm/kasan/kasan.c:241 [inline]
+RIP: 0010:check_memory_region_inline mm/kasan/kasan.c:257 [inline]
+RIP: 0010:check_memory_region+0x41/0x190 mm/kasan/kasan.c:267
+RSP: 0018:ffff880069007cb0 EFLAGS: 00000082
+RAX: ffff7fffffffffff RBX: ffffffffab6c6d43 RCX: ffffffffa8bf1548
+RDX: 0000000000000000 RSI: 0000000000000004 RDI: ffffffffab6c6d40
+RBP: 0000000000000001 R08: 1ffffffff56d8da8 R09: dffffc0000000000
+R10: 0000000000000001 R11: fffffbfff56d8da8 R12: 0000000000000003
+R13: fffffbfff56d8da8 R14: 0000000000000001 R15: ffffffffab6c6d40
+FS:  00007ff26b660700(0000) GS:ffff880069000000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000000 CR3: 00000000118b8002 CR4: 00000000003606f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000600
+Call Trace:
+ <IRQ>
+ atomic_read include/asm-generic/atomic-instrumented.h:21 [inline]
+ virt_spin_lock arch/x86/include/asm/qspinlock.h:68 [inline]
+ queued_spin_lock_slowpath+0x48/0x670 kernel/locking/qspinlock.c:305
+ queued_spin_lock include/asm-generic/qspinlock.h:90 [inline]
+ do_raw_spin_lock_flags include/linux/spinlock.h:172 [inline]
+ __raw_spin_lock_irqsave include/linux/spinlock_api_smp.h:119 [inline]
+ _raw_spin_lock_irqsave+0x3f/0x50 kernel/locking/spinlock.c:152
+ print_cpu_stall kernel/rcu/tree.c:1527 [inline]
+ check_cpu_stall kernel/rcu/tree.c:1593 [inline]
+ __rcu_pending kernel/rcu/tree.c:3356 [inline]
+ rcu_pending kernel/rcu/tree.c:3401 [inline]
+ rcu_check_callbacks+0xd77/0x1ba0 kernel/rcu/tree.c:2763
+ update_process_times+0x28/0x60 kernel/time/timer.c:1636
+ tick_sched_handle+0xe6/0x150 kernel/time/tick-sched.c:164
+ tick_sched_timer+0x40/0x110 kernel/time/tick-sched.c:1274
+ __run_hrtimer kernel/time/hrtimer.c:1398 [inline]
+ __hrtimer_run_queues+0x31a/0x780 kernel/time/hrtimer.c:1460
+ hrtimer_interrupt+0x2af/0x6f0 kernel/time/hrtimer.c:1518
+ local_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1025 [inline]
+ smp_apic_timer_interrupt+0xb9/0x2e0 arch/x86/kernel/apic/apic.c:1050
+ apic_timer_interrupt+0xf/0x20 arch/x86/entry/entry_64.S:863
+ </IRQ>
+RIP: 0010:echo_buf drivers/tty/n_tty.c:144 [inline]
+RIP: 0010:__process_echoes+0x5d8/0x760 drivers/tty/n_tty.c:732
+RSP: 0018:ffff8800192f7610 EFLAGS: 00000246 ORIG_RAX: ffffffffffffff13
+RAX: 0000000000040000 RBX: ffffc9002c68e000 RCX: ffffffffa97ee998
+RDX: 0000000000040000 RSI: ffffc90006844000 RDI: ffffc9002c68fdb6
+RBP: 00000000ab8f4b57 R08: 0000000000000000 R09: fffffbfff58737c4
+R10: 0000000000000001 R11: fffffbfff58737c4 R12: dffffc0000000000
+R13: 00000000ab8f4b57 R14: 0000000000000b57 R15: 00000000000008a6
+ commit_echoes+0x12f/0x1a0 drivers/tty/n_tty.c:764
+ n_tty_receive_char_special+0x1e58/0x2890 drivers/tty/n_tty.c:1315
+ n_tty_receive_buf_fast drivers/tty/n_tty.c:1577 [inline]
+ __receive_buf drivers/tty/n_tty.c:1611 [inline]
+ n_tty_receive_buf_common+0x1128/0x20a0 drivers/tty/n_tty.c:1709
+ tty_ldisc_receive_buf+0xa0/0x160 drivers/tty/tty_buffer.c:456
+ paste_selection+0x201/0x310 drivers/tty/vt/selection.c:348
+ tioclinux+0x10e/0x3b0 drivers/tty/vt/vt.c:2695
+ vt_ioctl+0x1508/0x24a0 drivers/tty/vt/vt_ioctl.c:362
+ tty_ioctl+0x26f/0x1330 drivers/tty/tty_io.c:2646
+ vfs_ioctl fs/ioctl.c:46 [inline]
+ do_vfs_ioctl+0x1a0/0xf50 fs/ioctl.c:686
+ ksys_ioctl+0x84/0x90 fs/ioctl.c:701
+ __do_sys_ioctl fs/ioctl.c:708 [inline]
+ __se_sys_ioctl fs/ioctl.c:706 [inline]
+ __x64_sys_ioctl+0x6f/0xb0 fs/ioctl.c:706
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007ff26b65fc58 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+RAX: ffffffffffffffda RBX: 000000000073bf00 RCX: 0000000000466039
+RDX: 0000000020000000 RSI: 000000000000541c RDI: 0000000000000003
+RBP: 0000000000000003 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007ff26b6606bc
+R13: 00000000004c4f2d R14: 0000000000706358 R15: 00000000ffffffff
+Code: 48 39 c7 0f 86 0e 01 00 00 55 53 48 8d 5c 37 ff 49 b9 00 00 00 00 00 fc ff df 49 89 f8 49 89 db 49 c1 e8 03 49 c1 eb 03 4d 01 cb <4d> 01 c1 49 8d 6b 01 4c 89 c8 49 89 ea 4d 29 ca 49 83 fa 10 7f 

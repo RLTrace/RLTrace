@@ -1,0 +1,38 @@
+kasan: CONFIG_KASAN_INLINE enabled
+kasan: GPF could be caused by NULL-ptr deref or user memory access
+general protection fault: 0000 [#1] SMP KASAN PTI
+Dumping ftrace buffer:
+   (ftrace buffer empty)
+Modules linked in:
+CPU: 0 PID: 17555 Comm: systemd-udevd Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+RIP: 0010:__get_fault_gfp_mask mm/memory.c:2348 [inline]
+RIP: 0010:__handle_mm_fault+0xfb/0x1ab0 mm/memory.c:4015
+RSP: 0000:ffff880069a3fd30 EFLAGS: 00010203
+RAX: dffffc0000000000 RBX: 1ffff1000d347fa9 RCX: ffffffff8b2a071a
+RDX: 0000000000000010 RSI: 00007ff2ab1c23d0 RDI: 0000000000000084
+RBP: ffff8800687ea200 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000000 R12: 00007ff2ab1c23d0
+R13: 0000000000000000 R14: ffff88006b2e9500 R15: ffff8800687ea200
+FS:  00007ff2abc548c0(0000) GS:ffff88006d200000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007ff2ab1c23d0 CR3: 000000003200c006 CR4: 00000000003606f0
+DR0: fffffffffffffffe DR1: fffffffffffffffe DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000010602
+Call Trace:
+ handle_mm_fault+0xfc/0x350 mm/memory.c:4124
+ __do_page_fault+0x4f8/0xb20 arch/x86/mm/fault.c:1399
+ async_page_fault+0x1e/0x30 arch/x86/entry/entry_64.S:1163
+RIP: 0033:0x7ff2ab1c23d0
+RSP: 002b:00007fffe871ef18 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: 0000556cfec0d030 RCX: 0000000000000000
+RDX: 000000000000a1ff RSI: 00007fffe871fad0 RDI: 0000556cfec0d030
+RBP: 00007fffe871fad0 R08: 0000556cfe8db670 R09: 000000000000000e
+R10: 0000000000000075 R11: 0000000000000003 R12: 0000000000000000
+R13: 000000000000a1ff R14: 0000000000000000 R15: 00007fffe871fadf
+Code: ea 03 80 3c 02 00 0f 85 72 17 00 00 4d 8b ae f0 00 00 00 48 b8 00 00 00 00 00 fc ff df 49 8d bd 84 00 00 00 48 89 fa 48 c1 ea 03 <0f> b6 14 02 48 89 f8 83 e0 07 83 c0 03 38 d0 7c 08 84 d2 0f 85 
+RIP: __get_fault_gfp_mask mm/memory.c:2348 [inline] RSP: ffff880069a3fd30
+RIP: __handle_mm_fault+0xfb/0x1ab0 mm/memory.c:4015 RSP: ffff880069a3fd30
+hpet_rtc_timer_reinit: 2 callbacks suppressed
+hpet1: lost 1 rtc interrupts
+---[ end trace d7006193cf763634 ]---

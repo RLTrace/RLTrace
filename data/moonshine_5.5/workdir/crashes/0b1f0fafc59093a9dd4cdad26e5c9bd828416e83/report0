@@ -1,0 +1,57 @@
+==================================================================
+BUG: KASAN: stack-out-of-bounds in set_bit include/asm-generic/bitops/instrumented-atomic.h:28 [inline]
+BUG: KASAN: stack-out-of-bounds in __node_set include/linux/nodemask.h:130 [inline]
+BUG: KASAN: stack-out-of-bounds in mpol_to_str+0x2b9/0x380 mm/mempolicy.c:2958
+Write of size 8 at addr ffff88806c93fb60 by task systemd/1
+
+CPU: 0 PID: 1 Comm: systemd Not tainted 5.5.0-rc6 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x94/0xce lib/dump_stack.c:118
+ print_address_description.constprop.5+0x16/0x310 mm/kasan/report.c:374
+ __kasan_report+0x149/0x18d mm/kasan/report.c:506
+ kasan_report+0xe/0x20 mm/kasan/common.c:639
+ check_memory_region_inline mm/kasan/generic.c:185 [inline]
+ check_memory_region+0x149/0x1a0 mm/kasan/generic.c:192
+ set_bit include/asm-generic/bitops/instrumented-atomic.h:28 [inline]
+ __node_set include/linux/nodemask.h:130 [inline]
+ mpol_to_str+0x2b9/0x380 mm/mempolicy.c:2958
+ shmem_show_mpol mm/shmem.c:1406 [inline]
+ shmem_show_options+0x367/0x520 mm/shmem.c:3614
+ show_mountinfo+0x5b6/0x870 fs/proc_namespace.c:187
+ seq_read+0x9f8/0x1020 fs/seq_file.c:268
+ __vfs_read+0x7c/0x100 fs/read_write.c:425
+ vfs_read+0x103/0x310 fs/read_write.c:461
+ ksys_read+0x175/0x200 fs/read_write.c:587
+ do_syscall_64+0x9a/0x360 arch/x86/entry/common.c:294
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x7f01b5854910
+Code: b6 fe ff ff 48 8d 3d 0f be 08 00 48 83 ec 08 e8 06 db 01 00 66 0f 1f 44 00 00 83 3d f9 2d 2c 00 00 75 10 b8 00 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 31 c3 48 83 ec 08 e8 de 9b 01 00 48 89 04 24
+RSP: 002b:00007ffd9fa22898 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
+RAX: ffffffffffffffda RBX: 0000560bd92076b0 RCX: 00007f01b5854910
+RDX: 0000000000000400 RSI: 0000560bd92070f0 RDI: 0000000000000013
+RBP: 0000000000000d68 R08: 00007f01b728a500 R09: 00000000000000e0
+R10: 0000560bd92074a6 R11: 0000000000000246 R12: 00007f01b5b0f440
+R13: 00007f01b5b0e900 R14: 000000000000004a R15: 0000000000000000
+
+The buggy address belongs to the page:
+page:ffffea0001b24fc0 refcount:0 mapcount:0 mapping:0000000000000000 index:0x0
+raw: 0100000000000000 ffffea0001b24fc8 ffffea0001b24fc8 0000000000000000
+raw: 0000000000000000 0000000000000000 00000000ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
+
+addr ffff88806c93fb60 is located in stack of task systemd/1 at offset 40 in frame:
+ mpol_to_str+0x0/0x380 mm/mempolicy.c:2920
+
+this frame has 1 object:
+ [32, 40) 'nodes'
+
+Memory state around the buggy address:
+ ffff88806c93fa00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ ffff88806c93fa80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>ffff88806c93fb00: 00 00 00 00 00 00 00 f1 f1 f1 f1 00 f2 f2 f2 00
+                                                       ^
+ ffff88806c93fb80: 00 00 00 00 00 00 00 00 00 00 f1 f1 f1 f1 00 00
+ ffff88806c93fc00: 00 00 00 00 00 00 f3 f3 f3 f3 00 00 00 00 00 00
+==================================================================

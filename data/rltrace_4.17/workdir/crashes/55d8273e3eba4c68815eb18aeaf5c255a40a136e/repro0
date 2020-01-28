@@ -1,0 +1,580 @@
+2020/01/27 10:53:35 reproducing crash 'general protection fault in sysctl_print_dir': 587 programs, 4 VMs, timeouts [15s 1m0s 6m0s]
+2020/01/27 10:53:35 reproducing crash 'general protection fault in sysctl_print_dir': extracting reproducer from 587 programs
+2020/01/27 10:53:35 reproducing crash 'general protection fault in sysctl_print_dir': single: executing 16 programs separately with timeout 15s
+2020/01/27 10:53:46 reproducing crash 'general protection fault in sysctl_print_dir': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): clock_adjtime-seccomp$SECCOMP_SET_MODE_FILTER-socket$netlink-socketpair$unix-ioctl$sock_SIOCGIFVLAN_GET_VLAN_INGRESS_PRIORITY_CMD-socket$netlink-setsockopt$netlink_NETLINK_CAP_ACK-sendmsg$nl_generic-socket$netlink-sendmsg$nl_generic-sendmsg$NFNL_MSG_CTHELPER_NEW-sendmsg$IPSET_CMD_HEADER
+2020/01/27 10:53:46 reproducing crash 'general protection fault in sysctl_print_dir': detailed listing:
+executing program 0:
+clock_adjtime(0x0, 0x0)
+seccomp$SECCOMP_SET_MODE_FILTER(0x1, 0x4, &(0x7f0000000040)={0x2000000000000025, &(0x7f0000000080)=[{0x8, 0x5, 0x4, 0x5}]})
+r0 = socket$netlink(0x10, 0x3, 0x0)
+socketpair$unix(0x1, 0x2, 0x0, &(0x7f0000000180)={<r1=>0xffffffffffffffff})
+ioctl$sock_SIOCGIFVLAN_GET_VLAN_INGRESS_PRIORITY_CMD(r1, 0x8982, &(0x7f00000001c0))
+r2 = socket$netlink(0x10, 0x3, 0x12)
+setsockopt$netlink_NETLINK_CAP_ACK(r2, 0x10e, 0xa, &(0x7f0000000340)=0x4, 0x4)
+sendmsg$nl_generic(r0, &(0x7f0000000140)={0x0, 0x0, &(0x7f00000000c0)={&(0x7f0000000380)={0x14, 0x32, 0xc1a89a70663767c3}, 0x14}}, 0x0)
+r3 = socket$netlink(0x10, 0x3, 0x0)
+sendmsg$nl_generic(r3, &(0x7f0000000140)={0x0, 0x0, &(0x7f00000000c0)={&(0x7f0000000380)={0x14, 0x32, 0xc1a89a70663767c3}, 0x14}}, 0x0)
+sendmsg$NFNL_MSG_CTHELPER_NEW(r3, &(0x7f0000000300)={&(0x7f0000000200)={0x10, 0x0, 0x0, 0x800}, 0xc, &(0x7f00000002c0)={&(0x7f0000000240)={0x6c, 0x0, 0x9, 0x0, 0x70bd26, 0x25dfdbfe, {0x2, 0x0, 0x5}, [@NFCTH_NAME={0x9, 0x1, 'syz0\x00'}, @NFCTH_NAME={0x9, 0x1, 'syz0\x00'}, @NFCTH_POLICY={0xc, 0x4, {0x8, 0x5, 0x2}}, @NFCTH_STATUS={0x8, 0x6, 0x1}, @NFCTH_POLICY={0xc, 0x4, {0x8, 0x5, 0x9}}, @NFCTH_PRIV_DATA_LEN={0x8, 0x5, 0xa}, @NFCTH_NAME={0x9, 0x1, 'syz0\x00'}, @NFCTH_POLICY={0xc, 0x4, {0x8, 0x5, 0x7fffffff}}]}, 0x6c}, 0x1, 0x0, 0x0, 0x40}, 0x4810)
+sendmsg$IPSET_CMD_HEADER(r0, &(0x7f0000000140)={&(0x7f0000000000)={0x10, 0x0, 0x0, 0x80000000}, 0xc, &(0x7f0000000100)={&(0x7f00000000c0)={0x1c, 0xc, 0x6, 0x200, 0x70bd29, 0x25dfdbff, {0x5}, [@IPSET_ATTR_PROTOCOL={0x5}]}, 0x1c}, 0x1, 0x0, 0x0, 0x4040081}, 0x40000800)
+2020/01/27 10:54:01 reproducing crash 'general protection fault in sysctl_print_dir': program did not crash
+2020/01/27 10:54:02 reproducing crash 'general protection fault in sysctl_print_dir': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): socket$nl_route-dup-sendmmsg
+2020/01/27 10:54:02 reproducing crash 'general protection fault in sysctl_print_dir': detailed listing:
+executing program 0:
+r0 = socket$nl_route(0x10, 0x3, 0x0)
+r1 = dup(r0)
+sendmmsg(r1, &(0x7f0000004e00)=[{{0x0, 0x0, &(0x7f0000002480)=[{&(0x7f0000000000)="dac11ef5f9abbd8b17341b0e882d3470", 0x10}, {0x0}, {0x0}, {0x0}, {0x0}, {0x0}, {0x0}, {0x0}, {0x0}], 0x9}}, {{0x0, 0x0, 0x0, 0x0, &(0x7f0000000040)=ANY=[@ANYBLOB="1000000000000000010000000000000088cca0ca01d3c39ead4e82e9a828602f559aaf310dd232da07fd2cf0cfeb75525e1362bc88f99d5b8d1db4815ecd89d23fed908fe0a0afc446c9d4ff3d40d1a49bb2d30ba5bad682854000a1435b413683150dd10d05b551bb13938c7ed305fd"], 0x10}}], 0x2, 0x0)
+2020/01/27 10:54:17 reproducing crash 'general protection fault in sysctl_print_dir': program did not crash
+2020/01/27 10:54:17 reproducing crash 'general protection fault in sysctl_print_dir': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): socket$packet-setsockopt$packet_fanout-socket$inet6_icmp_raw-socket$inet6_icmp_raw-dup2-exit-syz_genetlink_get_family_id$tipc2-socket$netlink-sendmsg$nl_generic-sendmsg$TIPC_NL_NET_SET
+2020/01/27 10:54:17 reproducing crash 'general protection fault in sysctl_print_dir': detailed listing:
+executing program 0:
+r0 = socket$packet(0x11, 0x2, 0x300)
+setsockopt$packet_fanout(r0, 0x107, 0x12, &(0x7f0000000100)={0x0, 0x3}, 0x4)
+r1 = socket$inet6_icmp_raw(0xa, 0x3, 0x3a)
+r2 = socket$inet6_icmp_raw(0xa, 0x3, 0x3a)
+dup2(r1, r2)
+exit(0x100000001)
+r3 = syz_genetlink_get_family_id$tipc2(&(0x7f0000000040)='TIPCv2\x00')
+r4 = socket$netlink(0x10, 0x3, 0x0)
+sendmsg$nl_generic(r4, &(0x7f0000000140)={0x0, 0x0, &(0x7f00000000c0)={&(0x7f0000000380)={0x14, 0x32, 0xc1a89a70663767c3}, 0x14}}, 0x0)
+sendmsg$TIPC_NL_NET_SET(r4, &(0x7f00000000c0)={&(0x7f0000000000)={0x10, 0x0, 0x0, 0x88}, 0xc, &(0x7f0000000080)={&(0x7f0000000380)={0x3c, r3, 0x100, 0x70bd2b, 0x25dfdbfd, {}, [@TIPC_NLA_NET={0x28, 0x7, [@TIPC_NLA_NET_ADDR={0x8, 0x2, 0x81}, @TIPC_NLA_NET_NODEID_W1={0xbad441fa82a62975, 0x4, 0x100000000}, @TIPC_NLA_NET_ID={0x8, 0x1, 0x5}, @TIPC_NLA_NET_ADDR={0x8, 0x2, 0x2000007f}]}]}, 0x8}, 0x1, 0x0, 0x0, 0x800}, 0x4800)
+2020/01/27 10:54:32 reproducing crash 'general protection fault in sysctl_print_dir': program did not crash
+2020/01/27 10:54:32 reproducing crash 'general protection fault in sysctl_print_dir': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): creat-ioctl$FS_IOC_FSSETXATTR-syz_open_dev$sndseq-ioctl$sock_inet_SIOCDARP-fsetxattr$trusted_overlay_origin
+2020/01/27 10:54:32 reproducing crash 'general protection fault in sysctl_print_dir': detailed listing:
+executing program 0:
+r0 = creat(&(0x7f0000000000)='./file0\x00', 0x0)
+ioctl$FS_IOC_FSSETXATTR(r0, 0x401c5820, &(0x7f0000000080)={0x8})
+r1 = syz_open_dev$sndseq(&(0x7f0000000040)='/dev/snd/seq\x00', 0x0, 0x800)
+ioctl$sock_inet_SIOCDARP(r0, 0x8953, &(0x7f0000000140)={{0x2, 0x4e24, @dev={0xac, 0x14, 0x14, 0x19}}, {0x1, @dev={[], 0x32}}, 0x49, {0x2, 0x4e20, @broadcast}, 'veth0_to_bridge\x00'})
+fsetxattr$trusted_overlay_origin(r1, &(0x7f00000000c0)='trusted.overlay.origin\x00', &(0x7f0000000100)='y\x00', 0x2, 0x1)
+2020/01/27 10:54:47 reproducing crash 'general protection fault in sysctl_print_dir': program did not crash
+2020/01/27 10:54:47 reproducing crash 'general protection fault in sysctl_print_dir': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): socketpair$unix-sendmmsg$inet-accept-setsockopt$inet6_MRT6_ADD_MFC_PROXY-openat$procfs-creat-fadvise64-perf_event_open$cgroup
+2020/01/27 10:54:47 reproducing crash 'general protection fault in sysctl_print_dir': detailed listing:
+executing program 0:
+socketpair$unix(0x1, 0x1, 0x0, &(0x7f0000000140)={<r0=>0xffffffffffffffff})
+sendmmsg$inet(r0, &(0x7f0000006240)=[{{0x0, 0x0, 0x0}}, {{&(0x7f00000012c0), 0x10, 0x0}}], 0x2, 0x0)
+r1 = accept(r0, &(0x7f0000000040)=@tipc=@id, &(0x7f00000000c0)=0x80)
+setsockopt$inet6_MRT6_ADD_MFC_PROXY(r1, 0x29, 0xd2, &(0x7f0000000100)={{0xa, 0x4e21, 0x1, @remote, 0x80000000}, {0xa, 0x4e20, 0x0, @mcast2, 0x9}, 0x7fff, [0x4, 0x87b7, 0x1, 0xfffff3f5, 0x6, 0x1, 0x7, 0x9]}, 0x5c)
+r2 = openat$procfs(0xffffffffffffff9c, &(0x7f0000000000)='/proc/asound/seq/timer\x00', 0x0, 0x0)
+r3 = creat(&(0x7f00000000c0)='./file0\x00', 0x0)
+fadvise64(r3, 0x0, 0x0, 0x4)
+perf_event_open$cgroup(&(0x7f0000000180)={0x2, 0x70, 0x9, 0x3f, 0x5, 0x7f, 0x0, 0x7, 0x80, 0x2, 0x1, 0x0, 0x1, 0x1, 0x1, 0x0, 0x0, 0x0, 0x0, 0x1, 0x1, 0x1, 0x1, 0x1, 0x0, 0x3, 0x1, 0x0, 0x0, 0x1, 0x0, 0x0, 0x1, 0x0, 0x0, 0x1, 0x0, 0x0, 0x0, 0xc8, 0x7, @perf_config_ext={0x1ff, 0x20}, 0x1100, 0xfff, 0x5, 0x6, 0x5f08, 0x0, 0x127f}, r2, 0xc, r3, 0x2)
+2020/01/27 10:55:02 reproducing crash 'general protection fault in sysctl_print_dir': program did not crash
+2020/01/27 10:55:02 reproducing crash 'general protection fault in sysctl_print_dir': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): openat$procfs-open-fremovexattr-keyctl$clear-creat-fadvise64-ioctl$sock_SIOCGIFVLAN_ADD_VLAN_CMD-getsockopt$ARPT_SO_GET_ENTRIES-read$eventfd
+2020/01/27 10:55:02 reproducing crash 'general protection fault in sysctl_print_dir': detailed listing:
+executing program 0:
+openat$procfs(0xffffffffffffff9c, &(0x7f0000000340)='/proc/asound/seq/timer\x00', 0x0, 0x0)
+r0 = open(&(0x7f0000000180)='./file0\x00', 0x2008c0, 0x8)
+fremovexattr(r0, 0x0)
+keyctl$clear(0x7, 0xfffffffffffffffb)
+r1 = creat(&(0x7f00000000c0)='./file0\x00', 0x0)
+fadvise64(r1, 0x0, 0x0, 0x4)
+ioctl$sock_SIOCGIFVLAN_ADD_VLAN_CMD(r0, 0x8982, &(0x7f0000000000)={0x0, 'veth1\x00', {0x4}, 0x7})
+getsockopt$ARPT_SO_GET_ENTRIES(r1, 0x0, 0x61, &(0x7f00000001c0)=ANY=[@ANYBLOB="66696c7465720000000000000000000000000000000000000000000000000000ab000000d58f44bb0448a5a97ead25d7b221e6768d0f138f390b83f7d5bb21d66e01ee4038f2722aa2570400000000000000af51a5a22f4078ac8bddee5500cc241ced0bb8614e84e18ad6693520563d017dfcf35e3249fed6268872ad6995ee142f4f25e49e8ad71d7e03000000000000008af98e4ee383ecf1147981f5a07916b11c81d6ad3a9ff4eb83d96f39ab0e4a6ab75793b55541bec79edb8400"/208], &(0x7f0000000140)=0xcf)
+read$eventfd(0xffffffffffffffff, 0x0, 0xff32)
+2020/01/27 10:55:17 reproducing crash 'general protection fault in sysctl_print_dir': program did not crash
+2020/01/27 10:55:17 reproducing crash 'general protection fault in sysctl_print_dir': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): socket$nl_generic-socket$nl_generic-syz_genetlink_get_family_id$nl80211-sendmsg$NL80211_CMD_DEL_STATION-sendmsg$NL80211_CMD_START_SCHED_SCAN-creat-creat-pwrite64-ioctl$FIBMAP
+2020/01/27 10:55:17 reproducing crash 'general protection fault in sysctl_print_dir': detailed listing:
+executing program 0:
+r0 = socket$nl_generic(0x10, 0x3, 0x10)
+r1 = socket$nl_generic(0x10, 0x3, 0x10)
+r2 = syz_genetlink_get_family_id$nl80211(&(0x7f0000000080)='nl80211\x00')
+sendmsg$NL80211_CMD_DEL_STATION(r1, &(0x7f0000000140)={0x0, 0x0, &(0x7f0000000100)={&(0x7f0000000000)={0x38, r2, 0x1, 0x0, 0x0, {}, [@NL80211_ATTR_STA_FLAGS2={0xc}, @NL80211_ATTR_STA_SUPPORTED_RATES={0x1f1, 0x13, "9e162aebca4698056b6607a0a061e0c115f5bba7"}]}, 0x38}}, 0x0)
+sendmsg$NL80211_CMD_START_SCHED_SCAN(r0, &(0x7f00000000c0)={&(0x7f0000000040)={0x10, 0x0, 0x0, 0x100}, 0xc, &(0x7f0000000080)={&(0x7f0000001340)={0x22b8, r2, 0x20, 0x70bd27, 0x25dfdbfb, {}, [@NL80211_ATTR_SCAN_SUPP_RATES={0x2264, 0x7d, [@NL80211_BAND_60GHZ={0x1004, 0x2, "1f8af944c47bfdcaf87445e8df6e4258e889b917b185c56c49af790fe5fde3b923f620bf2352401a91f45c12f74dbc53d1bf390333ad05cc55ed61cd19e6cf5fa4b24a9db56db103556219938f0c89b2a19fa3e064fc53634dced8ec9a6e4b3139ee65ea2d3f6b1903088e4c4f3513bdb9b743810782d4c06c85ae237d8e173fab41091a7acde93d568b8e5e45656afde3ebf12bfc834d27c632e4fe08896fbc8f614c3c03f048033962ed1f870395f238d557ee84a30c732e2ad4f8bf04de04d9f58bff21a8c36c9dfb3ec3d47d2a9c5984cafdb0f4154c0802e27738386f552eaecb71b72a2f768e80c8515d661a96ee84623673d5a282cc04211b2f4de8ced36e3d4a3233e0a87a2bc7a0f00e0825eb32225f3394d68e57874a289214f180af556b458ee0dc7ec4b6a910d02a1e3bd84fed423fee1c47435273544903705e12ccd8dd40630900a7323d993c89d1d78d252b58e50839671dc20d5111167596c04072c885cfb016429948af67e8afcb7a0e2bb9b61ccbdfce895482e540966f6ee5d9cd160955aaf7ca8c8240a49bd511f83c9c476b67d30c4bbe932968d5b5fff9f7ed28a38672fa1c82aec9cb3dd2b7cd95e957879a11750f27694e2315d4852e757f74419f1aacbd95843dd58ef8a2a9e08345ce2077d92a2e5b52845a36eab039e659364d688327617c4a3a5e257c56a10bc651f17b6eeb2395377c0bc48cbb2fa1e0c9fcab4bbae9512a7d10ea6bf7502cee52af99c0d805f7a653abf43e15f8db06599fa36b3910fa9041fed7f926b90e4e3d3e05fb40645c516b4c13ea32130916582155d2f8a4014e32247d08f1f05f30e2cff152ab5f407c487bf162876aefd3e3d231dc63abecc0536e5d207a58244e4a3cf9c6bca92dac4ba1d2c29bcd4f0cf6365dd32b9c4ccfa194682ea7e80d7b1cd6ab985897a66910033f875c95f20af86ebd3526df4e9fb31a7754a3da5bea7c06d441d2081c1d15fd76c11db7c229c3a09e19035c779e62e0cf8cc8af7d0148020b9f5ae0131354153a3aacc35b512e0b7702678973c0bc813d21dcdb366aa75e149b68266a06b9f7ee86c993a4fb0e552bdd5c0baa98cc6e449ae4a9b444ec3d2ad51fb3a9560881e9e0f6f771d5b1bf4c94ff9bd974d1ef04790812a8d01ca6a8a54eb1483300962c86c59870387eb3cd86c391c1c26c013b974c6886deb9daee59f413d34f3700f8eb463b2292108a491d194c504f856e672384e79d84aa722ab9268b3e00b1d41db38bbfe7052bc901b06fcc7958cb877a21afde0d3d283e7ab0477fe64f3f00a63407852970841c7dded6f2d4303ae79164b3b57bfa43608c7f4278f0641549dbb8c76b5f2b9b92496e89816f04cde17885ecd66edff4a26f286e8541b835d14eb46596c68657f3f9d62bdc21b8ae29263276490ac6b80218c2c1fab2db9671813719ca04d9f11958301d17ef35438caebb1cb2eb2b951fca3a05c659cdaea1f4720f631df6e306e9e86aa4f07ee4012493c1793c3ff6299977c35aee5ecf07dab5b3ef6cdf1d852acf07cafb839225138327d05ec22af922b8aa58c83dce308df6c7ed4950da6426a943463e515f226bef3b73297541a94b212311f2a4fa79ac7c1b60eef7244ede63c9211c7fff89ce446c990e244431c54114cb1ee4a4de71ac35b8f4665f7e11725449cd1874bd09972466b50b3f766f293e166e1cab2b4919cea3885ecc743def2b2f3844d373695511ebbaaa6794580517b62ebaa5a0a314523ce3641551769ac4ba55e34c9e00f69d7211e25d038b526ed24531bcedb183c86953033576383ea1109a65f60ec6241274b480e0c65a2a3839350533ba4dcb72dedbaecc3439ce977c65bbae7d2dbd228c6466f8efa643c87db745931e3bd1561dca6b4b6d2b0000371babdf0d29b691e959133d322192f572d1b57a80abdc17cccb6d1755d67fc454f195ac12ca719f7c32358e0539455cec9c46d3490262e7ad49db348e3d4bbdfd86c493fff3b58fc4300a9dccf32c1412541c162c0f93dcddd28cd811b889d2d58e8ae6df76be15bc97ad414ed70586289804186ca84fd246f9c596899388758f66f38b124fce006c2733d1f72d637b6930ea18f126f515f8f1e5746845c8d1900ef94220c253f2607a0ca38f02be19ab0a95e3f3d2087bc6e396fedbe16144420280184d52643843639763c1f67bb69275b0afd2c68d9072a04f132934e3aca83e02e6ab3f3aa2e0bed0513b5ca753d9349b8dfd329353e813bc5af1c5d220e936656fba51b21b61e3836e6330edfbb312b21d6044428095c34b2d95623fa9e5a71442283bc78f02f8618de290db461d22a036a084dad4bd72153c77eda4ea4c6a8048f8dcc3dc24ed3f04cd0501a5ab5b55cb6eb4a6a4fba34e90c79bfbf71095e7422ab037633b9ffc85fbca62e29b135cba73d63eac5e0d721167f71a4cc47af826845ce4c3fcbc3b6ee2abb69a6833616d388e6a2eee634b81af5af78597e92f73e635938e231c351739a95994ef75b3d8b3cdf70be7c6da8ab5025607e7c37e52ed8af66f30d2220c6e041f78b25fadac62662107c1a2300ba0b021aaefd648231928d7794a1c07e46b2e4c9adb63e4a289c092778545d322c7d62162a9bc81398ef3d00565ca70bfe54434a4651bf253203e191b6f6518faa6a1d2fd961909c0e38557b73516a31188c09b79dfeadbcf8ff4aea66bb1c496c6b12858abd9d11e645da76639236b04e3bbb622a192fe9f83ca33e1a78f38ac30ce0638c1563a62f5254590fe0fe080b15a916dc8c60f67ed07c7032fa8b7525c7a8eb7d431c06f85e575bade949b784bad5307e80b4e4229e744910cd7f0c9ac2d68b3202cc76060ed1d2f5ff9011775dc6f09dab4ff5c827a127160b0f447cfc27c2f22795b934e71e2b4a395072861bb887ea0ecdcebfa3d5d3d68f669aca0f779afdfa6ebbffb31678d2ff5732739042b8bdad9ee3a4a0e3dcf6a309070293400dda9d5a50464dcb2f2f191e9632485f0cc6d3ea0740b966e97e9fbc94ca0478877a6e6343fa585765d7e06c8daf02158647246c8dc867015c9578529cd466c6d43b7e1d0870eca968f643c0300f26e05018c4667ce50f7b18f7af57d5ccab5dba0580701b8f135e595c42bfd9bdc1dc9b94a73739ba738a6db53493c76e2f0037715dd0938a3b597cafb91359ae238c1acd9746860f460ba332cf4d11366ef97a0726953461fedc3687e4bdbbecfadd3140f76f83515079119d2ad89c9b371d3809fc1f62a0cb9dd4e105d35ef1132a418427f34cf698c1e40c215a76e1f7c074cf998136148de005af9a3654c575691e1e24013234e665f55f17a762382318ac3740a4dd56fde9d61eca047ca1a83c8f0525dad59d15ce89ab8cc1b9e657b8dd78feb908dff02069f6a0b073750c0c03bd7549296a6c78d38ffae12698a12cc483abb6ae1045ee95fe55f6a95fb920648a79b845a47a0411cd5385ecbd613d1aebd0d80f5c121fd175aebb463a1ff5a41bb4a5a22f60b5154fadd25a43dae1b60d254335620feefdcf1f75bc5367e69e261f0ad982c525c027cc027fc4b0a906c86aa92ccbe9bc7f35797f8b4ce1c1238327008d61052ce6af8b7f80c8cd5e5946a4ad9ed5b5b978f28b32e3a2344de9c47ae28e331d3bd0df6c8af926aa0e9794a02eebab4df47fcd55e8df21b7383ef5747da3c488c700c32ea6d1279bf0ab10ea9a074106c95bf4ef292ebfff13b64777467d04f824ffd11e0e7178d96b2ea6aaef0fccbb4118c2fbff47d5aeefa2dc36cd78bca5d406e96d3b7a72eca6f9fe1c2138dc70e54bd2d73d64c6eb69ea62129f5b4f0422e549076cf94c9fc6fb01d4da0e937fa9333adbe9b8351c6e03eec5d818b8c30b8e612233755ab29770127ef8a00a86d68d05ac3b716c696138ea69b30bac735c847611bc4a131a4c120c43278bb63c3e1c13f7fc0196a510b1cb3ed79e3c3702b41e9d5f4c36aa9bc6a403329fa0cf6e89396f652d429568f3008dee581250236ebd9652a112b27bbf47a50e7cc99c89eb99e2c6392ca2b4cc3edb263e31a6f1273f1a671f4e2b313f558ab8dfa2a0bf4ee570da83cc04dd31a2806dfb67ca285686dd8bb455cd372da256d9e738a2dd0605b47d0f94932aff46a9f7e5989e9f5d3a1d62e14fa613af3c6d6cd1f6acab73a11fb200ffebfac52dff5e662f327634537a497587df97a12b16fff65928da41af4d841e91792edc20dcba672451f944bffc95d01fede9e702a7deb818e92d022f11a5b87166c654e55b98631c735a6687e6d2d422992de4d49117d3519b095ada7ccb1c03438ec69bc498cbf5ca4dfb6f99d4a972d3bffc92a33e33a04c087852c9e3995c3c4ea78b59a5620055e4ae271bb9a908345b662853c35068015de28e2352a608f940a1de527e9141ef5cb1a79c528af9d5a98d36e807e227fe163690be95a4010f4ec456661829e4df876eda54f1a3412a6e13e6401f43b111432ae1c9b12df8a3b70ba894e51d047473ac7280ada3b9933abf9f759593238d0e6ca322fc94a877d51923aa11315acdad7e9247f0d99ce0971bafc806af7cf89e6b238ca90964ab85df187183f4fe7e28bb6fbdbefce80c97d5771fec8712657abc40bf447b7f0f80c62dc0109b5dece0166f6a9c28952850b461169464d3f1cf3d3db55b99bf9c73900773fc56d774704252476607abca4e90ab65d32c3baefd78d7595219c5e0d79ec26acbf706bbda69aa964f4e4bf3ac612673f9bfe8e6d2ea5a529d2602696d35dfdb6f7fc3b485c4044a6d65c0451b5ce4f5de34cd7ffb60a993ade9300a8774cc0e7644293aa224c3f00adc5eacd5f2c798f5b8f95358c0ce3f824438aa2d6ea1c49821a3d48ff0c1446ad3d06462fea0a701aea99e500d8f38b9da466e6f698ac5b3c73a24b44d770a423acfd9b73a93ec89b3d21a1c92ef7cdbccde7a2239ac1db36e69955f2548af410ed6abc93825f268bc97db842e6fdcbd5390030bde7f7ef57515b1b2b4d9b390841192bebd238aa2173809508126216b8c149fed7eb3cf8cb3a75a3612a7872ad379573daea6f76a558fb1b62f9fd6660770caa66f6d65ccf78e34e3bd657d2971f7afc7da46a112d4d023cdf98b404ec0a5024881bcbed70623434d5ad13d26bfcf205e41d6e7beb10acd1f6040cf5660b94f1bb7218dc1d40f1b7b6b0a8e4d10ccf0071a180a42269031a304feb7896708ad54614c6d0af60eddf17fdc87d89a88941045c26524f022f1c71e2413fa73dd210631512f48438e064ff7a9d1c3b3afeffba64192b7dbb5405b550c1cbe434a0e9e1d90bc067e835988e6f7e1102ce73c9e1889bb61748fbcc030eef9dd39a28da761cd0b0f6d211b77f6bf1d8076f6cab2ab5405021902241e65d7d648490be6abe26734bc0ce4d577f2d9270b087cabbb9d46ba7ef9ac45c559af50809f7f0f2656103afc68d3b86d15dd4ed34e1408a02d7f49ecef6cf8e1346ca9e8a8718865e5aa573c70c1b03a3d542768e3e8f5c6b9a84123bb07f2708b102cc6e65c32c055b5c34e86358b1f71a7a6c7023af7dfc71cf4a9fd730c8452b45c9802f1949ec984d3f148d26aab5dab3df5d56aa50e7ad5362ce3dce1b85bd269bdeb03f5c9e02121d4e8b4b8c5cb589189bac8e87dfb372f5415c38976f98b47cb03be2754c7a4b7d6d10667752f4506e90ce02ff155b68664ffc1dc1a47167a3558c704ab3fed11ed05490fad817549ddadae158c4818deb9b8fb8129073f68e7c6e566244d6107dc3c4db66"}, @NL80211_BAND_5GHZ={0x85, 0x1, "2b3214fcee0e89e16f178676fa4e3e972aee557aafa28e89efb6b0e08e05f573b48375c4888f7943457d6dcf29aa263511fe71f9c64cf02912fbdcae80d3dfa3b204589704c7e648a1241605ebfb37d83c6747a892504db153e0528024af0303d99e1675d2028de47ebaaaf581dbe37dce1574d2ce9fc283266b9f9cfedde9fb2c"}, @NL80211_BAND_60GHZ={0x90, 0x2, "17ca054269dfa0e9ae7b336cb29bc4c50371a4c898909297d1b523790c7dfe2dfb5d419068abf023309d49faf78f8f363213ee47177d85887f3b5417cc1f6de7712b97c73d6ce7df1ba34914dc2b18c73ddc35bf6deff14cdecd75a7d9502121007002dd1956fcdaadea456dd77512237bf4b78c2e9032c87b6d10c65d018e3918c991b7da22e5d6b16a0c0c"}, @NL80211_BAND_60GHZ={0x7d, 0x2, "fe860588fc1cb2600b76f130c6ea8955f3c4a07d629f1d4e2aa046747e628afbc5e85fa7301992e03cb3b249e8dd136bf858591304639e0e702acbe3c495349f2151a8769b830293f63bb34f81eb110da97b47882ea7f3f63e001a24988fc86a50187fe2b5bd2407d0ed69719c95921239b26a3b886402828a"}, @NL80211_BAND_60GHZ={0xac, 0x2, "1b6ddb85e06dde790ae6cdf0c5d774442a7a55cb65fef75bfdbb7fd640656186ac545b0bd51b13d2ae9abbc9422f6766fb591a8de1feb5a2c928ed650b33fb0d1be0717b1dca3d896b8af6673efa56955861f2e508cea18b3b6b77baf79ead6c8dcdb86631f2a86835caf8e0cdb66e5c13635041ab406dabf0b98b12db6f9ea0901c850849b3b4d9b17f6775850c5214811e70eea8de898dfd13094810011b7b832e0b193d583c81"}, @NL80211_BAND_5GHZ={0x14, 0x1, "0e1a9d8b38dfed249e6ff52512c4300d"}, @NL80211_BAND_2GHZ={0x1004, 0x0, "fa24858fd1226c19da6ca5054b26984bf7b433adf1e870eb55dd0bdbc8be89094c7ea25b776b0288a99edbd445d820422909ebcf2278c9b4b662c6a88deee8323e1b2c1706db22f55ab0ba29cc3273c68018451be1528f5f411288c8257dfa7a7a6802d0f9143151d8cd4ae0405749dce7b999e1e8236d896905b28dd19bf5186bcbfae139b67e98e0984bc5135d4a501b0678b8bcd83d922c03fdc73921fa8377a0a057aeb578f4b825990aad1e366356542245b22fc2887003e9824b5b7bcdc633c0a8000886aa80c3e0ca375759f2ef28ce5822c55c938d4d492e4a408c60dff5bd5702a4ed596a31018b7d61476215170526c6e4ea2140558c02d12abac811b69f0c80bc8313526926764a315f7140d0d6f09cdd42296fd12b1f04d22b2048136693b968daa1b23f6660ce8c5e076cec9bf08617b177070c29d69a2e37c873439bcb0bd62b139c937531a0e647fc37a2b93a8731a705b9f0e55a4a1ddbe962031bd9111c05dee12c249671a0c483a8215cf80efa2f55e96895b43159d72c92a5dea0b2d68cdf26ff97c4c7830631a1cfcd7c6c2a49490a68406633eee32bbefa7f829f8ac8026aa14728428fed5f826efb9d122d8bb85a1aab465f092a0b7f6a27d0e06ef904b8d769e4db65e95ccc7cd689d1ed6d92de7bd1fbaba9d377bc2db23ae3192d9a8de3e2a2903d25952e8180f8c3795ee4f8179e8f5936c77954bd803af1bfc5b7d8afb19f66216b65097e6290c60bce5f83f10ab792d039a824f4aa88700452c736c2e5ac3e74c0d4ffd1a163a6c3b1eaa3cdbaea8edaa69c5fa86d12033245e2871626c662d20d25ec12b391f11d9a5b21494cefb6ef404221bd328b5df44b81725ff63080e369d29d95b10cc282085abced07ec54fbaa11014b7dd4641182d8f4c53cdb8d519c01357d7400197c8a4241eda725b3b0b6444ccde7d4578e20a4f9c5910d98a6b56343041561d52eea0a15f2696ca53c0967c8843ff5b2437f6486a4faec9da8e612c5184c0ff44df762096b653a7fd17e5428c65d103f50864e2a2941e459f5f9ee7d34e56f1220ab599d8aab1bc48ac09c35ced82fad3b6e160a92224cad8f9a1ece7703336ab34835bac132fcfae1ef3299c92762984cb64e2263bb420fecc228d1f24ccc4dcc97df147ff02feccad4a0c9bc28a408941d1b1ca559384bd63cbcb465cf34f7ed5486381319f8f01c9b1fdc8c1e334d7431ecc547c0972115608013f8adce689f1eba529d7ffa03ab04b1e604286a759c23ba99224dd679b30216fd9d3b03ec15888ae41d9cd709c51a0f44d14980d7448f27d6b71f470cfbadede706086f06ff93da94df1fdc2a749018675fdd267eda0dcc363989db0c69c0b289247d4defe19969cc1c592b4675d579b7a3b9fee5802c1e61a1302dbd85031f24f643c93b899990b66b9074d33c21b8e9fdb785f9db2315fbe5b3edaab1e9420b316ceb5d39f4c831b5d88156d79a1988f548e3a163b8010d23a60d62e33ebcae6f53f85006df94caf35f67ebe2637f55832d30e57a6725c3f722806d125f032149b4ec1e66791533bb34b26e134f917935a0c0f3bca52d35e9b37f1a5c81a49e3e1ce53f1cd3b5ddcffe52675abe8474bd801ed3ba67547c384abd6ec38003838768cf2e2687c788540ddcb01f4f62be6bb03e3532f810a00be3fea917eb0621f8623b9e71a0b07023a7d5374c3eceaa19916663518005398b109fbf94462ead186b9fa88635c9b93e26ddd6b77bc2fd06f9e15f72ba8d2e09f8e67de2760bf72ca4d27a70c36e0b08c7e3dd73ca4fed0bcb9b575b2d93564778291b89a065bcfe5e8cb3e4e539086451582ab319b1c74a261e2fdc9d7b6c2ba2762a3ce96032d4053c3199c6c26c725d25dfe03766820c7f9348d65409be0cd8b85de5d1e1b33bf33f5191d405af6f12e60a2daf95d1fa7862278c7d83a75607e24208311d087d680a743cf15fee67e6ae61098e1a6ec5a1b532f56af51899110e3f29838f77c189cdea6a9a7cd46d683788436349bfac2b70644b41a36ce28d59b3eddb04c78e9fa72c8ab83024b903d41a4536c793402bb0afd05e65f831bac8eb97cc51c657e7f905820cd3a3b885134bc3452c32d683e13ccc41cfec07159f90d8cd785f380ae5f7e8fc9fabcae002ac97f1bbdc40ac7b170a9799252a50d3df8a61b156f67ad19aeb35c2727524a39daca107c49925dc67c0b01c7391405ec2eb66a2d644981600c8456a97c557e8ebffb6a103ecd3ebbc5db827639d9f1babe3005b5cc5d5bb1ce2670a754e80acf57e9dbade6bc0ec1b74a6cfea625cbc97f46fbbc63ee5d59b1c54ae3980d75eb9dc22b91350610a6e2c3dff82947548919fc53d8ac1bef1bb118935e97700fdf0a2a9d913a4f16f48528f5e73f6edd549e8468593749849d7dd60755fa095fc6c027e5539674e9363d1b7ed1ad7391d319ce9d406b0266bcc83853c35f7842122a91c410f4676bab46cd6890ced76f4d6cbc6c8b49ba6b207c393c923fae3c6bee03b8ce40f774017f0f89daa8fc98a19979e13b33f7c4bedb7bb08bdcc00871f1d590bcae75cde221bf16f4e8215e337e3da4f203039ce639c8a6a5b996f16163dad64a9cf26f788ba56747490acd5ca620aadcda7bf4d5b80ccc4302b817d8f7532ee6727612d164a75bd52ed779c3595e359b83df874d100aeaf343cbb8770b0a53706ed5d14b23997c1dadbf6019ba33d558e188d92a434efa971e0ba5529c90548490a5407c7101b4741c1305de2c1835c1406e442001c573fcd86ddf803f97d187f0bd6c0d6546008cb6682d7049e2087d2a172c3cf5531a65500859a27c0b7579aa765586037799ed64705c34ba6399403991460254fe9abf67525fe373a158675e00b0afd496600acb15396b39ae4021a83b6a4cacf211c57ae64e3cf505e3154deef2b1b4c1db4397794eb1fec6f1f63b2e162602fef9528d39560a77d0f0d26a411759aa46b7671703800efe4b60c9cb3b51edf8459023f5492586cbc1de7ee7a23d658f31af1ef81fe6008f02789e4e1f9fb194c0de73276911448d79ca7f3de1a5f34821d2141749b7d72d7537c7b9e035dddf7a32f8732c4e2015144404161044af05c5c534711fc65382925620e1fc570e92f1a9096c26e25dc7f7c62c8d5f3ffb7a7ec41a22a4374ec73b4445764e171dc2a039989a3c53cb4275734d834ace1f00c54b43acb49173aedfd42195998216ae96c6216d744f665f47f4c38f5085cb2b5ad5ca2e44b6fe67ec0a8fa0d2ae2e75ebec6a041adc09932f01d6a69171a7681bd3bf490cb9580b92564e27a4abbafa18853abbd99b7953b2e7e66d96d96ce37b8fb839ec86c2c6d46c4a8cc5618382e6e8f705537f7e12a709a1c14f4cc0ed822049108dfacef0bd0d0266ac5108e13fbd7bdef091e7d61fbf17041bf1c160abb5b694859c8f72326bdd72cac7dfcbfec78bab08bb1bb203bfd4ca2968b18346c18bf33078f440cff12e801ae5fcabc208d7ec88f8bdb6b178d8a6f4cdcbb5eec6c7e0d5fa3bbbfd935a0c049c4006656207e5db1b42592aaba31b47994aa74ecdd757fa560e0f17de64d65c75016dfb6c594f52072e14036474c6d6160318631ae24463527b8e95194521d3808790af47ae27fdd4e6864973fb3d0cd003748678a2c2318b15ebab9c3bfdd2de66fa727133c7a2bf3553711c00c47d3aaf3283f5f9bb181e45ecfcf32177a3a92e5b8e2af70a89dffa641f4bba4b4d753629f2e1a40c4ecea92c52d8b1ed3b9be9c30f579b2f5ecaefc4e3d24af1696e15cacc7354f52db280bec805fa452a31f4b05a0e32ffea8004607304c61e9a1462267355de9f3b17a95712cd8b101c076107236ab6c518c744b61f3ed8d0bd70653e5ae0f0f7d28977b02f4fc6e836b6628c8451fe30f21a87b5767cd13ba207e461d8798941adb248b780e26593512568b4ea373103962a6b12532bf4751afb8ac7332fdd7915b599b07a2446612de4a8f4c16c770926c11a7344c196a461df0b0654c97a525f3c9c11da8eea49542aa2b3ae2f02df260ccd9b6ef91f76bbe1df2c35b62de859166e0527a2a19a4693e945f8a5536e0a8e7d9dd1b082720d7ec4893148493bc17837e67e9eec8ce96beb22065cf5ced84861d82e397f435ed2f3f5a6be90a7e8a6c6722b31f9ff9d24582e50073f3e80971643a6be73811e9715704012382f76ad56e8ccbd919b802da7591f7a6b220ea92a5060c49eda5cecf4e3276c7b44cfe7c7f1c311a58531c661a4ebc6bff189ca6f877f4653d2e9f8171e424af673cd819cba2153ff9bf381c3d339642491fcb9644c6755bc8f0c12a8af86662a717c9a6b2b0371ac0f6b17974cd00b1c5671c36c4b3942db4b3ef99a97cb994d5d03627d18069ecdab30a1d560786caf556d9195c6bd7daa21d29ed1e1718576fd25240be579c3cf7bebcd4fda889f058fef773a6169ac7977a059bc4c50eaf9c6b0760d02b726e26602951f63d0ef703700a80e815a69dbf96cece0719ab92f3759fe240d745a374211b5cd6676da8633571dfa479e2bf6773a3c56dc2459b2574cd6740346c836272a4ce2a39b372cb1ff711166347708df00c6479a4ac376a9e0a7c58d2912a1ca6636bff44ac29bca0fbfbcabd41e131ee347912e2840cbedb40a79379d699b8e04eeb8711c853ad103d1e21fcee77289b065b8473907f35fa9a6108719f265c8966d29cc0a3d3b4348b1508a69ec52698fd045f22dd0f2eeefe9839b9af03b11f191862ef9b9ca4f678b17f384e7da7fa32513bde9f1ae4d07b65916a923110b573b53cc18b2891d2790366f016e48da67668472fa66081b358937a495b00d976c594e8db8d7f41097dae941d45dcb44350d9b742d4b31df73acb9d90034a330240fa09e909d9845341799930693d0f333f0e1f32ca4c2df59b51321ea3fc64d1b23725f8187b7bcd5ba7455b3c94a3395fec623ebe472ee3a375780052103e24afbe84df730824ee2428ff3c6a866009d5a3c56b2db6a7470d631d7edce0da0334b75f125578f4c84ca4e2fe600faaa152a5ef88344a4a18e5acaaedd5082f2a757bec7b19439f208c3f6714ba8ccb2b59b50513875720b3b00b313ac1f61842fe17531b8edd28ca95f70f2e1eed3150a18afc869e03d97c1044539478473ce0176f85d120e83ab067bf2c07c65a21d1dffeaea22432405a792cb49e0ad6da3e20eb3648e06cc79eea1c470f760fb4c9106f11a170624f78304e2ffe091f90bf61a6e03d0dc90af7109637756ba6685def5e11214079acd694ffd0356c60fbcb083cb7a823224b25684268cde53b77696d76fd33a8b4e7832d2cd2b8ca63f4cd8b562a7036c2b838638b8b1f9d11a60df2b6d73071677dc4d165ff44dfdfa87b66ac0b331390ec1826b2dc003e44547dc9a27aa4ae7aecc1308cd84f81c3814f707cdea2fb006a422afc10f25d62f83b8eef2098b384e2aa9de412f93ed7322f9659f9b13c44f81bae7bc8721bf2e54cbc11f9d7274cb868722870e6c7d7cd7f3c289cc5d94c13179a3240420ba0e3433b9ce2155056e2d5126f31cb2e22e488a47cbe5176d967cb7081d25363316ed7427f0e13580f5ac63624d6f712272fcde1725eac3e1459c729b0877e7cb11ac2119c847f57f29a855ca201c9a67c5bdb122b1f9d4ad24b25dafaf0e619f9077234506c5d09a4d6a3b9e38bc3cdbfb13cfe55518ab2e9bd6532c24a17957fa645a64299fe2453baf204001c8f6ad114e607fb9fe009f6bbbf3d6a956981ee"}]}, @NL80211_ATTR_SCHED_SCAN_INTERVAL={0x8, 0x77, 0x126d2a9a}, @NL80211_ATTR_WDEV={0xc, 0x99, {0x9, 0xffffffffffffffff}}, @NL80211_ATTR_WDEV={0xc, 0x99, {0x6, 0x3}}, @NL80211_ATTR_SCHED_SCAN_INTERVAL={0x8, 0x77, 0xfff}, @NL80211_ATTR_SCHED_SCAN_RELATIVE_RSSI={0x5, 0xf6, 0xff}, @NL80211_ATTR_SCHED_SCAN_RSSI_ADJUST={0x6, 0xf7, {0x5, 0x6}}, @NL80211_ATTR_SCHED_SCAN_RSSI_ADJUST={0x6, 0xf7, {0x3, 0x3}}]}, 0x22b8}, 0x1, 0x0, 0x0, 0x24004040}, 0x6040041)
+r3 = creat(&(0x7f0000000180)='./file0\x00', 0x0)
+r4 = creat(&(0x7f0000000000)='./file0\x00', 0x0)
+pwrite64(r4, &(0x7f0000000140)='\x00', 0xfffffec2, 0x4)
+ioctl$FIBMAP(r3, 0x1, &(0x7f0000001300))
+2020/01/27 10:55:32 reproducing crash 'general protection fault in sysctl_print_dir': program did not crash
+2020/01/27 10:55:33 reproducing crash 'general protection fault in sysctl_print_dir': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): socketpair$unix-sendmmsg$inet-recvmmsg-syz_genetlink_get_family_id$team-ioctl$ifreq_SIOCGIFINDEX_vcan-getsockname$packet-ioctl$sock_inet6_SIOCADDRT-getsockname$packet-getsockname$packet-ioctl$sock_inet6_SIOCADDRT-getsockname$packet-ioctl$sock_inet6_SIOCADDRT-getsockname$packet-ioctl$sock_inet6_SIOCADDRT-getsockname$packet-ioctl$sock_inet6_SIOCADDRT-ioctl$sock_SIOCGIFINDEX-getsockname$packet-ioctl$sock_inet6_SIOCADDRT-getsockname$packet-ioctl$sock_inet6_SIOCADDRT-getsockname$packet-ioctl$sock_inet6_SIOCADDRT-getsockname$packet-ioctl$sock_inet6_SIOCADDRT-getsockname$packet-ioctl$sock_inet6_SIOCADDRT-open-readv-getsockname$packet-getsockname$packet-ioctl$sock_inet6_SIOCADDRT-getsockname$packet-ioctl$sock_inet6_SIOCADDRT-getsockname$packet-ioctl$sock_inet6_SIOCADDRT-ioctl$ifreq_SIOCGIFINDEX_team-sendmsg$TEAM_CMD_PORT_LIST_GET-syz_mount_image$tmpfs
+2020/01/27 10:55:33 reproducing crash 'general protection fault in sysctl_print_dir': detailed listing:
+executing program 0:
+socketpair$unix(0x1, 0x1, 0x0, &(0x7f0000000140)={<r0=>0xffffffffffffffff})
+sendmmsg$inet(r0, &(0x7f0000006240)=[{{0x0, 0x0, 0x0}}, {{&(0x7f00000012c0), 0x10, 0x0}}], 0x2, 0x0)
+recvmmsg(r0, &(0x7f0000005980)=[{{&(0x7f0000000180)=@sco, 0x80, &(0x7f00000013c0)=[{&(0x7f0000000200)=""/162, 0xa2}, {&(0x7f00000002c0)=""/109, 0x6d}, {&(0x7f0000000340)=""/127, 0x7f}, {&(0x7f0000000000)=""/16, 0x10}, {&(0x7f00000003c0)=""/4096, 0x1000}], 0x5, &(0x7f0000001440)=""/92, 0x5c}, 0xffff}, {{&(0x7f00000014c0)=@pppol2tpv3in6={0x18, 0x1, {0x0, <r1=>0xffffffffffffffff}}, 0x80, &(0x7f0000001a00)=[{&(0x7f0000001540)=""/219, 0xdb}, {&(0x7f0000001640)=""/113, 0x71}, {&(0x7f00000016c0)=""/147, 0x93}, {&(0x7f0000000080)=""/54, 0x36}, {&(0x7f0000001780)=""/111, 0x6f}, {&(0x7f0000000100)=""/16, 0x10}, {&(0x7f0000001800)=""/157, 0x9d}, {&(0x7f00000018c0)=""/112, 0x70}, {&(0x7f0000001940)=""/173, 0xad}], 0x9}, 0x2}, {{&(0x7f0000001ac0)=@l2tp={0x2, 0x0, @local}, 0x80, &(0x7f0000001d00)=[{&(0x7f0000001b40)=""/144, 0x90}, {&(0x7f0000001c00)=""/235, 0xeb}], 0x2, &(0x7f0000001d40)=""/4096, 0x1000}, 0x3592}, {{&(0x7f0000002d40)=@alg, 0x80, &(0x7f0000002e80)=[{&(0x7f0000002dc0)=""/29, 0x1d}, {&(0x7f0000002e00)=""/54, 0x36}, {&(0x7f0000002e40)=""/21, 0x15}], 0x3}, 0x8000}, {{&(0x7f0000002ec0)=@pppol2tpin6={0x18, 0x1, {0x0, 0xffffffffffffffff, 0x0, 0x0, 0x0, 0x0, {0xa, 0x0, 0x0, @mcast1}}}, 0x80, &(0x7f0000003140)=[{&(0x7f0000002f40)=""/198, 0xc6}, {&(0x7f0000003040)=""/53, 0x35}, {&(0x7f0000003080)=""/99, 0x63}, {&(0x7f0000003100)=""/9, 0x9}], 0x4, &(0x7f0000003180)=""/209, 0xd1}}, {{&(0x7f0000003280)=@nl=@proc, 0x80, &(0x7f0000003400)=[{&(0x7f0000003300)=""/242, 0xf2}], 0x1, &(0x7f0000003440)=""/50, 0x32}, 0x7}, {{&(0x7f0000003480)=@nfc, 0x80, &(0x7f00000048c0)=[{&(0x7f0000003500)}, {&(0x7f0000003540)=""/162, 0xa2}, {&(0x7f0000003600)=""/4096, 0x1000}, {&(0x7f0000004600)=""/225, 0xe1}, {&(0x7f0000004700)=""/19, 0x13}, {&(0x7f0000004740)=""/90, 0x5a}, {&(0x7f00000047c0)=""/7, 0x7}, {&(0x7f0000004800)=""/21, 0x15}, {&(0x7f0000004840)=""/121, 0x79}], 0x9, &(0x7f0000004980)=""/4096, 0x1000}, 0x507}], 0x7, 0x5, 0x0)
+r2 = syz_genetlink_get_family_id$team(&(0x7f0000005b80)='team\x00')
+ioctl$ifreq_SIOCGIFINDEX_vcan(0xffffffffffffffff, 0x8933, &(0x7f0000006100)={'vxcan1\x00', <r3=>0x0})
+getsockname$packet(0xffffffffffffffff, &(0x7f0000001580)={0x11, 0x0, <r4=>0x0, 0x1, 0x0, 0x6, @random}, &(0x7f00000015c0)=0x14)
+ioctl$sock_inet6_SIOCADDRT(0xffffffffffffffff, 0x890b, &(0x7f0000000680)={@empty, @dev={0xfe, 0x80, [], 0x16}, @ipv4={[], [], @multicast1}, 0x5a, 0x1f, 0x0, 0x0, 0x3f, 0x40520301, r4})
+getsockname$packet(0xffffffffffffffff, &(0x7f0000006140)={0x11, 0x0, <r5=>0x0, 0x1, 0x0, 0x6, @link_local}, &(0x7f0000006180)=0x14)
+getsockname$packet(0xffffffffffffffff, &(0x7f0000001580)={0x11, 0x0, <r6=>0x0, 0x1, 0x0, 0x6, @random}, &(0x7f00000015c0)=0x14)
+ioctl$sock_inet6_SIOCADDRT(0xffffffffffffffff, 0x890b, &(0x7f0000000680)={@empty, @dev={0xfe, 0x80, [], 0x16}, @ipv4={[], [], @multicast1}, 0x5a, 0x1f, 0x0, 0x0, 0x3f, 0x40520301, r6})
+getsockname$packet(0xffffffffffffffff, &(0x7f0000001580)={0x11, 0x0, <r7=>0x0, 0x1, 0x0, 0x6, @random}, &(0x7f00000015c0)=0x14)
+ioctl$sock_inet6_SIOCADDRT(0xffffffffffffffff, 0x890b, &(0x7f0000000680)={@empty, @dev={0xfe, 0x80, [], 0x16}, @ipv4={[], [], @multicast1}, 0x5a, 0x1f, 0x0, 0x0, 0x3f, 0x40520301, r7})
+getsockname$packet(0xffffffffffffffff, &(0x7f0000001580)={0x11, 0x0, <r8=>0x0, 0x1, 0x0, 0x6, @random}, &(0x7f00000015c0)=0x14)
+ioctl$sock_inet6_SIOCADDRT(0xffffffffffffffff, 0x890b, &(0x7f0000000680)={@empty, @dev={0xfe, 0x80, [], 0x16}, @ipv4={[], [], @multicast1}, 0x5a, 0x1f, 0x0, 0x0, 0x3f, 0x40520301, r8})
+getsockname$packet(0xffffffffffffffff, &(0x7f0000001580)={0x11, 0x0, <r9=>0x0, 0x1, 0x0, 0x6, @random}, &(0x7f00000015c0)=0x14)
+ioctl$sock_inet6_SIOCADDRT(0xffffffffffffffff, 0x890b, &(0x7f0000000680)={@empty, @dev={0xfe, 0x80, [], 0x16}, @ipv4={[], [], @multicast1}, 0x5a, 0x1f, 0x0, 0x0, 0x3f, 0x40520301, r9})
+ioctl$sock_SIOCGIFINDEX(0xffffffffffffffff, 0x8933, &(0x7f00000061c0)={'macvlan0\x00', <r10=>0x0})
+getsockname$packet(0xffffffffffffffff, &(0x7f0000001580)={0x11, 0x0, <r11=>0x0, 0x1, 0x0, 0x6, @random}, &(0x7f00000015c0)=0x14)
+ioctl$sock_inet6_SIOCADDRT(0xffffffffffffffff, 0x890b, &(0x7f0000000680)={@empty, @dev={0xfe, 0x80, [], 0x16}, @ipv4={[], [], @multicast1}, 0x5a, 0x1f, 0x0, 0x0, 0x3f, 0x40520301, r11})
+getsockname$packet(0xffffffffffffffff, &(0x7f0000001580)={0x11, 0x0, <r12=>0x0, 0x1, 0x0, 0x6, @random}, &(0x7f00000015c0)=0x14)
+ioctl$sock_inet6_SIOCADDRT(0xffffffffffffffff, 0x890b, &(0x7f0000000680)={@empty, @dev={0xfe, 0x80, [], 0x16}, @ipv4={[], [], @multicast1}, 0x5a, 0x1f, 0x0, 0x0, 0x3f, 0x40520301, r12})
+getsockname$packet(0xffffffffffffffff, &(0x7f0000001580)={0x11, 0x0, <r13=>0x0, 0x1, 0x0, 0x6, @random}, &(0x7f00000015c0)=0x14)
+ioctl$sock_inet6_SIOCADDRT(0xffffffffffffffff, 0x890b, &(0x7f0000000680)={@empty, @dev={0xfe, 0x80, [], 0x16}, @ipv4={[], [], @multicast1}, 0x5a, 0x1f, 0x0, 0x0, 0x3f, 0x40520301, r13})
+getsockname$packet(0xffffffffffffffff, &(0x7f0000001580)={0x11, 0x0, <r14=>0x0, 0x1, 0x0, 0x6, @random}, &(0x7f00000015c0)=0x14)
+ioctl$sock_inet6_SIOCADDRT(0xffffffffffffffff, 0x890b, &(0x7f0000000680)={@empty, @dev={0xfe, 0x80, [], 0x16}, @ipv4={[], [], @multicast1}, 0x5a, 0x1f, 0x0, 0x0, 0x3f, 0x40520301, r14})
+getsockname$packet(0xffffffffffffffff, &(0x7f0000001580)={0x11, 0x0, <r15=>0x0, 0x1, 0x0, 0x6, @random}, &(0x7f00000015c0)=0x14)
+ioctl$sock_inet6_SIOCADDRT(0xffffffffffffffff, 0x890b, &(0x7f0000000680)={@empty, @dev={0xfe, 0x80, [], 0x16}, @ipv4={[], [], @multicast1}, 0x5a, 0x1f, 0x0, 0x0, 0x3f, 0x40520301, r15})
+r16 = open(&(0x7f0000000080)='./file0\x00', 0x0, 0x0)
+readv(r16, &(0x7f0000000180)=[{&(0x7f00000000c0)=""/167, 0xa7}], 0x1)
+getsockname$packet(r16, &(0x7f0000007840)={0x11, 0x0, <r17=>0x0, 0x1, 0x0, 0x6, @local}, &(0x7f0000007880)=0x14)
+getsockname$packet(0xffffffffffffffff, &(0x7f0000001580)={0x11, 0x0, <r18=>0x0, 0x1, 0x0, 0x6, @random}, &(0x7f00000015c0)=0x14)
+ioctl$sock_inet6_SIOCADDRT(0xffffffffffffffff, 0x890b, &(0x7f0000000680)={@empty, @dev={0xfe, 0x80, [], 0x16}, @ipv4={[], [], @multicast1}, 0x5a, 0x1f, 0x0, 0x0, 0x3f, 0x40520301, r18})
+getsockname$packet(0xffffffffffffffff, &(0x7f0000001580)={0x11, 0x0, <r19=>0x0, 0x1, 0x0, 0x6, @random}, &(0x7f00000015c0)=0x14)
+ioctl$sock_inet6_SIOCADDRT(0xffffffffffffffff, 0x890b, &(0x7f0000000680)={@empty, @dev={0xfe, 0x80, [], 0x16}, @ipv4={[], [], @multicast1}, 0x5a, 0x1f, 0x0, 0x0, 0x3f, 0x40520301, r19})
+getsockname$packet(0xffffffffffffffff, &(0x7f0000001580)={0x11, 0x0, <r20=>0x0, 0x1, 0x0, 0x6, @random}, &(0x7f00000015c0)=0x14)
+ioctl$sock_inet6_SIOCADDRT(0xffffffffffffffff, 0x890b, &(0x7f0000000680)={@empty, @dev={0xfe, 0x80, [], 0x16}, @ipv4={[], [], @multicast1}, 0x5a, 0x1f, 0x0, 0x0, 0x3f, 0x40520301, r20})
+ioctl$ifreq_SIOCGIFINDEX_team(0xffffffffffffffff, 0x8933, &(0x7f00000078c0)={'team0\x00', <r21=>0x0})
+sendmsg$TEAM_CMD_PORT_LIST_GET(r1, &(0x7f0000008000)={&(0x7f0000005b40), 0xc, &(0x7f0000007fc0)={&(0x7f0000007900)=ANY=[@ANYBLOB="b4020000", @ANYRES16=r2, @ANYBLOB="00042dbd7000fddbdf250300000008000100", @ANYRES32=0x0, @ANYBLOB="7c0002003800010024000100616374697665706f727400000000000000000000000000000000000000000000050003000300000008000400", @ANYRES32=r3, @ANYBLOB="40000100240001006c625f686173685f737461747300000000000000000000000000000000000000050003000b0000000800040004000000080007000000000008000100", @ANYRES32=r4, @ANYBLOB="8400020040000100240001006c625f686173685f737461747300000000000000000000000000000000000000050003000b00000008000400000000e0080007000000000040000100240001006c625f706f72745f737461747300000000000000000000000000000000000000050003000b000000080004008000000008000600", @ANYRES32=r5, @ANYBLOB="08000100", @ANYRES32=r6, @ANYBLOB="4400020040000100240001006c625f74785f686173685f746f5f706f72745f6d617070696e67000000000000050003000300000008000400", @ANYRES32=r7, @ANYBLOB="080007000000000008000100", @ANYRES32=r8, @ANYBLOB="b401020038000100240001006d636173745f72656a6f696e5f636f756e74000000000000000000000000000005000300030000000800040008000000400001002400010071756575655f69640000000000000000000000000000000000000000000000000500030003000000080004000100000008000600", @ANYRES32=r9, @ANYBLOB="3c00010024000100656e61626c65640000000000000000000000000000000000000000000000000005000300060000000400040008000600", @ANYRES32=r10, @ANYBLOB="40000100240001006c625f686173685f737461747300000000000000000000000000000000000000050003000b000000080004007d030000080007000000000040000100240001006c625f74785f686173685f746f5f706f72745f6d617070696e67000000000000050003000300000008000400", @ANYRES32=r11, @ANYBLOB="080007000000000040000100240001007072696f72697479000000000000000000000000000000000000000000000000050003000e000000080004000101000008000600", @ANYRES32=r12, @ANYBLOB="3c00010024000100757365725f6c696e6b757000000000000000000000000000000000000000000005000300060000000400040008000600", @ANYRES32=r13, @ANYBLOB="08000100", @ANYRES32=r14, @ANYBLOB="b001020038000100240001006d636173745f72656a6f696e5f696e74657276616c00000000000000000000000500030003000000080004000100000040000100240001006c625f74785f686173685f746f5f706f72745f6d617070696e67000000000000050003000300000008000400", @ANYRES32=0x0, @ANYBLOB="080007000000000040000100240001006c625f686173685f737461747300000000000000000000000000000000000000050003000b000000080004000700000008000700000000003c00010024000100757365725f6c696e6b75705f656e61626c65640000000000000000000000000005000300060000000400040008000600", @ANYRES32=0x0, @ANYBLOB="3c00010024000100757365725f6c696e6b757000000000000000000000000000000000000000000005000300060000000400040008000600", @ANYRES32=r15, @ANYBLOB="38000100240001006d636173745f72656a6f696e5f636f756e740000000000000000000000000000050003000300000008000400d100000044000100240001006270665f686173685f66756e6300000000000000000000000000000000000000050003000b0000001400040004000840001000008100b8010100000008000100", @ANYRES32=r17, @ANYBLOB="0001020044000100240001006270665f686173685f66756e6300000000000000000000000000000000000000050003000b0000001400040000010140020000000100a0040104000040000100240001006c625f74785f686173685f746f5f706f72745f6d617070696e67000000000000050003000300000008000400", @ANYRES32=r18, @ANYBLOB="080007000000000038000100240001006d636173745f72656a6f696e5f696e74657276616c00000000000000000000000500030003000000080004000000000040000100240001006c625f686173685f737461747300000000000000000000000000000000000000050003000b0000000800040006000000080007000000000008000100", @ANYRES32=r19, @ANYBLOB="c000020040000100240001007072696f72697479000000000000000000000000000000000000000000000000050003000e000000080004000000008008000600", @ANYRES32=r20, @ANYBLOB="3c00010024000100656e61626c65640000000000000000000000000000000000000000000000000005000300060000000400040008000600", @ANYRES32=r21, @ANYBLOB="40000100240001006c625f706f72745f737461747300000000000000000000000000000000000000050003000b000000080004008000000008000600", @ANYRES32=0x0, @ANYBLOB], 0x6b4}, 0x1, 0x0, 0x0, 0x4}, 0x4)
+syz_mount_image$tmpfs(&(0x7f00000000c0)='tmpfs\x00', &(0x7f0000000140)='./file0\x00', 0x0, 0x0, 0x0, 0x0, &(0x7f0000005bc0)=ANY=[@ANYBLOB="6d706f6c3d69493dca492d2c0039553091fd77f6ed04f5005ba7515d051fd051c83b5130345e634840bfa2f76d0000622c78ef133a644343e49adb0f167f79142c6c6fee01da805a4a7ef3ff6d0fd3dd025e213d960e8a5a4d71fad06c6f1a3e2a9b34d0009d372bde249c6502566b2a6a816d5ee5"])
+2020/01/27 10:55:48 reproducing crash 'general protection fault in sysctl_print_dir': program did not crash
+2020/01/27 10:55:48 reproducing crash 'general protection fault in sysctl_print_dir': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_mount_image$tmpfs-syz_open_procfs-syz_genetlink_get_family_id$gtp-write$P9_RLOCK-sendmsg$GTP_CMD_DELPDP
+2020/01/27 10:55:48 reproducing crash 'general protection fault in sysctl_print_dir': detailed listing:
+executing program 0:
+syz_mount_image$tmpfs(&(0x7f0000000040)='tmpfs\x00', &(0x7f0000000080)='./file0\x00', 0x0, 0x0, 0x0, 0x0, &(0x7f0000000000)=ANY=[@ANYBLOB='nr_blocks=k'])
+r0 = syz_open_procfs(0xffffffffffffffff, &(0x7f00000000c0)='net/rpc\x00')
+r1 = syz_genetlink_get_family_id$gtp(&(0x7f0000000140)='gtp\x00')
+write$P9_RLOCK(r0, &(0x7f0000000180)={0x8, 0x35, 0x2}, 0x8)
+sendmsg$GTP_CMD_DELPDP(r0, &(0x7f0000000200)={&(0x7f0000000100)={0x10, 0x0, 0x0, 0x22800080}, 0xc, &(0x7f00000001c0)={&(0x7f0000000240)=ANY=[@ANYBLOB="1c000000", @ANYRES16=r1, @ANYBLOB="00915ffad68bea0529ee8172311c5df64cbd7000fcdbdf25010000000800"], 0x1c}, 0x1, 0x0, 0x0, 0x20044010}, 0x8)
+2020/01/27 10:56:03 reproducing crash 'general protection fault in sysctl_print_dir': program did not crash
+2020/01/27 10:56:03 reproducing crash 'general protection fault in sysctl_print_dir': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): open-sync-mkdir-socket$netlink-sendmsg$nl_generic-creat-write$P9_RREAD-creat-write$P9_RREAD-getsockopt$inet_IP_IPSEC_POLICY-getsockname$packet-ioctl$sock_inet6_SIOCADDRT-sendmsg$NL80211_CMD_GET_MESH_CONFIG-mkdir-fsync
+2020/01/27 10:56:03 reproducing crash 'general protection fault in sysctl_print_dir': detailed listing:
+executing program 0:
+r0 = open(&(0x7f0000000000)='./file0\x00', 0x141000, 0x3a)
+sync()
+mkdir(&(0x7f0000000040)='./file0\x00', 0x60)
+r1 = socket$netlink(0x10, 0x3, 0x0)
+sendmsg$nl_generic(r1, &(0x7f0000000140)={0x0, 0x0, &(0x7f00000000c0)={&(0x7f0000000380)={0x14, 0x32, 0xc1a89a70663767c3}, 0x14}}, 0x0)
+r2 = creat(&(0x7f00000000c0)='./file0\x00', 0x0)
+write$P9_RREAD(r2, &(0x7f0000000180)=ANY=[@ANYBLOB="0339b4f661e291cd8a6b80eeee91ee55674ac20c603ef9042fe8526ed0ec27163a9da28bcc6617317188a4e225904197202252bab211fdd6bf045717f706fa"], 0x1)
+r3 = creat(&(0x7f00000000c0)='./file0\x00', 0x0)
+write$P9_RREAD(r3, &(0x7f0000000100)=ANY=[@ANYBLOB='\v'], 0x1)
+getsockopt$inet_IP_IPSEC_POLICY(r0, 0x0, 0x10, &(0x7f00000001c0)={{{@in=@multicast2, @in, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, <r4=>0x0}}, {{@in=@empty}, 0x0, @in6=@mcast2}}, &(0x7f0000001400)=0xe8)
+getsockname$packet(0xffffffffffffffff, &(0x7f0000001580)={0x11, 0x0, <r5=>0x0, 0x1, 0x0, 0x6, @random}, &(0x7f00000015c0)=0x14)
+ioctl$sock_inet6_SIOCADDRT(0xffffffffffffffff, 0x890b, &(0x7f0000000680)={@empty, @dev={0xfe, 0x80, [], 0x16}, @ipv4={[], [], @multicast1}, 0x5a, 0x1f, 0x0, 0x0, 0x3f, 0x40520301, r5})
+sendmsg$NL80211_CMD_GET_MESH_CONFIG(r1, &(0x7f0000001500)={&(0x7f00000000c0)={0x10, 0x0, 0x0, 0x2000000}, 0xc, &(0x7f00000014c0)={&(0x7f0000001440)={0x68, 0x0, 0x400, 0x70bd28, 0x25dfdbfe, {}, [@NL80211_ATTR_WDEV={0xc, 0x99, {0x2, 0x1}}, @NL80211_ATTR_WDEV={0xc, 0x99, {0x401}}, @NL80211_ATTR_IFINDEX={0x8, 0x3, r4}, @NL80211_ATTR_WDEV={0xc, 0x99, {0x3f, 0x3}}, @NL80211_ATTR_IFINDEX={0x8, 0x3, r5}, @NL80211_ATTR_WDEV={0xc, 0x99, {0x3ff, 0x4}}, @NL80211_ATTR_WIPHY={0x8, 0x1, 0x3}, @NL80211_ATTR_WDEV={0xc, 0x99, {0x8, 0x4}}]}, 0x68}, 0x1, 0x0, 0x0, 0x4040004}, 0x4000004)
+mkdir(&(0x7f0000000080)='./file0\x00', 0x40)
+fsync(r0)
+2020/01/27 10:56:18 reproducing crash 'general protection fault in sysctl_print_dir': program did not crash
+2020/01/27 10:56:18 reproducing crash 'general protection fault in sysctl_print_dir': testing program (duration=15s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-finit_module-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 10:56:18 reproducing crash 'general protection fault in sysctl_print_dir': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+finit_module(r0, &(0x7f0000000040)='/dev/sg#\x00', 0x2)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000000080)={0x1, 0x0, 0x8, "11"})
+2020/01/27 10:56:30 reproducing crash 'general protection fault in sysctl_print_dir': program crashed: kernel panic: Fatal exception
+2020/01/27 10:56:30 reproducing crash 'general protection fault in sysctl_print_dir': single: successfully extracted reproducer
+2020/01/27 10:56:30 reproducing crash 'general protection fault in sysctl_print_dir': found reproducer with 3 syscalls
+2020/01/27 10:56:30 reproducing crash 'general protection fault in sysctl_print_dir': minimizing guilty program
+2020/01/27 10:56:30 reproducing crash 'general protection fault in sysctl_print_dir': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-finit_module
+2020/01/27 10:56:30 reproducing crash 'general protection fault in sysctl_print_dir': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+finit_module(r0, &(0x7f0000000040)='/dev/sg#\x00', 0x2)
+2020/01/27 10:56:52 reproducing crash 'general protection fault in sysctl_print_dir': program did not crash
+2020/01/27 10:56:53 reproducing crash 'general protection fault in sysctl_print_dir': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 10:56:53 reproducing crash 'general protection fault in sysctl_print_dir': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000000080)={0x1, 0x0, 0x8, "11"})
+2020/01/27 10:57:04 reproducing crash 'general protection fault in sysctl_print_dir': program crashed: BUG: Bad page map
+2020/01/27 10:57:05 reproducing crash 'general protection fault in sysctl_print_dir': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 10:57:05 reproducing crash 'general protection fault in sysctl_print_dir': detailed listing:
+executing program 0:
+ioctl$SCSI_IOCTL_SEND_COMMAND(0xffffffffffffffff, 0x1, &(0x7f0000000080)={0x1, 0x0, 0x8, "11"})
+2020/01/27 10:57:27 reproducing crash 'general protection fault in sysctl_print_dir': program did not crash
+2020/01/27 10:57:27 reproducing crash 'general protection fault in sysctl_print_dir': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 10:57:27 reproducing crash 'general protection fault in sysctl_print_dir': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(0x0, 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000000080)={0x1, 0x0, 0x8, "11"})
+2020/01/27 10:57:50 reproducing crash 'general protection fault in sysctl_print_dir': program did not crash
+2020/01/27 10:57:50 reproducing crash 'general protection fault in sysctl_print_dir': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 10:57:50 reproducing crash 'general protection fault in sysctl_print_dir': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, 0x0)
+2020/01/27 10:58:12 reproducing crash 'general protection fault in sysctl_print_dir': program did not crash
+2020/01/27 10:58:12 reproducing crash 'general protection fault in sysctl_print_dir': testing program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 10:58:12 reproducing crash 'general protection fault in sysctl_print_dir': detailed listing:
+executing program 0:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000000080)={0x0, 0x0, 0x8})
+2020/01/27 10:58:35 reproducing crash 'general protection fault in sysctl_print_dir': program did not crash
+2020/01/27 10:58:35 reproducing crash 'general protection fault in sysctl_print_dir': extracting C reproducer
+2020/01/27 10:58:35 reproducing crash 'general protection fault in sysctl_print_dir': testing compiled C program (duration=22.5s, {Threaded:true Collide:true Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 10:58:47 reproducing crash 'general protection fault in sysctl_print_dir': program crashed: BUG: unable to handle kernel paging request in corrupted
+2020/01/27 10:58:47 reproducing crash 'general protection fault in sysctl_print_dir': simplifying C reproducer
+2020/01/27 10:58:47 reproducing crash 'general protection fault in sysctl_print_dir': testing compiled C program (duration=22.5s, {Threaded:true Collide:false Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 10:58:59 reproducing crash 'general protection fault in sysctl_print_dir': program crashed: BUG: Bad rss-counter state
+2020/01/27 10:59:00 reproducing crash 'general protection fault in sysctl_print_dir': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:true RepeatTimes:0 Procs:8 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 10:59:11 reproducing crash 'general protection fault in sysctl_print_dir': program crashed: BUG: Bad rss-counter state
+2020/01/27 10:59:11 reproducing crash 'general protection fault in sysctl_print_dir': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:false RepeatTimes:0 Procs:1 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:false Cgroups:false BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 10:59:22 reproducing crash 'general protection fault in sysctl_print_dir': program did not crash
+2020/01/27 10:59:22 reproducing crash 'general protection fault in sysctl_print_dir': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:true RepeatTimes:0 Procs:1 Sandbox:none Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:true NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:true UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 10:59:33 reproducing crash 'general protection fault in sysctl_print_dir': program crashed: general protection fault in kmem_cache_alloc
+2020/01/27 10:59:33 reproducing crash 'general protection fault in sysctl_print_dir': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:true RepeatTimes:0 Procs:1 Sandbox: Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:false NetDevices:false NetReset:false Cgroups:false BinfmtMisc:false CloseFDs:false KCSAN:false DevlinkPCI:false UseTmpDir:true HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 10:59:43 reproducing crash 'general protection fault in sysctl_print_dir': program crashed: BUG: unable to handle kernel paging request in kmem_cache_alloc
+2020/01/27 10:59:43 reproducing crash 'general protection fault in sysctl_print_dir': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:true RepeatTimes:0 Procs:1 Sandbox: Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:false NetDevices:false NetReset:false Cgroups:false BinfmtMisc:false CloseFDs:false KCSAN:false DevlinkPCI:false UseTmpDir:false HandleSegv:true Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 10:59:54 reproducing crash 'general protection fault in sysctl_print_dir': program crashed: general protection fault in __handle_mm_fault
+2020/01/27 10:59:54 reproducing crash 'general protection fault in sysctl_print_dir': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:true RepeatTimes:0 Procs:1 Sandbox: Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:false NetDevices:false NetReset:false Cgroups:false BinfmtMisc:false CloseFDs:false KCSAN:false DevlinkPCI:false UseTmpDir:false HandleSegv:false Repro:true Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 11:00:25 reproducing crash 'general protection fault in sysctl_print_dir': program crashed: INFO: rcu detected stall in corrupted
+2020/01/27 11:00:25 reproducing crash 'general protection fault in sysctl_print_dir': reproducing took 6m50.10952383s
+2020/01/27 11:00:25 reproducing crash 'general protection fault in sysctl_print_dir': repro crashed as (corrupted=true):
+INFO: rcu_sched self-detected stall on CPU
+	1-...!: (20999 ticks this GP) idle=d96/1/4611686018427387906 softirq=2098/2098 fqs=544 
+	 (t=21001 jiffies g=394 c=393 q=43)
+INFO: rcu_sched detected stalls on CPUs/tasks:
+rcu_sched kthread starved for 18826 jiffies! g394 c393 f0x0 RCU_GP_WAIT_FQS(3) ->state=0x0 ->cpu=0
+RCU grace-period kthread stack dump:
+	1-...!: (20999 ticks this GP) idle=d96/1/4611686018427387906 softirq=2098/2098 fqs=544 
+rcu_sched       R
+	
+  running task    
+(detected by 0, t=21002 jiffies, g=394, c=393, q=43)
+29736     9      2 0x80000000
+Sending NMI from CPU 0 to CPUs 1:
+Call Trace:
+NMI backtrace for cpu 1
+CPU: 1 PID: 350 Comm: syz-executor229 Not tainted 4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+RIP: 0010:io_serial_out+0x68/0x80
+RSP: 0018:ffff8800363078b8 EFLAGS: 00000006
+RAX: 0000000000000000 RBX: 00000000000003f9 RCX: 0000000000000000
+RDX: 00000000000003f9 RSI: 0000000000000001 RDI: ffffffff893f0528
+RBP: ffffffff893f0520 R08: fffffbfff127e0a5 R09: fffffbfff127e0a5
+R10: 0000000000000001 R11: fffffbfff127e0a4 R12: 0000000000000000
+R13: ffffffff893f0540 R14: 0000000000000001 R15: ffffffff893f0538
+FS:  0000000000c4e880(0000) GS:ffff880036300000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000496fe0 CR3: 000000002f0ca002 CR4: 0000000000360ee0
+Call Trace:
+ <IRQ>
+ serial8250_console_write+0x3f4/0x7d0
+ console_unlock+0x5f9/0xa50
+ vprintk_emit+0x3c9/0x500
+ vprintk_func+0x52/0xc0
+ printk+0xb2/0xdd
+ show_trace_log_lvl+0x7d/0x360
+ sched_show_task+0x304/0x3e0
+ rcu_check_gp_kthread_starvation+0x2c9/0x311
+ rcu_check_callbacks+0xd67/0x1ba0
+ update_process_times+0x28/0x60
+ tick_sched_handle+0xe6/0x150
+ tick_sched_timer+0x40/0x110
+ __hrtimer_run_queues+0x31a/0x780
+ hrtimer_interrupt+0x2af/0x6f0
+ smp_apic_timer_interrupt+0xb9/0x2e0
+ apic_timer_interrupt+0xf/0x20
+ </IRQ>
+RIP: 0010:queued_spin_lock_slowpath+0x89/0x670
+RSP: 0018:ffff8800355277b0 EFLAGS: 00000206 ORIG_RAX: ffffffffffffff13
+RAX: 0000000000000000 RBX: ffff880035e480cc RCX: ffffffff853f8a18
+RDX: 0000000000000000 RSI: 0000000000000004 RDI: ffff880035e480cc
+RBP: 0000000020000000 R08: ffffed0006bc901a R09: ffffed0006bc901a
+R10: 0000000000000001 R11: ffffed0006bc9019 R12: 0000000000000007
+R13: ffffed0006bc9019 R14: 0000000000000001 R15: ffff880035e480cc
+ inode_doinit_with_dentry+0xda/0x1320
+ __inode_security_revalidate+0x98/0xd0
+ selinux_inode_permission+0x1d4/0x470
+ security_inode_permission+0x8c/0xe0
+ inode_permission+0x7f/0x320
+ link_path_walk+0x77f/0xf30
+ path_openat+0x212/0x4490
+ do_filp_open+0x1a5/0x2b0
+ do_sys_open+0x302/0x460
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x40132b
+RSP: 002b:00007ffdc73742d0 EFLAGS: 00000246 ORIG_RAX: 0000000000000101
+RAX: ffffffffffffffda RBX: 00007ffdc7374364 RCX: 000000000040132b
+RDX: 0000000000080001 RSI: 0000000000496fe5 RDI: 00000000ffffff9c
+RBP: 00007ffdc7374360 R08: 0000000000000000 R09: 0000000000000004
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000007a71
+R13: 0000000000000000 R14: 00000000006be018 R15: 0000000000000000
+Code: 8d a1 00 00 00 48 8d 7d 08 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 d3 e3 80 3c 02 00 75 15 03 5d 08 44 89 e0 89 da ee <5b> 5d 41 5c c3 e8 5e 05 6d ff eb c7 e8 87 05 6d ff eb e4 0f 1f 
+rcu_sched kthread starved for 18826 jiffies! g394 c393 f0x0 RCU_GP_WAIT_FQS(3) ->state=0x0 ->cpu=0
+RCU grace-period kthread stack dump:
+rcu_sched       R
+  running task    
+29736     9      2 0x80000000
+Call Trace:
+ schedule+0x70/0x190
+ schedule_timeout+0x333/0x9b0
+ schedule+0x70/0x190
+ rcu_gp_kthread+0xe2e/0x2c80
+ schedule_timeout+0x333/0x9b0
+ kthread+0x2f4/0x3b0
+ rcu_gp_kthread+0xe2e/0x2c80
+ ret_from_fork+0x35/0x40
+NMI backtrace for cpu 1
+CPU: 1 PID: 350 Comm: syz-executor229 Not tainted 4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ kthread+0x2f4/0x3b0
+ <IRQ>
+ dump_stack+0x8c/0xce
+ ret_from_fork+0x35/0x40
+ nmi_cpu_backtrace+0x153/0x170
+ nmi_trigger_cpumask_backtrace+0xf9/0x150
+ rcu_dump_cpu_stacks+0x17d/0x1cb
+ rcu_check_callbacks+0xd6f/0x1ba0
+ update_process_times+0x28/0x60
+ tick_sched_handle+0xe6/0x150
+ tick_sched_timer+0x40/0x110
+ __hrtimer_run_queues+0x31a/0x780
+ hrtimer_interrupt+0x2af/0x6f0
+ smp_apic_timer_interrupt+0xb9/0x2e0
+ apic_timer_interrupt+0xf/0x20
+ </IRQ>
+RIP: 0010:queued_spin_lock_slowpath+0x89/0x670
+RSP: 0018:ffff8800355277b0 EFLAGS: 00000206 ORIG_RAX: ffffffffffffff13
+RAX: 0000000000000000 RBX: ffff880035e480cc RCX: ffffffff853f8a18
+RDX: 0000000000000000 RSI: 0000000000000004 RDI: ffff880035e480cc
+RBP: 0000000020000000 R08: ffffed0006bc901a R09: ffffed0006bc901a
+R10: 0000000000000001 R11: ffffed0006bc9019 R12: 0000000000000007
+R13: ffffed0006bc9019 R14: 0000000000000001 R15: ffff880035e480cc
+ inode_doinit_with_dentry+0xda/0x1320
+ __inode_security_revalidate+0x98/0xd0
+ selinux_inode_permission+0x1d4/0x470
+ security_inode_permission+0x8c/0xe0
+ inode_permission+0x7f/0x320
+ link_path_walk+0x77f/0xf30
+ path_openat+0x212/0x4490
+ do_filp_open+0x1a5/0x2b0
+ do_sys_open+0x302/0x460
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x40132b
+RSP: 002b:00007ffdc73742d0 EFLAGS: 00000246 ORIG_RAX: 0000000000000101
+RAX: ffffffffffffffda RBX: 00007ffdc7374364 RCX: 000000000040132b
+RDX: 0000000000080001 RSI: 0000000000496fe5 RDI: 00000000ffffff9c
+RBP: 00007ffdc7374360 R08: 0000000000000000 R09: 0000000000000004
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000007a71
+R13: 0000000000000000 R14: 00000000006be018 R15: 0000000000000000
+2020/01/27 11:00:25 reproducing crash 'general protection fault in sysctl_print_dir': report is corrupted, running repro again
+2020/01/27 11:00:25 reproducing crash 'general protection fault in sysctl_print_dir': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:true RepeatTimes:0 Procs:1 Sandbox: Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:false NetDevices:false NetReset:false Cgroups:false BinfmtMisc:false CloseFDs:false KCSAN:false DevlinkPCI:false UseTmpDir:false HandleSegv:false Repro:false Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 11:00:35 reproducing crash 'general protection fault in sysctl_print_dir': program crashed: kernel panic: Fatal exception
+2020/01/27 11:00:35 reproducing crash 'general protection fault in sysctl_print_dir': report is corrupted, running repro again
+2020/01/27 11:00:36 reproducing crash 'general protection fault in sysctl_print_dir': testing compiled C program (duration=22.5s, {Threaded:false Collide:false Repeat:true RepeatTimes:0 Procs:1 Sandbox: Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:false NetDevices:false NetReset:false Cgroups:false BinfmtMisc:false CloseFDs:false KCSAN:false DevlinkPCI:false UseTmpDir:false HandleSegv:false Repro:false Trace:false}): syz_open_dev$sg-ioctl$SCSI_IOCTL_SEND_COMMAND
+2020/01/27 11:00:46 reproducing crash 'general protection fault in sysctl_print_dir': program crashed: general protection fault in unlink_anon_vmas
+2020/01/27 11:00:46 reproducing crash 'general protection fault in sysctl_print_dir': final repro crashed as (corrupted=false):
+kasan: CONFIG_KASAN_INLINE enabled
+kasan: GPF could be caused by NULL-ptr deref or user memory access
+general protection fault: 0000 [#1] SMP KASAN PTI
+Dumping ftrace buffer:
+   (ftrace buffer empty)
+Modules linked in:
+CPU: 1 PID: 307 Comm: syz-executor094 Not tainted 4.17.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+RIP: 0010:unlink_anon_vmas+0xb5/0x650
+RSP: 0018:ffff880031b8fb98 EFLAGS: 00010207
+RAX: 0000000000000006 RBX: 0000000000000000 RCX: ffffffff988d437f
+RDX: 0000000000000000 RSI: ffff8800330a4c20 RDI: 0000000000000034
+RBP: dffffc0000000000 R08: ffffed00066af3fd R09: ffffed00066af3fd
+R10: 0000000000000001 R11: ffffed00066af3fc R12: ffff8800314ee620
+R13: ffff880033cc1368 R14: 0000000000000000 R15: ffff8800314ee660
+FS:  0000000000000000(0000) GS:ffff880036300000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00000000006c03a0 CR3: 0000000026a0e003 CR4: 0000000000360ee0
+Call Trace:
+ free_pgtables+0xe3/0x330
+ exit_mmap+0x24b/0x450
+ mmput+0x52/0x2b0
+ do_exit+0x6f3/0x2870
+ do_group_exit+0xed/0x320
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0xa2/0x2f0
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x44de56
+RSP: 002b:00007ffee0abb208 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 00000000006c0390 RCX: 000000000044de56
+RDX: 0000000000000000 RSI: 000000000000003c RDI: 0000000000000000
+RBP: 0000000000000000 R08: 00000000000000e7 R09: ffffffffffffffc0
+R10: 000000000000000f R11: 0000000000000246 R12: 00000000006c0390
+R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+Code: e8 01 52 e5 ff 49 8d 7c 24 38 48 89 f8 48 c1 e8 03 80 3c 28 00 0f 85 7d 05 00 00 49 8b 5c 24 38 48 8d 7b 34 48 89 f8 48 c1 e8 03 <0f> b6 14 28 48 89 f8 83 e0 07 83 c0 03 38 d0 7c 08 84 d2 0f 85 
+RIP: unlink_anon_vmas+0xb5/0x650 RSP: ffff880031b8fb98
+---[ end trace 11da2700fb2a0f74 ]---
+Extracting prog: 2m54.844165707s
+Minimizing prog: 2m5.101008784s
+Simplifying prog options: 0s
+Extracting C: 12.008553431s
+Simplifying C: 1m38.155756147s
+opts: {Threaded:false Collide:false Repeat:true RepeatTimes:0 Procs:1 Sandbox: Fault:false FaultCall:-1 FaultNth:0 Leak:false NetInjection:false NetDevices:false NetReset:false Cgroups:false BinfmtMisc:false CloseFDs:false KCSAN:false DevlinkPCI:false UseTmpDir:false HandleSegv:false Repro:false Trace:false} crepro: true
+
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f0000000080)={0x1, 0x0, 0x8, "11"})
+
+// autogenerated by syzkaller (https://github.com/google/syzkaller)
+
+#define _GNU_SOURCE 
+
+#include <dirent.h>
+#include <endian.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <signal.h>
+#include <stdarg.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/prctl.h>
+#include <sys/stat.h>
+#include <sys/syscall.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <time.h>
+#include <unistd.h>
+
+static void sleep_ms(uint64_t ms)
+{
+	usleep(ms * 1000);
+}
+
+static uint64_t current_time_ms(void)
+{
+	struct timespec ts;
+	if (clock_gettime(CLOCK_MONOTONIC, &ts))
+	exit(1);
+	return (uint64_t)ts.tv_sec * 1000 + (uint64_t)ts.tv_nsec / 1000000;
+}
+
+static bool write_file(const char* file, const char* what, ...)
+{
+	char buf[1024];
+	va_list args;
+	va_start(args, what);
+	vsnprintf(buf, sizeof(buf), what, args);
+	va_end(args);
+	buf[sizeof(buf) - 1] = 0;
+	int len = strlen(buf);
+	int fd = open(file, O_WRONLY | O_CLOEXEC);
+	if (fd == -1)
+		return false;
+	if (write(fd, buf, len) != len) {
+		int err = errno;
+		close(fd);
+		errno = err;
+		return false;
+	}
+	close(fd);
+	return true;
+}
+
+static long syz_open_dev(volatile long a0, volatile long a1, volatile long a2)
+{
+	if (a0 == 0xc || a0 == 0xb) {
+		char buf[128];
+		sprintf(buf, "/dev/%s/%d:%d", a0 == 0xc ? "char" : "block", (uint8_t)a1, (uint8_t)a2);
+		return open(buf, O_RDWR, 0);
+	} else {
+		char buf[1024];
+		char* hash;
+strncpy(buf, (char*)a0, sizeof(buf) - 1);
+		buf[sizeof(buf) - 1] = 0;
+		while ((hash = strchr(buf, '#'))) {
+			*hash = '0' + (char)(a1 % 10);
+			a1 /= 10;
+		}
+		return open(buf, a2, 0);
+	}
+}
+
+static void kill_and_wait(int pid, int* status)
+{
+	kill(-pid, SIGKILL);
+	kill(pid, SIGKILL);
+	int i;
+	for (i = 0; i < 100; i++) {
+		if (waitpid(-1, status, WNOHANG | __WALL) == pid)
+			return;
+		usleep(1000);
+	}
+	DIR* dir = opendir("/sys/fs/fuse/connections");
+	if (dir) {
+		for (;;) {
+			struct dirent* ent = readdir(dir);
+			if (!ent)
+				break;
+			if (strcmp(ent->d_name, ".") == 0 || strcmp(ent->d_name, "..") == 0)
+				continue;
+			char abort[300];
+			snprintf(abort, sizeof(abort), "/sys/fs/fuse/connections/%s/abort", ent->d_name);
+			int fd = open(abort, O_WRONLY);
+			if (fd == -1) {
+				continue;
+			}
+			if (write(fd, abort, 1) < 0) {
+			}
+			close(fd);
+		}
+		closedir(dir);
+	} else {
+	}
+	while (waitpid(-1, status, __WALL) != pid) {
+	}
+}
+
+static void setup_test()
+{
+	prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0);
+	setpgrp();
+	write_file("/proc/self/oom_score_adj", "1000");
+}
+
+static void execute_one(void);
+
+#define WAIT_FLAGS __WALL
+
+static void loop(void)
+{
+	int iter;
+	for (iter = 0;; iter++) {
+		int pid = fork();
+		if (pid < 0)
+	exit(1);
+		if (pid == 0) {
+			setup_test();
+			execute_one();
+			exit(0);
+		}
+		int status = 0;
+		uint64_t start = current_time_ms();
+		for (;;) {
+			if (waitpid(-1, &status, WNOHANG | WAIT_FLAGS) == pid)
+				break;
+			sleep_ms(1);
+			if (current_time_ms() - start < 5 * 1000)
+				continue;
+			kill_and_wait(pid, &status);
+			break;
+		}
+	}
+}
+
+uint64_t r[1] = {0xffffffffffffffff};
+
+void execute_one(void)
+{
+		intptr_t res = 0;
+memcpy((void*)0x20000000, "/dev/sg#\000", 9);
+	res = syz_open_dev(0x20000000, 0, 0);
+	if (res != -1)
+		r[0] = res;
+*(uint32_t*)0x20000080 = 1;
+*(uint32_t*)0x20000084 = 0;
+*(uint32_t*)0x20000088 = 8;
+memcpy((void*)0x2000008c, "\x11", 1);
+	syscall(__NR_ioctl, r[0], 1ul, 0x20000080ul);
+
+}
+int main(void)
+{
+		syscall(__NR_mmap, 0x20000000ul, 0x1000000ul, 3ul, 0x32ul, -1, 0);
+			loop();
+	return 0;
+}
+

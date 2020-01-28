@@ -1,0 +1,1676 @@
+Warning: Permanently added '[localhost]:30527' (ECDSA) to the list of known hosts.
+2020/01/15 18:47:12 fuzzer started
+2020/01/15 18:47:12 dialing manager at 10.0.2.10:46315
+2020/01/15 18:47:12 syscalls: 1558
+2020/01/15 18:47:12 code coverage: enabled
+2020/01/15 18:47:12 comparison tracing: CONFIG_KCOV_ENABLE_COMPARISONS is not enabled
+2020/01/15 18:47:12 extra coverage: enabled
+2020/01/15 18:47:12 setuid sandbox: enabled
+2020/01/15 18:47:12 namespace sandbox: /proc/self/ns/user does not exist
+2020/01/15 18:47:12 Android sandbox: enabled
+2020/01/15 18:47:12 fault injection: CONFIG_FAULT_INJECTION is not enabled
+2020/01/15 18:47:12 leak checking: CONFIG_DEBUG_KMEMLEAK is not enabled
+2020/01/15 18:47:12 net packet injection: /dev/net/tun does not exist
+2020/01/15 18:47:12 net device setup: enabled
+2020/01/15 18:47:12 concurrency sanitizer: /sys/kernel/debug/kcsan does not exist
+2020/01/15 18:47:12 devlink PCI setup: PCI device 0000:00:10.0 is not available
+18:47:34 executing program 0:
+r0 = socket$inet_udp(0x2, 0x2, 0x0)
+setsockopt$inet_opts(r0, 0x0, 0x4, &(0x7f0000000000)="ec3e8ec61fe75573e10203a062534713b21926cda54264e11d82e7ebc6e76435827bbbdd39f013d9d25770bbadc2ded9dd2383297d5fe9ea9b56bb9d0b1772caec243b444d5b190ea7e4ec81b11be4463df7adadb58be17c1dd92377350c38369b8f841181eac566125d", 0x6a)
+getsockopt$inet_mreqn(r0, 0x0, 0x0, &(0x7f0000000080)={@remote, @empty}, &(0x7f00000000c0)=0xc)
+setsockopt$IPT_SO_SET_ADD_COUNTERS(r0, 0x0, 0x41, &(0x7f0000000100)={'filter\x00', 0x2, [{}, {}]}, 0x48)
+r1 = openat$autofs(0xffffffffffffff9c, &(0x7f0000000180)='/dev/autofs\x00', 0x200, 0x0)
+ioctl$sock_inet_SIOCGARP(r1, 0x8954, &(0x7f00000001c0)={{0x2, 0x4e20, @dev={0xac, 0x14, 0x14, 0x32}}, {0x304, @link_local={0x1, 0x80, 0xc2, 0x0, 0x0, 0x3}}, 0x529f92185cfe3a2f, {0x2, 0x4e21, @initdev={0xac, 0x1e, 0x0, 0x0}}, 'netpci0\x00'})
+r2 = openat$bsg(0xffffffffffffff9c, &(0x7f0000000240)='/dev/bsg\x00', 0x4600, 0x0)
+ioctl$RTC_EPOCH_SET(r2, 0x4008700e, 0x5)
+io_setup(0x80, &(0x7f0000000280)=<r3=>0x0)
+r4 = accept$inet(0xffffffffffffffff, &(0x7f00000002c0)={0x2, 0x0, @remote}, &(0x7f0000000300)=0x10)
+io_cancel(r3, &(0x7f00000003c0)={0x0, 0x0, 0x0, 0x3, 0x1f, r4, &(0x7f0000000340)="e3ce3dd1dd9f8a7655c9a276f2c60eb55fcb5e5ca655e2d6665d1f761f16e4dfd8f2e8464964fb40ed889934725187bdc0e5ea9391bf35852851f8d0da57c6ec3ddb9b2248999e8022d93141a66c", 0x4e, 0x10001, 0x0, 0x4, r1}, &(0x7f0000000400))
+r5 = open(&(0x7f0000000440)='./file0\x00', 0x100000, 0x36)
+ioctl$TIOCMGET(r5, 0x5415, &(0x7f0000000480))
+r6 = openat$zero(0xffffffffffffff9c, &(0x7f00000004c0)='/dev/zero\x00', 0x0, 0x0)
+r7 = inotify_init1(0x80800)
+epoll_ctl$EPOLL_CTL_DEL(r6, 0x2, r7)
+r8 = openat$full(0xffffffffffffff9c, &(0x7f0000000500)='/dev/full\x00', 0x180040, 0x0)
+r9 = accept(r8, &(0x7f0000000540)=@xdp, &(0x7f00000005c0)=0x80)
+r10 = syz_genetlink_get_family_id$netlbl_calipso(&(0x7f0000000640)='NLBL_CALIPSO\x00')
+sendmsg$NLBL_CALIPSO_C_ADD(r9, &(0x7f0000000700)={&(0x7f0000000600), 0xc, &(0x7f00000006c0)={&(0x7f0000000680)={0x2c, r10, 0x58c71df9d650595f, 0x70bd2b, 0x25dfdbfb, {}, [@NLBL_CALIPSO_A_DOI={0x8, 0x1, 0x1}, @NLBL_CALIPSO_A_MTYPE={0x8}, @NLBL_CALIPSO_A_DOI={0x8}]}, 0x2c}, 0x1, 0x0, 0x0, 0x40c0}, 0x8000)
+r11 = semget(0x2, 0x3, 0x8)
+semctl$SETALL(r11, 0x0, 0x11, &(0x7f0000000740)=[0x8, 0xff, 0x2, 0x11b, 0x7, 0xd82])
+r12 = accept4(r6, &(0x7f0000000780)=@in={0x2, 0x0, @empty}, &(0x7f0000000800)=0x80, 0x80000)
+write$nbd(r12, &(0x7f0000000840)={0x67446698, 0x1, 0x2, 0x2, 0x2, "0d1a0dc494bf9cdb57b1b777f247829675d5948d07f6773254d06224d9948fdd1b47f8fa01338039e6bea0a50084f71208356b38233182f9a57424d017e47a4e00ab2879918be5766d6c0edfa5bd2241db396caeefb056311fd4aaa6e7a412e97732babcee107b71e8f1b0"}, 0x7b)
+ioctl$sock_SIOCINQ(r4, 0x541b, &(0x7f00000008c0))
+ioctl$SNDRV_SEQ_IOCTL_SET_QUEUE_TIMER(0xffffffffffffffff, 0x40605346, &(0x7f0000000900)={0x1, 0x3, {0x1, 0x1, 0x8, 0x2, 0x100}, 0x7})
+r13 = openat$vcsu(0xffffffffffffff9c, &(0x7f0000000980)='/dev/vcsu\x00', 0x0, 0x0)
+setns(r13, 0x2000000)
+prctl$PR_SET_THP_DISABLE(0x29, 0x0)
+mq_unlink(&(0x7f00000009c0)='/dev/full\x00')
+
+18:47:34 executing program 3:
+r0 = dup3(0xffffffffffffffff, 0xffffffffffffffff, 0x0)
+setsockopt$inet6_icmp_ICMP_FILTER(r0, 0x1, 0x1, &(0x7f0000000000)={0x9c}, 0x4)
+r1 = socket$nl_netfilter(0x10, 0x3, 0xc)
+sendmsg$IPSET_CMD_ADD(r1, &(0x7f0000000140)={&(0x7f0000000040), 0xc, &(0x7f0000000100)={&(0x7f0000000080)={0x5c, 0x9, 0x6, 0x100, 0x70bd2d, 0x25dfdbfe, {0x5, 0x0, 0x8}, [@IPSET_ATTR_LINENO={0x8, 0x9, 0x1, 0x0, 0x9}, @IPSET_ATTR_LINENO={0x8, 0x9, 0x1, 0x0, 0x80000000}, @IPSET_ATTR_PROTOCOL={0x5}, @IPSET_ATTR_PROTOCOL={0x5}, @IPSET_ATTR_SETNAME={0x9, 0x2, 'syz0\x00'}, @IPSET_ATTR_SETNAME={0x9, 0x2, 'syz1\x00'}, @IPSET_ATTR_PROTOCOL={0x5}, @IPSET_ATTR_PROTOCOL={0x5}]}, 0x5c}, 0x1, 0x0, 0x0, 0xe49a3a70718c8b8e}, 0x60040000)
+ioctl$FS_IOC_SETVERSION(r1, 0x40087602, &(0x7f0000000180)=0x7f)
+ioctl$sock_SIOCADDDLCI(r0, 0x8980, &(0x7f00000001c0)={'vlan0\x00', 0x1})
+r2 = syz_open_procfs(0x0, &(0x7f0000000200)='gid_map\x00')
+ioctl$RTC_WKALM_RD(r2, 0x80287010, &(0x7f0000000240))
+pipe2(&(0x7f0000000280)={<r3=>0xffffffffffffffff, <r4=>0xffffffffffffffff}, 0x400)
+ioctl$RTC_IRQP_SET(r3, 0x4008700c, 0x75)
+ioctl$EVIOCGMTSLOTS(r4, 0x8040450a, &(0x7f00000002c0)=""/186)
+r5 = openat$full(0xffffffffffffff9c, &(0x7f0000000380)='/dev/full\x00', 0xd94fc89c56647f85, 0x0)
+getsockopt$inet6_IPV6_XFRM_POLICY(r0, 0x29, 0x23, &(0x7f0000000480)={{{@in=@local, @in=@loopback, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, <r6=>0x0}}, {{@in=@empty}, 0x0, @in=@remote}}, &(0x7f0000000580)=0xe8)
+ioctl$sock_inet6_SIOCDIFADDR(r5, 0x8936, &(0x7f00000005c0)={@rand_addr="0e11b304862bf7a4bd72f821d220ba75", 0x52, r6})
+r7 = openat$vcsu(0xffffffffffffff9c, &(0x7f0000000600)='/dev/vcsu\x00', 0x2000, 0x0)
+recvfrom$inet6(r7, &(0x7f0000000640)=""/31, 0x1f, 0x0, &(0x7f0000000680)={0xa, 0x4e20, 0x1, @local, 0x3}, 0x1c)
+setsockopt$IP_VS_SO_SET_FLUSH(0xffffffffffffffff, 0x0, 0x485, 0x0, 0x0)
+r8 = fcntl$dupfd(0xffffffffffffffff, 0x0, r2)
+ioctl$BLKALIGNOFF(r8, 0x127a, &(0x7f00000006c0))
+getsockopt$inet_IP_XFRM_POLICY(0xffffffffffffffff, 0x0, 0x11, &(0x7f0000000700)={{{@in6=@mcast2, @in6=@initdev, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, <r9=>0x0}}, {{@in6}, 0x0, @in6=@ipv4={[], [], @remote}}}, &(0x7f0000000800)=0xe8)
+r10 = syz_genetlink_get_family_id$nl80211(&(0x7f0000000880)='nl80211\x00')
+getsockopt$inet_IP_IPSEC_POLICY(0xffffffffffffffff, 0x0, 0x10, &(0x7f0000000d00)={{{@in=@remote, @in6=@local, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, <r11=>0x0}}, {{@in6=@local}, 0x0, @in6=@dev}}, &(0x7f0000000e00)=0xe8)
+ioctl$ifreq_SIOCGIFINDEX_vcan(0xffffffffffffffff, 0x8933, &(0x7f0000000e40)={'vxcan1\x00', <r12=>0x0})
+sendmsg$NL80211_CMD_DEL_MPATH(r8, &(0x7f0000000f40)={&(0x7f0000000840)={0x10, 0x0, 0x0, 0x900000}, 0xc, &(0x7f0000000f00)={&(0x7f0000000e80)={0x50, r10, 0x2, 0x70bd2a, 0x25dfdbff, {}, [@NL80211_ATTR_IFINDEX={0x8, 0x3, r11}, @NL80211_ATTR_WDEV={0xc, 0x99, {0xfff, 0xffffffffffffffff}}, @NL80211_ATTR_MPATH_NEXT_HOP={0xa, 0x1a, @remote}, @NL80211_ATTR_IFINDEX={0x8, 0x3, r12}, @NL80211_ATTR_MAC={0xa, 0x6, @random="c3c13976bad0"}, @NL80211_ATTR_IFINDEX={0x8, 0x3, r9}]}, 0x50}, 0x1, 0x0, 0x0, 0x8008}, 0x10)
+ioctl$SNDRV_SEQ_IOCTL_DELETE_PORT(0xffffffffffffffff, 0x40a85321, &(0x7f0000000f80)={{0x0, 0x1b}, 'port1\x00', 0x20, 0x11, 0x3, 0x8, 0x0, 0x7ff, 0x7fff, 0x0, 0x4, 0x9})
+setsockopt$inet6_udp_int(r5, 0x11, 0x31fe6607d3f4dfd6, &(0x7f0000001040)=0x4, 0x4)
+r13 = syz_open_dev$tty20(0xc, 0x4, 0x1)
+ioctl$TIOCGLCKTRMIOS(r13, 0x5456, &(0x7f0000001080)={0x1, 0x8, 0x400, 0x2, 0x8, "36bdb015d6165402eb9f38b8835f3c13fe2526"})
+r14 = socket(0x5, 0x3, 0x3)
+r15 = syz_genetlink_get_family_id$ipvs(&(0x7f0000001100)='IPVS\x00')
+sendmsg$IPVS_CMD_NEW_DEST(r14, &(0x7f00000012c0)={&(0x7f00000010c0)={0x10, 0x0, 0x0, 0x10000002}, 0xc, &(0x7f0000001280)={&(0x7f0000001140)={0x114, r15, 0x400, 0x70bd29, 0x25dfdbfc, {}, [@IPVS_CMD_ATTR_TIMEOUT_UDP={0x8}, @IPVS_CMD_ATTR_SERVICE={0x38, 0x1, [@IPVS_SVC_ATTR_PORT={0x6, 0x4, 0x4e22}, @IPVS_SVC_ATTR_ADDR={0x14, 0x3, @ipv4=@loopback}, @IPVS_SVC_ATTR_FWMARK={0x8}, @IPVS_SVC_ATTR_FWMARK={0x8, 0x5, 0x2}, @IPVS_SVC_ATTR_TIMEOUT={0x8, 0x8, 0x10001}]}, @IPVS_CMD_ATTR_DEST={0x4c, 0x2, [@IPVS_DEST_ATTR_TUN_TYPE={0x5}, @IPVS_DEST_ATTR_INACT_CONNS={0x8, 0x8, 0x2}, @IPVS_DEST_ATTR_ACTIVE_CONNS={0x8, 0x7, 0x5}, @IPVS_DEST_ATTR_U_THRESH={0x8, 0x5, 0xffffff81}, @IPVS_DEST_ATTR_PERSIST_CONNS={0x8, 0x9, 0x3f}, @IPVS_DEST_ATTR_ACTIVE_CONNS={0x8, 0x7, 0x2}, @IPVS_DEST_ATTR_FWD_METHOD={0x6, 0x3, 0x4}, @IPVS_DEST_ATTR_FWD_METHOD={0x6, 0x3, 0x4}, @IPVS_DEST_ATTR_TUN_TYPE={0x5}]}, @IPVS_CMD_ATTR_DEST={0x28, 0x2, [@IPVS_DEST_ATTR_INACT_CONNS={0x8, 0x8, 0x80}, @IPVS_DEST_ATTR_WEIGHT={0x8, 0x4, 0x8}, @IPVS_DEST_ATTR_ADDR={0x14, 0x1, @ipv6=@dev={0xfe, 0x80, [], 0x35}}]}, @IPVS_CMD_ATTR_SERVICE={0xc, 0x1, [@IPVS_SVC_ATTR_PROTOCOL={0x6, 0x2, 0x73}]}, @IPVS_CMD_ATTR_TIMEOUT_TCP={0x8}, @IPVS_CMD_ATTR_SERVICE={0x30, 0x1, [@IPVS_SVC_ATTR_ADDR={0x14, 0x3, @ipv4=@local}, @IPVS_SVC_ATTR_PE_NAME={0x8, 0xb, 'sip\x00'}, @IPVS_SVC_ATTR_AF={0x6, 0x1, 0x2}, @IPVS_SVC_ATTR_PROTOCOL={0x6, 0x2, 0x29}]}, @IPVS_CMD_ATTR_TIMEOUT_TCP={0x8, 0x4, 0x2}]}, 0x114}, 0x1, 0x0, 0x0, 0x1}, 0x50)
+
+syzkaller login: [   33.972850] audit: type=1400 audit(1579114054.581:8): avc:  denied  { execmem } for  pid=2032 comm="syz-executor.0" scontext=system_u:system_r:kernel_t:s0 tcontext=system_u:system_r:kernel_t:s0 tclass=process permissive=1
+18:47:34 executing program 13:
+r0 = openat$vcsa(0xffffffffffffff9c, &(0x7f0000000000)='/dev/vcsa\x00', 0x141100, 0x0)
+r1 = syz_genetlink_get_family_id$nbd(&(0x7f0000000080)='nbd\x00')
+r2 = openat$vga_arbiter(0xffffffffffffff9c, &(0x7f00000000c0)='/dev/vga_arbiter\x00', 0x400400, 0x0)
+r3 = dup(0xffffffffffffffff)
+r4 = syz_open_dev$vcsn(&(0x7f0000002d00)='/dev/vcs#\x00', 0x20, 0x400)
+r5 = openat$snapshot(0xffffffffffffff9c, &(0x7f0000002d40)='/dev/snapshot\x00', 0x0, 0x0)
+r6 = openat$bsg(0xffffffffffffff9c, &(0x7f0000002d80)='/dev/bsg\x00', 0x2000, 0x0)
+r7 = openat$zero(0xffffffffffffff9c, &(0x7f0000002dc0)='/dev/zero\x00', 0xe57a26824b250616, 0x0)
+r8 = openat$procfs(0xffffffffffffff9c, &(0x7f0000002e00)='/proc/vmallocinfo\x00', 0x0, 0x0)
+sendmsg$NBD_CMD_STATUS(r0, &(0x7f0000002f40)={&(0x7f0000000040)={0x10, 0x0, 0x0, 0x9000}, 0xc, &(0x7f0000002f00)={&(0x7f0000002e40)={0xb0, r1, 0x200, 0x70bd28, 0x25dfdbfc, {}, [@NBD_ATTR_SERVER_FLAGS={0xc, 0x5, 0x2e}, @NBD_ATTR_SOCKETS={0x3c, 0x7, [{0x8, 0x1, r2}, {0x8, 0x1, r3}, {0x8, 0x1, r4}, {0x8, 0x1, r5}, {0x8, 0x1, r6}, {0x8, 0x1, r7}, {0x8, 0x1, r8}]}, @NBD_ATTR_DEAD_CONN_TIMEOUT={0xc, 0x8, 0x40}, @NBD_ATTR_BLOCK_SIZE_BYTES={0xc, 0x3, 0x100000000}, @NBD_ATTR_INDEX={0x8, 0x1, 0x0}, @NBD_ATTR_INDEX={0x8, 0x1, 0x0}, @NBD_ATTR_INDEX={0x8, 0x1, 0x0}, @NBD_ATTR_TIMEOUT={0xc, 0x4, 0xffff}, @NBD_ATTR_TIMEOUT={0xc, 0x4, 0x8}, @NBD_ATTR_BLOCK_SIZE_BYTES={0xc, 0x3, 0xdec5}]}, 0xb0}, 0x1, 0x0, 0x0, 0x80}, 0x44088)
+readlink(&(0x7f0000002f80)='./file0\x00', &(0x7f0000002fc0)=""/4096, 0x1000)
+socket$netlink(0x10, 0x3, 0x8)
+sendmsg$NLBL_MGMT_C_REMOVE(r4, &(0x7f00000040c0)={&(0x7f0000003fc0)={0x10, 0x0, 0x0, 0x1000000}, 0xc, &(0x7f0000004080)={&(0x7f0000004000)={0x48, 0x0, 0x100, 0x70bd25, 0x25dfdbfb, {}, [@NLBL_MGMT_A_CLPDOI={0x8, 0xc, 0x1}, @NLBL_MGMT_A_IPV4MASK={0x8, 0x8, @broadcast}, @NLBL_MGMT_A_DOMAIN={0xf, 0x1, '(eth0\'eth1\x00'}, @NLBL_MGMT_A_DOMAIN={0xa, 0x1, 'nodev\x00'}, @NLBL_MGMT_A_PROTOCOL={0x8, 0x2, 0x3}]}, 0x48}, 0x1, 0x0, 0x0, 0x20000000}, 0x44)
+r9 = openat(0xffffffffffffff9c, &(0x7f0000004100)='./file0\x00', 0x1, 0x42)
+ioctl$LOOP_CTL_GET_FREE(r9, 0x4c82)
+r10 = syz_genetlink_get_family_id$netlbl_mgmt(&(0x7f0000004180)='NLBL_MGMT\x00')
+sendmsg$NLBL_MGMT_C_ADDDEF(r4, &(0x7f0000004240)={&(0x7f0000004140)={0x10, 0x0, 0x0, 0x800000}, 0xc, &(0x7f0000004200)={&(0x7f00000041c0)={0x30, r10, 0x8, 0x70bd2c, 0x25dfdbfd, {}, [@NLBL_MGMT_A_IPV4ADDR={0x8, 0x7, @rand_addr=0x8001}, @NLBL_MGMT_A_IPV6MASK={0x14, 0x6, @dev={0xfe, 0x80, [], 0x36}}]}, 0x30}, 0x1, 0x0, 0x0, 0x400a}, 0x20044006)
+lsetxattr$security_evm(&(0x7f0000004280)='./file0\x00', &(0x7f00000042c0)='security.evm\x00', &(0x7f0000004300)=@md5={0x1, "552f8bd3447db9a324f892b77846ffa4"}, 0x11, 0x1)
+io_uring_register$IORING_UNREGISTER_EVENTFD(r3, 0x5, 0x0, 0x0)
+r11 = openat$zero(0xffffffffffffff9c, &(0x7f0000004340)='/dev/zero\x00', 0x400040, 0x0)
+epoll_ctl$EPOLL_CTL_MOD(r11, 0x3, 0xffffffffffffffff, &(0x7f0000004380)={0x40000000})
+ioctl$SCSI_IOCTL_BENCHMARK_COMMAND(r6, 0x3)
+ioctl$TCSETAF(r7, 0x5408, &(0x7f00000043c0)={0x8, 0xbe, 0x3, 0x7fff, 0x18, "ec674e87072a62e6"})
+r12 = syz_genetlink_get_family_id$team(&(0x7f0000004440)='team\x00')
+getsockopt$inet_IP_XFRM_POLICY(r2, 0x0, 0x11, &(0x7f0000004500)={{{@in6=@loopback, @in6=@local, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, <r13=>0x0}}, {{@in6=@remote}, 0x0, @in=@broadcast}}, &(0x7f0000004600)=0xe8)
+getsockname$packet(r0, &(0x7f0000004800)={0x11, 0x0, <r14=>0x0, 0x1, 0x0, 0x6, @dev}, &(0x7f0000004840)=0x14)
+ioctl$ifreq_SIOCGIFINDEX_vcan(0xffffffffffffffff, 0x8933, &(0x7f0000004880)={'vxcan0\x00', <r15=>0x0})
+getsockopt$inet_IP_XFRM_POLICY(0xffffffffffffffff, 0x0, 0x11, &(0x7f0000004980)={{{@in=@broadcast, @in6=@mcast1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, <r16=>0x0}}, {{@in=@broadcast}, 0x0, @in=@dev}}, &(0x7f0000004a80)=0xe8)
+getsockopt$inet_IP_XFRM_POLICY(0xffffffffffffffff, 0x0, 0x11, &(0x7f0000004ac0)={{{@in6=@dev, @in6=@local, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, <r17=>0x0}}, {{@in6=@local}, 0x0, @in=@dev}}, &(0x7f0000004bc0)=0xe8)
+sendmsg$TEAM_CMD_OPTIONS_GET(0xffffffffffffffff, &(0x7f0000004e80)={&(0x7f0000004400)={0x10, 0x0, 0x0, 0x40}, 0xc, &(0x7f0000004e40)={&(0x7f0000004c00)={0x218, r12, 0x100, 0x70bd26, 0x25dfdbfe, {}, [{{0x8}, {0x44, 0x2, [{0x40, 0x1, @priority={{{0x24, 0x1, 'priority\x00'}, {0x5}, {0x8, 0x4, 0x7f}}, {0x8}}}]}}, {{0x8, 0x1, r13}, {0x44, 0x2, [{0x40, 0x1, @priority={{{0x24, 0x1, 'priority\x00'}, {0x5}, {0x8, 0x4, 0x9eb8}}, {0x8}}}]}}, {{0x8, 0x1, r14}, {0x164, 0x2, [{0x38, 0x1, @mcast_rejoin_interval={{0x24, 0x1, 'mcast_rejoin_interval\x00'}, {0x5}, {0x8, 0x4, 0x656}}}, {0x40, 0x1, @queue_id={{{0x24, 0x1, 'queue_id\x00'}, {0x5}, {0x8, 0x4, 0x3}}, {0x8, 0x6, r15}}}, {0x3c, 0x1, @user_linkup={{{0x24, 0x1, 'user_linkup\x00'}, {0x5}, {0x4}}, {0x8, 0x6, r16}}}, {0x38, 0x1, @mcast_rejoin_count={{0x24, 0x1, 'mcast_rejoin_count\x00'}, {0x5}, {0x8, 0x4, 0x5}}}, {0x40, 0x1, @lb_port_stats={{{0x24, 0x1, 'lb_port_stats\x00'}, {0x5}, {0x8}}, {0x8, 0x6, r17}}}, {0x34, 0x1, @bpf_hash_func={{0x24, 0x1, 'bpf_hash_func\x00'}, {0x5}, {0x4}}}]}}]}, 0x218}}, 0x40)
+
+18:47:34 executing program 1:
+r0 = creat(&(0x7f0000000000)='./file0\x00', 0x1)
+setsockopt$inet6_MCAST_JOIN_GROUP(r0, 0x29, 0x2a, &(0x7f0000000040)={0x35e, {{0xa, 0x4e23, 0x1ff, @mcast1, 0x3}}}, 0x88)
+ioctl$EVIOCGBITSW(r0, 0x80404525, &(0x7f0000000100)=""/158)
+r1 = openat$cgroup_ro(r0, &(0x7f00000001c0)='io.stat\x00', 0x0, 0x0)
+ioctl$BLKRAGET(r1, 0x1263, &(0x7f0000000200))
+r2 = socket$inet6_udplite(0xa, 0x2, 0x88)
+setsockopt$inet6_MRT6_ADD_MIF(r2, 0x29, 0xca, &(0x7f0000000240)={0x1, 0x1, 0x10, 0x1ff, 0x7}, 0xc)
+r3 = openat(r0, &(0x7f0000000280)='./file0\x00', 0x0, 0x20)
+r4 = inotify_add_watch(r1, &(0x7f00000002c0)='./file0\x00', 0x40)
+inotify_rm_watch(r3, r4)
+r5 = openat$hpet(0xffffffffffffff9c, &(0x7f0000000300)='/dev/hpet\x00', 0x400, 0x0)
+write$P9_RWRITE(r5, &(0x7f0000000340)={0xb, 0x77, 0x2, 0x8000}, 0xb)
+r6 = open(&(0x7f0000000380)='./file0\x00', 0x0, 0x100)
+ioctl$TIOCNOTTY(r6, 0x5422)
+r7 = openat$selinux_attr(0xffffffffffffff9c, 0xfffffffffffffffd, 0x2, 0x0)
+sendfile(r7, r1, 0x0, 0x1)
+wait4(0x0, 0x0, 0x80000003, &(0x7f00000003c0))
+ioctl$EVIOCGLED(r5, 0x80404519, &(0x7f0000000480)=""/149)
+getxattr(&(0x7f0000000540)='./file0\x00', &(0x7f0000000580)=@random={'system.', 'io.stat\x00'}, &(0x7f00000005c0)=""/226, 0xe2)
+r8 = openat$vcsu(0xffffffffffffff9c, &(0x7f00000006c0)='/dev/vcsu\x00', 0x0, 0x0)
+r9 = syz_genetlink_get_family_id$ipvs(&(0x7f0000000740)='IPVS\x00')
+sendmsg$IPVS_CMD_GET_DEST(r8, &(0x7f0000000880)={&(0x7f0000000700)={0x10, 0x0, 0x0, 0x2000000}, 0xc, &(0x7f0000000840)={&(0x7f0000000780)={0x90, r9, 0x800, 0x70bd2a, 0x25dfdbfb, {}, [@IPVS_CMD_ATTR_DEST={0x24, 0x2, [@IPVS_DEST_ATTR_FWD_METHOD={0x6, 0x3, 0x2}, @IPVS_DEST_ATTR_L_THRESH={0x8}, @IPVS_DEST_ATTR_PERSIST_CONNS={0x8, 0x9, 0x3}, @IPVS_DEST_ATTR_FWD_METHOD={0x6}]}, @IPVS_CMD_ATTR_SERVICE={0x2c, 0x1, [@IPVS_SVC_ATTR_AF={0x6, 0x1, 0xa}, @IPVS_SVC_ATTR_FLAGS={0xc, 0x7, {0x20, 0x20}}, @IPVS_SVC_ATTR_FLAGS={0xc, 0x7, {0x10, 0x9}}, @IPVS_SVC_ATTR_NETMASK={0x8, 0x9, 0x57}]}, @IPVS_CMD_ATTR_DAEMON={0x2c, 0x3, [@IPVS_DAEMON_ATTR_MCAST_IFN={0x14, 0x2, 'vcan0\x00'}, @IPVS_DAEMON_ATTR_MCAST_GROUP6={0x14, 0x6, @empty}]}]}, 0x90}, 0x1, 0x0, 0x0, 0x20000100}, 0x8000)
+r10 = dup2(r6, r2)
+ioctl$sock_SIOCGSKNS(r10, 0x894c, &(0x7f00000008c0)=0x14fe)
+ioctl$LOOP_GET_STATUS64(r5, 0x4c05, &(0x7f0000000900))
+r11 = epoll_create(0x8)
+r12 = syz_open_dev$ttys(0xc, 0x2, 0x0)
+io_uring_register$IORING_REGISTER_FILES(0xffffffffffffffff, 0x2, &(0x7f0000000a00)=[r11, r5, r7, r8, r12], 0x5)
+io_uring_enter(r6, 0x1c1b, 0x0, 0x0, &(0x7f0000000a40)={0x80}, 0x8)
+r13 = timerfd_create(0x8, 0x1000)
+timerfd_gettime(r13, &(0x7f0000000a80))
+
+18:47:34 executing program 4:
+r0 = openat$hpet(0xffffffffffffff9c, &(0x7f0000001640)='/dev/hpet\x00', 0x400, 0x0)
+ioctl$sock_inet6_tcp_SIOCINQ(r0, 0x541b, &(0x7f0000001680))
+pipe2(&(0x7f00000016c0)={0xffffffffffffffff, <r1=>0xffffffffffffffff}, 0x80000)
+getsockopt$sock_linger(r1, 0x1, 0xd, &(0x7f0000001700), &(0x7f0000001740)=0x8)
+r2 = openat$loop_ctrl(0xffffffffffffff9c, &(0x7f0000001840)='/dev/loop-control\x00', 0x24940, 0x0)
+ioctl$FS_IOC_ADD_ENCRYPTION_KEY(r2, 0xc0506617, &(0x7f0000001880)={{0x2, 0x0, @descriptor="944ff40a72b645f6"}, 0xe2, [], "f799e72535072403c32c295483cc1b4f9c486f5b8c3397987fa60b9f13fff6402e50b3a1a0a061a1cfd95a3d769bbe4f54ab81ca0e80666d1bd10a631649186ba08e9a9fd130f5228c38064c0f54c9728084d9487e6acc9b33fb5bd5a2acdbd7482327e190d0b353d6f1019785768e079e65b7ac35dd8c9c97b1125fe45ffed00bfadef5cee9088a17e16ba96ddc665edd007d764297612f98f31ce81edf77456e04fe1e0ef4e9bbed6ee42cff41f4252dc47b13449ad2dd434840d0b6c903d55578f6dc2b2046a9f3fda390e60d1185ef37ded2e5018d6bca01ba78067ed95df93e"})
+lseek(r2, 0x401, 0x0)
+setsockopt$inet6_tcp_int(0xffffffffffffffff, 0x6, 0xc, &(0x7f00000019c0), 0x4)
+io_setup(0x3, &(0x7f0000001a00)=<r3=>0x0)
+r4 = accept4$inet(0xffffffffffffffff, &(0x7f0000001a40)={0x2, 0x0, @dev}, &(0x7f0000001a80)=0x10, 0x101000)
+io_cancel(r3, &(0x7f0000001b00)={0x0, 0x0, 0x0, 0x0, 0x1000, r4, &(0x7f0000001ac0), 0x0, 0x1, 0x0, 0x7, r1}, &(0x7f0000001b40))
+r5 = add_key$user(&(0x7f0000001b80)='user\x00', &(0x7f0000001bc0)={'syz', 0x3}, &(0x7f0000001c00)="c8e66591475cb94afa148702590eceac020c41c73d397ccdcabff4b622f33e57e7a3aed0c2762820faa6c9e31a8dd6bf5fc87ee6eb03c9", 0x37, 0xfffffffffffffffb)
+keyctl$get_security(0x11, r5, &(0x7f0000001c40)=""/194, 0xc2)
+sendmsg$IPCTNL_MSG_CT_GET_DYING(r0, &(0x7f0000001e00)={&(0x7f0000001d40)={0x10, 0x0, 0x0, 0x80000000}, 0xc, &(0x7f0000001dc0)={&(0x7f0000001d80)={0x14, 0x6, 0x1, 0x4, 0x70bd2b, 0x25dfdbfb, {0x3, 0x0, 0x5}, ["", ""]}, 0x14}, 0x1, 0x0, 0x0, 0x1c004}, 0x4000)
+r6 = syz_open_procfs(0x0, &(0x7f0000001e40)='timers\x00')
+setsockopt$IP_VS_SO_SET_STARTDAEMON(r6, 0x0, 0x48b, &(0x7f0000001e80)={0x0, 'ip6gretap0\x00', 0x1}, 0x18)
+r7 = socket$inet6(0xa, 0x80007, 0x4)
+ioctl$sock_SIOCBRDELBR(r7, 0x89a1, &(0x7f0000001ec0)='bond_slave_1\x00')
+r8 = openat$nvram(0xffffffffffffff9c, &(0x7f0000001f00)='/dev/nvram\x00', 0x101700, 0x0)
+ioctl$sock_inet6_udp_SIOCOUTQ(r8, 0x5411, &(0x7f0000001f40))
+socket$inet(0x2, 0x80000, 0x1)
+setsockopt$inet_int(0xffffffffffffffff, 0x0, 0x27, &(0x7f0000001f80)=0x6, 0x4)
+getsockopt$SO_COOKIE(r6, 0x1, 0x39, &(0x7f0000001fc0), &(0x7f0000002000)=0x8)
+r9 = openat$cgroup_ro(0xffffffffffffffff, &(0x7f0000002040)='cpu.stat\x00', 0x0, 0x0)
+ioctl$NS_GET_OWNER_UID(r9, 0xb704, &(0x7f0000002080))
+r10 = openat$cgroup_ro(r6, &(0x7f00000020c0)='memory.current\x00', 0x0, 0x0)
+unlinkat(r10, &(0x7f0000002100)='./file0\x00', 0x600)
+r11 = syz_open_procfs(0xffffffffffffffff, &(0x7f0000002140)='net/anycast6\x00')
+accept$inet(r11, 0x0, &(0x7f0000002180))
+pread64(r10, &(0x7f00000021c0)=""/69, 0x45, 0x0)
+
+18:47:34 executing program 5:
+r0 = openat$procfs(0xffffffffffffff9c, &(0x7f0000000000)='/proc/diskstats\x00', 0x0, 0x0)
+r1 = syz_genetlink_get_family_id$netlbl_mgmt(&(0x7f0000000080)='NLBL_MGMT\x00')
+sendmsg$NLBL_MGMT_C_ADD(r0, &(0x7f0000000140)={&(0x7f0000000040)={0x10, 0x0, 0x0, 0x10210000}, 0xc, &(0x7f0000000100)={&(0x7f00000000c0)={0x1c, r1, 0x2, 0x70bd2c, 0x25dfdbfc, {}, [@NLBL_MGMT_A_IPV4ADDR={0x8, 0x7, @local}]}, 0x1c}, 0x1, 0x0, 0x0, 0x20001000}, 0x40046)
+r2 = syz_open_dev$vcsu(&(0x7f0000000240)='/dev/vcsu#\x00', 0x7fffffff, 0x84800)
+ioctl$sock_inet_tcp_SIOCINQ(r2, 0x541b, &(0x7f0000000280))
+ioctl$RTC_WIE_ON(r0, 0x700f)
+r3 = syz_open_procfs(0x0, &(0x7f00000002c0)='net/sockstat6\x00')
+ioctl$SG_GET_ACCESS_COUNT(r3, 0x2289, &(0x7f0000000300))
+fcntl$getownex(r2, 0x10, &(0x7f0000000340)={0x0, <r4=>0x0})
+move_pages(r4, 0x5, &(0x7f0000000380)=[&(0x7f0000ffa000/0x4000)=nil, &(0x7f0000ffd000/0x3000)=nil, &(0x7f0000ff9000/0x4000)=nil, &(0x7f0000ff1000/0xf000)=nil, &(0x7f0000ffb000/0x4000)=nil], &(0x7f00000003c0)=[0xb1e, 0x8c, 0x2], &(0x7f0000000400)=[0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0], 0x2)
+r5 = request_key(&(0x7f0000000440)='keyring\x00', &(0x7f0000000480)={'syz', 0x1}, &(0x7f00000004c0)='\x00', 0xffffffffffffffff)
+keyctl$revoke(0x3, r5)
+r6 = openat$thread_pidfd(0xffffffffffffff9c, &(0x7f0000000500)='/proc/thread-self\x00', 0x8000, 0x0)
+ioctl$FITRIM(r6, 0xc0185879, &(0x7f0000000540)={0x4, 0x6, 0xfffffffffffffff9})
+write$binfmt_elf64(r0, &(0x7f0000000580)={{0x7f, 0x45, 0x4c, 0x46, 0x3, 0x6, 0x4, 0x7f, 0x0, 0x3, 0x6, 0x2, 0x107, 0x40, 0x64, 0x6761, 0x1ff, 0x38, 0x2, 0x40, 0x2d, 0x7}, [{0x1, 0x7, 0x8, 0x3, 0xff, 0x5, 0x1000, 0xfffffffffffffffa}, {0x5, 0x5, 0x4, 0x5, 0x400, 0xfb8, 0x1c, 0x9ca0}], "9a25a7ebad7600372ba43ea8f2fde698d922236eb2e5bbf50d6ec23808bc7ddf037944a18b15ed2978fc914eca2e53b76b382073e0c8ba2e946a87c274", [[], [], [], [], [], []]}, 0x6ed)
+ioctl$SG_SET_DEBUG(0xffffffffffffffff, 0x227e, &(0x7f0000000c80)=0x1)
+ioctl$PTP_PEROUT_REQUEST2(r3, 0x40383d0c, &(0x7f0000000cc0)={{0x72, 0x10001}, {0x100, 0x81}, 0x9, 0x1})
+r7 = openat$ptp0(0xffffffffffffff9c, &(0x7f0000000d00)='/dev/ptp0\x00', 0x2, 0x0)
+write$binfmt_elf32(r7, &(0x7f0000000d40)={{0x7f, 0x45, 0x4c, 0x46, 0xc8, 0x32, 0x7f, 0x1, 0x8, 0x0, 0x6, 0x3f, 0x278, 0x38, 0x25c, 0x8fe, 0x8d, 0x20, 0x2, 0xff, 0x8001, 0xd7c9}, [{0x6474e551, 0x4000, 0xfff, 0x0, 0x6, 0x8001, 0x6, 0x1f}, {0x6474e551, 0xffffffff, 0x86de, 0x7cfba390, 0x9, 0xb38e, 0x3, 0x7fff}], "3f5d500a07cde7a044e10083a7420bc6f0324f71b8e9395704ce655d40036e03d3339099547e304688f54989c12e14bdf4905452b3169e5d8f89ddb53a3881f327790ecf9d034a1b1fdcc25558b4baca18fec7693a70985d6887d668172eab05544a5fe1b582", [[], [], []]}, 0x3de)
+r8 = socket$inet_tcp(0x2, 0x1, 0x0)
+setsockopt$inet_int(r8, 0x0, 0x1a, &(0x7f0000001200)=0x2, 0x4)
+socket$inet_udp(0x2, 0x2, 0x0)
+finit_module(r3, &(0x7f0000001240)='\x00', 0x2)
+r9 = openat$md(0xffffffffffffff9c, &(0x7f0000001280)='/dev/md0\x00', 0x0, 0x0)
+fcntl$setstatus(r9, 0x4, 0x200)
+r10 = openat$hwrng(0xffffffffffffff9c, &(0x7f00000012c0)='/dev/hwrng\x00', 0x80, 0x0)
+ioctl$EVIOCSMASK(r10, 0x40104593, &(0x7f00000013c0)={0x38, 0x8a, &(0x7f0000001300)="64678f7e71e2aebf761c4c51104914638e9dc616f430fe7a9e7b6f8c5eab23bd321ab3ef09243a440d2a0ac70b3ef88cdeedd4fe6a401c2ee95ee4342daef7a81a3dd721db2007e74874bfa6867ef62dd8d7bf77dd799a4cde67701d0de1aa08e551fd3a695efa904b4fa0d42ebf4e9f657b1b144929e45ed6e593ab0f756ca710f10b6b70d4800fc171"})
+r11 = socket$inet6_icmp(0xa, 0x2, 0x3a)
+setsockopt$inet6_IPV6_FLOWLABEL_MGR(r11, 0x29, 0x20, &(0x7f0000001400)={@ipv4={[], [], @multicast1}, 0x0, 0x0, 0xfd, 0x1, 0xcc87, 0x5a}, 0x20)
+prctl$PR_SET_MM(0x23, 0x1, &(0x7f0000ffc000/0x1000)=nil)
+
+18:47:34 executing program 6:
+r0 = ioctl$TIOCGPTPEER(0xffffffffffffffff, 0x5441, 0x7ff)
+ioctl$GIO_FONT(r0, 0x4b60, &(0x7f0000000000)=""/35)
+r1 = openat$ptmx(0xffffffffffffff9c, &(0x7f0000000040)='/dev/ptmx\x00', 0x8100, 0x0)
+ioctl$GIO_UNIMAP(r1, 0x4b66, &(0x7f00000000c0)={0x6, &(0x7f0000000080)=[{}, {}, {}, {}, {}, {}]})
+r2 = openat$nvram(0xffffffffffffff9c, &(0x7f0000000100)='/dev/nvram\x00', 0x0, 0x0)
+ioctl$BLKGETSIZE64(r2, 0x80081272, &(0x7f0000000140))
+prctl$PR_SET_SPECULATION_CTRL(0x35, 0x0)
+ioctl$TCGETA(r0, 0x5405, &(0x7f0000000180))
+mremap(&(0x7f0000fff000/0x1000)=nil, 0x1000, 0x1000, 0x3, &(0x7f0000fff000/0x1000)=nil)
+r3 = openat$full(0xffffffffffffff9c, &(0x7f00000001c0)='/dev/full\x00', 0xdc2c4a78783760a2, 0x0)
+sendmmsg$inet6(r3, &(0x7f0000000200), 0x0, 0x40000)
+r4 = openat$procfs(0xffffffffffffff9c, &(0x7f0000000240)='/proc/meminfo\x00', 0x0, 0x0)
+ioctl$SNDRV_SEQ_IOCTL_GET_QUEUE_TIMER(r4, 0xc0605345, &(0x7f0000000280)={0x6, 0x0, {0x0, 0x1, 0x73f, 0x2, 0x400}, 0x10000})
+r5 = syz_open_dev$vcsa(&(0x7f0000000300)='/dev/vcsa#\x00', 0x3, 0x2a202)
+r6 = getpid()
+ioctl$BLKTRACESETUP(r5, 0xc0481273, &(0x7f0000000340)={[], 0x0, 0x9, 0xc942, 0x1c000000, 0x8, r6})
+r7 = accept4$unix(0xffffffffffffffff, &(0x7f00000003c0)=@abs, &(0x7f0000000440)=0x6e, 0x80000)
+ioctl$EXT4_IOC_MIGRATE(r7, 0x6609)
+ioctl$EVIOCSABS20(r5, 0x401845e0, &(0x7f0000000480)={0x7902, 0xfffeffff, 0x2, 0x202, 0x3fb, 0x80000000})
+ioctl$BLKBSZSET(r2, 0x40081271, &(0x7f00000004c0)=0xfffffffffffffff8)
+r8 = syz_genetlink_get_family_id$ipvs(&(0x7f0000000540)='IPVS\x00')
+sendmsg$IPVS_CMD_NEW_DEST(0xffffffffffffffff, &(0x7f0000000600)={&(0x7f0000000500)={0x10, 0x0, 0x0, 0x10000}, 0xc, &(0x7f00000005c0)={&(0x7f0000000580)={0x24, r8, 0xc80, 0x70bd2d, 0x25dfdbfb, {}, [@IPVS_CMD_ATTR_TIMEOUT_UDP={0x8, 0x6, 0xffffffff}, @IPVS_CMD_ATTR_TIMEOUT_UDP={0x8, 0x6, 0x6}]}, 0x24}, 0x1, 0x0, 0x0, 0x4000}, 0x24000040)
+r9 = accept(r4, &(0x7f0000000640)=@nl=@unspec, &(0x7f00000006c0)=0x80)
+fsetxattr$trusted_overlay_origin(r9, &(0x7f0000000700)='trusted.overlay.origin\x00', &(0x7f0000000740)='y\x00', 0x2, 0x2)
+r10 = openat$nvram(0xffffffffffffff9c, &(0x7f0000000780)='/dev/nvram\x00', 0x42000, 0x0)
+ioctl$NS_GET_USERNS(r10, 0xb701, 0x0)
+futex(&(0x7f00000007c0)=0x2, 0xcf, 0x0, &(0x7f0000000800), &(0x7f0000000840)=0x2, 0x0)
+r11 = dup(0xffffffffffffffff)
+r12 = openat$cgroup_root(0xffffffffffffff9c, &(0x7f00000008c0)='./cgroup.net/syz1\x00', 0x200002, 0x0)
+fsconfig$FSCONFIG_SET_FD(r11, 0x5, &(0x7f0000000880)='/dev/ptmx\x00', 0x0, r12)
+
+18:47:34 executing program 7:
+openat$procfs(0xffffffffffffff9c, &(0x7f0000000000)='/proc/bus/input/handlers\x00', 0x0, 0x0)
+r0 = openat$vcsa(0xffffffffffffff9c, &(0x7f0000000040)='/dev/vcsa\x00', 0x2000, 0x0)
+sendmsg$IPVS_CMD_NEW_SERVICE(r0, &(0x7f0000000180)={&(0x7f0000000080)={0x10, 0x0, 0x0, 0x80818}, 0xc, &(0x7f0000000140)={&(0x7f00000000c0)={0x68, 0x0, 0x8, 0x70bd29, 0x25dfdbfe, {}, [@IPVS_CMD_ATTR_SERVICE={0x18, 0x1, [@IPVS_SVC_ATTR_PROTOCOL={0x6, 0x2, 0x67}, @IPVS_SVC_ATTR_FLAGS={0xc, 0x7, {0x20, 0x20}}]}, @IPVS_CMD_ATTR_TIMEOUT_TCP={0x8}, @IPVS_CMD_ATTR_SERVICE={0x2c, 0x1, [@IPVS_SVC_ATTR_SCHED_NAME={0x9, 0x6, 'none\x00'}, @IPVS_SVC_ATTR_AF={0x6, 0x1, 0x2}, @IPVS_SVC_ATTR_SCHED_NAME={0x7, 0x6, 'lc\x00'}, @IPVS_SVC_ATTR_FLAGS={0xc, 0x7, {0x3, 0x8}}]}, @IPVS_CMD_ATTR_TIMEOUT_TCP={0x8, 0x4, 0xfffffffd}]}, 0x68}, 0x1, 0x0, 0x0, 0x44000}, 0x60000084)
+r1 = creat(&(0x7f00000001c0)='./file0\x00', 0x10)
+r2 = syz_genetlink_get_family_id$tipc2(&(0x7f0000000240)='TIPCv2\x00')
+sendmsg$TIPC_NL_BEARER_GET(r1, &(0x7f00000003c0)={&(0x7f0000000200)={0x10, 0x0, 0x0, 0x4000}, 0xc, &(0x7f0000000380)={&(0x7f0000000280)={0x100, r2, 0x400, 0x70bd29, 0x25dfdbfb, {}, [@TIPC_NLA_NODE={0x24, 0x6, 0x0, 0x1, [@TIPC_NLA_NODE_ADDR={0x8, 0x1, 0x10000}, @TIPC_NLA_NODE_ADDR={0x8, 0x1, 0x3}, @TIPC_NLA_NODE_ADDR={0x8, 0x1, 0x200000}, @TIPC_NLA_NODE_ADDR={0x8, 0x1, 0x7fffffff}]}, @TIPC_NLA_SOCK={0x18, 0x2, [@TIPC_NLA_SOCK_HAS_PUBL={0x4}, @TIPC_NLA_SOCK_ADDR={0x8, 0x1, 0x3839}, @TIPC_NLA_SOCK_ADDR={0x8, 0x1, 0x8001}]}, @TIPC_NLA_MON={0x14, 0x9, [@TIPC_NLA_MON_REF={0x8, 0x2, 0x8}, @TIPC_NLA_MON_REF={0x8, 0x2, 0x1}]}, @TIPC_NLA_NODE={0x38, 0x6, 0x0, 0x1, [@TIPC_NLA_NODE_UP={0x4}, @TIPC_NLA_NODE_UP={0x4}, @TIPC_NLA_NODE_ADDR={0x8, 0x1, 0x1}, @TIPC_NLA_NODE_UP={0x4}, @TIPC_NLA_NODE_UP={0x4}, @TIPC_NLA_NODE_ADDR={0x8, 0x1, 0x1}, @TIPC_NLA_NODE_ADDR={0x8, 0x1, 0x7}, @TIPC_NLA_NODE_ADDR={0x8, 0x1, 0x5}, @TIPC_NLA_NODE_UP={0x4}]}, @TIPC_NLA_NODE={0x30, 0x6, 0x0, 0x1, [@TIPC_NLA_NODE_ADDR={0x8, 0x1, 0x5}, @TIPC_NLA_NODE_UP={0x4}, @TIPC_NLA_NODE_ADDR={0x8, 0x1, 0x9}, @TIPC_NLA_NODE_ADDR={0x8, 0x1, 0x4}, @TIPC_NLA_NODE_ADDR={0x8}, @TIPC_NLA_NODE_ADDR={0x8, 0x1, 0x5}]}, @TIPC_NLA_NODE={0x2c, 0x6, 0x0, 0x1, [@TIPC_NLA_NODE_UP={0x4}, @TIPC_NLA_NODE_UP={0x4}, @TIPC_NLA_NODE_UP={0x4}, @TIPC_NLA_NODE_ADDR={0x8, 0x1, 0x7}, @TIPC_NLA_NODE_ADDR={0x8, 0x1, 0x101}, @TIPC_NLA_NODE_UP={0x4}, @TIPC_NLA_NODE_ADDR={0x8, 0x1, 0x4}]}, @TIPC_NLA_NODE={0x8, 0x6, 0x0, 0x1, [@TIPC_NLA_NODE_UP={0x4}]}]}, 0x100}, 0x1, 0x0, 0x0, 0x4c800}, 0x4)
+ioctl$sock_FIOGETOWN(r0, 0x8903, &(0x7f0000000400))
+r3 = dup(0xffffffffffffffff)
+r4 = syz_genetlink_get_family_id$netlbl_mgmt(&(0x7f0000000480)='NLBL_MGMT\x00')
+sendmsg$NLBL_MGMT_C_ADDDEF(r3, &(0x7f0000000540)={&(0x7f0000000440), 0xc, &(0x7f0000000500)={&(0x7f00000004c0)={0x3c, r4, 0x200, 0x70bd29, 0x25dfdbfb, {}, [@NLBL_MGMT_A_CLPDOI={0x8, 0xc, 0x2}, @NLBL_MGMT_A_FAMILY={0x6, 0xb, 0x22}, @NLBL_MGMT_A_DOMAIN={0xe, 0x1, '/dev/vcsa\x00'}, @NLBL_MGMT_A_CLPDOI={0x8, 0xc, 0x3}]}, 0x3c}, 0x1, 0x0, 0x0, 0x10}, 0x4000000)
+r5 = openat$vga_arbiter(0xffffffffffffff9c, &(0x7f0000000580)='/dev/vga_arbiter\x00', 0x200000, 0x0)
+readv(r5, &(0x7f00000017c0)=[{&(0x7f00000005c0)=""/55, 0x37}, {&(0x7f0000000600)=""/49, 0x31}, {&(0x7f0000000640)=""/112, 0x70}, {&(0x7f00000006c0)=""/4096, 0x1000}, {&(0x7f00000016c0)=""/201, 0xc9}], 0x5)
+r6 = socket$inet(0x2, 0x3, 0x1f)
+setsockopt$IP_VS_SO_SET_TIMEOUT(r6, 0x0, 0x48a, &(0x7f0000001840)={0x2, 0x8, 0x7}, 0xc)
+syz_genetlink_get_family_id$tipc(&(0x7f0000001880)='TIPC\x00')
+r7 = syz_open_dev$vcsa(&(0x7f00000018c0)='/dev/vcsa#\x00', 0x0, 0x10000)
+accept(r7, &(0x7f0000001900)=@in6, &(0x7f0000001980)=0x80)
+r8 = socket$inet_tcp(0x2, 0x1, 0x0)
+ioctl$sock_proto_private(r8, 0x89e3, &(0x7f00000019c0)="84b37ccbe7a402524a9fdcf41d25492944d1d53850451a5e0578d8be73ed1a5a4060f66aa2fea354a208231a985938b249dd11e444d0080dee9ba11bfa998c282c599b46fe92ef0230042015acb94f139fd86e0213b9ed552342e6981a4b83e7e4eb354c11835362c205c1a37b7a1b541e7cff2646272d9ea8c2b20761380250d6dfe9788e9a11e49ba4b5")
+fallocate(r6, 0x28, 0x100000001, 0x400)
+eventfd2(0x34e, 0x1)
+r9 = creat(&(0x7f0000001a80)='./file1\x00', 0x28)
+ioctl$EVIOCGKEYCODE(r9, 0x80084504, &(0x7f0000001ac0)=""/181)
+fsconfig$FSCONFIG_SET_FD(r3, 0x5, &(0x7f0000001b80)='/dev/vcsa#\x00', 0x0, r1)
+r10 = openat$bsg(0xffffffffffffff9c, &(0x7f0000001bc0)='/dev/bsg\x00', 0x200000, 0x0)
+ioctl$SNDRV_TIMER_IOCTL_TREAD(r10, 0x40045402, &(0x7f0000001c00))
+getsockopt$EBT_SO_GET_INFO(r6, 0x0, 0x80, &(0x7f0000001c40)={'broute\x00'}, &(0x7f0000001cc0)=0x78)
+r11 = request_key(&(0x7f0000001d00)='cifs.idmap\x00', &(0x7f0000001d40)={'syz', 0x1}, &(0x7f0000001d80)='/dev/vga_arbiter\x00', 0xfffffffffffffffd)
+keyctl$KEYCTL_PKEY_QUERY(0x18, r11, 0x0, &(0x7f0000001dc0)='broute\x00', &(0x7f0000001e00))
+getsockopt$IPT_SO_GET_INFO(r7, 0x0, 0x40, &(0x7f0000001e40)={'filter\x00'}, &(0x7f0000001ec0)=0x54)
+
+18:47:34 executing program 8:
+r0 = openat$vga_arbiter(0xffffffffffffff9c, &(0x7f0000000000)='/dev/vga_arbiter\x00', 0x2980, 0x0)
+ioctl$SNDRV_TIMER_IOCTL_SELECT(r0, 0x40345410, &(0x7f0000000040)={{0xffffffffffffffff, 0x0, 0x4, 0x3, 0xf1c}})
+r1 = accept4$inet6(0xffffffffffffffff, &(0x7f0000000080)={0xa, 0x0, 0x0, @mcast1}, &(0x7f00000000c0)=0x1c, 0x80000)
+setsockopt$inet6_buf(r1, 0x29, 0x23, &(0x7f0000000100)="afb93dedf0b7c59996a127826cfc0836a3aac733438cd75dc3f6c041a3bb828405d42947cf1006780b724b0ee6e627bdb75ff3d6b9e572ee725a26d110bfee7460be2f2016babcc307255edf4d0227fa71a0e4e80a7eff7d8a89d12363849c8a54188b48fa6503c338ab8fd79a5b704eccc8a2837945b6d32aa69b23ad4ff214f4b5f6e4002b79bbc4c3e22b71346c7d3859fe875843a4b6b10ce3cc0f4d5ce3c2ceffb353f626899cf1c800dd2498487f212112e7feee47eeb6da521b11fa564e07b3", 0xc3)
+lsetxattr$security_evm(&(0x7f0000000200)='./file0\x00', &(0x7f0000000240)='security.evm\x00', &(0x7f0000000280)=@ng={0x4, 0x6, "c29ccf5b2ae02969156e9c2367e8"}, 0x10, 0x0)
+ioctl$SNDRV_SEQ_IOCTL_GET_PORT_INFO(r0, 0xc0a85322, &(0x7f00000002c0))
+ioctl$TIOCGISO7816(r0, 0x80285442, &(0x7f0000000380))
+ioctl$KDENABIO(r0, 0x4b36)
+r2 = openat$procfs(0xffffffffffffff9c, &(0x7f00000003c0)='/proc/tty/drivers\x00', 0x0, 0x0)
+sendmsg$inet(r2, &(0x7f0000000880)={&(0x7f0000000400)={0x2, 0x4e24, @broadcast}, 0x10, &(0x7f0000000780)=[{&(0x7f0000000440)="0c4d47f2edf95d2b7ae1b603fb845e78b1fa1a6e5ac4c55038c4df614e7d41cbe746941827e46ec8e00dca0d43d8f3c5a5d54004c4e2dca7f960669a5d42c89dc35b9ef02c65f97149f7ac845a72", 0x4e}, {&(0x7f00000004c0)="4e911d9ed21f17e2c7fe76c82f0d6a2cd52f65017be88f9e9d535d642021b47cf15913578b7856ae4870849788324506148b987e", 0x34}, {&(0x7f0000000500)="0e71aba3cf162b584efa930fcd941213eaf355e438f01f512cbbe84b112113a83831fed5079ef442e5654d823d515c5e5248f18a5e54102b2ce90c1fc4150fa60551d102d8b86b146667dc25bf03fdb1719b076b3101cc572af8d3dfa3aa963f68281c12c2340c8bc44cafd17c77c9902223d8ca2667c27edac3357bb65202cc6ee344372e54c0e6", 0x88}, {&(0x7f00000005c0)="92fd9a94d2aba64a0155ce9d7abcfc21b9be90f6e79dd45594153baad975bd7a094c47f10d88b3725ecf3591a54ca7a3530a879195e5e6511d60f7d869c445c79af96208a4397c3b395cb7353dcb75f14da023d7f44129970e7d413b80b53bbb168dbf334783755638d053937cda4e021801cbec3785cf5f2a405a9057a3e5628dc07823", 0x84}, {&(0x7f0000000680)="7c2aa24ca1b529725d17ac58e82a9f33eebbe7fb29cbe0045643bb5feedc4abcaa448cdbc99ade09129d745145125436491d041a19d40e585a418b414e69a58daa14a68e6977f832762a82a2c6ccb124effd92ba9ebd1f2bd5f778ec2ab8607b0f1b000a23c2651767c0cbd2c5d043a831b73694bdc376a64981a7b345a28bbd129a84f0f08f41f52fadfc130830f6138f2c78270fb4150fb7f872b02cf64f0e0f29d1ddc44ae65e3e48c219a83cb8610ed0c0676829c19fa2c3f480d30d7bfc6a987e8345e5b70b38b494568e8386ef8037bdbb2fe738e5e34c11657310b8218be68bbf0c22c64a53e3fbfc8714554d829a10c4183851", 0xf7}], 0x5, &(0x7f0000000800)=[@ip_retopts={{0x60, 0x0, 0x7, {[@timestamp={0x44, 0x2c, 0x87, 0x0, 0x2, [0xa3, 0x4, 0x0, 0x3325, 0x8, 0x8, 0xbdf, 0x3, 0x0, 0xb49]}, @timestamp_prespec={0x44, 0x24, 0x65, 0x3, 0x8, [{@local, 0x8001}, {@multicast1, 0x10000}, {@multicast2, 0x5}, {@initdev={0xac, 0x1e, 0x0, 0x0}, 0x81}]}]}}}], 0x60}, 0x8040004)
+link(&(0x7f00000008c0)='./file0\x00', &(0x7f0000000900)='\x00')
+ioctl$GIO_FONT(r2, 0x4b60, &(0x7f0000000940)=""/183)
+r3 = syz_genetlink_get_family_id$nl80211(&(0x7f0000000a40)='nl80211\x00')
+sendmsg$NL80211_CMD_TRIGGER_SCAN(r2, &(0x7f0000000b40)={&(0x7f0000000a00)={0x10, 0x0, 0x0, 0x8}, 0xc, &(0x7f0000000b00)={&(0x7f0000000a80)={0x48, r3, 0x100, 0x70bd25, 0x25dfdbfd, {}, [@NL80211_ATTR_SCAN_SSIDS={0x34, 0x2d, [{0x8, 0x0, [0x8, 0x8, 0xc, 0xa]}, {0x8, 0x0, [0x17, 0x3, 0x7, 0x18]}, {0x5, 0x0, [0xd]}, {0xe, 0x0, [0xf, 0x1f, 0x1b, 0x18, 0x7, 0xe, 0x3, 0xe, 0x1f, 0x1b]}, {0x5, 0x0, [0x14]}]}]}, 0x48}, 0x1, 0x0, 0x0, 0x80}, 0x20000044)
+socket$inet6_tcp(0xa, 0x1, 0x0)
+ioctl$PTP_EXTTS_REQUEST2(0xffffffffffffffff, 0x40103d0b, &(0x7f0000000b80)={0x0, 0x42b49f6119508c4})
+r4 = openat$vcsu(0xffffffffffffff9c, &(0x7f0000000bc0)='/dev/vcsu\x00', 0x200000, 0x0)
+r5 = socket$nl_generic(0x10, 0x3, 0x10)
+epoll_ctl$EPOLL_CTL_MOD(r4, 0x3, r5, &(0x7f0000000c00)={0x3000001f})
+r6 = dup2(0xffffffffffffffff, 0xffffffffffffffff)
+ioctl$SNDRV_TIMER_IOCTL_STATUS32(r6, 0x80585414, &(0x7f0000000c40))
+r7 = dup(0xffffffffffffffff)
+ioctl$EVIOCGABS3F(r7, 0x8018457f, &(0x7f0000000cc0)=""/252)
+r8 = syz_open_dev$ptys(0xc, 0x3, 0x0)
+ioctl$TCGETA(r8, 0x5405, &(0x7f0000000dc0))
+r9 = syz_open_dev$vcsa(&(0x7f0000000e00)='/dev/vcsa#\x00', 0x40, 0x900a0)
+write$rfkill(r9, &(0x7f0000000e40)={0x1, 0x6, 0x3, 0x0, 0x1}, 0x8)
+ioctl$FS_IOC_SETVERSION(r1, 0x40087602, &(0x7f0000000e80)=0x5ca9)
+r10 = syz_genetlink_get_family_id$SEG6(&(0x7f0000000f00)='SEG6\x00')
+sendmsg$SEG6_CMD_SET_TUNSRC(0xffffffffffffffff, &(0x7f0000000fc0)={&(0x7f0000000ec0)={0x10, 0x0, 0x0, 0x4000000}, 0xc, &(0x7f0000000f80)={&(0x7f0000000f40)={0x24, r10, 0x200, 0x70bd29, 0x25dfdbff, {}, [@SEG6_ATTR_ALGID={0x5, 0x6, 0x80}, @SEG6_ATTR_SECRETLEN={0x5, 0x5, 0x5}]}, 0x24}, 0x1, 0x0, 0x0, 0x8000}, 0xc0048e2)
+
+18:47:34 executing program 9:
+r0 = creat(&(0x7f0000000040)='./file0\x00', 0x25)
+symlinkat(&(0x7f0000000000)='./file0\x00', r0, &(0x7f0000000080)='./file0\x00')
+r1 = openat$dir(0xffffffffffffff9c, &(0x7f00000000c0)='./file0\x00', 0x200000, 0x80)
+statx(r1, &(0x7f0000000100)='./file0\x00', 0x0, 0x20, &(0x7f0000000140))
+r2 = syz_genetlink_get_family_id$netlbl_unlabel(&(0x7f0000000280)='NLBL_UNLBL\x00')
+sendmsg$NLBL_UNLABEL_C_STATICADD(r0, &(0x7f00000003c0)={&(0x7f0000000240)={0x10, 0x0, 0x0, 0x804040}, 0xc, &(0x7f0000000380)={&(0x7f00000002c0)={0xb0, r2, 0x4, 0x70bd2b, 0x25dfdbfe, {}, [@NLBL_UNLABEL_A_SECCTX={0x20, 0x7, 'system_u:object_r:cert_t:s0\x00'}, @NLBL_UNLABEL_A_IPV6MASK={0x14, 0x3, @loopback}, @NLBL_UNLABEL_A_IPV4ADDR={0x8, 0x4, @initdev={0xac, 0x1e, 0x0, 0x0}}, @NLBL_UNLABEL_A_IPV6MASK={0x14, 0x3, @empty}, @NLBL_UNLABEL_A_IFACE={0x14, 0x6, 'bond_slave_1\x00'}, @NLBL_UNLABEL_A_SECCTX={0x24, 0x7, 'system_u:object_r:sshd_key_t:s0\x00'}, @NLBL_UNLABEL_A_IPV6MASK={0x14, 0x3, @local}]}, 0xb0}, 0x1, 0x0, 0x0, 0x8005090}, 0x4)
+socket$inet6_tcp(0xa, 0x1, 0x0)
+syz_mount_image$nfs4(&(0x7f0000000400)='nfs4\x00', &(0x7f0000000440)='./file0\x00', 0x6, 0x7, &(0x7f0000001880)=[{&(0x7f0000000480)="85c1d19791b236d685dc9a585583a1a3f88b98c52418647641aaafe063ac322eb163bb5d5ec31da3da167305cc009092d8ff95cc530c240324718d8be1c1635d455acc39f63ba15a76d06d28ac31843db880da493752860b916b17c9a0dcd51123475d93856e0f40ed3d42fd54fac0f5fc7540888eea2a70a826a7363ad5dd17a3e8666e45e6012fb0af52ba74e5949d494bee4b7b900e264019793886f9f91367b71141", 0xa4, 0x1}, {&(0x7f0000000540)="f75084785c7949389a2889750b1fba8267c4a40c5db5be7de573d22ea650839c9366499191bc58bdfdca1e8dd94372bbf034c21550c2b63c426760bddf8610044d0f9bc900278835913ca3da23070b0094af19978f6c8d71c6ac728163a5e18b1109174a5e7ec853c411b6054ae8d3cfdc8709ed4d32bf0c5ae92d7b9b3ff4aa287c5e762afa1f5b45bdf21d83890c97e5d5230485dc9166746c16ae68c7fc7cb627ce46f1577d91982a0e69ed2c809bde0da6e3", 0xb4, 0x100}, {&(0x7f0000000600)="0bd86159834135e9ba1deb569177e34dfe82544ea35c91d6f4be8972ab64d88ea805e76fae3b27deb8e56825b0d891eff336741263fde700c8805b340fb9dd7304f418766a54690aa9e7d1944452762dcd65d51b5584616b036bd875cf476bdc7299b3969e9c5b6eb29c56f87d056aca0232e4648c646e449d7dc17d720e39fb5ead9ce8caf7f15fa0d4d870", 0x8c, 0xa2}, {&(0x7f00000006c0)="f6f1a16673a747d1d4faac69b8d2accd8edc82d20799030608e44bab7ab5b55865c932954ec2c386caad8ec86047577b4e8a5889e593a7a1f6f92d22d60eb935c1db5cd0e5fb16abf7a87c9818e218265aac641da0766f0c24034408f822b25aad901889e930c86eafea034582043c8105327b1c1d407261f949ee6c6f85948734a5f04718e008f96c8d5752cb82e4e07b5b27a247cbad75d0d5651a8ac74bcdf396f417ae21098027a9fe179f68f84f1b7ec249ffd2e23fa025f53ca4d0ee888d9bc69e2f56e1d53190b92a225f951052f9a2f3915503e5786e1212ad6f90ae4284c2dcf88358282eb5bd8576177901d5b05d90180ed0a3b228b333e4a695fb32ae03a1073fe45089cb77cbf6468d901a536aea9f0dd0d046e01967eb209650d9eb91404fed0cd635af34ce480e1cfee9f7858b534b8de213a4f10083507b19919e4c0ec527fa075fd67f3d27231d54fec202e4057738ba851bb08898ac9232bdea19f18f6723e28e88a926930a2ccaa40b0ee0dcad427f74f9d2d6155e8b466f52653a29782a9fdd9489e3179702f2fe5fa00fa35e9dfb17f01763eab15808e50137b809bb37c324389d629740ef1a13e5ee71a9464b18e915d67fb37e769e327277ea57ea8a817e2c30ce9efe5330bd7755e38985e758b87f8e3b7e7003f1a228ed617c030068be071718fa1c1eccd5203ca7451e3431b91da9f4f9897a76e8d678deeb4d1d8a81262da74c5a10ea653d58eb729c8436c6b699dca0129c11f28557d5c315dd183b2253b31a82be33ac479e2e96486b124000b167b2ac9a806d2d94034cd1be9c1b0f029e9d6c1b720af13f21e73693a91e6d18ce7a32c51445a029768c4d480cb43284685a4579200e3fbd218b926e2bc7d93324dc48629193d7a15da3a0340c2c02c2331d6cdad9d0c7dc4acdd01921980ab760f1d0cdc3cd5a2f850bba0995a493882f4603d7b3b4491ed82e79c85cc7684196854a9b9caa2b6ed7a272b5fa02ed5b5884f0ff7cd1ae8f952ac94c84ca6d999f53328688d5adbe6ec4927e54e60fd15abe63517e4dcacb352d2a79d13d2422a1df45e91263ca37ebc94f9e5bdbb835495cf1d996f4ab2078b0ce8dbdaf7762d2773be39e852bdb87415471b5c67fe0bb3c3523ee0b9579e82bc7fa55864e350023ab3000b86e2396b1ee7099c8fd85287e2cad6f31cbbead111c7471c5ce43e74533684d210d924661cb861c7496380f1508c3e068b08bc8835c1e8eedce9a7089f196520ba0800d0e9769a3dbfca87b32f8474b891863f4a9308247b11d03468399856c781dd5a172c8d879f71847de830f24cc86d03e35fd43748eb0541b21dbd836959dcd3bad40515b57e4718fd4a0b21440a7b90c4b84e4f129f4d5c370b70f366ece36e8b80e556929195451b037552484e776bd62cc628e9644fd73bc0b176b377f8582d4f164ed9d09db86bae2ce60fdf7513be13214678871b137e8c7d2900c086c9577633b4f0ceae04500d0cb6ca015db0f650d28ad2a3455bb5f2c3f27c616f9f7f6ec2b2fb95d9d662f1d41770621f41668b4e51f2ab672f17eb2f9a29645aaa9a9fa2ea6f697f2759042551dcd8a7af805e3e5024dd20e72d921b119b565bf854fdd60745ab04081b4f247244299aace16567aaaaaa38d635b27cc79b5791d1cafc567cd9d57b4bca1b39f0c905db73ebdd80571f7e70fe7c21049246a6caf46cb83455029c135bd766754f844d55beec640ae7d233117956b1d0244a8184816afebb8f11e2cb708e1dd92e90735ab80b68927760234d0b443800519f2de17fbc81dd6f73229cd2db9c0e3ca20819e5eb14db9c0b5064a710c047e6a0a296628de53e70f6975cc0abcd9c74f61ba9802c041b0c01a79838099325653424ed34ad3f88c7d933a06af7ac27ebe7590e22e242066fd6ddd7f3f45750653dad059e0dfb85341fae2ecbb4e708b8f97416623597787ec566df9c4eccb25f3a3f966013959549bc8cdb3c9af0f44a0254adea8b016d8b6fba8e541a45f2348ddb0bd408005c61372a828b5e187d53caa8037ca2dcc3ad8926c9a9b01d41bec2e9deffea0895e22e68d1f1ffccad3298c1af878ca27a2d43df75ba54668fda704e45568fd5eaa52581fd993c763644ecdc17b3dbfe06d00a23c30fd8c7b62fe61240b4df37e62a16e1a7cae3853a5d1a0c31d4df90c9165a88745ef0892f67968eebc4c9e03a911a526951f11be19be12c435b1adc34511033e393cc2cc10351d97a2501016aadad96ecb33b8ef57da3bb80b3617368622c191adc3bb922eb53dfa13b61f890e03064863392214d5044a2c0c3a13f31fdbb2ac1ad4832100979703d7dd8695c793d736b3fa94b737c6097e09cb0e62067ed01e8913f6ee370ab71e41d495dc469113980f155ee6d72a69d1c626f56524f0cae499a768db296b825429e1c45c73306f84e12bde57f1e977a896f4e1858bacf5f400f940ade4898f4ba048552b9cfc857e7910988e8d3f40aeb36cbe780854f5e68234ba94dc1ac7eadd2b0327ad0b5856f8d1b12b87f35b1863c925f9f05a887e013fbf8277103e4f0ae9d03e5cba26dd44bc565d8b3b4ec3dd838c4c81cc42bcbc013c1403c2d65bdae59c66b4633ebb461a1a54b5176bc91859da388cac0ea9220eb4bd0949b952b4d453ed2db94c8fbf67849f5c4e36dc59c403d94ac30a51ba703ea07ee02db154eb8dfa0388517eb7d6ae4b7061512f06971e3655e10d5ab74c2deb0b7914ddc8ddc39be09ab8d7ce04d674adac9b994c66f5fbd9b36e93d8548a6539b2fbc3b2a6de49a71fd3b6a0e817f36ac1ace87783594c48c99e6948cef6044b94e3dea9d04d36215479a8beaf08854e09d36ef3505e2ee197a56bc01d6fbcd66aeffdef3371858b7bfc1e9b64bb8fd0869affb50af73eff3f77f3f2faa5cc18b5914a170352841bd6e7a89dfd0993ac042a37c7d41072139ab282838a2553048f20a42cdbe2379edaeb1c4f8465a162d08352989ac50a6757a06eb9d3957d52173b77160cd83dd9fac78b585a615a8fa90dd7a0ade0e552d640917ec7f97b18c43df328f7c8aceaefeaa070cb2f575e91a4636202aed20c06c78abb79a2be808ef9f48016adc9112f4fd88e6f3c85c646322013e0134abda12c669a8996042aeba7ae4f6cef03ffe0fcd2ccfa69606a84de08fdc59afd2459cced8b230a178b02c583c5fe1920df1f005164dc862eca5413eca9b83354b5f17203bcb49e3f8f05281543882da5c0f530b4801e0447e6403cb623e5989676565f96c5043fe5fb52dbc4e07a676b6e6fc3581ed15197b6905d273ef889dd3010cae8a1ddabee1c3b4fca7f1dffad6f98192b921c18b292453ed310eb53ea8b94c06e500a1841bb29bb617d9cc17315bfae99406afe1d70ad309e413b05c8976279c8ca17dcd96acdf817c071ec3da079b4844ed42584b666881a77b54449792daca6a1acdf321935ec7f49fe6962364ac10ea4d5cd58d5ec57124e5b4e3a751fd871e7432c45cf7f99e6f466cd41030931ebcd1f28f25361c70072534539c70931b6430a9ae840983532f38ac09d8676d883c4396e7a79dd31cb1be4356e01ec7ab79d91c891a8df31dcca6d5413ee6dc8410792294ceb2a9e747b388407592f8808090b843df9e203ee5d022e40b5490cff7eddf7a9a6a73a52473ac6af350dd80b2715d59c2c996e07f88c2eaa31a9b98898a963faf7f0a9431bde4be1441403d94902d8ef1d82422e068171de6687b25cd20c9ae8c85529706c75dac1b28db2a093e53617d201f847a293c0209e7e0a16c6d3aa88dd9504c0ebd1e4ffd752fb370f73282914d60bb5f659ece324644afc2a064e41029d88851a0e09d0bad6b97ae13a521f6f10646e1e269828353caa30cc489dbbefdc573993d54c2017449bafb3c79a41b79054f0f83b003028b2a9a2827262f979e4fc9835a15dcda44e0093fc66f7ef0972d2b2e1c9ad469d51c50827d9168ed8daff44bcdeb711b51ad463cb9e96533793d9eee06a3b83e755015503726beec2d7ea01b4f7ff52998237982388f483ab6b2b0050605ba5cf355e3ce8ad439ff13f8617c02be0e39ca4ad753d36e9f2ff1f05eccc48830cd775c984f74d49bf30593966139f17e835c51d786012f2953ba41a0aead3e0493076e6d171e47deca7302937402b71f0316966acf472c1c6c42d6083ddeb7e5397f07d8d542826ba6e53a91ba049447877e4d29b064348096bbefe0521db811f90686ff9e5e057c3cd9fafa5aa24ef2f8aae057548a9220889e7f318aa7f12ec99cbc8ea84d84b50a73fabcba63c85795dd4584a4e61a57c2f656445979e039317665ca569cabfcddc6185200d3003236576c3ac4b531fe50e71c1f4ab8a1fbb1ae605a282f490e9b4fe934b4126a4038c180b455f9d5bab87f80add8c759586c97105fcd292036e60dd3747e585cf5d924aedfbceb03fec7e221b5085143fcf5165e5b4086683d51d9e948125504fdc3b5f7ed38f7c8b42a13448966941dfcd3241c59c5558bc983d76f66144b083155609820de64781a986163822c36ed6a39aebf2fe55576cb9b66e707b6129cdc2689bcac6902d17433db181b09d1228aaff2a40a5a7a12b105f942e6a7afb9d34ac430803df1bf72ac5c5e751396a458eae95c4cc48f232ff9d8da8dee98f7eea3e9503d85dac016027b2f4a125921fa9dea7d083519da3a819b7ea7e54a06fbd6ad1e13ee0bcea2ede41cfa347a659396010a78ff5e90f0ec265ab54c9f7aa37ffb596b8691d35487a09ef8c874256ccb535ba8eb7c297d49083903f7ee94239d4c9050263c9820ce13290191093cb6dae575214d5e53e17c77e67d82e3d26f4e926c8b0539ebaba68f78c75ec61d437313db48146fb6b4d1a8b35fd8e6894794f69dae9254adb6804697747c29f56524bb4456abb2ae672e90c2ef84da4527247476030353f4a6bd9bc5b3dc4e435a4383220c213d9ed479d7718944fb5fa5d701da3a1b8993766b5799f193d5a45cdaa92147ae85c089f5beefd277daa5a76f71541b83e0ab9f62cfd1185ca67e216dbbb235800846770b3d1ce95ea690a968db043d7c799a60f6617bc0c5ad6bfff25dacac61e387fb7ce8de77ac736d6e4e86585ef3917f199f6b57d56d3dce44403c8a01a91b56edc8725d595c80cbbb3a10e8009ef5c3ec639f5c827de827d5a9f306f6ecc22975f6e66529e4914b631e471049e68f5cb4c88887213624ef840dbefc84ba4e4886fb8fc42ce9b906460503d82141fa1a7f2462468c17223ee5dea5566ac7b29b93b463cb05ccd92fde89d38b0131bfa176595045db30d8d73a4d72dfc6897b814670a6d3d808e14c17003b605b03e9e1c8e7be50d81d52f832c9f35baf9f9743275dcabdbe3c9c0709bd62ca0fbc169068fb59310c096534df461ea14970faac46f649d7973ae972a4bb2a581b38518c8a42234816ca713140ac1ce56ea79f2aa06a494823708f70a6c422eddaae11662447db6df20e40cc48479ac31cee26b178f269e9467e552c722d907a0fdc69315958f7cc7fa28e7b5995b7292d1a79305587d24731cc84d40e82b806e4f2bb65175a03d0a9944a24e16428c01fa8878048db234dc3b0b0c85f8f671a83168d92c0378a888ca10f15d1a960acb3ad6b6753875d663e7abb45cc327f057c976fe369a6dd655c1ef9800ab40ef4d86f85a11dee3fcdc8cf033815dcaa0dd4f0751737d5f96e329e1624bf3aeb8374baba9ec361ab1e29cea6aa8d396791ee043d4dd37de54f3", 0x1000, 0x9}, {&(0x7f00000016c0)="975b25a8dcef9be38c5e65e8c5953cc21a4ad659169d2bc0da3e57e4", 0x1c, 0x2}, {&(0x7f0000001700)="7260651b3ac9d121a2708428646f0e84b0595f8043adc0924dc5b5fe57a8c507eab6bd337add5ccb3f83bc9abb6570d99b62438d38245ecec868a2ddfc5fa1822d03c8665e11b264337e434a9f4a596a4ea26b6f3a30cdf2874c66c2f6468d87ab6e200287b8d2d01a86367cc87b3a117a11fa42308ab017ef5089c0968b39e6d6b6b3294e3d51d6cca5ff28", 0x8c, 0x8}, {&(0x7f00000017c0)="2d3dfe4269290efcf3965f24eb0d5da400c0749fd6a6cae41d448eb67cc4a79a66560f3fdae9745c4d93ec823390c12c7aa1657eba46c29b3030cc56ec529b325a837254c0d9c79328fc259a09fc1023738fb0c0308008b0f40130b3563c0e71f4f9979aecd98d9dc2382bb103ebc1200b69406852195540188382a634a801dc4b29bc9f00a4ce10bae35d6983b725360a5b27778002e99be29f536a2e0d796c51443b74af1834e5a7ae52751b9d0b", 0xaf, 0x400}], 0x800, &(0x7f0000001940)='bond_slave_1\x00')
+r3 = syz_open_dev$vcsa(&(0x7f0000001980)='/dev/vcsa#\x00', 0x5, 0x4200)
+connect$inet(r3, &(0x7f00000019c0)={0x2, 0x4e24, @multicast2}, 0x10)
+openat$cgroup_int(r3, &(0x7f0000001a00)='cpuset.mem_hardwall\x00', 0x2, 0x0)
+prctl$PR_GET_NAME(0x10, &(0x7f0000001a40)=""/166)
+r4 = dup3(0xffffffffffffffff, 0xffffffffffffffff, 0x180000)
+r5 = syz_genetlink_get_family_id$netlbl_calipso(&(0x7f0000001b40)='NLBL_CALIPSO\x00')
+sendmsg$NLBL_CALIPSO_C_LISTALL(r4, &(0x7f0000001c00)={&(0x7f0000001b00)={0x10, 0x0, 0x0, 0x801000}, 0xc, &(0x7f0000001bc0)={&(0x7f0000001b80)={0x24, r5, 0x200, 0x70bd2b, 0x25dfdbfc, {}, [@NLBL_CALIPSO_A_MTYPE={0x8}, @NLBL_CALIPSO_A_DOI={0x8, 0x1, 0x3}]}, 0x24}, 0x1, 0x0, 0x0, 0x1}, 0x24000018)
+write$P9_RSTATFS(r0, &(0x7f0000001c40)={0x43, 0x9, 0x1, {0x9, 0x3, 0x0, 0x1, 0x80000001, 0x7c, 0x510d, 0x1, 0x7}}, 0x43)
+r6 = socket(0x21, 0x800, 0x85)
+r7 = syz_genetlink_get_family_id$nl80211(&(0x7f0000001d00)='nl80211\x00')
+getsockopt$inet6_IPV6_IPSEC_POLICY(0xffffffffffffffff, 0x29, 0x22, &(0x7f0000001d40)={{{@in6=@ipv4, @in=@broadcast, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, <r8=>0x0}}, {{@in=@multicast1}, 0x0, @in6=@mcast1}}, &(0x7f0000001e40)=0xe8)
+sendmsg$NL80211_CMD_LEAVE_MESH(r6, &(0x7f0000001f40)={&(0x7f0000001cc0)={0x10, 0x0, 0x0, 0x200000}, 0xc, &(0x7f0000001f00)={&(0x7f0000001e80)={0x6c, r7, 0x2, 0x70bd2a, 0x25dfdbff, {}, [@NL80211_ATTR_WDEV={0xc, 0x99, {0x9fe, 0xffffffffffffffff}}, @NL80211_ATTR_WIPHY={0x8, 0x1, 0x2}, @NL80211_ATTR_WDEV={0xc, 0x99, {0x9, 0x4}}, @NL80211_ATTR_WDEV={0xc, 0x99, {0x1f, 0x4}}, @NL80211_ATTR_WIPHY={0x8, 0x1, 0x1}, @NL80211_ATTR_WIPHY={0x8, 0x1, 0x3}, @NL80211_ATTR_WDEV={0xc, 0x99, {0x5}}, @NL80211_ATTR_WIPHY={0x8}, @NL80211_ATTR_IFINDEX={0x8, 0x3, r8}]}, 0x6c}, 0x1, 0x0, 0x0, 0x40000}, 0x800)
+r9 = request_key(&(0x7f0000001f80)='pkcs7_test\x00', &(0x7f0000001fc0)={'syz', 0x2}, &(0x7f0000002000)='-selinux\x00', 0x0)
+r10 = add_key$keyring(&(0x7f0000002040)='keyring\x00', &(0x7f0000002080)={'syz', 0x3}, 0x0, 0x0, 0xfffffffffffffffe)
+r11 = add_key$keyring(&(0x7f00000020c0)='keyring\x00', &(0x7f0000002100)={'syz', 0x3}, 0x0, 0x0, 0xfffffffffffffff8)
+keyctl$KEYCTL_MOVE(0x1e, r9, r10, r11, 0x1)
+socket$packet(0x11, 0x3, 0x300)
+r12 = openat$nvram(0xffffffffffffff9c, &(0x7f0000002140)='/dev/nvram\x00', 0x2000, 0x0)
+r13 = socket$inet_udp(0x2, 0x2, 0x0)
+epoll_ctl$EPOLL_CTL_DEL(r12, 0x2, r13)
+ioctl$ifreq_SIOCGIFINDEX_vcan(r12, 0x8933, &(0x7f0000002280)={'vxcan1\x00', <r14=>0x0})
+accept$packet(0xffffffffffffffff, &(0x7f00000022c0)={0x11, 0x0, <r15=>0x0, 0x1, 0x0, 0x6, @dev}, &(0x7f0000002300)=0x14)
+sendmsg$NL80211_CMD_GET_INTERFACE(0xffffffffffffffff, &(0x7f0000002400)={&(0x7f0000002180)={0x10, 0x0, 0x0, 0x101009}, 0xc, &(0x7f00000023c0)={&(0x7f0000002340)={0x54, r7, 0x200, 0x70bd28, 0x25dfdbfd, {}, [@NL80211_ATTR_WDEV={0xc, 0x99, {0x101, 0xffffffffffffffff}}, @NL80211_ATTR_WIPHY={0x8, 0x1, 0xffffffffffffffff}, @NL80211_ATTR_IFINDEX={0x8, 0x3, r14}, @NL80211_ATTR_IFINDEX={0x8, 0x3, r15}, @NL80211_ATTR_WIPHY={0x8, 0x1, 0x3}, @NL80211_ATTR_WDEV={0xc, 0x99, {0x6, 0x2}}, @NL80211_ATTR_IFINDEX={0x8, 0x3, r8}]}, 0x54}}, 0x4)
+
+18:47:34 executing program 10:
+r0 = socket$inet(0x2, 0x3, 0x81)
+connect(r0, &(0x7f0000000000)=@un=@file={0x251e581777b6350c, './file0\x00'}, 0x80)
+r1 = socket$inet6_udplite(0xa, 0x2, 0x88)
+ioctl$sock_SIOCGIFINDEX(0xffffffffffffffff, 0x8933, &(0x7f0000000280)={'veth1_vlan\x00', <r2=>0x0})
+ioctl$sock_inet6_SIOCSIFADDR(r1, 0x8916, &(0x7f00000002c0)={@loopback, 0x37, r2})
+r3 = semget$private(0x0, 0x3, 0x4)
+semctl$SEM_STAT(r3, 0x3, 0x12, &(0x7f0000000300)=""/4096)
+r4 = openat$null(0xffffffffffffff9c, &(0x7f0000001300)='/dev/null\x00', 0x0, 0x0)
+clock_gettime(0x0, &(0x7f0000001380)={<r5=>0x0, <r6=>0x0})
+futimesat(r4, &(0x7f0000001340)='./file0\x00', &(0x7f00000013c0)={{}, {r5, r6/1000+30000}})
+r7 = openat$vcsa(0xffffffffffffff9c, &(0x7f0000001400)='/dev/vcsa\x00', 0x10000, 0x0)
+setsockopt$netlink_NETLINK_ADD_MEMBERSHIP(r7, 0x10e, 0x1, &(0x7f0000001440)=0x3, 0x4)
+r8 = openat$vga_arbiter(0xffffffffffffff9c, &(0x7f0000001480)='/dev/vga_arbiter\x00', 0x28000, 0x0)
+ioctl$PTP_SYS_OFFSET_PRECISE(r8, 0xc0403d08, &(0x7f00000014c0))
+r9 = openat$procfs(0xffffffffffffff9c, &(0x7f0000001500)='/proc/consoles\x00', 0x0, 0x0)
+ioctl$sock_SIOCGIFVLAN_GET_VLAN_INGRESS_PRIORITY_CMD(r9, 0x8982, &(0x7f0000001540))
+r10 = openat$vcsa(0xffffffffffffff9c, &(0x7f0000001580)='/dev/vcsa\x00', 0x40004, 0x0)
+ioctl$TCSBRK(r10, 0x5409, 0x0)
+r11 = openat$autofs(0xffffffffffffff9c, &(0x7f00000015c0)='/dev/autofs\x00', 0x40, 0x0)
+ioctl$RTC_IRQP_SET(r11, 0x4008700c, 0x5dc)
+r12 = syz_genetlink_get_family_id$ipvs(&(0x7f0000001640)='IPVS\x00')
+sendmsg$IPVS_CMD_NEW_SERVICE(0xffffffffffffffff, &(0x7f0000001740)={&(0x7f0000001600)={0x10, 0x0, 0x0, 0x20000}, 0xc, &(0x7f0000001700)={&(0x7f0000001680)={0x50, r12, 0x400, 0x70bd2d, 0x25dfdbfb, {}, [@IPVS_CMD_ATTR_DAEMON={0x18, 0x3, [@IPVS_DAEMON_ATTR_MCAST_GROUP6={0x14, 0x6, @loopback}]}, @IPVS_CMD_ATTR_TIMEOUT_UDP={0x8, 0x6, 0xfffffff9}, @IPVS_CMD_ATTR_TIMEOUT_TCP_FIN={0x8, 0x5, 0x1f}, @IPVS_CMD_ATTR_SERVICE={0xc, 0x1, [@IPVS_SVC_ATTR_SCHED_NAME={0x7, 0x6, 'lc\x00'}]}, @IPVS_CMD_ATTR_TIMEOUT_UDP={0x8}]}, 0x50}, 0x1, 0x0, 0x0, 0x4008004}, 0x80)
+r13 = openat$bsg(0xffffffffffffff9c, &(0x7f0000001780)='/dev/bsg\x00', 0x80440, 0x0)
+ioctl$TCSETXF(r13, 0x5434, &(0x7f00000017c0)={0xfffd, 0x82, [0x1ff, 0x401, 0x2b1, 0xffff, 0x200], 0xff})
+prctl$PR_SET_DUMPABLE(0x4, 0x0)
+ioctl$sock_inet_udp_SIOCINQ(r11, 0x541b, &(0x7f0000001800))
+ioctl$TIOCGPTPEER(r10, 0x5441, 0x3)
+r14 = fcntl$getown(0xffffffffffffffff, 0x9)
+sched_setaffinity(r14, 0x8, &(0x7f0000001840)=0x80000000)
+r15 = openat$vcsa(0xffffffffffffff9c, &(0x7f0000001880)='/dev/vcsa\x00', 0x402000, 0x0)
+r16 = syz_genetlink_get_family_id$nl80211(&(0x7f0000001900)='nl80211\x00')
+sendmsg$NL80211_CMD_GET_STATION(r15, &(0x7f00000019c0)={&(0x7f00000018c0)={0x10, 0x0, 0x0, 0x2ffe0463bdde5261}, 0xc, &(0x7f0000001980)={&(0x7f0000001940)={0x3c, r16, 0x100, 0x70bd27, 0x1, {}, [@NL80211_ATTR_VLAN_ID={0x6, 0x11a, 0x1}, @NL80211_ATTR_REASON_CODE={0x6, 0x36, 0xffff}, @NL80211_ATTR_STA_VLAN={0x8, 0x14, r2}, @NL80211_ATTR_PEER_AID={0x6, 0xb5, 0xdc}, @NL80211_ATTR_VLAN_ID={0x6, 0x11a, 0x2}]}, 0x3c}, 0x1, 0x0, 0x0, 0x20000080}, 0x95)
+
+18:47:34 executing program 11:
+r0 = openat$hwrng(0xffffffffffffff9c, &(0x7f0000000000)='/dev/hwrng\x00', 0x20000, 0x0)
+ioctl$RTC_WIE_ON(r0, 0x700f)
+r1 = openat$bsg(0xffffffffffffff9c, &(0x7f0000000040)='/dev/bsg\x00', 0x80000, 0x0)
+ioctl$BLKBSZSET(r1, 0x40081271, &(0x7f0000000080)=0x80)
+r2 = openat$vcsu(0xffffffffffffff9c, &(0x7f00000000c0)='/dev/vcsu\x00', 0x2000, 0x0)
+ioctl$TIOCGLCKTRMIOS(r2, 0x5456, &(0x7f0000000100)={0x9, 0x1, 0x0, 0x1, 0x1a, "d1d6f9a24f5281845b27ec13210911bdc21ae7"})
+syz_genetlink_get_family_id$netlbl_unlabel(&(0x7f0000000140)='NLBL_UNLBL\x00')
+ioctl$sock_SIOCSIFVLAN_GET_VLAN_VID_CMD(r2, 0x8983, &(0x7f0000000180))
+r3 = syz_genetlink_get_family_id$net_dm(&(0x7f0000000200)='NET_DM\x00')
+sendmsg$NET_DM_CMD_START(r2, &(0x7f00000002c0)={&(0x7f00000001c0)={0x10, 0x0, 0x0, 0x10000000}, 0xc, &(0x7f0000000280)={&(0x7f0000000240)={0x14, r3, 0x800, 0x70bd26, 0x25dfdbfe, {}, ["", "", "", "", "", "", "", "", ""]}, 0x14}, 0x1, 0x0, 0x0, 0x2044000}, 0x44000005)
+r4 = creat(&(0x7f0000000300)='./file0\x00', 0x4)
+ioctl$SNDRV_TIMER_IOCTL_STATUS32(r4, 0x80585414, &(0x7f0000000340))
+r5 = fcntl$dupfd(0xffffffffffffffff, 0x0, 0xffffffffffffffff)
+ioctl$SNDRV_TIMER_IOCTL_STATUS64(r5, 0x80605414, &(0x7f00000003c0))
+r6 = ioctl$TIOCGPTPEER(r4, 0x5441, 0x1)
+ioctl$TIOCSLCKTRMIOS(r6, 0x5457, &(0x7f0000000440))
+futimesat(r1, &(0x7f0000000480)='./file0\x00', &(0x7f00000004c0)={{0x0, 0x7530}, {0x0, 0x2710}})
+r7 = creat(&(0x7f0000000500)='./file1\x00', 0x8)
+r8 = syz_genetlink_get_family_id$tipc2(&(0x7f0000000580)='TIPCv2\x00')
+sendmsg$TIPC_NL_PEER_REMOVE(r7, &(0x7f0000000680)={&(0x7f0000000540)={0x10, 0x0, 0x0, 0x204000}, 0xc, &(0x7f0000000640)={&(0x7f00000005c0)={0x7c, r8, 0x400, 0x70bd28, 0x25dfdbfd, {}, [@TIPC_NLA_MON={0x54, 0x9, [@TIPC_NLA_MON_REF={0x8, 0x2, 0x3}, @TIPC_NLA_MON_REF={0x8}, @TIPC_NLA_MON_REF={0x8, 0x2, 0xfff}, @TIPC_NLA_MON_ACTIVATION_THRESHOLD={0x8, 0x1, 0x8a6}, @TIPC_NLA_MON_ACTIVATION_THRESHOLD={0x8, 0x1, 0x7}, @TIPC_NLA_MON_ACTIVATION_THRESHOLD={0x8, 0x1, 0x4}, @TIPC_NLA_MON_REF={0x8, 0x2, 0x9}, @TIPC_NLA_MON_ACTIVATION_THRESHOLD={0x8, 0x1, 0xaf7}, @TIPC_NLA_MON_REF={0x8, 0x2, 0xfff}, @TIPC_NLA_MON_ACTIVATION_THRESHOLD={0x8, 0x1, 0x5}]}, @TIPC_NLA_MON={0x14, 0x9, [@TIPC_NLA_MON_ACTIVATION_THRESHOLD={0x8}, @TIPC_NLA_MON_ACTIVATION_THRESHOLD={0x8, 0x1, 0x10000}]}]}, 0x7c}, 0x1, 0x0, 0x0, 0x621ce101c6814ce9}, 0x80)
+ioctl$sock_SIOCSIFVLAN_SET_VLAN_FLAG_CMD(r5, 0x8983, &(0x7f00000006c0)={0x7, 'vcan0\x00', {0x40}, 0x7fff})
+clock_adjtime(0x0, &(0x7f0000000700)={0x2, 0x4, 0x2, 0x80000000, 0x7ff, 0x7, 0x5, 0x25, 0x2, 0x7ff, 0x400, 0x1f, 0x1, 0x1d71, 0x1, 0x9, 0xfff, 0x6, 0x7, 0x3, 0x6, 0x1f, 0x0, 0xc63, 0x400, 0x3})
+r9 = socket$unix(0x1, 0x5, 0x0)
+getsockname$unix(r9, &(0x7f0000000800), &(0x7f0000000880)=0x6e)
+lsetxattr$security_evm(&(0x7f00000008c0)='./file0\x00', &(0x7f0000000900)='security.evm\x00', &(0x7f0000000940)=@v2={0x3, 0x3, 0x5, 0xb6c, 0xf2, "262876821763aef7f2555a06c36bfaff66f5156dd052ce44c234e8caf9cde49f5885230e6531cdf8f3bcb7e9727c026fdfe7a9b4f4804f6c823d51e4d661836d6fb073b8db07952db5376f0fceeb7120ec5240d49618422b935d0ab1627d554bdb91dd2b02e0034423424fadde8bbe3787061a0c3689197d93ca16755065afdabd87ee9809e25b36766181457a3bb16ca584da42cfcba936a17c1509eb82ce6e7ed68be660708e544a437b03a68f9cc0b44ebce8c67974c962c3f982155b81d84d6a74865cc1a703ff6939200a97173ed9040b7aea7bb6e947bbf53e90d12d94fce2d1113f20deb6a9e490ac7ed817c1d569"}, 0xfc, 0x0)
+r10 = openat$snapshot(0xffffffffffffff9c, &(0x7f0000000a40)='/dev/snapshot\x00', 0x4000, 0x0)
+ioctl$EVIOCSREP(r10, 0x40084503, &(0x7f0000000a80)=[0x4, 0x1])
+openat$cgroup_int(r1, &(0x7f0000000ac0)='cpu.weight\x00', 0x2, 0x0)
+ioctl$SCSI_IOCTL_PROBE_HOST(r4, 0x5385, &(0x7f0000000b00)={0x49, ""/73})
+r11 = socket$packet(0x11, 0x2, 0x300)
+ioctl$sock_SIOCSIFVLAN_ADD_VLAN_CMD(r11, 0x8983, &(0x7f0000000b80)={0x0, 'netpci0\x00', {0x4}, 0x9})
+
+18:47:34 executing program 12:
+r0 = openat$null(0xffffffffffffff9c, &(0x7f0000000000)='/dev/null\x00', 0x8000, 0x0)
+ioctl$KDSKBSENT(r0, 0x4b49, &(0x7f0000000040)={0x8, "b8cc7fc1fc2d1d59871dd91eb43139be051fb6a67a1a2bbf92ea306fd8d17b9da0b519da60c2b3a60ef5d129ae363a57ecd77ab883d40872fb1a0efdc136663d65f08f15b6df988beaad4fe0e25e66f504391c568c3c3f3a0c0f957e316b26e7c9fcc3c8552f30e181a34e85cf391caf72c53c5d8a217013dea50b12ac0998d54f347ea12d0fed3716508b70af5e4c5efec1a3c5bd140163166665014addfdab5e3471e779086186876fe73c9c0cc854758947196fae786c0b4b64419b19aa98e7df63a952e28ff577b3c097af9ab6e7c9b45c4f7c50c6c90620f77db95014f2ed6d58fbd700da78e7f6dcfe744fea4e5a053631963f16ee29467bd1310204621c08a29e2a4acd86e64a2e3ce729a2d94e0481ae3dfcd35c706b52b6cb26acf1aa0086e692d975fedf9b57c0d9a5cc6f11113a93863da9a1283435adb44873042224d3969c60e512cb31f9f451a1fed467fe645e2e490adbceac8e43ec1f485f52d6f01374b15364d5b889b6e3d9cfd8b61af0beca875461bfe4ab555f671dd487e154a864e6f8433ac38be6c5a74f0decde6c41f2093db0061833ea0e3742894ae60b1af95319439f42e4903192c1f213647d95d329d7eb48ecf47938f501124b29645a693cfbbd3d8d5c23eaef504267f5c8b00b9608f86147e5bd38be1bbab54d7fe88181fdba2e050ac6eee5545c1a9757f5822910790e60298b53a3326f"})
+openat$null(0xffffffffffffff9c, &(0x7f0000000280)='/dev/null\x00', 0x20000, 0x0)
+ioctl$SCSI_IOCTL_PROBE_HOST(r0, 0x5385, &(0x7f00000002c0)={0x94, ""/148})
+r1 = openat$bsg(0xffffffffffffff9c, &(0x7f0000000380)='/dev/bsg\x00', 0x80000, 0x0)
+ioctl$SNDRV_SEQ_IOCTL_QUERY_SUBS(r1, 0xc058534f, &(0x7f00000003c0)={{0x8, 0xf9}, 0x0, 0x6, 0x9f, {0x3, 0x20}, 0x4, 0x46e})
+r2 = epoll_create1(0x180000)
+close(r2)
+r3 = timerfd_create(0x0, 0x40000)
+timerfd_gettime(r3, &(0x7f0000000440))
+r4 = openat$bsg(0xffffffffffffff9c, &(0x7f0000000480)='/dev/bsg\x00', 0x200000, 0x0)
+setsockopt$inet6_udp_encap(r4, 0x11, 0x64, &(0x7f00000004c0)=0x5, 0x4)
+r5 = syz_open_dev$vcsu(&(0x7f0000000500)='/dev/vcsu#\x00', 0x7, 0x1)
+ioctl$SNDRV_SEQ_IOCTL_SET_PORT_INFO(r5, 0x40a85323, &(0x7f0000000540)={{0x7b, 0x1}, 'port1\x00', 0x10, 0x4, 0x200, 0x6, 0xfff, 0x8, 0x200, 0x0, 0x1, 0x23})
+r6 = syz_open_dev$sg(&(0x7f0000000600)='/dev/sg#\x00', 0x6, 0x4)
+fcntl$F_GET_FILE_RW_HINT(r6, 0x40d, &(0x7f0000000640))
+r7 = io_uring_setup(0x3fc, &(0x7f0000000680)={0x0, 0x0, 0x2, 0x2, 0x261})
+ioctl$FS_IOC_REMOVE_ENCRYPTION_KEY_ALL_USERS(r7, 0xc0406619, &(0x7f0000000700)={{0x2, 0x0, @reserved="48a4a7384d276335cfde798d3faf83f99316d9866a14c9ba549407f09d8af077"}})
+r8 = syz_open_dev$vcsn(&(0x7f0000000740)='/dev/vcs#\x00', 0x4, 0x82000)
+r9 = syz_genetlink_get_family_id$nl80211(&(0x7f00000007c0)='nl80211\x00')
+getsockopt$inet_IP_XFRM_POLICY(0xffffffffffffffff, 0x0, 0x11, &(0x7f0000000800)={{{@in6, @in6=@initdev, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, <r10=>0x0}}, {{@in6=@local}, 0x0, @in6=@mcast1}}, &(0x7f0000000900)=0xe8)
+getsockopt$inet_mreqn(0xffffffffffffffff, 0x0, 0x23, &(0x7f0000001040)={@broadcast, @dev, <r11=>0x0}, &(0x7f0000001080)=0xc)
+sendmsg$NL80211_CMD_DEL_INTERFACE(r8, &(0x7f0000001180)={&(0x7f0000000780)={0x10, 0x0, 0x0, 0x1}, 0xc, &(0x7f0000001140)={&(0x7f00000010c0)={0x44, r9, 0x100, 0x70bd2a, 0x25dfdbfc, {}, [@NL80211_ATTR_IFINDEX={0x8, 0x3, r10}, @NL80211_ATTR_WIPHY={0x8}, @NL80211_ATTR_WIPHY={0x8, 0x1, 0x3}, @NL80211_ATTR_IFINDEX={0x8, 0x3, r11}, @NL80211_ATTR_WIPHY={0x8, 0x1, 0x3}, @NL80211_ATTR_WIPHY={0x8, 0x1, 0x1}]}, 0x44}, 0x1, 0x0, 0x0, 0x20000001}, 0x10010011)
+read$eventfd(r1, &(0x7f00000011c0), 0x8)
+pipe(&(0x7f0000001200)={<r12=>0xffffffffffffffff})
+fsetxattr$security_capability(r12, &(0x7f0000001240)='security.capability\x00', &(0x7f0000001280)=@v1={0x1000000, [{0x80000001, 0x80000000}]}, 0xc, 0x1)
+r13 = syz_open_dev$usbmon(&(0x7f00000012c0)='/dev/usbmon#\x00', 0x1, 0x80000)
+fcntl$notify(r13, 0x402, 0x1)
+socket$inet(0x2, 0x6, 0x80)
+r14 = syz_genetlink_get_family_id$tipc(&(0x7f0000001340)='TIPC\x00')
+sendmsg$TIPC_CMD_GET_MAX_PORTS(r8, &(0x7f0000001400)={&(0x7f0000001300)={0x10, 0x0, 0x0, 0x200}, 0xc, &(0x7f00000013c0)={&(0x7f0000001380)={0x1c, r14, 0x300, 0x70bd26, 0x25dfdbff, {}, [""]}, 0x1c}, 0x1, 0x0, 0x0, 0x1}, 0x0)
+
+18:47:34 executing program 14:
+r0 = openat$cgroup_ro(0xffffffffffffffff, &(0x7f0000000000)='cpu.stat\x00', 0x0, 0x0)
+getsockopt$sock_cred(0xffffffffffffffff, 0x1, 0x11, &(0x7f0000000040)={0x0, <r1=>0x0}, &(0x7f0000000080)=0xc)
+getsockopt$sock_cred(0xffffffffffffffff, 0x1, 0x11, &(0x7f00000000c0)={0x0, 0x0, <r2=>0x0}, &(0x7f0000000100)=0xc)
+fchown(r0, r1, r2)
+ioctl$PERF_EVENT_IOC_DISABLE(r0, 0x2401, 0x5)
+ioctl$BLKPBSZGET(r0, 0x127b, &(0x7f0000000140))
+r3 = socket$netlink(0x10, 0x3, 0xe)
+r4 = syz_genetlink_get_family_id$netlbl_unlabel(&(0x7f00000001c0)='NLBL_UNLBL\x00')
+sendmsg$NLBL_UNLABEL_C_STATICLISTDEF(r3, &(0x7f00000002c0)={&(0x7f0000000180)={0x10, 0x0, 0x0, 0x104000}, 0xc, &(0x7f0000000280)={&(0x7f0000000200)={0x50, r4, 0x400, 0x70bd29, 0x25dfdbfe, {}, [@NLBL_UNLABEL_A_IFACE={0x14, 0x6, 'syzkaller1\x00'}, @NLBL_UNLABEL_A_IPV6MASK={0x14, 0x3, @initdev={0xfe, 0x88, [], 0x1, 0x0}}, @NLBL_UNLABEL_A_IPV6MASK={0x14, 0x3, @rand_addr="65b1bb13c2bb28219500ade1bb449cf2"}]}, 0x50}, 0x1, 0x0, 0x0, 0x800}, 0x20)
+r5 = openat$vga_arbiter(0xffffffffffffff9c, &(0x7f0000000300)='/dev/vga_arbiter\x00', 0x0, 0x0)
+sendmsg$NLBL_UNLABEL_C_STATICREMOVEDEF(r5, &(0x7f0000000480)={&(0x7f0000000340)={0x10, 0x0, 0x0, 0x100000}, 0xc, &(0x7f0000000440)={&(0x7f0000000380)={0x88, 0x0, 0x200, 0x70bd27, 0x25dfdbfe, {}, [@NLBL_UNLABEL_A_IPV6MASK={0x14, 0x3, @remote}, @NLBL_UNLABEL_A_SECCTX={0x27, 0x7, 'system_u:object_r:dhcpc_state_t:s0\x00'}, @NLBL_UNLABEL_A_IPV4ADDR={0x8, 0x4, @empty}, @NLBL_UNLABEL_A_IPV6MASK={0x14, 0x3, @rand_addr="0648802ab8cff36ca4e03828c4520bb6"}, @NLBL_UNLABEL_A_IPV4MASK={0x8, 0x5, @rand_addr=0x81}, @NLBL_UNLABEL_A_IFACE={0x14, 0x6, 'veth1_to_hsr\x00'}]}, 0x88}, 0x1, 0x0, 0x0, 0x20000000}, 0xfb6ecad27774335f)
+setxattr$security_selinux(&(0x7f00000004c0)='./file0\x00', &(0x7f0000000500)='security.selinux\x00', &(0x7f0000000540)='system_u:object_r:groupadd_exec_t:s0\x00', 0x25, 0x7)
+r6 = openat$hpet(0xffffffffffffff9c, &(0x7f0000000580)='/dev/hpet\x00', 0x10040, 0x0)
+r7 = syz_genetlink_get_family_id$tipc2(&(0x7f0000000600)='TIPCv2\x00')
+sendmsg$TIPC_NL_MEDIA_SET(r6, &(0x7f00000006c0)={&(0x7f00000005c0)={0x10, 0x0, 0x0, 0x100000}, 0xc, &(0x7f0000000680)={&(0x7f0000000640)={0x40, r7, 0x400, 0x70bd2a, 0x25dfdbfb, {}, [@TIPC_NLA_NODE={0x18, 0x6, 0x0, 0x1, [@TIPC_NLA_NODE_UP={0x4}, @TIPC_NLA_NODE_UP={0x4}, @TIPC_NLA_NODE_ADDR={0x8, 0x1, 0x8001}, @TIPC_NLA_NODE_UP={0x4}]}, @TIPC_NLA_SOCK={0x8, 0x2, [@TIPC_NLA_SOCK_HAS_PUBL={0x4}]}, @TIPC_NLA_SOCK={0xc, 0x2, [@TIPC_NLA_SOCK_ADDR={0x8, 0x1, 0x1f}]}]}, 0x40}, 0x1, 0x0, 0x0, 0x4084}, 0x8821)
+r8 = fcntl$dupfd(0xffffffffffffffff, 0x406, 0xffffffffffffffff)
+r9 = openat$cgroup_int(r5, &(0x7f0000000700)='cpuset.cpus\x00', 0x2, 0x0)
+epoll_ctl$EPOLL_CTL_DEL(r8, 0x2, r9)
+prctl$PR_SET_MM(0x23, 0x6, &(0x7f0000ffa000/0x3000)=nil)
+r10 = socket$inet_udp(0x2, 0x2, 0x0)
+fsetxattr$trusted_overlay_opaque(r10, &(0x7f0000000740)='trusted.overlay.opaque\x00', &(0x7f0000000780)='y\x00', 0x2, 0x2)
+r11 = syz_open_dev$vcsn(&(0x7f00000007c0)='/dev/vcs#\x00', 0x6a2, 0x101000)
+getsockopt$IPT_SO_GET_INFO(r11, 0x0, 0x40, &(0x7f0000000800)={'mangle\x00'}, &(0x7f0000000880)=0x54)
+munmap(&(0x7f0000ffb000/0x4000)=nil, 0x4000)
+r12 = syz_open_dev$evdev(&(0x7f00000008c0)='/dev/input/event#\x00', 0xf60, 0x1800)
+fcntl$lock(r12, 0x6f, &(0x7f0000000900)={0x2, 0x2, 0x368, 0xc9})
+r13 = accept$inet(0xffffffffffffffff, &(0x7f0000000940), &(0x7f0000000980)=0x10)
+getsockopt$IP_VS_SO_GET_DAEMON(r13, 0x0, 0x487, &(0x7f00000009c0), &(0x7f0000000a00)=0x30)
+r14 = semget(0x2, 0x0, 0x400)
+semtimedop(r14, &(0x7f0000000a40)=[{0x1, 0x1}, {0x3, 0x2, 0x1800}], 0x2, &(0x7f0000000a80)={0x77359400})
+
+18:47:34 executing program 2:
+r0 = dup2(0xffffffffffffffff, 0xffffffffffffffff)
+ioctl$SCSI_IOCTL_GET_BUS_NUMBER(r0, 0x5386, &(0x7f0000000000))
+utime(&(0x7f0000000040)='./file0\x00', &(0x7f0000000080)={0x6, 0x5})
+ioctl$sock_SIOCGSKNS(r0, 0x894c, &(0x7f00000000c0)=0x4)
+r1 = creat(&(0x7f0000000100)='./file0\x00', 0x3b)
+r2 = memfd_create(&(0x7f0000000140)='bdev{.ppp0lo-]\x00', 0x3d3c7e88a395e65c)
+clock_gettime(0x0, &(0x7f00000001c0)={<r3=>0x0, <r4=>0x0})
+ppoll(&(0x7f0000000180)=[{0xffffffffffffffff, 0x4}, {r1, 0x112}, {r0}, {r0, 0x4000}, {r2, 0x200}], 0x5, &(0x7f0000000200)={r3, r4+10000000}, &(0x7f0000000240)={0x53}, 0x8)
+timer_create(0x3, &(0x7f0000001340)={0x0, 0x8, 0x0, @thr={&(0x7f0000000280)="9311733ec15ffb15737b929c65aac621e3339ab030e2cfbc28656e8d5e73943f52596077b3bc9e2c68c5974134dd725f6363889cbc753051bbf224147a4bb7ea1225bfa2193e7a165de41ce1e2fb4e71b6edfdd16bea73694b589a06fadc3bf3bac5dca3062f7113661ef85f0f57af39fae8b374fe270c83e14d22abe80da14541762c1dd4", &(0x7f0000000340)="6bcb288497561d9bb9e1ff6b0fb995333b74a165c532cddc0510737fe65c3efd9b25c595d15b017d8922319a92f01125a02d1ffa8a8f4448cb388e863331c0f1d9fec923d02cc4f9f4412cda9bfc0ae08db45525c7654cb0ad14faad80ba5a5b03a2f1dab133ec3c5d52f96744535646cf8fc49e235297ad72436682972916f28fe2f9c83c6d9f759dc318405d0d60f63e7b60ab810d0cb7446a4ab16f1f7e984786936c0741c9f235e5f28141ac0d9dc41f9ebb3454c6fe716b0b08782c8da99745fed78177bde589c1558aafac7a53a1f06dc7772ae8c59d00f017ff1ba8902e48f73eca9e8fa7a2c71dadbd8d8977123a35e826708f6f626b1d61dd248683d11ea881ea63e9befd724914359c14023c381144c69087a25713e379e0a004d391fe12ed0556dcd48671d34d7e91b8243f793441c5cebb7e3e27d9583c394af2b873c07151b7faa089a23f6b06f48c4a7c263c5f4bfe6d63d0e728890915f42675a44450804070a50dabe3f798975a7d91484921dfe6852d5d0e758435dacdb2212ee56c5e12cd0b2ad89bb2ba5d5efdb082d5dad30758629e4b3c29c4c27a65448504ca7603b202e46aa519a5250675643bf6f9cdbdd6cc7a9cd9ee3d339964e5dfcfc0309ed68de546710a6d196eb56a65f38bc301fd51f6fd0017eaabc1edce338dd2723d4cccf938b021f9ced8d1f69cd656b15edde200023fd0695bbaf23caa7c6ac698d0f2d3ea07dad60d754275f63223cda14dfce4bc146353b0b272e7591af43f14023d9055e54f645309502b2b040cca414996996214da7cf0a41f4337d944987507b566f19cd87f48bc2b40db1ea97ff3fd3b17b5c014406478f815a4abd4b5689a2745d05338439e492f9a160a09824d1d75b5812bc954d694f6a257de1a7de1630e508fa8087547ff6de040286ffba35b9843b85ecfe47a4f37fc7aa6a60797004da4ca26d826cfa2071999abcc30c2b35f16de1826d3ff8109185516a82cbaf9341e74041d41947968f4a97ef213c74b49d04bc90833840cfe97632e30f963769a150e3e5d254aa100692fde0ee07ef4903743e92040786720578909dd977b5113c7f283807d76f87e12db65b0bf8c97415edff3800664b70d8873cdb49b8a87d6bd3a47c410cd0353625421911e28d9a03e816ce46b0de43898236acfab59e8ec5db710d1680667b7597920ffb428e56a2184537afc06cb8e49e95d090c68b2faae61caf6b05566b53026e971653d0bf23a284933d84872db2dac0410605f21a3e689cea95b0cfbd36fd698a3e9385fa13629e7e442c03ab8e0a1b27a27f644e53b832464c471c5cb5e38d9f1a574fad034cd542fee1af517ac5eea2b0da067c10bfad5b0bd2e7c12526277f58eb2e7574294f839f70e469a96d916dc05e0d376226cfe84669181bd816d3e013751c614e65138021f9fb0e6856ef955119380d9fbdd5d8e4647edcb5b4e83d69a6e47ccb0a1e1c1b316dbdd5ee19c964e951a7c88cfe9619a751921727cff90b598dc7dd4be52326fd2bad286ef2793ce6bf4d3d9eea365b243dedad56f7a1b2e883ce8ee9c877a2c22f8a362d6e4e698841bb855295e2a87714841857c0c2aab5a6596b7c2c41da662c74d0f4a1b2985687b9c471f78ae87e2989d0632b9ce51aaf6bb06fb634b99002b3f0b491a3119f1eec693d301662cffeb7a94ff4a316d24325b9bfb9764c93c69db70090d8f5a3f9c3fa0870597ce384a8f2eb6686d782a161d4236c42a8651241f69307df4d7f2c137e6ea9c6e81f77c26dabf4912806179172f803be2feb5c87d3727144599379e6adf0c2a5ed2c2a7c980313a2a17c5f297b71303308ec750062172f6b09193a26540b4bf23552c7ecf87dcd4af5e9adfeac852d81ce5a674b185a1acf8f32b33f18c121b777d11d2240165fe0812c3fc2b17c20fe3de1a633664df4c12977f9c04db721d05f124a10a7fc886a3732fc6799748a9658e3f7ed1b55230a8b5323123d1ff87d5ebaab52aa230dc39525f09b91db403e3bb6b1b31c1710165283996547217cccc5100b785b92b48cf59ff5b104ae64dfd6cf88d3563f109569a1f1fe0bc65f248ba2ff299025a7a73cc6532d768eabbdee04013783c33c6c8cc9acefda611df1f36822594f501d4662d3694f761cdcedf2ebbaf5cc78d397108c446b49b53e5ff53c48127b61119b9ba9308d338333b1879c7da53286a5c47ca7f86fd918dc3c15f0ad9a3699868856278ebe5fa39edb6319cc715a99db9d98f31100157c7d63eae6763f51fc3a2e34ab9401943c4153a172df75892fbba109b929cf7087451552bcce6be84e7b6e780de4c4ca5bc34d11bcc0200ec1b5ed4398dac4e4881a943daa860f14db4e3e54191b005e12331f6a7a67c3c1ac9c4aaa54633e2a8c01ab6269946f0a03b8c2fee652185f1fa91f9ef4aa41a5b9d12e05374b8b039a911d56fb53a13b1701cb4b1ffb6d6a3818398aa827d02e41d8400db48027af6e09842c078dd1aaaf6021772c255d5f80a5c791f62c130dd1032ed581bfc27ca6334fbde1a35435c11bea7963a20e1b033b8ae3cbc9ff230c4a074f956d3a95a3dcb0951c357080a90d7d572e19dc93355b74a13832a43d3e68d3f7723b0d1cf97a86eaeadc2a2d4f2b03a3a08493f8293a9d5f477e49b1d33083b1be9241f266d22e7fdbef77789cc25d2d58e2a540a0ca5df1c7cd208317b97477b23448d0064df89fd9a9c89dcc0cabc6f187875a0209d8fea4e5ae592f9add71174833c17fc9bae077aca7da118d2d66ea1724aa5b7a4f8d089d0aad0ed4d24af8a69fdf70eff821d905523e2e24086101aed50f9e20f9f14ee87ef65e118d2e7e22387d62a576f4360ad1f33c057d65fe4011f2efac354aedbaa9f8bac5b2a510916c8ecc5d6ad7ad7e87b5c26e08cedb42b470e1761a1f46c4f9935656859c7b51bdc47a27b72de2f56a14cab376dd92b2d3c93151cab4a643b933cd059a46f41de44da1375eecd38182045a74dba750b1b129f9e76d62a5e0a8a2f0e64b8fe80bde4926893fd99759e9bac37edc2cf23bc5c5362869caed7121fe1e614f0525b8bbbe1cecd04eaf61f3ca19901fac066083ec7ed1b1125c5af4527969a5aee7f1acf3c765e4cf64e4479a835ddf890518ec6002c37b2dcffd25d795c286e690a987bbff60dcfc4b748559286d4ce02fbd60fb92cdf1b4f2090413f41b67a13bc6835d1a226e94874e0d4a349c7596497e704ab0720ff15bf9cc7e9f76bfc1d92c7a9e049b1e9eef4cc4bda18db498f728e08c27dbec5f71ef144186f073400a56464f11fecd1572e7f0109521a19597d8cbe5eca3b26f55b313bbed1ab12b5dca6241c2c58dc23277ee68a3ee8cb66c516d74e368c95508f69f6307895a6d67233e675d49954f05fa2679bedb5faf31e626d174b17cfb93968cf5f4cabe619a2cc179a1e6cd75f05df1cb0b9bb87d1ef24bf119819e1881439f2222ed8781e7038d8d56f5ccabfe8678438d7d0d46337bf9c63e54c53c3dae961acb171f8e1b571b53423133471d4775c2a9f2ffdfc935ea38865d6294c97bf79d02ace50f24789d67399b5ddb5eba96d0209fd25928c3109566f311138a25a72ce5120d8cee7d4fe0146b62879e03d3edfbcced99d8fdd6c6185418273be9f9c38283c8ad3f86f8616c200dc564d42d42659f5174eeef55e4700bf01bfde1de5e3222401fb7c0562e8b53a7e86a27b64fc16a70af7b7fbd41ee08106b7cec70992e56839d57d8e029c25e4066c380ac51d1004825a01b942fed7758dc040f8d7cc04477caf0efba90f93bdf5ff10dab47a97ba851246df602db6c9b63c9b991bed095d2bc8b033ffd28787e619a1347e9970e84d843983d7764b458728ca7296929c8fce55201c5105f6e2e5c8617695989a74401b9e12c417bac0c20b84f459423e8f8159884f4071556ac01f6bd36012d1248eb6fb8550c48faadba26530d0039c64eca5ad5c6d80b5bb275f7c1b03a8ab49b12a5dadd52b38f993284c3db79b082a37e4360b9d636e550639bb1331230df63e86a90729b2f6dd4ffce78e8115ddd308d4b723c7006eea08759fb3c12eaa7b8899e381b06a09b54f3e2369655c6712c49dbe60dc1dd0ca6ffa8419a1216e2ff8ac638551805beadc255e7d223524440527be66ab62eba8cdbb3f410229e71ea0fa3ccd5a734bb9b351314b998525a96f61b86bfb8c8693edddba812359d5d5c4f0de8782355f1cd775839865f62e16bec0b81ff9ac0fa036e6ca310e84489683edb78e349d1cc59c1e3130d6e143818de3e8b6ace283921fc8eba0a412fdc561717e4760d98a37f2d5595df68eea4a42ffefd35bbf21596ac40ae968a7d471c823644abf53cc087e0248ddc8b419a42b669b12e1f93f6d6a679fa86756cb0626cb43d993023998a19df834e35cf15ee8860f807bc268d4923aa654918b1302669506c17a36327f22aacf1281124e824a6f6ee282f721322e2f7c6149212a41b0547a2bc2625f523d2d9a2051c95ef903f11ce99c13803741296733a37b2a3c93f31d1caeac21ec67abd82424244ee91a1dff9fb510adca3f55cd9647af2d30a1265d8d89dc0e8c4bbba5c41409c20faa427ee124a71a6689107f49b576fbb170c07afa1dd0229d6076dfa2fe13cbc54692e9609ec75b11c5acf9e5ab6d9bc993d4c248e463ab39cebb61078ead70288e12a57d1ae7607150940ad8f7667738cf7c82c749a605a8813436a07c0437a3c6e840b64fb536b2d1e079dd7662285ac0c978602a9cb90178ee5bf8eaa6e54c60ae1a844be96cfab80c715947b5808015e30b5f440a6d4477f76a76582defffa813f174412ff15ade9ec6d2ba2d5cffaca81d430dbaf0b45a7a6d33fd514b6225e65f178e31b7658bf940cb435fc09d7fadf8459c93f0cf3428b8e848804f33104a17e41d1c962961075f9a53cea0d683fd9eb009bfc5fd0862bf32f2afc2f1ce608739ab59a77d87cfd446e68238babb0ec8cf617f92f68be88da27edabb00d92f27255c0879ef58a0b7e2cbe6316cbf825f43d4e9800e63f6f8926bd0170b2a4c3fbed56af79917893d8561638234196d9927b3790438e6d42c6fce257d36f8879b7b7359473b8f4b664524c49abb907d7674536b7bd2d1021150bfbae3b63ea8802543ad2ed9c9648f000be86c47bedef57b5dd6205fcf126a67e731ffc37f04b7661f6564d70881e1d31e2c9eb7230c5db0c70e376f5d267c8e87d4d1876548bbfe3c4d275a1cfa23d489c858712d69c0f21ac7c95903842e242735bda9238f2d740804678309da7d49745c83b5c8160b911b509cb8d43119e0ada150eb45f1e020a72bf1f32d84c408531df07346498b4a9c0bace4aa21f02610447b3cabd7f864e3e1b7d31ff31b311ea8164ef3f64cd6d17ef4e19b31c5dc0619cf4c89bf21155382b3bf64308d40429801b93187dac99be3f74254bc4d518e23722d76984ebecfcde08d48661de2e6cad6edf67282b94c95f6a7b16fee6458f08ae14d7ade143bae7d407fcae7bcbd5b83778a01f06489efe7fd942b6b1dad7b10fa59645c1063be4770f3daea61cd5f69cf3f02cb000d240ee50c3f215ed755cf65a063c2ad65fdc10850d704f2f1b02f9151dea9e59bf54ea04878f30d7b6f15b82048ed0cdb86c1826674dd75d9a8b5d28c2eef727f7548df7b7351d577635b2bc9b98a4dc00cab7a579a04d40d09a0fd936235eddb97e04c6e9ab8c25a9e80165aa561197b537037deeaed3386d1e1fbe9a41d94f8d3b0ecfcd7dc64b1"}}, &(0x7f0000001380)=<r5=>0x0)
+timer_gettime(r5, &(0x7f00000013c0))
+getsockopt$ARPT_SO_GET_REVISION_TARGET(r0, 0x0, 0x63, &(0x7f0000001400)={'ipvs\x00'}, &(0x7f0000001440)=0x1e)
+ioctl$TIOCSCTTY(r1, 0x540e, 0x36)
+setsockopt$inet_MCAST_JOIN_GROUP(r0, 0x0, 0x2a, &(0x7f0000001480)={0x4, {{0x2, 0x4e21, @loopback}}}, 0x88)
+r6 = openat(0xffffffffffffff9c, &(0x7f0000001540)='./file0\x00', 0x200, 0x10)
+getsockopt$ARPT_SO_GET_REVISION_TARGET(r6, 0x0, 0x63, &(0x7f0000001580)={'HL\x00'}, &(0x7f00000015c0)=0x1e)
+r7 = accept4$inet6(0xffffffffffffffff, 0x0, &(0x7f0000001600), 0x180000)
+ioctl$EXT4_IOC_SWAP_BOOT(r7, 0x6611)
+arch_prctl$ARCH_GET_CPUID(0x1011)
+setxattr$trusted_overlay_redirect(&(0x7f0000001640)='./file0\x00', &(0x7f0000001680)='trusted.overlay.redirect\x00', &(0x7f00000016c0)='./file0\x00', 0x8, 0x2)
+getsockopt$inet_tcp_buf(r6, 0x6, 0x1c, &(0x7f0000001700)=""/63, &(0x7f0000001740)=0x3f)
+r8 = accept$inet(r0, 0x0, &(0x7f0000001780))
+setsockopt$EBT_SO_SET_ENTRIES(r8, 0x0, 0x80, &(0x7f0000001b00)=@broute={'broute\x00', 0x20, 0x2, 0x2f4, [0x0, 0x0, 0x0, 0x0, 0x0, 0x20001800], 0x0, &(0x7f00000017c0), &(0x7f0000001800)=[{0x0, '\x00', 0x0, 0xffffffffffffffff, 0x2, [{0x3, 0x2, 0xc, 'vcan0\x00', 'ip6tnl0\x00', 'dummy0\x00', 'veth0_virt_wifi\x00', @dev={[], 0x13}, [0x0, 0x7f, 0x0, 0x0, 0x7f], @dev={[], 0x12}, [0xff, 0xff, 0xff, 0x1fe, 0xff], 0xce, 0x116, 0x146, [@arp={{'arp\x00', 0x0, 0x38}, {{0x3, 0x9200, 0xa, @broadcast, 0xffffff00, @loopback, 0xffffff00, @empty, [0xff, 0xff, 0x0, 0xff, 0xff, 0xff], @empty, [0xedfbfe269ea6d99e, 0xff, 0xff, 0xff, 0xff, 0xff], 0x14, 0x20}}}], [@common=@ERROR={'ERROR\x00', 0x20, {"2627082a6cd86b7e31a92510a8ab37a244a332e5c9588f82ba1ec5d27abc"}}], @common=@CLASSIFY={'CLASSIFY\x00', 0x8, {{0x101}}}}, {0x11, 0x2, 0x6007, 'veth0_to_hsr\x00', 'lo\x00', 'veth0\x00', 'gre0\x00', @local, [0x0, 0x80, 0xff, 0xff, 0xff, 0x7f], @dev={[], 0x29}, [0x0, 0x0, 0xff, 0x0, 0x0, 0xff], 0x6e, 0xce, 0x11e, [], [@common=@CONNSECMARK={'CONNSECMARK\x00', 0x8, {{0x2}}}, @common=@redirect={'redirect\x00', 0x8, {{0xfffffffffffffffe}}}], @common=@LED={'LED\x00', 0x28, {{'syz0\x00', 0x0, 0x40, {0x422}}}}}]}, {0x0, '\x00', 0x2, 0xfffffffffffffffe}, {0x0, '\x00', 0x2, 0xfffffffffffffffe}]}, 0x36c)
+r9 = dup2(0xffffffffffffffff, 0xffffffffffffffff)
+mmap$IORING_OFF_SQ_RING(&(0x7f0000fff000/0x1000)=nil, 0x1000, 0x4, 0x190010, r9, 0x0)
+socketpair$unix(0x1, 0x5, 0x0, &(0x7f0000001b80)={<r10=>0xffffffffffffffff})
+readahead(r10, 0x4855, 0xffffffff)
+r11 = perf_event_open$cgroup(&(0x7f0000001cc0)={0x0, 0x70, 0x5, 0x6a, 0x9, 0xff, 0x0, 0x0, 0x40004, 0x3, 0x0, 0x0, 0x0, 0x1, 0x0, 0x1, 0x0, 0x1, 0x0, 0x1, 0x1, 0x1, 0x0, 0x0, 0x0, 0x0, 0x1, 0x0, 0x0, 0x1, 0x1, 0x0, 0x0, 0x0, 0x0, 0x1, 0x1, 0x1, 0x0, 0x1, 0x1, @perf_bp={&(0x7f0000001c80), 0x2}, 0x8000, 0xbbc8, 0xfffffff8, 0x0, 0xb073, 0x6, 0xc9}, r6, 0x3, 0xffffffffffffffff, 0x0)
+perf_event_open(&(0x7f0000001c00)={0x1, 0x70, 0x7, 0x0, 0x40, 0x0, 0x0, 0xffffffffffffa068, 0x0, 0x5, 0x0, 0x0, 0x1, 0x0, 0x1, 0x1, 0x1, 0x0, 0x1, 0x0, 0x0, 0x1, 0x0, 0x0, 0x1, 0x3, 0x0, 0x1, 0x0, 0x0, 0x0, 0x1, 0x1, 0x1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8000, 0x6, @perf_bp={&(0x7f0000001bc0), 0x8}, 0x10411, 0x5, 0x20, 0x0, 0xffff, 0x1, 0x80}, 0x0, 0x5, r11, 0x1)
+socket$inet(0x2, 0x3, 0x7)
+arch_prctl$ARCH_MAP_VDSO_X32(0x2001, 0x1)
+
+18:47:34 executing program 15:
+rt_sigsuspend(&(0x7f0000000000)={0x58b8}, 0x8)
+r0 = accept$inet6(0xffffffffffffffff, &(0x7f0000000040)={0xa, 0x0, 0x0, @loopback}, &(0x7f0000000080)=0x1c)
+ioctl$sock_SIOCSIFVLAN_GET_VLAN_INGRESS_PRIORITY_CMD(r0, 0x8983, &(0x7f00000000c0))
+r1 = fcntl$dupfd(0xffffffffffffffff, 0x605, 0xffffffffffffffff)
+sendmsg$nl_xfrm(r1, &(0x7f00000003c0)={&(0x7f0000000100), 0xc, &(0x7f0000000380)={&(0x7f0000000140)=@getsa={0x234, 0x12, 0x4, 0x70bd25, 0x25dfdbfd, {@in6=@rand_addr="d3894c4cfe5755333f537c0a1d71f6f2", 0x4d5, 0xa, 0xbd49a213de6b9c32}, [@tmpl={0x204, 0x5, [{{@in6=@local, 0x4d5, 0x33}, 0xa, @in6=@empty, 0x0, 0x3, 0x0, 0x81, 0x42f, 0x1, 0x80000001}, {{@in=@remote, 0x4d6, 0x32}, 0xa, @in6=@rand_addr="38c3d5f4c60d6dffa62506fd0b67adc0", 0x3505, 0x3, 0x0, 0x9, 0x1, 0x6, 0x10000}, {{@in=@rand_addr=0x5, 0x4d6, 0x3c}, 0xa, @in=@remote, 0x3503, 0x1, 0x0, 0x2, 0x80000001, 0x9, 0x5}, {{@in6=@local, 0x4d4}, 0x40c506b3d5529761, @in6=@empty, 0x3504, 0x4, 0x3, 0x80, 0x7, 0x7, 0x1}, {{@in=@rand_addr=0x7f, 0x4d5, 0xff}, 0xa, @in=@broadcast, 0x3505, 0x2, 0x3, 0x5, 0xeeb7, 0xfd60, 0x80000000}, {{@in=@dev={0xac, 0x14, 0x14, 0x18}, 0x4d5, 0x2b}, 0x4e4e97e83c891ae9, @in6=@mcast1, 0x0, 0x3, 0x0, 0x3, 0x40, 0x56, 0x9}, {{@in6=@ipv4={[], [], @loopback}, 0x4d3}, 0xa, @in6=@ipv4={[], [], @initdev={0xac, 0x1e, 0x0, 0x0}}, 0x3507, 0x6, 0x0, 0x7, 0x1, 0x7, 0x10000}, {{@in=@rand_addr=0x8000, 0x4d4, 0x78ca1c3fc9fa2898}, 0xa, @in6=@dev={0xfe, 0x80, [], 0x36}, 0x0, 0xe8d2fdd38dcd1605, 0x0, 0x2, 0xffff, 0x800, 0x2e}]}, @output_mark={0x8, 0x1d, 0x1}]}, 0x234}, 0x1, 0x0, 0x0, 0x80}, 0x8000000)
+sendto$inet(0xffffffffffffffff, &(0x7f0000000400)="1c36e77043b1c659fe86c13cac6fa982c668045cab35946f3510a42e079b657a62813062aa0c9fceae2eb46203f0cb15865941c577e09e6d16150f8367d45bcecb13c1011dee1f2cb5e9a25d390a144ce359e53de760f3ece7b3afe98b6c2fc63c42e4e079af8f3512af6057b48c6889e8c503318eb91125fb6bc61f770138786b45dbd555f0f189859a8b7ec895c268dc867fe72315a547e6c98dae8cce026a85de6bc8657c5d8633f7fd21bf2ccebc3576b385eb7ffbe0f0f412fda028873d197c35cf3a65cb03c078fd1cc5545b01e4", 0xd1, 0x20004831, &(0x7f0000000500)={0x2, 0x4e21, @rand_addr=0x4}, 0x10)
+fsetxattr(r1, &(0x7f0000000540)=@known='trusted.syz\x00', &(0x7f0000000580)='userloeth0\x00', 0xb, 0x2)
+r2 = syz_genetlink_get_family_id$nl80211(&(0x7f0000000600)='nl80211\x00')
+getsockopt$inet_IP_XFRM_POLICY(0xffffffffffffffff, 0x0, 0x11, &(0x7f0000000700)={{{@in=@dev, @in6=@empty, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, <r3=>0x0}}, {{@in6=@remote}, 0x0, @in6=@mcast1}}, &(0x7f0000000800)=0xe8)
+sendmsg$NL80211_CMD_STOP_AP(r1, &(0x7f0000000900)={&(0x7f00000005c0)={0x10, 0x0, 0x0, 0x80000}, 0xc, &(0x7f00000008c0)={&(0x7f0000000840)={0x44, r2, 0x102, 0x70bd2d, 0x25dfdbfe, {}, [@NL80211_ATTR_DTIM_PERIOD={0x8, 0xd, 0x10001}, @NL80211_ATTR_BEACON_INTERVAL={0x8, 0xc, 0x7}, @NL80211_ATTR_TWT_RESPONDER={0x4}, @NL80211_ATTR_DTIM_PERIOD={0x8, 0xd, 0x1}, @NL80211_ATTR_HIDDEN_SSID={0x8, 0x7e, 0x1}, @NL80211_ATTR_IFINDEX={0x8, 0x3, r3}, @NL80211_ATTR_PRIVACY={0x4}]}, 0x44}, 0x1, 0x0, 0x0, 0x10000}, 0x800)
+ioctl$SNDRV_TIMER_IOCTL_STOP(r1, 0x54a1)
+r4 = syz_genetlink_get_family_id$ipvs(&(0x7f0000000980)='IPVS\x00')
+sendmsg$IPVS_CMD_NEW_DEST(r1, &(0x7f0000000b80)={&(0x7f0000000940)={0x10, 0x0, 0x0, 0x1050}, 0xc, &(0x7f0000000b40)={&(0x7f00000009c0)={0x144, r4, 0x818, 0x70bd28, 0x25dfdbfc, {}, [@IPVS_CMD_ATTR_TIMEOUT_TCP={0x8, 0x4, 0x1}, @IPVS_CMD_ATTR_TIMEOUT_TCP={0x8, 0x4, 0x4}, @IPVS_CMD_ATTR_TIMEOUT_TCP_FIN={0x8, 0x5, 0x3}, @IPVS_CMD_ATTR_TIMEOUT_TCP={0x8, 0x4, 0x4}, @IPVS_CMD_ATTR_SERVICE={0x58, 0x1, [@IPVS_SVC_ATTR_ADDR={0x14, 0x3, @ipv4=@empty}, @IPVS_SVC_ATTR_FLAGS={0xc, 0x7, {0xa, 0x28}}, @IPVS_SVC_ATTR_PORT={0x6, 0x4, 0x4e20}, @IPVS_SVC_ATTR_FLAGS={0xc, 0x7, {0x20, 0x4}}, @IPVS_SVC_ATTR_PE_NAME={0x8, 0xb, 'sip\x00'}, @IPVS_SVC_ATTR_PE_NAME={0x8, 0xb, 'sip\x00'}, @IPVS_SVC_ATTR_PROTOCOL={0x6, 0x2, 0xff}, @IPVS_SVC_ATTR_FWMARK={0x8, 0x5, 0x4}]}, @IPVS_CMD_ATTR_DAEMON={0x3c, 0x3, [@IPVS_DAEMON_ATTR_MCAST_GROUP6={0x14, 0x6, @mcast1}, @IPVS_DAEMON_ATTR_SYNC_MAXLEN={0x6, 0x4, 0x9ddf}, @IPVS_DAEMON_ATTR_MCAST_TTL={0x5, 0x8, 0x5}, @IPVS_DAEMON_ATTR_MCAST_GROUP6={0x14, 0x6, @dev={0xfe, 0x80, [], 0x29}}]}, @IPVS_CMD_ATTR_DEST={0x14, 0x2, [@IPVS_DEST_ATTR_WEIGHT={0x8}, @IPVS_DEST_ATTR_WEIGHT={0x8, 0x4, 0x2}]}, @IPVS_CMD_ATTR_DAEMON={0x1c, 0x3, [@IPVS_DAEMON_ATTR_STATE={0x8}, @IPVS_DAEMON_ATTR_MCAST_GROUP={0x8, 0x5, @multicast1}, @IPVS_DAEMON_ATTR_SYNC_ID={0x8, 0x3, 0x3}]}, @IPVS_CMD_ATTR_TIMEOUT_UDP={0x8, 0x6, 0x3}, @IPVS_CMD_ATTR_DAEMON={0x44, 0x3, [@IPVS_DAEMON_ATTR_MCAST_IFN={0x14, 0x2, 'ip6erspan0\x00'}, @IPVS_DAEMON_ATTR_MCAST_GROUP={0x8, 0x5, @local}, @IPVS_DAEMON_ATTR_MCAST_PORT={0x6, 0x7, 0x4e22}, @IPVS_DAEMON_ATTR_MCAST_TTL={0x5, 0x8, 0x85}, @IPVS_DAEMON_ATTR_MCAST_IFN={0x14, 0x2, 'veth0_vlan\x00'}]}]}, 0x144}, 0x1, 0x0, 0x0, 0x40000040}, 0x20000000)
+ioctl$RTC_WKALM_SET(r1, 0x4028700f, &(0x7f0000000bc0)={0x0, 0x1, {0x29, 0x21, 0xd, 0xc, 0x5, 0x5, 0x1, 0x72}})
+r5 = openat$bsg(0xffffffffffffff9c, &(0x7f0000000c00)='/dev/bsg\x00', 0x20000, 0x0)
+ioctl$SG_GET_VERSION_NUM(r5, 0x2282, &(0x7f0000000c40))
+r6 = socket$nl_xfrm(0x10, 0x3, 0x6)
+recvmsg(r6, &(0x7f0000002100)={&(0x7f0000000c80)=@in={0x2, 0x0, @dev}, 0x80, &(0x7f0000002000)=[{&(0x7f0000000d00)=""/232, 0xe8}, {&(0x7f0000000e00)=""/135, 0x87}, {&(0x7f0000000ec0)=""/24, 0x18}, {&(0x7f0000000f00)=""/8, 0x8}, {&(0x7f0000000f40)=""/173, 0xad}, {&(0x7f0000001000)=""/4096, 0x1000}], 0x6, &(0x7f0000002080)=""/97, 0x61}, 0x1)
+r7 = dup2(0xffffffffffffffff, r5)
+r8 = syz_genetlink_get_family_id$netlbl_mgmt(&(0x7f0000002180)='NLBL_MGMT\x00')
+sendmsg$NLBL_MGMT_C_LISTDEF(r7, &(0x7f0000002240)={&(0x7f0000002140)={0x10, 0x0, 0x0, 0x8}, 0xc, &(0x7f0000002200)={&(0x7f00000021c0)={0x2c, r8, 0x10, 0x70bd2d, 0x25dfdbff, {}, [@NLBL_MGMT_A_DOMAIN={0x10, 0x1, 'trusted.syz\x00'}, @NLBL_MGMT_A_PROTOCOL={0x8, 0x2, 0x7}]}, 0x2c}, 0x1, 0x0, 0x0, 0x44}, 0x4000)
+r9 = openat$zero(0xffffffffffffff9c, &(0x7f0000002280)='/dev/zero\x00', 0x28001, 0x0)
+getsockopt$sock_cred(0xffffffffffffffff, 0x1, 0x11, &(0x7f00000022c0)={0x0, <r10=>0x0}, &(0x7f0000002300)=0xc)
+getsockopt$sock_cred(0xffffffffffffffff, 0x1, 0x11, &(0x7f0000002340)={0x0, 0x0, <r11=>0x0}, &(0x7f0000002380)=0xc)
+getsockopt$inet_IP_XFRM_POLICY(0xffffffffffffffff, 0x0, 0x11, &(0x7f00000023c0)={{{@in=@local, @in6=@ipv4={[], [], @loopback}, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, <r12=>0x0}}, {{@in6=@dev}, 0x0, @in6=@dev}}, &(0x7f00000024c0)=0xe8)
+write$P9_RSTATu(r9, &(0x7f0000002500)={0x5f, 0x7d, 0x2, {{0x0, 0x4a, 0xff, 0x9, {0x10, 0x1, 0x2}, 0x10000, 0xfff, 0x0, 0x2, 0xb, 'veth0_vlan\x00', 0x8, 'nl80211\x00', 0x0, '', 0x4, 'proc'}, 0x0, '', r10, r11, r12}}, 0x5f)
+r13 = socket(0x2d, 0x1, 0x7a)
+setsockopt$inet_udp_encap(r13, 0x11, 0x64, &(0x7f0000003380)=0x4, 0x4)
+r14 = syz_genetlink_get_family_id$ipvs(&(0x7f0000003400)='IPVS\x00')
+sendmsg$IPVS_CMD_NEW_DAEMON(r13, &(0x7f0000003500)={&(0x7f00000033c0)={0x10, 0x0, 0x0, 0x40}, 0xc, &(0x7f00000034c0)={&(0x7f0000003440)={0x5c, r14, 0x2, 0x70bd2b, 0x4, {}, [@IPVS_CMD_ATTR_SERVICE={0x1c, 0x1, [@IPVS_SVC_ATTR_PE_NAME={0x8, 0xb, 'sip\x00'}, @IPVS_SVC_ATTR_PE_NAME={0x8, 0xb, 'sip\x00'}, @IPVS_SVC_ATTR_AF={0x6, 0x1, 0x2}]}, @IPVS_CMD_ATTR_TIMEOUT_UDP={0x8, 0x6, 0x50db}, @IPVS_CMD_ATTR_DEST={0x24, 0x2, [@IPVS_DEST_ATTR_TUN_TYPE={0x5}, @IPVS_DEST_ATTR_INACT_CONNS={0x8, 0x8, 0x3f}, @IPVS_DEST_ATTR_PERSIST_CONNS={0x8, 0x9, 0x7}, @IPVS_DEST_ATTR_FWD_METHOD={0x6, 0x3, 0x4}]}]}, 0x5c}, 0x1, 0x0, 0x0, 0x1}, 0x4001)
+
+[   34.101426] cgroup1: Unknown subsys name 'perf_event'
+[   34.119801] cgroup1: Unknown subsys name 'net_cls'
+[   34.198343] cgroup1: Unknown subsys name 'perf_event'
+[   34.216093] cgroup1: Unknown subsys name 'net_cls'
+[   34.219352] cgroup1: Unknown subsys name 'perf_event'
+[   34.221147] cgroup1: Unknown subsys name 'net_cls'
+[   34.249930] cgroup1: Unknown subsys name 'perf_event'
+[   34.272023] cgroup1: Unknown subsys name 'net_cls'
+[   34.274669] cgroup1: Unknown subsys name 'perf_event'
+[   34.280196] cgroup1: Unknown subsys name 'perf_event'
+[   34.293921] cgroup1: Unknown subsys name 'net_cls'
+[   34.301899] cgroup1: Unknown subsys name 'net_cls'
+[   34.350350] cgroup1: Unknown subsys name 'perf_event'
+[   34.353838] cgroup1: Unknown subsys name 'perf_event'
+[   34.370526] cgroup1: Unknown subsys name 'perf_event'
+[   34.373659] cgroup1: Unknown subsys name 'net_cls'
+[   34.374497] cgroup1: Unknown subsys name 'perf_event'
+[   34.378568] cgroup1: Unknown subsys name 'net_cls'
+[   34.383891] cgroup1: Unknown subsys name 'net_cls'
+[   34.387229] cgroup1: Unknown subsys name 'perf_event'
+[   34.388472] cgroup1: Unknown subsys name 'net_cls'
+[   34.390243] cgroup1: Unknown subsys name 'perf_event'
+[   34.391469] cgroup1: Unknown subsys name 'net_cls'
+[   34.399981] cgroup1: Unknown subsys name 'net_cls'
+[   34.432806] cgroup1: Unknown subsys name 'perf_event'
+[   34.443690] cgroup1: Unknown subsys name 'net_cls'
+[   34.450305] cgroup1: Unknown subsys name 'perf_event'
+[   34.462832] cgroup1: Unknown subsys name 'net_cls'
+[   34.492036] cgroup1: Unknown subsys name 'perf_event'
+[   34.493842] cgroup1: Unknown subsys name 'perf_event'
+[   34.495374] cgroup1: Unknown subsys name 'net_cls'
+[   34.497869] cgroup1: Unknown subsys name 'net_cls'
+18:47:40 executing program 4:
+perf_event_open(&(0x7f0000000200)={0x0, 0x70, 0x0, 0x0, 0x0, 0x0, 0x0, 0x9cd9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, @perf_config_ext}, 0x0, 0xffffffffffffffff, 0xffffffffffffffff, 0x0)
+io_setup(0x10000, &(0x7f0000000000))
+r0 = open(&(0x7f0000000000)='/proc/slabinfo\x00', 0x0, 0x0)
+r1 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r1, 0x10, 0x0, 0x1000)
+setsockopt$packet_int(r1, 0x107, 0x14, &(0x7f0000000040)=0xffff, 0x4)
+read(r0, 0x0, 0x0)
+
+[   39.826723] perf: interrupt took too long (2521 > 2500), lowering kernel.perf_event_max_sample_rate to 79000
+[   39.828760] perf: interrupt took too long (3210 > 3151), lowering kernel.perf_event_max_sample_rate to 62000
+[   39.830799] perf: interrupt took too long (4014 > 4012), lowering kernel.perf_event_max_sample_rate to 49000
+18:47:40 executing program 8:
+r0 = socket$nl_netfilter(0x10, 0x3, 0xc)
+sendmsg$IPCTNL_MSG_EXP_GET(r0, &(0x7f0000000100)={0x0, 0x0, &(0x7f00000000c0)={&(0x7f0000000140)={0x30, 0x1, 0x2, 0x1, 0x0, 0x0, {}, [@CTA_EXPECT_FN={0x13, 0xb, 'callforwarding\x00'}, @CTA_EXPECT_CLASS={0x0, 0x9, 0x80000000}, @CTA_EXPECT_NAT={0x0, 0xa, [@CTA_EXPECT_NAT_DIR={0x0, 0x1, 0x1}, @CTA_EXPECT_NAT_DIR]}, @CTA_EXPECT_CLASS={0x0, 0x9, 0x9}]}, 0xffffffffffffffa6}, 0x1, 0x0, 0x0, 0x80}, 0x0)
+
+[   39.893072] perf: interrupt took too long (5018 > 5017), lowering kernel.perf_event_max_sample_rate to 39000
+18:47:40 executing program 8:
+mmap(&(0x7f0000000000/0x3000)=nil, 0x3000, 0x1, 0x3c471, 0xffffffffffffffff, 0x0)
+
+[   39.918720] perf: interrupt took too long (6317 > 6272), lowering kernel.perf_event_max_sample_rate to 31000
+[   39.935734] perf: interrupt took too long (7901 > 7896), lowering kernel.perf_event_max_sample_rate to 25000
+18:47:40 executing program 8:
+r0 = syz_open_dev$sg(&(0x7f0000000040)='/dev/sg#\x00', 0x0, 0x0)
+mremap(&(0x7f0000ffc000/0x1000)=nil, 0x1000, 0x2000, 0x3, &(0x7f0000ffd000/0x2000)=nil)
+openat$cgroup_ro(0xffffffffffffffff, &(0x7f0000000140)='cpuacct.usage_percpu_user\x00', 0x0, 0x0)
+r1 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r1, 0x10, 0x0, 0x1000)
+r2 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r2, 0x10, 0x0, 0x1000)
+ioctl$SCSI_IOCTL_GET_BUS_NUMBER(r0, 0x5386, &(0x7f0000000100))
+
+18:47:40 executing program 6:
+r0 = open(&(0x7f00000000c0)='./file0\x00', 0x1, 0x5)
+fcntl$getflags(r0, 0xb)
+ioctl$FS_IOC_GETFSMAP(r0, 0xc0c0583b, &(0x7f0000000040)=ANY=[@ANYBLOB="000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003"])
+r1 = syz_genetlink_get_family_id$nl80211(&(0x7f0000000100)='nl80211\x00')
+getsockopt$inet6_IPV6_XFRM_POLICY(0xffffffffffffffff, 0x29, 0x23, &(0x7f0000000240)={{{@in=@local, @in=@empty, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, <r2=>0x0}}, {{}, 0x0, @in=@loopback}}, &(0x7f0000000340)=0xe8)
+r3 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r3, 0x40086602, &(0x7f0000000040)=0x4000)
+ftruncate(r3, 0x0)
+r4 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+r5 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r5, 0x10, 0x0, 0x1000)
+r6 = openat(r5, &(0x7f0000000180)='./file0\x00', 0x80000, 0xd1)
+io_uring_register$IORING_UNREGISTER_EVENTFD(r6, 0x5, 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r4, 0x40086602, &(0x7f0000000040)=0x4000)
+ioctl$SG_GET_NUM_WAITING(0xffffffffffffffff, 0x227d, &(0x7f0000000140))
+ioctl$KDGKBSENT(r4, 0x4b48, &(0x7f0000000380)={0x1, "893e6dadff1800bbdff1ee567e3da993d4519ac2a7e07a0193f1d59a552a0157ffc7e791851140a9087f5d727303e2f6f97c062c5de5bef605191f89e93df04b7e396e533452ebf4a1c5f0e480f352f25c189548b4a691a7de322523f3fb888ad40302c10cfc3f7e42e743d87a60a19af612cf57b7ae4bd66f41c3ca82818d29e4e7a5482b27ba34724baf47c3666212db638f2be03604754409cc0642bf43ea8ee798967373f2da3f155e3b846829a6135bfd2ac595a2beaf6ed417d69ca5082e0a3a04cd70eaa8b08d32fd688fdb32f16d559f15ebd5a6a3e27345285b17e27fb0d72122d0e84bfac41ff3fc892e2ff338f05423469bdc24626041907b5231c3383497ecdd7142414c044fc0c814b412d45b62233308c9fb8c7eacf9fa9c37537fbd7d8e8b8d57b4176bb3dd5c4a8e9413a5a63a7246e20465893213ff834351544f041b97576cac9a25717a492ca4c91628f767943e649d4f82f65d709cdfa9510758d783324068576561902893bc099a2d955eef76d4cdee60c919a3e0f86789c1e3948a83046437fe2ead7f07e044ac8e99d8898d9c83ef5f0e6b97926542f702ec80396f6096aa5c19c939ade8a33a050eab80ae53c9e1e18cfddc0c6bb63a215337e84380bd2920d2755db24e98257d80e5b410400acec50d57a483245348b753efda22a4287ebb6b2438ec0d49080a40565d10ce6a8dc92cc3c20ea6"})
+ioctl$sock_SIOCGIFINDEX(r3, 0x8933, &(0x7f00000006c0)={'veth0\x00', <r7=>0x0})
+sendmsg$NL80211_CMD_SET_STATION(r0, &(0x7f00000007c0)={&(0x7f0000000000)={0x10, 0x0, 0x0, 0x20000000}, 0xc, &(0x7f0000000780)={&(0x7f0000000700)={0x50, r1, 0x200, 0x70bd2d, 0x25dfdbfd, {}, [@NL80211_ATTR_IFINDEX={0x8, 0x3, r2}, @NL80211_ATTR_STA_CAPABILITY={0x6, 0xab, 0x1f}, @NL80211_ATTR_STA_AID={0x6, 0x10, 0x38c}, @NL80211_ATTR_VLAN_ID={0x6, 0x11a, 0x3}, @NL80211_ATTR_STA_SUPPORT_P2P_PS={0x5}, @NL80211_ATTR_MGMT_SUBTYPE={0x5, 0x29, 0xc}, @NL80211_ATTR_STA_SUPPORTED_CHANNELS={0x4}, @NL80211_ATTR_IFINDEX={0x8, 0x3, r7}]}, 0x50}, 0x1, 0x0, 0x0, 0x24004840}, 0x0)
+
+[   39.968178] perf: interrupt took too long (9883 > 9876), lowering kernel.perf_event_max_sample_rate to 20000
+18:47:40 executing program 8:
+getresuid(&(0x7f0000000080), &(0x7f0000000040), &(0x7f0000000000))
+ioctl$TIOCGPGRP(0xffffffffffffffff, 0x540f, &(0x7f00000001c0)=<r0=>0x0)
+ptrace$setsig(0x4203, r0, 0x3000000, &(0x7f0000000140)={0x1a, 0x81, 0x400})
+
+[   40.012793] perf: interrupt took too long (12362 > 12353), lowering kernel.perf_event_max_sample_rate to 16000
+18:47:40 executing program 6:
+r0 = add_key$keyring(&(0x7f0000000180)='keyring\x00', &(0x7f00000001c0)={'syz', 0x3}, 0x0, 0x0, 0xfffffffffffffffe)
+keyctl$KEYCTL_RESTRICT_KEYRING(0x1d, r0, &(0x7f0000000000)='asymmetric\x00', &(0x7f0000000080)=@chain={'key_or_keyring:', 0x0, ':chain\x00'})
+recvmmsg(0xffffffffffffffff, &(0x7f0000002880)=[{{&(0x7f00000000c0)=@pppol2tp={0x18, 0x1, {0x0, <r1=>0xffffffffffffffff, {0x2, 0x0, @broadcast}}}, 0x80, &(0x7f0000001280)=[{&(0x7f0000000200)=""/4096, 0x1000}, {&(0x7f0000000040)=""/16, 0x10}, {&(0x7f0000000140)=""/54, 0x36}, {&(0x7f0000001200)=""/73, 0x49}], 0x4}, 0x80000000}, {{&(0x7f00000012c0)=@nl=@unspec, 0x80, &(0x7f00000027c0)=[{&(0x7f0000001340)=""/220, 0xdc}, {&(0x7f0000001440)=""/85, 0x55}, {&(0x7f00000014c0)=""/243, 0xf3}, {&(0x7f00000015c0)=""/4096, 0x1000}, {&(0x7f00000025c0)=""/10, 0xa}, {&(0x7f0000002600)=""/48, 0x30}, {&(0x7f0000002640)=""/202, 0xca}, {&(0x7f0000002740)=""/123, 0x7b}], 0x8, &(0x7f0000002840)=""/18, 0x12}, 0x3f}], 0x2, 0x10000, &(0x7f0000002900)={0x77359400})
+getsockopt$EBT_SO_GET_INIT_ENTRIES(r1, 0x0, 0x83, &(0x7f0000002a00)={'filter\x00', 0x0, 0x4, 0x49, [], 0x1, &(0x7f0000002940)=[{}], &(0x7f0000002980)=""/73}, &(0x7f0000002a80)=0x78)
+keyctl$link(0x8, r0, r0)
+
+18:47:40 executing program 8:
+r0 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x42, 0x0)
+setsockopt$inet_tcp_TCP_CONGESTION(r0, 0x6, 0xd, &(0x7f0000000000)='veno\x00', 0x5)
+write$P9_RAUTH(r0, &(0x7f0000000080)={0x4, 0x67, 0x0, {0x81, 0x4, 0xfffffffffffffffb}}, 0xfffffe7b)
+
+18:47:40 executing program 7:
+r0 = socket$inet(0x2, 0x1, 0x0)
+r1 = shmget(0x3, 0x1000, 0x0, &(0x7f0000000000/0x1000)=nil)
+shmctl$IPC_SET(r1, 0x1, &(0x7f0000000240)={{0x0}})
+shmctl$IPC_STAT(r1, 0x2, &(0x7f0000000040)=""/47)
+bind$inet(r0, &(0x7f0000000000)={0x2, 0x8235}, 0x10)
+
+18:47:40 executing program 6:
+socket$packet(0x11, 0x3, 0x300)
+r0 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r0, 0x10, 0x0, 0x1000)
+setsockopt$packet_fanout(r0, 0x107, 0x12, &(0x7f00000000c0)={0x0, 0x7}, 0x4)
+socket$inet6_udp(0xa, 0x2, 0x0)
+r1 = open(&(0x7f0000000100)='fallocate04.txt\x00', 0x42, 0x200)
+fallocate(r1, 0x10, 0x0, 0x1000)
+sendmsg$inet(r1, &(0x7f0000006700)={&(0x7f0000000040)={0x2, 0x4e24, @remote}, 0xb, 0x0, 0x344}, 0x0)
+
+18:47:40 executing program 13:
+r0 = socket$inet6_udp(0xa, 0x2, 0x0)
+ioctl$TIOCL_BLANKSCREEN(0xffffffffffffffff, 0x541c, &(0x7f00000000c0))
+readv(r0, &(0x7f00000017c0)=[{&(0x7f00000016c0)=""/209, 0xd1}], 0x1)
+r1 = open(&(0x7f0000000000)='./file0\x00', 0x111180, 0x8)
+r2 = open(&(0x7f0000000100)='./file0\x00', 0x10841, 0x80)
+getpeername$inet6(0xffffffffffffffff, &(0x7f0000000340)={0xa, 0x0, 0x0, @empty}, &(0x7f0000000380)=0x1c)
+r3 = syz_genetlink_get_family_id$SEG6(&(0x7f0000000180)='SEG6\x00')
+sendmsg$SEG6_CMD_DUMPHMAC(r2, &(0x7f0000000280)={&(0x7f0000000140)={0x10, 0x0, 0x0, 0x8440090}, 0xc, &(0x7f0000000240)={&(0x7f00000001c0)={0x74, r3, 0x8, 0x70bd2d, 0x25dfdbfb, {}, [@SEG6_ATTR_DST={0x14, 0x1, @mcast2}, @SEG6_ATTR_DSTLEN={0x8, 0x2, 0x7}, @SEG6_ATTR_HMACKEYID={0x8, 0x3, 0x6}, @SEG6_ATTR_SECRET={0x14, 0x4, [0x10001, 0x200, 0x3, 0x8]}, @SEG6_ATTR_DST={0x14, 0x1, @empty}, @SEG6_ATTR_DST={0x14, 0x1, @initdev={0xfe, 0x88, [], 0x0, 0x0}}]}, 0x74}, 0x1, 0x0, 0x0, 0x4004083}, 0x4000000)
+r4 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r4, 0x40086602, &(0x7f0000000040)=0x4000)
+ioctl$SNDRV_TIMER_IOCTL_GSTATUS(r4, 0xc0505405, &(0x7f00000002c0)={{0x3, 0x1, 0xfffffffe, 0x3, 0x81}, 0x101, 0x9})
+ioctl$SCSI_IOCTL_STOP_UNIT(r1, 0x6)
+r5 = openat$full(0xffffffffffffff9c, &(0x7f0000000040)='/dev/full\x00', 0x240800, 0x0)
+sendto$unix(r5, &(0x7f0000000080)="4e48c12a164669f435cfb712efec7554c055a77fd59b249f322d1f9ece", 0x1d, 0x4000000, 0x0, 0x0)
+
+18:47:40 executing program 2:
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$SCSI_IOCTL_SEND_COMMAND(r0, 0x1, &(0x7f00000002c0)=ANY=[@ANYBLOB="ed00000002000000880300005c2ddd03e6b8f1623fac6a5d40722e644dc9420bd6ebc6252457865e38a4d649891b617958bd884df6a0e4ac2e0b73be897d73ef97cb42755549a8da7d991ff3dd76e85524bdbcae89111eb158d7ec5dca74db759f4a4e221c80e9bae9186d17fc632db9dc3ae9a75e99ffff8d17b5a4de72cbc163e36331e2ccf6e0cde2ab99642f52dc0e13ab45173465fbcf94f5a00a3672d21cfaaac71725c27839b120fe9e9fb35a8b35549d486b5ca8e208f5c60ec1f86e572744af20f20a40c75fbf945c8dd00926ee7155544c7a14d941918ea684488bb189dda4a301940f82d911523c05e7f9844ab521772cf32f97"])
+ioctl$TIOCMIWAIT(0xffffffffffffffff, 0x545c, 0x0)
+r1 = perf_event_open$cgroup(&(0x7f0000002280)={0x0, 0x70, 0x2, 0x3f, 0x7, 0x6, 0x0, 0x3ff, 0x14, 0x0, 0x1, 0x1, 0x0, 0x1, 0x1, 0x1, 0x1, 0x0, 0x1, 0x0, 0x1, 0x1, 0x1, 0x0, 0x1, 0x3, 0x1, 0x0, 0x1, 0x1, 0x1, 0x0, 0x0, 0x1, 0x1, 0x0, 0x0, 0x0, 0x0, 0x7, 0x4, @perf_bp={&(0x7f0000002240), 0x1}, 0x2000, 0x8001, 0x7ff, 0x1, 0x1, 0x72, 0x22a5}, 0xffffffffffffffff, 0x8, 0xffffffffffffffff, 0x1)
+fstat(r1, &(0x7f0000002300))
+
+18:47:40 executing program 7:
+mmap(&(0x7f0000000000/0x3000)=nil, 0x3000, 0x1, 0x3c471, 0xffffffffffffffff, 0x0)
+r0 = socket$inet6_udp(0xa, 0x2, 0x0)
+sendmsg$inet(r0, &(0x7f0000006700)={&(0x7f0000000040)={0x2, 0x4e24, @loopback}, 0x10, 0x0, 0x0, &(0x7f0000000280)=[@ip_retopts={{0x1c, 0x0, 0x7, {[@ra={0x94, 0x4, 0x1}, @timestamp_prespec={0x44, 0x4, 0xa7}, @end, @rr={0x7, 0x3}]}}}], 0x20}, 0x0)
+r1 = socket$nl_generic(0x10, 0x3, 0x10)
+setsockopt$netlink_NETLINK_BROADCAST_ERROR(r1, 0x10e, 0x4, &(0x7f0000000040), 0x4)
+
+18:47:40 executing program 0:
+perf_event_open(&(0x7f0000000200)={0x0, 0x70, 0x0, 0x0, 0x0, 0x0, 0x0, 0x9cd9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, @perf_config_ext}, 0x0, 0x0, 0xffffffffffffffff, 0x0)
+open(0x0, 0x0, 0x0)
+r0 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r0, 0x10, 0x0, 0x1000)
+r1 = dup(r0)
+ioctl$MON_IOCQ_RING_SIZE(r1, 0x9205)
+sync()
+
+18:47:40 executing program 6:
+setrlimit(0x0, 0x0)
+r0 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r0, 0x40086602, &(0x7f0000000040)=0x4000)
+ioctl$FS_IOC_SETFLAGS(r0, 0x40086602, &(0x7f0000000040)=0x100000000)
+ioctl$TIOCSISO7816(0xffffffffffffffff, 0xc0285443, &(0x7f0000000000)={0x5, 0x1400000, 0xfffffff9, 0x3, 0x1})
+openat(0xffffffffffffffff, &(0x7f0000000080)='fallocate04.txt\x00', 0xc08400, 0x40)
+
+18:47:40 executing program 4:
+get_mempolicy(&(0x7f0000000200), &(0x7f0000000240), 0x101, &(0x7f0000ffe000/0x1000)=nil, 0x1)
+r0 = socket$inet6_udplite(0xa, 0x2, 0x88)
+sendmsg$inet(r0, &(0x7f00000001c0)={0x0, 0x0, &(0x7f0000000100)=[{&(0x7f0000000000)="c1709a9b1d1372aa785b9ef614620fc844a173ed792a705e8997e21a301076eb0a6cc749218d4b3be369a6071fafeef1bb611766fc9abe3dbf4e3035967776950c3d68d2d6c64fb914e625b11e18ebd792e5a3ce4bb85d5edf35d2741fc5", 0x5e}, {&(0x7f0000000080)="1cdc34d3e2fc0b9773c3f6f096bc17a4ff3265a508ad207b0cccc9e29510ac4efe7d356cbc657a8c4b4e6b2729b88c996c0094371f7931a080249ed61fd8", 0x3e}, {&(0x7f00000000c0)="2f2c355654e98ad9c391f0357988a2542dcf075c", 0x14}], 0x3, &(0x7f0000000300)=ANY=[@ANYBLOB="240000000000000000000000070000008211840dc1d8a103d2f808a1d90000000000000014000000000000000000000002000000010000000000000014000000e480000000000000ae147f5b2e01000000080000b7d7a76f6a764739cf5560e75e9b2daf392caad22dbf03cd5a2b6feb023a0b8e0d9ff4f846d7a7b9a3bc1dfbe1ab11625c82de0bcaf12f008279d87c6e8ec653837d26e40b37ae93b7a57a5c9bfd4b6e24ba4d96f493af4d2e56bfb8517952b15649bb8d844d453090c29d2908c44a16c24e6e7c2a20f13fd027cbbb9e95fb5eeb76ca40d9412e9ac99ef7da471910ea3b1f593a9365dfbd6ac9487d65923542aa17cf625a0b1b3ab1b27d44cfff2aba95c314297664f7e8dbbbc848d28ca5f67706c407b2561c059fbdcf2d190f927a452ea1374066955c6c00aee488cbfe0f73886a5f94cb6951cc97bbd7b0b1e93dc4a0b9486daf865ef4"], 0x58}, 0xdcdc8eb6e6befccc)
+syz_mount_image$msdos(0x0, &(0x7f00000002c0)='./file0\x00', 0x0, 0x0, 0x0, 0x0, 0x0)
+prctl$PR_CAPBSET_READ(0x17, 0x18)
+
+18:47:40 executing program 2:
+r0 = socket$inet(0x2, 0x2, 0x0)
+r1 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r1, 0x40086602, &(0x7f0000000040)=0x4000)
+ioctl$RTC_UIE_ON(r1, 0x7003)
+setsockopt$inet_opts(r0, 0x0, 0xc, &(0x7f0000000080)="c3", 0xfdbd)
+ioctl$SNDRV_SEQ_IOCTL_SET_QUEUE_TEMPO(r1, 0x402c5342, &(0x7f0000000100)={0x0, 0x2, 0xfffffd5c, {0x0, 0x7}, 0xffffffff, 0x195})
+
+[   40.166143] audit: type=1400 audit(1579114060.774:9): avc:  denied  { create } for  pid=7725 comm="syz-executor.12" scontext=system_u:system_r:kernel_t:s0 tcontext=system_u:system_r:kernel_t:s0 tclass=dccp_socket permissive=1
+[   40.259989] perf: interrupt took too long (15538 > 15452), lowering kernel.perf_event_max_sample_rate to 12000
+18:47:41 executing program 3:
+r0 = socket$inet(0x2, 0x2, 0x0)
+connect$inet(r0, &(0x7f0000000000), 0x10)
+r1 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r1, 0x40086602, &(0x7f0000000040)=0x4000)
+accept$inet(r1, &(0x7f0000000100)={0x2, 0x0, @remote}, &(0x7f0000000140)=0x10)
+ioctl(r0, 0x4, &(0x7f0000000040)="89b53807d8898e94ccce5ef50cc47da0e1196aaf4de1c43d27256cb1c8c417aada32e8685441d547ca15b1e3f0ba5f440aa151927f915f718312fb9ec005d54544cd6361e62a41d607a9d56ecd8a5b0b6effdaaca77b7c2a4f7996a8fca420569eae1f451130e28ba0775027c1517753b8a7a0b7bd2938c6047bd18adc56fe9ab51ce83f8dc09a3ee08b9881cf0401625e8921b84f704590c277c1dfb2")
+
+18:47:41 executing program 7:
+io_setup(0x0, &(0x7f0000000000))
+r0 = openat$null(0xffffffffffffff9c, &(0x7f00000000c0)='/dev/null\x00', 0x282000, 0x0)
+setsockopt$inet_tcp_buf(r0, 0x6, 0xb, &(0x7f0000000100)="3f0b6481110ef19857e1f5a1dc2649633867b22726953c99e136a7897d8e3dc6fe145d3f347cf5cf5e75da3e7bb6c17ce98471088f5c960cc43ad27e39dff87f3e26f1988d0a1053065e588c214389d1ffa161271a80f8a724132b67eda0c2586118843746ec141b8d78e3d429c0954ff37cf2c79df07a6165587a6b73c7fd5a28b51edfe390a01aa8fbd5b39d97b2bbab77598074f858e850de2dd8a0641809230c8663737fd82d2440364fa4ce6dfadcee1b9af3d3ac39ae5b53865c23d312eef8bfcbd104f7aa133a9f378f73a3aca8545aab1bff697ff9a261cba6deb00c6647eb857cec57f860b996a481a6bbcf2432e0087d3ea402", 0xf8)
+
+18:47:41 executing program 6:
+r0 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x43, 0x0)
+open_by_handle_at(r0, &(0x7f0000000040)=ANY=[@ANYBLOB="a09e2c28"], 0x0)
+ioctl$EXT4_IOC_PRECACHE_EXTENTS(r0, 0x6612)
+
+18:47:41 executing program 5:
+open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+r0 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r0, 0x10, 0x0, 0x1000)
+fstat(r0, &(0x7f0000000140)={0x0, 0x0, 0x0, 0x0, <r1=>0x0})
+syz_mount_image$iso9660(&(0x7f0000000000)='iso9660\x00', &(0x7f0000000040)='./file0\x00', 0x0, 0x0, 0x0, 0x0, &(0x7f0000000680)=ANY=[@ANYBLOB='overriderockperm,iocharset=none,uid=', @ANYRESHEX=r1])
+
+18:47:41 executing program 1:
+syz_mount_image$vfat(&(0x7f0000000000)='vfat\x00', &(0x7f0000000040)='./file0\x00', 0x0, 0x0, 0x0, 0x0, &(0x7f00000000c0)=ANY=[@ANYBLOB="696f6368d5897323743d63703933d7fe696f6308000000000000007466382c00"])
+
+18:47:41 executing program 4:
+r0 = dup3(0xffffffffffffffff, 0xffffffffffffffff, 0x80000)
+ioctl$TCSETX(r0, 0x5433, &(0x7f0000000000)={0x3, 0x5, [0x81, 0x3f, 0x4, 0xff01, 0x9], 0x7})
+socket$inet6_udp(0xa, 0x2, 0x0)
+
+18:47:41 executing program 0:
+perf_event_open(&(0x7f0000000200)={0x0, 0x70, 0x0, 0x0, 0x0, 0x0, 0x0, 0x9cd9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, @perf_config_ext}, 0x0, 0x0, 0xffffffffffffffff, 0x0)
+open(0x0, 0x0, 0x0)
+r0 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r0, 0x10, 0x0, 0x1000)
+r1 = dup(r0)
+ioctl$MON_IOCQ_RING_SIZE(r1, 0x9205)
+sync()
+
+18:47:41 executing program 9:
+syz_genetlink_get_family_id$SEG6(&(0x7f0000000240)='SEG6\x00')
+r0 = socket$packet(0x11, 0x2, 0x300)
+r1 = socket$inet6_tcp(0xa, 0x1, 0x0)
+getsockopt$inet6_mreq(r1, 0x29, 0x1c, &(0x7f0000000200)={@ipv4={[], [], @multicast1}, <r2=>0x0}, &(0x7f0000000280)=0x14)
+ioctl$sock_inet6_SIOCADDRT(r1, 0x890b, &(0x7f0000000040)={@ipv4={[], [], @multicast1}, @dev={0xfe, 0x80, [], 0x22}, @mcast2, 0x0, 0x0, 0x0, 0x0, 0x0, 0x84060200, r2})
+r3 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r3, 0x40086602, &(0x7f0000000040)=0x4000)
+getsockopt$inet_IP_XFRM_POLICY(r3, 0x0, 0x11, &(0x7f00000000c0)={{{@in=@multicast2, @in6, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, <r4=>0x0}}, {{@in=@multicast1}, 0x0, @in6=@dev}}, &(0x7f00000001c0)=0xe8)
+ioctl$ifreq_SIOCGIFINDEX_team(r0, 0x8933, &(0x7f0000000000)={'team0\x00', r4})
+sendmsg$sock(r0, &(0x7f00000005c0)={&(0x7f0000000380)=@nfc_llcp={0x27, 0x1, 0x0, 0x0, 0x0, 0x0, "8616068b8b38286954e45913aff1fcf9d4d40c74fbc82e9aee42c13db3417f760e50160aeeb66c45ff8fcdc1d1cc0c325e41b635919864fe567db54a20983c"}, 0x80, 0x0, 0x0, &(0x7f0000000540)=[@mark={{0x14}}], 0x18}, 0x0)
+
+18:47:41 executing program 12:
+perf_event_open(&(0x7f0000000200)={0x0, 0x70, 0x0, 0x0, 0x0, 0x0, 0x0, 0x9cd9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, @perf_config_ext}, 0x0, 0x0, 0xffffffffffffffff, 0x0)
+open(0x0, 0x0, 0x0)
+r0 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r0, 0x10, 0x0, 0x1000)
+r1 = dup(r0)
+ioctl$MON_IOCQ_RING_SIZE(r1, 0x9205)
+sync()
+
+18:47:41 executing program 11:
+r0 = perf_event_open(&(0x7f0000000200)={0x0, 0x70, 0x0, 0x0, 0x0, 0x0, 0x0, 0x9cd9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, @perf_config_ext}, 0x0, 0xffffffffffffffff, 0xffffffffffffffff, 0x0)
+r1 = open(&(0x7f0000000000)='.\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_GROUP_EXTEND(r1, 0x40086607, &(0x7f0000000100))
+r2 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x400, 0x0)
+fallocate(r2, 0x10, 0x0, 0x1000)
+r3 = fcntl$dupfd(r0, 0x0, r2)
+getdents64(r3, &(0x7f0000000040)=""/88, 0x58)
+
+18:47:41 executing program 10:
+r0 = socket$inet6_tcp(0xa, 0x1, 0x0)
+connect$inet6(r0, &(0x7f0000000340)={0xa, 0x0, 0x0, @mcast1}, 0x1c)
+r1 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r1, 0x40086602, &(0x7f0000000040)=0x4000)
+r2 = openat(r1, &(0x7f0000000000)='./file0\x00', 0x8140, 0x70)
+setsockopt$inet6_tcp_TCP_ULP(r2, 0x6, 0x1f, &(0x7f0000000040)='tls\x00', 0x4)
+
+18:47:41 executing program 14:
+r0 = accept$inet6(0xffffffffffffffff, &(0x7f0000000000)={0xa, 0x0, 0x0, @dev}, &(0x7f0000000040)=0x1c)
+r1 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x1)
+fallocate(r1, 0x10, 0x0, 0x1000)
+ioctl$int_in(r1, 0x5421, &(0x7f00000000c0)=0x10001)
+setsockopt$SO_TIMESTAMP(r0, 0x1, 0x0, &(0x7f0000000080)=0x3, 0x4)
+r2 = openat$bsg(0xffffffffffffff9c, &(0x7f0000000100)='/dev/bsg\x00', 0x1a001, 0x0)
+ioctl$TIOCMSET(r2, 0x5418, &(0x7f0000000140))
+timer_create(0x6, 0x0, &(0x7f0000000500))
+r3 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r3, 0x40086602, &(0x7f0000000040)=0x4000)
+r4 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r4, 0x10, 0x0, 0x1000)
+r5 = dup3(r3, r4, 0x80000)
+ioctl$BLKBSZSET(r5, 0x40081271, &(0x7f0000000180)=0x7)
+
+[   40.445978] FAT-fs (loop1): Unrecognized mount option "iochÕ‰s#t=cp93×þioc" or missing value
+18:47:41 executing program 7:
+seccomp$SECCOMP_SET_MODE_FILTER(0x1, 0x0, &(0x7f0000000080)={0x1, &(0x7f0000000040)=[{0x65d}]})
+r0 = syz_open_dev$vcsu(&(0x7f0000000000)='/dev/vcsu#\x00', 0x4, 0x741001)
+ioctl$TCSETA(r0, 0x5406, &(0x7f00000000c0)={0x6, 0x5, 0x80, 0x6531, 0x11, "ee80af5dc5f54390"})
+
+18:47:41 executing program 4:
+perf_event_open(&(0x7f0000000200)={0x0, 0x70, 0x0, 0x0, 0x0, 0x0, 0x0, 0x9cd9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, @perf_config_ext}, 0x0, 0xffffffffffffffff, 0xffffffffffffffff, 0x0)
+r0 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r0, 0x10, 0x0, 0x1000)
+write$P9_RMKDIR(r0, &(0x7f0000000000)={0x14, 0x49, 0x2, {0x0, 0x1, 0x8}}, 0x14)
+dup(0x2)
+clone3(&(0x7f0000000500)={0x0, 0x0, 0x0, 0x0, {}, 0x0, 0x0, 0x0, 0x0}, 0x50)
+
+[   40.502432] FAT-fs (loop1): Unrecognized mount option "iochÕ‰s#t=cp93×þioc" or missing value
+[   40.581866] ISOFS: Unable to identify CD-ROM format.
+[   40.646770] ISOFS: Unable to identify CD-ROM format.
+[   40.666645] perf: interrupt took too long (19435 > 19422), lowering kernel.perf_event_max_sample_rate to 10000
+18:47:41 executing program 14:
+mkdir(&(0x7f0000000180)='mntpoint\x00', 0x0)
+mount(&(0x7f0000000280)=ANY=[@ANYBLOB="2f6465762f6c6f6f703000ada3c7b48d905b7a065094ac7606dd8787979c4aa174c31a01aa4782ef8988f3a3fe9dfb32fd51badefd8efabe3d9d174f383e49f24f381d3774946c814971f36bfb7c3f9282322f"], &(0x7f00000000c0)='mntpoint\x00', &(0x7f0000000140)='ext4\x00', 0x0, 0x0)
+lsetxattr$trusted_overlay_origin(&(0x7f0000000040)='mntpoint\x00', &(0x7f0000000080)='trusted.overlay.origin\x00', &(0x7f0000000100)='y\x00', 0x2, 0x2)
+setxattr$security_evm(&(0x7f00000001c0)='mntpoint\x00', &(0x7f0000000200)='security.evm\x00', &(0x7f0000000240)=@sha1={0x1, "229ab71b35f907e236d134b1478abd344ae361c7"}, 0x15, 0x0)
+
+18:47:41 executing program 6:
+r0 = openat$loop_ctrl(0xffffffffffffff9c, &(0x7f0000000080)='/dev/loop-control\x00', 0x0, 0x0)
+ioctl$LOOP_CTL_GET_FREE(r0, 0x4c82)
+r1 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+r2 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r2, 0x40086602, &(0x7f0000000040)=0x4000)
+r3 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r3, 0x40086602, &(0x7f0000000040)=0x4000)
+getsockname$packet(r3, &(0x7f0000000140)={0x11, 0x0, 0x0, 0x1, 0x0, 0x6, @link_local}, &(0x7f0000000180)=0x14)
+r4 = socket$inet6_tcp(0xa, 0x1, 0x0)
+getsockopt$inet6_mreq(r4, 0x29, 0x1c, &(0x7f0000000200)={@ipv4={[], [], @multicast1}, <r5=>0x0}, &(0x7f0000000280)=0x14)
+ioctl$sock_inet6_SIOCADDRT(r4, 0x890b, &(0x7f0000000040)={@ipv4={[], [], @multicast1}, @dev={0xfe, 0x80, [], 0x13}, @mcast2, 0x0, 0x0, 0x0, 0x0, 0x0, 0x84060200, r5})
+socket$inet6_udp(0xa, 0x2, 0x0)
+connect$packet(r2, &(0x7f0000000100)={0x11, 0xc, r5, 0x1, 0xff, 0x6, @dev={[], 0x1b}}, 0x14)
+r6 = accept4$unix(r1, &(0x7f0000000000), &(0x7f00000000c0)=0x6e, 0x80000)
+fallocate(r1, 0x10, 0x0, 0x1000)
+ioctl$LOOP_CTL_GET_FREE(r1, 0x4c82)
+r7 = dup(r6)
+ioctl$SNDRV_SEQ_IOCTL_SYSTEM_INFO(r7, 0xc0305302, &(0x7f00000001c0)={0x3f, 0x11, 0x7, 0xe3, 0x6, 0x8000})
+
+18:47:41 executing program 10:
+getsockopt$bt_hci(0xffffffffffffffff, 0x0, 0x1, &(0x7f0000000000)=""/77, &(0x7f0000000080)=0x4d)
+r0 = socket$nl_generic(0x10, 0x3, 0x10)
+r1 = syz_genetlink_get_family_id$nl80211(&(0x7f0000000140)='nl80211\x00')
+sendmsg$NL80211_CMD_SET_INTERFACE(r0, &(0x7f00000002c0)={&(0x7f0000000100)={0x10, 0x0, 0x0, 0x80000}, 0xc, &(0x7f0000000280)={&(0x7f00000001c0)={0x30, r1, 0x100, 0x70bd2d, 0x25dfdbff, {}, [@NL80211_ATTR_WIPHY={0x8, 0x1, 0x1}, @NL80211_ATTR_IFNAME={0x14, 0x4, 'nr0\x00'}]}, 0x30}, 0x1, 0x0, 0x0, 0x2000004}, 0x4)
+perf_event_open(&(0x7f0000000200)={0x4, 0x70, 0x0, 0x1, 0x40, 0x0, 0x0, 0x3, 0xc, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x9, 0x5, @perf_config_ext={0x0, 0x3}, 0x0, 0x0, 0x8000000, 0x0, 0x1}, 0x0, 0x6, 0xffffffffffffffff, 0x1)
+clone3(&(0x7f0000000500)={0x2000400, &(0x7f00000000c0), &(0x7f0000000180), &(0x7f0000000300), {0x19}, &(0x7f0000000340)=""/255, 0xff, &(0x7f0000000440)=""/63, &(0x7f00000004c0)=[0x0, 0xffffffffffffffff, 0xffffffffffffffff], 0x3}, 0x50)
+
+18:47:41 executing program 2:
+r0 = syz_open_procfs(0x0, &(0x7f0000000000)='loginuid\x00')
+r1 = semget(0x3, 0x5, 0x600)
+semop(r1, &(0x7f0000000000)=[{0x0, 0x0, 0x1000}], 0x1)
+semctl$IPC_RMID(r1, 0x0, 0x0)
+semctl$GETALL(r1, 0x0, 0xd, &(0x7f00000003c0)=""/196)
+readv(r0, &(0x7f0000001480)=[{&(0x7f0000000040)=""/117, 0x75}], 0x1)
+r2 = syz_genetlink_get_family_id$tipc2(&(0x7f0000000100)='TIPCv2\x00')
+sendmsg$TIPC_NL_MON_GET(r0, &(0x7f0000000380)={&(0x7f00000000c0)={0x10, 0x0, 0x0, 0x100000}, 0xc, &(0x7f0000000340)={&(0x7f0000000140)={0x18c, r2, 0x98, 0x70bd25, 0x25dfdbfd, {}, [@TIPC_NLA_BEARER={0x44, 0x1, [@TIPC_NLA_BEARER_PROP={0xc, 0x2, [@TIPC_NLA_PROP_PRIO={0x8, 0x1, 0x14}]}, @TIPC_NLA_BEARER_NAME={0xd, 0x1, @udp='udp:syz2\x00'}, @TIPC_NLA_BEARER_DOMAIN={0x8, 0x3, 0x7}, @TIPC_NLA_BEARER_PROP={0xffffffffffffff0c, 0x2, [@TIPC_NLA_PROP_MTU={0x8, 0x4, 0x7fffffff}, @TIPC_NLA_PROP_TOL={0x8, 0x2, 0x20}, @TIPC_NLA_PROP_MTU={0x8, 0x4, 0x5}]}]}, @TIPC_NLA_NET={0x4}, @TIPC_NLA_BEARER={0x24, 0x1, [@TIPC_NLA_BEARER_DOMAIN={0x8, 0x3, 0x1}, @TIPC_NLA_BEARER_NAME={0xd, 0x1, @l2={'ib', 0x3a, 'vlan0\x00'}}, @TIPC_NLA_BEARER_DOMAIN={0x8, 0x3, 0x1}]}, @TIPC_NLA_BEARER={0x6c, 0x1, [@TIPC_NLA_BEARER_NAME={0xd, 0x1, @udp='udp:syz2\x00'}, @TIPC_NLA_BEARER_DOMAIN={0x8, 0x3, 0x401}, @TIPC_NLA_BEARER_PROP={0x44, 0x2, [@TIPC_NLA_PROP_MTU={0x8, 0x4, 0x1}, @TIPC_NLA_PROP_MTU={0x8, 0x4, 0x7}, @TIPC_NLA_PROP_TOL={0x8, 0x2, 0x20}, @TIPC_NLA_PROP_TOL={0x8, 0x2, 0x5c1e6f6d}, @TIPC_NLA_PROP_MTU={0x8, 0x4, 0x100}, @TIPC_NLA_PROP_TOL={0x8, 0x2, 0x5}, @TIPC_NLA_PROP_PRIO={0x8, 0x1, 0x8}, @TIPC_NLA_PROP_WIN={0x8, 0x3, 0xe56f}]}, @TIPC_NLA_BEARER_PROP={0xc, 0x2, [@TIPC_NLA_PROP_WIN={0x8, 0x3, 0xffffffd2}]}]}, @TIPC_NLA_NET={0x30, 0x7, [@TIPC_NLA_NET_NODEID={0xc, 0x3, 0x6}, @TIPC_NLA_NET_ID={0x8, 0x1, 0xffffffe1}, @TIPC_NLA_NET_NODEID={0xc, 0x3, 0x4}, @TIPC_NLA_NET_NODEID={0xc, 0x3, 0x1a865a5c}]}, @TIPC_NLA_NODE={0x20, 0x6, 0x0, 0x1, [@TIPC_NLA_NODE_UP={0x4}, @TIPC_NLA_NODE_UP={0x4}, @TIPC_NLA_NODE_UP={0x4}, @TIPC_NLA_NODE_ADDR={0x8, 0x1, 0x957}, @TIPC_NLA_NODE_ADDR={0x8, 0x1, 0x7}]}, @TIPC_NLA_NET={0x4}, @TIPC_NLA_MON={0x4c, 0x9, [@TIPC_NLA_MON_REF={0x8, 0x2, 0x1ff}, @TIPC_NLA_MON_ACTIVATION_THRESHOLD={0x8, 0x1, 0x4}, @TIPC_NLA_MON_REF={0x8, 0x2, 0x7fffffff}, @TIPC_NLA_MON_REF={0x8, 0x2, 0x6d}, @TIPC_NLA_MON_ACTIVATION_THRESHOLD={0x8, 0x1, 0x8b64}, @TIPC_NLA_MON_REF={0x8, 0x2, 0x3}, @TIPC_NLA_MON_ACTIVATION_THRESHOLD={0x8, 0x1, 0xd52a}, @TIPC_NLA_MON_REF={0x8, 0x2, 0x1}, @TIPC_NLA_MON_ACTIVATION_THRESHOLD={0x8, 0x1, 0x9}]}]}, 0x18c}, 0x1, 0x0, 0x0, 0xd8}, 0x40)
+r3 = openat$snapshot(0xffffffffffffff9c, &(0x7f0000000040)='/dev/snapshot\x00', 0x40, 0x0)
+r4 = syz_genetlink_get_family_id$tipc(&(0x7f00000000c0)='TIPC\x00')
+sendmsg$TIPC_CMD_GET_NODES(r3, &(0x7f0000001280)={&(0x7f0000000080)={0x10, 0x0, 0x0, 0x2001000}, 0xc, &(0x7f00000001c0)={&(0x7f0000000100)={0x1c, r4, 0x200, 0x70bd27, 0x25dfdbff, {}, [""]}, 0x1c}, 0x1, 0x0, 0x0, 0x40000}, 0x46040)
+sendmsg$TIPC_CMD_SET_LINK_WINDOW(0xffffffffffffffff, &(0x7f0000000540)={&(0x7f0000000300)={0x10, 0x0, 0x0, 0x100010000}, 0xc, &(0x7f0000000500)={&(0x7f00000004c0)={0x30, r4, 0x400, 0x70bd25, 0x25dfdbfb, {{}, {}, {0x14, 0x18, {0x35d, @bearer=@l2={'eth', 0x3a, 'sit0\x00'}}}}, ["", ""]}, 0x30}, 0x1, 0x0, 0x0, 0x24004880}, 0x804)
+
+18:47:41 executing program 7:
+r0 = openat$procfs(0xffffffffffffff9c, &(0x7f0000000000)='/proc/timer_list\x00', 0x0, 0x0)
+r1 = socket$inet(0x2, 0x2, 0x0)
+connect$inet(r1, &(0x7f0000000040)={0x2, 0x0, @remote}, 0x10)
+sendfile(r1, r0, 0x0, 0x10000)
+r2 = openat$hpet(0xffffffffffffff9c, &(0x7f00000012c0)='/dev/hpet\x00', 0x101080, 0x0)
+sendmsg$TIPC_CMD_SHOW_LINK_STATS(r2, &(0x7f00000013c0)={&(0x7f0000001300)={0x10, 0x0, 0x0, 0x100}, 0xc, &(0x7f0000001380)={&(0x7f0000001340)={0x30, 0x0, 0x1, 0x70bd2d, 0x25dfdbfb, {{}, {}, {0x14, 0x14, 'broadcast-link\x00'}}, ["", "", "", "", "", "", "", ""]}, 0x30}, 0x1, 0x0, 0x0, 0x801}, 0x0)
+
+18:47:41 executing program 1:
+r0 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r0, 0x40086602, &(0x7f0000000040)=0x4000)
+write$P9_RSTATFS(r0, &(0x7f0000000000)={0x43, 0x9, 0x1, {0x80, 0x81, 0x9, 0x4, 0x9, 0x5, 0xffffffffffffffff, 0xc, 0x8705}}, 0x43)
+r1 = syz_open_dev$tty1(0xc, 0x4, 0x1)
+ioctl$GIO_UNIMAP(r1, 0x4b66, &(0x7f0000000100)={0xfffffffffffffcf8, 0x0})
+setsockopt$IP_VS_SO_SET_EDITDEST(r0, 0x0, 0x489, &(0x7f0000000140)={{0x0, @multicast1, 0x4e23, 0x3, 'nq\x00', 0x8, 0x100, 0x63}, {@initdev={0xac, 0x1e, 0x1, 0x0}, 0x4e23, 0x1, 0x6, 0x20, 0x8000}}, 0x44)
+prctl$PR_SET_CHILD_SUBREAPER(0x24, 0x0)
+
+18:47:41 executing program 11:
+r0 = socket$packet(0x11, 0x0, 0x300)
+r1 = openat$nvram(0xffffffffffffff9c, &(0x7f0000000000)='/dev/nvram\x00', 0x20000, 0x0)
+write$P9_RREAD(r1, &(0x7f0000000140)=ANY=[@ANYBLOB="b6000000750100ab000000d34d07aaa12ec2231fb319ce13de9efdd32f1aea64221dfd5a3fca7d0726dc9626b0fb954e2ed5d4450ef1b4cc1c09b39460c76c17f5515587d89672e961901b5076890aebf542733996227e79a5554335be6c7c8b85d611a67d7d99c320fabbd562bc9bccf619de3813dccd7c8de56e6fd16d74b56b9aea380fe6807ed53b5f86f9aeffd1580f5799142c5f2e7aad7b1e41676a42017cefb440c92ed9671d0ef6ab243dca8ba26dadd9ca851a9c90a38d9dc51a0b2394ab99d65d9fc7d0febc102103c2c836112ed7f20f3c161f55220850ce0f30346a9c70124c1828f176e3cd27d74d3463043819df1c2952c5"], 0xb6)
+mmap(&(0x7f0000002000/0x3000)=nil, 0x3000, 0x0, 0x12, r0, 0x8109c000)
+
+18:47:41 executing program 4:
+perf_event_open(&(0x7f0000000200)={0x0, 0x70, 0x0, 0x0, 0x0, 0x0, 0x0, 0x9cd9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, @perf_config_ext}, 0x0, 0xffffffffffffffff, 0xffffffffffffffff, 0x0)
+r0 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r0, 0x10, 0x0, 0x1000)
+write$P9_RMKDIR(r0, &(0x7f0000000000)={0x14, 0x49, 0x2, {0x0, 0x1, 0x8}}, 0x14)
+dup(0x2)
+clone3(&(0x7f0000000500)={0x0, 0x0, 0x0, 0x0, {}, 0x0, 0x0, 0x0, 0x0}, 0x50)
+
+18:47:41 executing program 15:
+r0 = socket$inet(0x2, 0x3, 0x3f)
+r1 = socket$inet6_tcp(0xa, 0x1, 0x0)
+getsockopt$inet6_mreq(r1, 0x29, 0x1c, &(0x7f0000000200)={@ipv4={[], [], @multicast1}, <r2=>0x0}, &(0x7f0000000280)=0x14)
+ioctl$sock_inet6_SIOCADDRT(r1, 0x890b, &(0x7f0000000040)={@ipv4={[], [], @multicast1}, @dev={0xfe, 0x80, [], 0x22}, @mcast2, 0x0, 0x0, 0x0, 0x0, 0x0, 0x84060200, r2})
+getsockopt$inet_IP_XFRM_POLICY(r0, 0x0, 0x11, &(0x7f0000000140)={{{@in=@broadcast, @in6=@loopback, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, <r3=>0x0}}, {{@in=@loopback}, 0x0, @in6=@ipv4={[], [], @multicast1}}}, &(0x7f0000000080)=0xe8)
+sendmsg$nl_xfrm(0xffffffffffffffff, &(0x7f00000003c0)={&(0x7f0000000040)={0x10, 0x0, 0x0, 0x20000000}, 0xc, &(0x7f00000000c0)={&(0x7f0000000240)=@getae={0x168, 0x1f, 0x67fab5d3b37e06, 0x70bd26, 0x25dfdbfc, {{@in6=@ipv4={[], [], @multicast1}, 0x4d4, 0x12, 0x32}, @in6=@ipv4={[], [], @loopback}, 0x0, 0x3505}, [@policy={0xac, 0x7, {{@in=@initdev={0xac, 0x1e, 0x1, 0x0}, @in=@loopback, 0x4e20, 0xe5, 0x4e21, 0x0, 0x2, 0x20, 0x0, 0x2f, r2, r3}, {0x6985c0cc, 0x20, 0x401, 0x259, 0x1ff, 0x2, 0x705}, {0xffffffffffff8e74, 0x3, 0x9, 0x1f}, 0x81, 0x6e6bb9, 0x0, 0x0, 0xcaf265573a87d8ee}}, @offload={0xc}, @algo_aead={0x59, 0x12, {{'gcm(aes)\x00'}, 0x68, 0x0, "b5b4b07343924a8574705096dd"}}, @srcaddr={0x14, 0xd, @in6=@ipv4={[], [], @local}}]}, 0x168}, 0x1, 0x0, 0x0, 0x20000000}, 0x20c0)
+sendmmsg$inet(r0, &(0x7f00000021c0)=[{{&(0x7f0000000100)={0x2, 0x0, @dev={0xac, 0x14, 0x14, 0x2c}}, 0x10, 0x0}}, {{&(0x7f0000000000)={0x2, 0x0, @empty}, 0x10, 0x0, 0x0, &(0x7f0000000640)=[@ip_retopts={{0x18, 0x0, 0x7, {[@timestamp={0x44, 0x4, 0xcd}, @timestamp={0x44, 0x4}]}}}], 0x18}}], 0x2, 0x0)
+
+18:47:41 executing program 9:
+r0 = socket$inet_icmp_raw(0x2, 0x3, 0x1)
+ioctl$sock_SIOCGIFCONF(0xffffffffffffffff, 0x8912, &(0x7f0000002480)=@req={0x28, &(0x7f0000002440)={'team0\x00', @ifru_addrs=@xdp={0x2c, 0x0, <r1=>0x0}}})
+r2 = creat(&(0x7f0000000100)='fallocate04.txt\x00', 0x28)
+r3 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r3, 0x40086602, &(0x7f0000000040)=0x4000)
+ioctl$SECCOMP_IOCTL_NOTIF_RECV(r3, 0xc0502100, &(0x7f0000000140)={<r4=>0x0})
+ioctl$SECCOMP_IOCTL_NOTIF_SEND(r2, 0xc0182101, &(0x7f00000001c0)={r4, 0x8, 0x5})
+socket$inet_icmp(0x2, 0x2, 0x1)
+sendmsg$inet(r0, &(0x7f0000002580)={&(0x7f0000000000)={0x2, 0x0, @broadcast}, 0x10, 0x0, 0x0, &(0x7f00000024c0)=[@ip_tos_int={{0x14}}, @ip_pktinfo={{0x1c, 0x0, 0x8, {r1, @local, @empty}}}], 0x38}, 0x0)
+r5 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r5, 0x10, 0x0, 0x1000)
+getsockopt$IPT_SO_GET_ENTRIES(r5, 0x0, 0x41, &(0x7f0000000040)={'filter\x00', 0x50, "fb4530da7e335c6cfb8b5485a61f959ce436a2fc8795a24a5afb74106b35a6728acca5a72889f54c3301abae76993eb8140575508e4964271115fc17cbc8d30695f087cacc4c2d5be72d58ccb1a0cd8d"}, &(0x7f00000000c0)=0x74)
+r6 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r6, 0x10, 0x0, 0x1000)
+ioctl$FS_IOC_SETVERSION(r6, 0x40087602, &(0x7f0000000200)=0x238b)
+
+18:47:41 executing program 5:
+perf_event_open(&(0x7f0000000200)={0x0, 0x70, 0xfd, 0x0, 0x0, 0x0, 0x0, 0x1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, @perf_config_ext, 0x0, 0x1}, 0x0, 0x0, 0xffffffffffffffff, 0x0)
+io_setup(0x10000, &(0x7f0000000000))
+r0 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r0, 0x10, 0x0, 0x1000)
+setsockopt$inet6_tcp_TCP_REPAIR_OPTIONS(r0, 0x6, 0x16, &(0x7f00000001c0)=[@window={0x3, 0x1ff, 0x20}], 0x1)
+io_pgetevents(0x0, 0xdcf00000, 0x0, 0x0, 0x0, 0x0)
+r1 = syz_genetlink_get_family_id$ipvs(&(0x7f0000000080)='IPVS\x00')
+sendmsg$IPVS_CMD_NEW_SERVICE(0xffffffffffffffff, &(0x7f0000000140)={&(0x7f0000000040)={0x10, 0x0, 0x0, 0xe93c0c381cc91d2e}, 0xc, &(0x7f0000000100)={&(0x7f00000000c0)=ANY=[@ANYBLOB="f1000000", @ANYRES16=r1, @ANYBLOB="000227bd7000fcdbdf250100000008000600010000000800050004000000"], 0x24}, 0x1, 0x0, 0x0, 0x20000000}, 0xf64ed8472141636c)
+openat$ttyS3(0xffffffffffffff9c, &(0x7f0000000180)='/dev/ttyS3\x00', 0x800, 0x0)
+
+[   40.825496] blk_update_request: I/O error, dev loop0, sector 2 op 0x0:(READ) flags 0x0 phys_seg 1 prio class 0
+[   40.827793] EXT4-fs (loop0): unable to read superblock
+[   40.831323] EXT4-fs warning (device sda): ext4_ioctl:883: Setting inode version is not supported with metadata_csum enabled.
+[   40.845764] blk_update_request: I/O error, dev loop0, sector 2 op 0x0:(READ) flags 0x0 phys_seg 1 prio class 0
+[   40.847777] EXT4-fs (loop0): unable to read superblock
+[   40.865703] EXT4-fs warning (device sda): ext4_ioctl:883: Setting inode version is not supported with metadata_csum enabled.
+18:47:41 executing program 13:
+symlink(&(0x7f0000000000)='./file0\x00', &(0x7f0000000040)='./file0\x00')
+r0 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r0, 0x40086602, &(0x7f0000000040)=0x4000)
+fstat(0x1, &(0x7f00000001ca)={0x0, 0x0, 0x0, 0x0, <r1=>0x0})
+setresuid(0xffffffffffffffff, r1, 0xffffffffffffffff)
+stat(&(0x7f0000000340)='./file0\x00', &(0x7f0000000380)={0x0, 0x0, 0x0, 0x0, <r2=>0x0})
+syz_mount_image$msdos(&(0x7f0000000140)='msdos\x00', &(0x7f0000000180)='fallocate04.txt\x00', 0x0, 0x2, &(0x7f0000000300)=[{&(0x7f00000001c0)="8ead6dd2c08215b5d7c74ee70a9c6a4e98e1d0a1185627c45d603c0af2ba1286aa10a1b89b12e590f82cc1d800f04cbaac", 0x31, 0xffffffffffff0001}, {&(0x7f0000000200)="cf892b63e188c8e9a22aaafca3b69166f7a2dfd2e29167c85083b12b81f277b15a135fe5c1669a54c401505aa93eaf6d32ee41fc034ea830d4eb5f21552e4457e1d7d9f116222a12e90376ac2d517c2a2b52ae8d9ff5b93b06a679142b04676e4f9dc6e7bc7397eea8e5f6e725296f18bc6b6d1a74a48e2decda53c6757f5db0a5a346d6f76901b25107d2df97b131fe90b4f9d56dea7e04dd105cbe7472568c88ff7ed6a916ec2957c92eebd974712951a3a39ce918a6ec2d683e4155e7d3e21ef729d9db6db119dd9015e6f8d67dd6f6d70ee65fa5fd5f9050b73ff98369fadbb0447bcc887f6b839c611b82d59f82cde0038f22e2bd34b845cb86d92a", 0xfe, 0xfffffffffffff800}], 0x80, &(0x7f0000000400)={[{@fat=@errors_continue='errors=continue'}, {@nodots='nodots'}, {@dots='dots'}, {@fat=@allow_utime={'allow_utime', 0x3d, 0x65ea}}, {@dots='dots'}], [{@uid_gt={'uid>', r1}}, {@smackfsfloor={'smackfsfloor', 0x3d, 'cmdline\x00'}}, {@fowner_eq={'fowner', 0x3d, r2}}]})
+r3 = accept4(r0, &(0x7f0000000080)=@caif, &(0x7f0000000100)=0x80, 0x2af6df7d0e40006b)
+ioctl$SNDRV_TIMER_IOCTL_CONTINUE(r3, 0x54a2)
+r4 = syz_open_procfs(0x0, &(0x7f0000000540)='cmdline\x00')
+read(r4, 0x0, 0xfffffd53)
+
+18:47:41 executing program 8:
+r0 = socket$inet6_tcp(0xa, 0x1, 0x0)
+r1 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r1, 0x10, 0x0, 0x1000)
+connect$inet6(r1, &(0x7f0000000340)={0xa, 0xfffd, 0x0, @remote, 0xffffffff}, 0x32a19c0b546466c7)
+ioctl$FS_IOC_FIEMAP(r0, 0xc020660b, &(0x7f0000000380)=ANY=[@ANYBLOB="060000000000000007000000cdd6aa68ad627f331fec43ad1a884700000000000000000000010020ff7f0000007e0d000000000000db0000000000000000000008008000fbff000000000400000035000000ee1a30bf73ea319300003f00000000040000000000000000000000a46961b03e35a7025a59903ad8b4663792979138ed0ab71264292d3b5af6257c9dd899e9031e5c04dc2e648d14e4b64c01f00518a7fc2bacd28f8c95e576685ab5a19cc341141a61fdc98715e96007492036e6d303be5e4d760da20329adc6bde594e12c1e9bab53f3e36751942ed73e0eb07a866b24c060a04d939e4e037c08eabb6e0f0800d1869126fe56af70bc19d829d4c9e53addec9764f028b30c3cb06398a30e5bf544c9850f399d74d20f180ac7"])
+r2 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r2, 0x40086602, &(0x7f0000000040)=0x4000)
+fstat(0x1, &(0x7f00000001ca)={0x0, 0x0, 0x0, 0x0, <r3=>0x0})
+setresuid(0xffffffffffffffff, r3, 0xffffffffffffffff)
+r4 = socket$inet(0x2, 0x2, 0x0)
+r5 = openat$urandom(0xffffffffffffff9c, &(0x7f0000000100)='/dev/urandom\x00', 0x2000, 0x0)
+fcntl$F_SET_FILE_RW_HINT(r5, 0x40e, &(0x7f0000000140)=0xb7e4dac36b62124)
+getsockopt$sock_cred(r4, 0x1, 0x11, &(0x7f0000000000)={0x0, 0x0, <r6=>0x0}, &(0x7f0000001340)=0xee)
+r7 = socket$inet(0x2, 0x2, 0x0)
+getsockopt$sock_cred(r7, 0x1, 0x11, &(0x7f0000000000)={0x0, 0x0, <r8=>0x0}, &(0x7f0000001340)=0xee)
+setresgid(r8, 0x0, 0x0)
+r9 = socket$inet(0x2, 0x2, 0x0)
+getsockopt$sock_cred(r9, 0x1, 0x11, &(0x7f0000000000)={0x0, 0x0, <r10=>0x0}, &(0x7f0000001340)=0xee)
+setresgid(r10, 0x0, 0x0)
+r11 = socket$inet(0x2, 0x2, 0x0)
+getsockopt$sock_cred(r11, 0x1, 0x11, &(0x7f0000000000)={0x0, 0x0, <r12=>0x0}, &(0x7f0000001340)=0xee)
+setresgid(r12, 0x0, 0x0)
+r13 = socket$inet(0x2, 0x2, 0x0)
+getsockopt$sock_cred(r13, 0x1, 0x11, &(0x7f0000000000)={0x0, 0x0, <r14=>0x0}, &(0x7f0000001340)=0xee)
+setresgid(r14, 0x0, 0x0)
+setresgid(r14, r10, r12)
+fchown(r2, r3, r6)
+shutdown(r0, 0x0)
+
+18:47:41 executing program 12:
+r0 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+write(r0, &(0x7f00000000b0)='aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab', 0x1001)
+fallocate(r0, 0x0, 0xfff, 0x1002)
+fallocate(r0, 0x8, 0x1000, 0x1000)
+arch_prctl$ARCH_SET_CPUID(0x1012, 0x0)
+r1 = socket$inet6_udp(0xa, 0x2, 0x0)
+ioctl$sock_SIOCSIFVLAN_GET_VLAN_REALDEV_NAME_CMD(r1, 0x8983, &(0x7f0000000000)={0x8, 'vlan0\x00', {'ip6_vti0\x00'}, 0x4})
+
+18:47:41 executing program 0:
+ioctl$sock_inet_SIOCDELRT(0xffffffffffffffff, 0x890c, &(0x7f0000000140)={0x0, {0x2, 0x4e22, @empty}, {0x2, 0x4e21, @initdev={0xac, 0x1e, 0x0, 0x0}}, {0x2, 0x0, @multicast1}, 0x0, 0x0, 0x0, 0x0, 0x0, &(0x7f00000000c0)='ip6erspan0\x00', 0x0, 0x0, 0x60})
+perf_event_open(&(0x7f0000000200)={0x0, 0x70, 0x0, 0x0, 0x0, 0x0, 0x0, 0x9cd9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, @perf_config_ext}, 0x0, 0xffffffffffffffff, 0xffffffffffffffff, 0x0)
+r0 = open(&(0x7f0000000000)='.\x00', 0x0, 0x0)
+ustat(0x3, &(0x7f0000000040))
+ioctl$EXT4_IOC_GROUP_EXTEND(r0, 0x40086607, &(0x7f0000000100))
+ioctl$KDADDIO(r0, 0x4b34, 0x180000000000)
+clone3(0x0, 0x0)
+
+18:47:41 executing program 3:
+r0 = syz_genetlink_get_family_id$netlbl_unlabel(&(0x7f0000000080)='NLBL_UNLBL\x00')
+sendmsg$NLBL_UNLABEL_C_STATICLIST(0xffffffffffffffff, &(0x7f00000001c0)={&(0x7f0000000040)={0x10, 0x0, 0x0, 0x40000}, 0xc, &(0x7f0000000180)={&(0x7f0000000200)={0x98, r0, 0x100, 0x703d25, 0x25dfdbfd, {}, [@NLBL_UNLABEL_A_IPV6ADDR={0x14, 0x2, @rand_addr="5dd652176d5ccf96e348e69faaadabb1"}, @NLBL_UNLABEL_A_ACPTFLG={0x5, 0x1, 0x1}, @NLBL_UNLABEL_A_SECCTX={0x27, 0x7, 'system_u:object_r:tape_device_t:s0\x00'}, @NLBL_UNLABEL_A_ACPTFLG={0x5}, @NLBL_UNLABEL_A_IPV4MASK={0x8, 0x5, @loopback}, @NLBL_UNLABEL_A_IPV6MASK={0x14, 0x3, @mcast1}, @NLBL_UNLABEL_A_IFACE={0x14, 0x6, 'hsr0\x00'}, @NLBL_UNLABEL_A_IPV4ADDR={0xffffffffffffff01, 0x4, @broadcast}]}, 0x98}, 0x1, 0x0, 0x0, 0xc000}, 0x20022800)
+syz_mount_image$iso9660(&(0x7f0000000000)='iso9660\x00', 0x0, 0x0, 0x0, 0x0, 0x8000, 0x0)
+r1 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r1, 0x10, 0x0, 0x1000)
+r2 = syz_genetlink_get_family_id$ipvs(&(0x7f0000000100)='IPVS\x00')
+sendmsg$IPVS_CMD_NEW_DEST(r1, &(0x7f0000000340)={&(0x7f00000000c0)={0x10, 0x0, 0x0, 0x20000}, 0xc, &(0x7f0000000140)={&(0x7f00000002c0)={0x54, r2, 0x100, 0x70bd28, 0x25dfdbfe, {}, [@IPVS_CMD_ATTR_DEST={0xc, 0x2, [@IPVS_DEST_ATTR_U_THRESH={0x8, 0x5, 0xfffffffc}]}, @IPVS_CMD_ATTR_DEST={0x34, 0x2, [@IPVS_DEST_ATTR_FWD_METHOD={0x6}, @IPVS_DEST_ATTR_L_THRESH={0x8}, @IPVS_DEST_ATTR_WEIGHT={0x8, 0x4, 0x3}, @IPVS_DEST_ATTR_WEIGHT={0x8, 0x4, 0xff}, @IPVS_DEST_ATTR_PERSIST_CONNS={0x8, 0x9, 0x8}, @IPVS_DEST_ATTR_PERSIST_CONNS={0x8, 0x9, 0x1}]}]}, 0x54}, 0x1, 0x0, 0x0, 0x4000800}, 0x80)
+
+18:47:41 executing program 1:
+setxattr$trusted_overlay_upper(&(0x7f0000000040)='./file0\x00', &(0x7f0000000080)='trusted.overlay.upper\x00', &(0x7f00000000c0)=ANY=[@ANYBLOB="00fbc46102e94e9d6280ac92f067b9a496c1703b6d46ec3f648f2a818eb527f7ba2de82430ee0833343ff76a735915ceae3a8e7b06fa27cb0c42af231dd1a1cd5fe355b0f5474fdb93f2fe81f1a6dd0e89cf4eff9df497c8f9dc280c42ee9753c2b6fada12791ff48503264d301ba71957330021fff95744420c036230e5779d5a7634d592694b191f6c8c6bf2687aed49bedb2d3ea41cdcb6e00973eff9969413a318ce3f697ffdc518bd7999302d5457621a95d6c10679dfe41ef6b549db49babf2d7b"], 0xc4, 0x1)
+openat$ptmx(0xffffffffffffff9c, &(0x7f0000000000)='/dev/ptmx\x00', 0x8e400, 0x0)
+epoll_create(0xffff)
+
+18:47:41 executing program 11:
+ioctl$sock_inet_SIOCDELRT(0xffffffffffffffff, 0x890c, &(0x7f0000000040)={0x0, {0x2, 0x4e22, @loopback}, {0x2, 0x0, @initdev={0xac, 0x1e, 0x1, 0x0}}, {0x2, 0x4e20, @multicast1}, 0x20, 0x0, 0x0, 0x0, 0x2, &(0x7f00000000c0)='ip6erspan0\x00', 0xde2, 0x0, 0x60})
+perf_event_open(&(0x7f0000000200)={0x0, 0x70, 0x0, 0x0, 0x0, 0x0, 0x0, 0x9cd9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, @perf_bp={&(0x7f0000000140), 0x2}, 0x10}, 0x0, 0xffffffffffffffff, 0xffffffffffffffff, 0x0)
+r0 = open(&(0x7f0000000000)='.\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_GROUP_EXTEND(r0, 0x40086607, &(0x7f0000000100))
+clone3(&(0x7f0000000500)={0x8040000, 0x0, 0x0, 0x0, {0x26}, 0x0, 0x0, 0x0, 0x0, 0x18c}, 0x150aa521c6fb480a)
+
+18:47:41 executing program 7:
+r0 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r0, 0x10, 0x0, 0x1000)
+r1 = dup(r0)
+write$P9_RLERRORu(r1, &(0x7f0000000000)={0xe, 0x7, 0x1, {{0x1, '-'}, 0x40}}, 0xe)
+r2 = socket$nl_netfilter(0x10, 0x3, 0xc)
+r3 = syz_open_dev$vcsa(&(0x7f0000000040)='/dev/vcsa#\x00', 0x5, 0xdc06f93847e12b0)
+getsockopt$inet6_udp_int(r3, 0x11, 0xa, &(0x7f00000000c0), &(0x7f0000000100)=0x4)
+sendmsg$IPCTNL_MSG_CT_GET_CTRZERO(r2, &(0x7f0000000200)={0x0, 0x0, &(0x7f0000000080)={&(0x7f0000000140)=ANY=[@ANYRES16=r1], 0x1}, 0x1, 0x0, 0x0, 0x4000}, 0x10)
+
+18:47:41 executing program 9:
+r0 = openat$bsg(0xffffffffffffff9c, &(0x7f0000000000)='/dev/bsg\x00', 0x8000, 0x0)
+fchdir(r0)
+truncate(&(0x7f0000000000)='./file0\x00', 0x0)
+
+18:47:41 executing program 6:
+r0 = fsopen(&(0x7f0000000040)='btrfs\x00', 0x0)
+fsconfig$FSCONFIG_CMD_CREATE(r0, 0x6, 0x0, 0x0, 0x0)
+r1 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r1, 0x10, 0x0, 0x1000)
+ioctl$sock_SIOCGIFVLAN_GET_VLAN_INGRESS_PRIORITY_CMD(r1, 0x8982, &(0x7f0000000000))
+
+18:47:41 executing program 2:
+openat$rtc(0xffffffffffffff9c, &(0x7f0000000000)='/dev/rtc0\x00', 0x30000, 0x0)
+r0 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r0, 0x0, 0x1000, 0x1000)
+
+18:47:41 executing program 14:
+r0 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x42, 0x0)
+fstat(0x1, &(0x7f00000001ca)={0x0, 0x0, 0x0, 0x0, <r1=>0x0})
+r2 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r2, 0x40086602, &(0x7f0000000040)=0x4000)
+setsockopt$inet6_int(r2, 0x29, 0x46, &(0x7f0000000340)=0x9, 0x4)
+setresuid(0xffffffffffffffff, r1, 0xffffffffffffffff)
+statx(0xffffffffffffffff, &(0x7f0000000140)='fallocate04.txt\x00', 0x4000, 0x7ff, &(0x7f0000000180)={0x0, 0x0, 0x0, 0x0, <r3=>0x0})
+mount$9p_unix(&(0x7f0000000000)='fallocate04.txt\x00', &(0x7f0000000040)='fallocate04.txt\x00', &(0x7f0000000100)='9p\x00', 0x2000, &(0x7f0000000280)=ANY=[@ANYBLOB="7472616e733da66e69782c616e616d653d2d656d30747275737451642c64666c747569643d", @ANYRESHEX=r1, @ANYBLOB=',fowner>', @ANYRESDEC=0xee01, @ANYBLOB="2c736d61636b6673666c6f6f723d7070703070726f63a72c7569643d", @ANYRESDEC=r3, @ANYBLOB=',obj_role=bdevwlan0vboxnet1^md5sum,\x00'])
+write$P9_RAUTH(r0, &(0x7f0000000080)={0x4, 0x67, 0x0, {0x81, 0x4, 0xfffffffffffffffb}}, 0xfffffe7b)
+
+18:47:41 executing program 5:
+perf_event_open(0x0, 0x0, 0x0, 0xffffffffffffffff, 0x0)
+io_setup(0x0, 0x0)
+creat(&(0x7f0000000040)='./file0\x00', 0x0)
+openat$null(0xffffffffffffff9c, 0x0, 0x0, 0x0)
+ioctl$LOOP_SET_BLOCK_SIZE(0xffffffffffffffff, 0x4c09, 0x20)
+fstat(0x1, &(0x7f00000001ca))
+setresuid(0xffffffffffffffff, 0x0, 0xffffffffffffffff)
+syz_mount_image$ext4(&(0x7f0000000400)='ext3\x00', &(0x7f0000000480)='./file0/file0\x00', 0x0, 0x3, &(0x7f0000000680)=[{&(0x7f0000000580)="dae0707131f43da1aec436be50b41cd5ed50b1977bb36e0c1787a75818550d6d44c169c61eeba1d41ac72c0197d49f13d47ea4c81d1ebb1951e1e3538fdbb8152da901b5da791f61b2e00f488da31e939e64bc570adfc017945eccbbb42b23e3a57e7cdffcc0c1840020718c8151e80d9a012637e0f88d20b429f9a46501896cb3c30a02ab3c85c8a49d1c20038f622daa105b1222d51fd80afe39fdde94f33afff6aee80b05c84a2cdd6b8e308120388f527eca3164a4e163625454af8e0c1ad03789122d393b56b24b28257281897638777a54", 0xd4}, {&(0x7f00000004c0)="6528b12e063ce7263baf4e1e620de49394699d080e63a9ce18986967eb865487285258c3dabdb5cefbb8ed1314ccba34e6a77245633c93b55ba6a37ed642bc50", 0x40, 0x3}, {0x0, 0x0, 0x8}], 0xfe8acd9d177eaf01, &(0x7f0000001bc0)={[], [{@appraise='appraise'}, {@euid_lt={'euid<'}}]})
+socket$inet_udplite(0x2, 0x2, 0x88)
+
+18:47:41 executing program 10:
+keyctl$join(0x1, &(0x7f0000000040)={'syz', 0x3})
+r0 = seccomp$SECCOMP_SET_MODE_FILTER_LISTENER(0x1, 0x0, &(0x7f0000000100)={0x2, &(0x7f00000000c0)=[{0x3c}, {0x6}]})
+prctl$PR_GET_PDEATHSIG(0x2, &(0x7f0000000000))
+getsockopt$packet_int(r0, 0x107, 0x9, &(0x7f0000000180), &(0x7f00000001c0)=0x4)
+r1 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r1, 0x10, 0x0, 0x1000)
+getsockopt$inet6_IPV6_FLOWLABEL_MGR(r1, 0x29, 0x20, &(0x7f0000000080)={@initdev={0xfe, 0x88, [], 0x0, 0x0}, 0x3, 0x0, 0x0, 0x1, 0x401, 0x3}, &(0x7f0000000140)=0x20)
+
+18:47:41 executing program 4:
+perf_event_open(&(0x7f0000000280)={0x0, 0x70, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x20, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, @perf_config_ext, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0xc098}, 0x0, 0x0, 0xffffffffffffffff, 0x0)
+r0 = openat$vcsa(0xffffffffffffff9c, &(0x7f0000000000)='/dev/vcsa\x00', 0x4000, 0x0)
+ioctl$PERF_EVENT_IOC_ENABLE(r0, 0x2400, 0x80000001)
+
+18:47:41 executing program 8:
+open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x42, 0x0)
+setxattr$security_selinux(&(0x7f0000000000)='fallocate04.txt\x00', &(0x7f0000000080)='security.selinux\x00', &(0x7f0000000100)='system_u:object_r:tmpfs_t:s0\x00', 0x1c6, 0x0)
+r0 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r0, 0xba, 0xfffffffffffffffc, 0x1000)
+getpeername(r0, &(0x7f0000000140)=@ll={0x11, 0x0, 0x0, 0x1, 0x0, 0x6, @remote}, &(0x7f0000000040)=0x80)
+
+[   41.030874] audit: type=1326 audit(1579114061.637:10): auid=0 uid=0 gid=0 ses=4 subj=system_u:system_r:kernel_t:s0 pid=8063 comm="syz-executor.10" exe="/syz-executor.10" sig=31 arch=c000003e syscall=228 compat=0 ip=0x467dc7 code=0x0
+18:47:41 executing program 7:
+r0 = open(&(0x7f0000000040)='/proc/sys/vm/drop_caches\x00', 0x241, 0x0)
+write$P9_RREAD(r0, &(0x7f00000013c0)=ANY=[@ANYRESDEC, @ANYRESOCT], 0x2b)
+
+18:47:41 executing program 15:
+r0 = add_key$keyring(&(0x7f0000000180)='keyring\x00', &(0x7f00000001c0)={'syz', 0x3}, 0x0, 0x0, 0xfffffffffffffffe)
+keyctl$revoke(0x3, r0)
+keyctl$invalidate(0x15, r0)
+r1 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r1, 0x10, 0x0, 0x1000)
+r2 = openat$nvram(0xffffffffffffff9c, &(0x7f0000000000)='/dev/nvram\x00', 0x8300, 0x0)
+r3 = syz_genetlink_get_family_id$ipvs(&(0x7f0000000080)='IPVS\x00')
+sendmsg$IPVS_CMD_ZERO(r2, &(0x7f0000000180)={&(0x7f0000000040)={0x10, 0x0, 0x0, 0x4100002}, 0xc, &(0x7f0000000140)={&(0x7f00000000c0)={0x5c, r3, 0x0, 0x70bd2a, 0x25dfdbff, {}, [@IPVS_CMD_ATTR_DAEMON={0x14, 0x3, [@IPVS_DAEMON_ATTR_MCAST_PORT={0x6, 0x7, 0x4e23}, @IPVS_DAEMON_ATTR_MCAST_PORT={0x6, 0x7, 0x4e23}]}, @IPVS_CMD_ATTR_SERVICE={0x4}, @IPVS_CMD_ATTR_DEST={0x14, 0x2, [@IPVS_DEST_ATTR_ACTIVE_CONNS={0x8, 0x7, 0x3ca9a2e7}, @IPVS_DEST_ATTR_TUN_PORT={0x6, 0xe, 0x4e24}]}, @IPVS_CMD_ATTR_DAEMON={0x1c, 0x3, [@IPVS_DAEMON_ATTR_SYNC_ID={0x8, 0x3, 0x3}, @IPVS_DAEMON_ATTR_STATE={0x8}, @IPVS_DAEMON_ATTR_MCAST_TTL={0x5}]}]}, 0x5c}, 0x1, 0x0, 0x0, 0x4000}, 0x10000002)
+sendmsg$IPVS_CMD_GET_DAEMON(r1, &(0x7f00000000c0)={&(0x7f0000000000)={0x10, 0x0, 0x0, 0x20}, 0xc, &(0x7f0000000080)={&(0x7f0000000040)={0x1c, r3, 0x0, 0x70bd2d, 0x25dfdbfb, {}, [@IPVS_CMD_ATTR_TIMEOUT_TCP={0x8, 0x4, 0x80}]}, 0x1c}, 0x1, 0x0, 0x0, 0x1}, 0x0)
+request_key(&(0x7f0000000140)='keyring\x00', &(0x7f0000000180)={'syz', 0x3}, 0x0, 0xfffffffffffffffb)
+
+18:47:41 executing program 1:
+r0 = shmget(0x3, 0x1000, 0x0, &(0x7f0000000000/0x1000)=nil)
+getsockopt$inet_IP_IPSEC_POLICY(0xffffffffffffffff, 0x0, 0x10, &(0x7f0000000000)={{{@in=@broadcast, @in6=@dev, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, <r1=>0x0}}, {{@in=@remote}, 0x0, @in6=@empty}}, &(0x7f0000000180)=0x1d)
+shmget$private(0x0, 0x3000, 0x3867a60ec6beddb4, &(0x7f0000000000/0x3000)=nil)
+shmctl$IPC_SET(r0, 0x1, &(0x7f0000000240)={{0x0, 0x0, 0x0, r1}})
+r2 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r2, 0x10, 0x0, 0x1000)
+r3 = openat$procfs(0xffffffffffffff9c, &(0x7f0000000100)='/proc/crypto\x00', 0x0, 0x0)
+r4 = syz_genetlink_get_family_id$tipc2(&(0x7f0000000080)='TIPCv2\x00')
+r5 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r5, 0x10, 0x0, 0x1000)
+fcntl$addseals(r5, 0x409, 0x897b3ae64145d24d)
+sendmsg$TIPC_NL_BEARER_ENABLE(r3, &(0x7f00000001c0)={&(0x7f0000000040)={0x10, 0x0, 0x0, 0x2200}, 0xc, &(0x7f0000000140)={&(0x7f0000003480)={0x154, r4, 0x2, 0x70bd2b, 0x25dfdbfc, {}, [@TIPC_NLA_MEDIA={0x20, 0x5, [@TIPC_NLA_MEDIA_PROP={0x14, 0x2, [@TIPC_NLA_PROP_PRIO={0x8}, @TIPC_NLA_PROP_PRIO={0x8, 0x1, 0x13}]}, @TIPC_NLA_MEDIA_NAME={0x8, 0x1, 'udp\x00'}]}, @TIPC_NLA_SOCK={0x2c, 0x2, [@TIPC_NLA_SOCK_HAS_PUBL={0x4}, @TIPC_NLA_SOCK_ADDR={0x8, 0x1, 0x100}, @TIPC_NLA_SOCK_HAS_PUBL={0x4}, @TIPC_NLA_SOCK_ADDR={0x8, 0x1, 0x7f}, @TIPC_NLA_SOCK_ADDR={0x8, 0x1, 0x1000}, @TIPC_NLA_SOCK_ADDR={0x8, 0x1, 0x100}]}, @TIPC_NLA_MON={0x3c, 0x9, [@TIPC_NLA_MON_REF={0x8, 0x2, 0x10000}, @TIPC_NLA_MON_ACTIVATION_THRESHOLD={0xffa2, 0x1, 0x6}, @TIPC_NLA_MON_REF={0x8, 0x2, 0x1}, @TIPC_NLA_MON_ACTIVATION_THRESHOLD={0x8, 0x1, 0x131c6fdf}, @TIPC_NLA_MON_REF={0x8, 0x2, 0x401}, @TIPC_NLA_MON_REF={0x0, 0x2, 0x8001}, @TIPC_NLA_MON_ACTIVATION_THRESHOLD={0x8}]}, @TIPC_NLA_SOCK={0x48, 0x2, [@TIPC_NLA_SOCK_REF={0xffffffffffffffc8, 0x2, 0x3693}, @TIPC_NLA_SOCK_REF={0x8, 0x2, 0x8}, @TIPC_NLA_SOCK_HAS_PUBL={0x4}, @TIPC_NLA_SOCK_ADDR={0x8, 0x1, 0x10002}, @TIPC_NLA_SOCK_ADDR={0x8, 0x1, 0x1f}, @TIPC_NLA_SOCK_HAS_PUBL, @TIPC_NLA_SOCK_ADDR={0x8, 0x1, 0x81}, @TIPC_NLA_SOCK_REF={0x8, 0x2, 0x1000}, @TIPC_NLA_SOCK_REF={0x0, 0x2, 0x6c}, @TIPC_NLA_SOCK_HAS_PUBL={0x4}]}, @TIPC_NLA_NET={0x44, 0x7, [@TIPC_NLA_NET_NODEID={0xc, 0x3, 0x4}, @TIPC_NLA_NET_ID={0x8, 0x1, 0x9}, @TIPC_NLA_NET_NODEID_W1={0xc, 0x4, 0x400}, @TIPC_NLA_NET_ADDR={0x8, 0x2, 0x7}, @TIPC_NLA_NET_ADDR={0x0, 0x2, 0x3}, @TIPC_NLA_NET_NODEID={0xc, 0x3, 0x4}]}, @TIPC_NLA_SOCK={0x2c, 0x2, [@TIPC_NLA_SOCK_HAS_PUBL={0x4}, @TIPC_NLA_SOCK_REF={0x8, 0x2, 0xff}, @TIPC_NLA_SOCK_HAS_PUBL={0x4}, @TIPC_NLA_SOCK_HAS_PUBL={0x4}, @TIPC_NLA_SOCK_REF={0x8, 0x2, 0xfff}, @TIPC_NLA_SOCK_REF={0x8, 0x2, 0x401}, @TIPC_NLA_SOCK_HAS_PUBL={0x4b}]}]}, 0x154}, 0x1, 0x0, 0x0, 0xc9984614a05a2a43}, 0x40400)
+sendmsg$TIPC_NL_BEARER_SET(r2, &(0x7f0000000200)={&(0x7f0000000100)={0x10, 0x0, 0x0, 0x2000000}, 0xc, &(0x7f00000001c0)={&(0x7f00000002c0)={0x17c, r4, 0x1, 0x70bd29, 0x25dfdbfe, {}, [@TIPC_NLA_NODE={0x18, 0x6, 0x0, 0x1, [@TIPC_NLA_NODE_ADDR={0x8, 0x1, 0xb1}, @TIPC_NLA_NODE_ADDR={0x8, 0x1, 0xbeb9}, @TIPC_NLA_NODE_UP={0x4}]}, @TIPC_NLA_NODE={0x24, 0x6, 0x0, 0x1, [@TIPC_NLA_NODE_UP={0x4}, @TIPC_NLA_NODE_ADDR={0x8, 0x1, 0x9}, @TIPC_NLA_NODE_UP={0x4}, @TIPC_NLA_NODE_ADDR={0x8, 0x1, 0x12}, @TIPC_NLA_NODE_ADDR={0x8, 0x1, 0x52}]}, @TIPC_NLA_MEDIA={0xfc, 0x5, [@TIPC_NLA_MEDIA_PROP={0x3c, 0x2, [@TIPC_NLA_PROP_TOL={0x8, 0x2, 0x2}, @TIPC_NLA_PROP_PRIO={0x8, 0x1, 0x1b}, @TIPC_NLA_PROP_WIN={0x8, 0x3, 0x7}, @TIPC_NLA_PROP_WIN={0x8, 0x3, 0x4}, @TIPC_NLA_PROP_WIN={0x8, 0x3, 0x10001}, @TIPC_NLA_PROP_PRIO={0x8, 0x1, 0x18}, @TIPC_NLA_PROP_MTU={0x8, 0x4, 0x1}]}, @TIPC_NLA_MEDIA_PROP={0xc, 0x2, [@TIPC_NLA_PROP_WIN={0x8, 0x3, 0xfff}]}, @TIPC_NLA_MEDIA_PROP={0xc, 0x2, [@TIPC_NLA_PROP_TOL={0x8}]}, @TIPC_NLA_MEDIA_PROP={0x1c, 0x2, [@TIPC_NLA_PROP_MTU={0x8, 0x4, 0x9}, @TIPC_NLA_PROP_TOL={0x8, 0x2, 0x3}, @TIPC_NLA_PROP_WIN={0x8, 0x3, 0x800}]}, @TIPC_NLA_MEDIA_PROP={0x54, 0x2, [@TIPC_NLA_PROP_MTU={0x8, 0x4, 0x1}, @TIPC_NLA_PROP_WIN={0x8, 0x3, 0x8}, @TIPC_NLA_PROP_PRIO={0x8, 0x1, 0x20}, @TIPC_NLA_PROP_TOL={0x8, 0x2, 0x7}, @TIPC_NLA_PROP_WIN={0x8, 0x3, 0x7}, @TIPC_NLA_PROP_MTU={0x8, 0x4, 0x80000000}, @TIPC_NLA_PROP_WIN={0x8, 0x3, 0x300000}, @TIPC_NLA_PROP_TOL={0x8, 0x2, 0x8}, @TIPC_NLA_PROP_TOL={0x8, 0x2, 0x3}, @TIPC_NLA_PROP_MTU={0x8, 0x4, 0x80000001}]}, @TIPC_NLA_MEDIA_PROP={0x34, 0x2, [@TIPC_NLA_PROP_WIN={0x8}, @TIPC_NLA_PROP_TOL={0x8, 0x2, 0x100000}, @TIPC_NLA_PROP_PRIO={0x8, 0x1, 0x12}, @TIPC_NLA_PROP_PRIO={0x8, 0x1, 0x1a}, @TIPC_NLA_PROP_PRIO={0x8, 0x1, 0x13}, @TIPC_NLA_PROP_PRIO={0x8, 0x1, 0x15}]}]}, @TIPC_NLA_SOCK={0x28, 0x2, [@TIPC_NLA_SOCK_REF={0x8, 0x2, 0x9}, @TIPC_NLA_SOCK_HAS_PUBL={0x4}, @TIPC_NLA_SOCK_ADDR={0x8, 0x1, 0x101}, @TIPC_NLA_SOCK_ADDR={0x8}, @TIPC_NLA_SOCK_HAS_PUBL={0x4}, @TIPC_NLA_SOCK_HAS_PUBL={0x4}]}, @TIPC_NLA_NODE={0x8, 0x6, 0x0, 0x1, [@TIPC_NLA_NODE_UP={0x4}]}]}, 0x17c}, 0x1, 0x0, 0x0, 0x200008b1}, 0x40)
+r6 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r6, 0x40086602, &(0x7f0000000040)=0x4000)
+write$P9_RFSYNC(r6, &(0x7f0000000140)={0x7, 0x33, 0x2}, 0x7)
+r7 = shmget$private(0x0, 0x3000, 0x78000000, &(0x7f0000004000/0x3000)=nil)
+shmat(r7, &(0x7f0000001000/0x4000)=nil, 0x4000)
+shmctl$SHM_LOCK(r0, 0xb)
+mincore(&(0x7f0000002000/0x1000)=nil, 0x1000, &(0x7f0000001700)=""/4096)
+sendmsg$TIPC_NL_BEARER_ENABLE(0xffffffffffffffff, &(0x7f0000000500)={&(0x7f0000000440)={0x10, 0x0, 0x0, 0x100000}, 0xc, &(0x7f00000004c0)={&(0x7f0000000480)={0x3c, r4, 0x8, 0x70bd27, 0x25dfdbfe, {}, [@TIPC_NLA_MEDIA={0x28, 0x5, [@TIPC_NLA_MEDIA_PROP={0x1c, 0x2, [@TIPC_NLA_PROP_WIN={0x8, 0x3, 0x9}, @TIPC_NLA_PROP_TOL={0x8}, @TIPC_NLA_PROP_PRIO={0x8, 0x1, 0x12}]}, @TIPC_NLA_MEDIA_NAME={0x8, 0x1, 'udp\x00'}]}]}, 0x3c}}, 0x8001)
+
+18:47:41 executing program 13:
+setgroups(0x0, 0x0)
+socket$inet6_icmp(0xa, 0x2, 0x3a)
+write$binfmt_elf32(0xffffffffffffffff, &(0x7f0000000000)={{0x7f, 0x45, 0x4c, 0x46, 0x4, 0x20, 0x8, 0x8, 0x0, 0x3, 0x3, 0x2, 0x26a, 0x38, 0x118, 0xb0a0, 0x3d3e, 0x20, 0x1, 0x7fff, 0x81, 0x1000}, [{0x2, 0x7, 0x3, 0x6, 0x7fffffff, 0xffffffff, 0x6, 0x800}], "fcb3865ae9f0c7e2d8f5dc0b2ec0dcec1b27464a9bc53425927c6a511a4977df71ae8e45c6f9a6737bc7288a9c6f09c43719ac02a6f2ff55ef1859a8a645cedfa9aa1ff96dc70de0502fe9f9e338ad3c3dd370289eb8e31b154ba1b80139dd9d7da2d2b34c6bfec497b180c1413ab506cf0cbf62a576dfa93b2426c2da05c020a59fab82e8b8e96ebd7db894f245623c4cf217acf2a873eed658995b03fbb44d57a6ab7f30544c740fb1eb0809e4055affc55aac51d24a544c6314e421e8ce", [[], [], []]}, 0x417)
+
+18:47:41 executing program 12:
+ioctl$sock_inet_SIOCDELRT(0xffffffffffffffff, 0x890c, &(0x7f0000000140)={0x0, {0x2, 0x4e22, @empty}, {0x2, 0x0, @initdev={0xac, 0x1e, 0x1, 0x0}}, {0x2, 0x4e20, @multicast1}, 0x20, 0x0, 0x0, 0x0, 0x2, &(0x7f00000000c0)='ip6erspan0\x00', 0x80000000, 0x0, 0x60})
+perf_event_open(&(0x7f0000000200)={0x0, 0x70, 0x0, 0x0, 0x0, 0x0, 0x0, 0x9cd9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, @perf_config_ext}, 0x0, 0xffffffffffffffff, 0xffffffffffffffff, 0x0)
+ioctl$NS_GET_OWNER_UID(0xffffffffffffffff, 0xb704, &(0x7f0000000040)=<r0=>0x0)
+r1 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+r2 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r2, 0x10, 0x0, 0x1000)
+splice(r1, &(0x7f00000001c0)=0x9, r2, &(0x7f0000000380)=0x5, 0xda, 0xa)
+ioctl$EXT4_IOC_SETFLAGS(r1, 0x40086602, &(0x7f0000000040)=0x4000)
+getsockopt$inet6_IPV6_IPSEC_POLICY(r1, 0x29, 0x22, &(0x7f0000000280)={{{@in6=@mcast2, @in6=@mcast1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, <r3=>0x0}}, {{@in=@broadcast}, 0x0, @in6=@loopback}}, &(0x7f0000000080)=0xe8)
+setreuid(r0, r3)
+r4 = open(&(0x7f0000000000)='.\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_GROUP_EXTEND(r4, 0x40086607, &(0x7f0000000100))
+clone3(&(0x7f0000000500)={0x8040000, 0x0, 0x0, 0x0, {}, 0x0, 0x0, 0x0, 0x0, 0x18c}, 0x150aa521c6fb480a)
+r5 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r5, 0x40086602, &(0x7f0000000040)=0x4000)
+write$P9_RLERRORu(r5, &(0x7f00000003c0)={0x22, 0x7, 0x1, {{0x15, 'userbdev&vmnet0eth0[+'}, 0x9}}, 0x22)
+
+18:47:41 executing program 8:
+clone3(&(0x7f0000000640)={0x0, 0x0, 0x0, 0x0, {}, 0x0, 0x0, 0x0, 0x0}, 0x9c7)
+r0 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r0, 0x40086602, &(0x7f0000000040)=0x4000)
+ioctl$FS_IOC_GETFLAGS(r0, 0x80086601, &(0x7f0000000180))
+mount$9p_tcp(&(0x7f0000000000)='127.0.0.1\x00', &(0x7f0000000040)='./file0\x00', &(0x7f0000000080)='9p\x00', 0x1c800, &(0x7f00000000c0)={'trans=tcp,', {'port', 0x3d, 0x4e23}, 0x2c, {[{@msize={'msize', 0x3d, 0x40}}], [{@appraise='appraise'}, {@euid_lt={'euid<'}}, {@fscontext={'fscontext', 0x3d, 'root'}}, {@audit='audit'}, {@obj_role={'obj_role', 0x3d, '\xd3'}}, {@fscontext={'fscontext', 0x3d, 'unconfined_u'}}, {@hash='hash'}]}})
+
+18:47:41 executing program 5:
+prctl$PR_SVE_SET_VL(0x32, 0x8e6)
+clone3(&(0x7f0000000140)={0x40248180, 0x0, 0x0, 0x0, {}, &(0x7f0000001c00)=""/4104, 0x1008, 0x0, &(0x7f0000000100)=[0x0], 0x1}, 0x50)
+
+18:47:41 executing program 11:
+ioctl$sock_inet_SIOCDELRT(0xffffffffffffffff, 0x890c, &(0x7f0000000040)={0x0, {0x2, 0x4e22, @loopback}, {0x2, 0x0, @initdev={0xac, 0x1e, 0x1, 0x0}}, {0x2, 0x4e20, @multicast1}, 0x20, 0x0, 0x0, 0x0, 0x2, &(0x7f00000000c0)='ip6erspan0\x00', 0xde2, 0x0, 0x60})
+perf_event_open(&(0x7f0000000200)={0x0, 0x70, 0x0, 0x0, 0x0, 0x0, 0x0, 0x9cd9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, @perf_bp={&(0x7f0000000140), 0x2}, 0x10}, 0x0, 0xffffffffffffffff, 0xffffffffffffffff, 0x0)
+r0 = open(&(0x7f0000000000)='.\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_GROUP_EXTEND(r0, 0x40086607, &(0x7f0000000100))
+clone3(&(0x7f0000000500)={0x8040000, 0x0, 0x0, 0x0, {0x26}, 0x0, 0x0, 0x0, 0x0, 0x18c}, 0x150aa521c6fb480a)
+
+18:47:41 executing program 7:
+r0 = syz_open_dev$evdev(&(0x7f0000000000)='/dev/input/event#\x00', 0x5, 0x18042)
+r1 = socket$inet_icmp_raw(0x2, 0x3, 0x1)
+dup3(r0, r1, 0x0)
+open(&(0x7f0000000040)='./file0\x00', 0x40, 0x20)
+
+18:47:41 executing program 2:
+open(0x0, 0x0, 0x0)
+syz_mount_image$msdos(&(0x7f0000000000)='msdos\x00', &(0x7f0000000040)='fallocate04.txt\x00', 0x0, 0x0, &(0x7f0000000240), 0x0, &(0x7f0000000280)={[{@fat=@quiet='quiet'}], [{@measure='measure'}, {@appraise_type='appraise_type=imasig'}, {@audit='audit'}]})
+r0 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r0, 0x40086602, &(0x7f0000000040)=0x4000)
+getsockopt$inet6_IPV6_FLOWLABEL_MGR(r0, 0x29, 0x20, &(0x7f0000000080)={@local, 0x800, 0x10f0f6004e2e38d6, 0x2, 0xef0929c4aacd3cd7, 0x5}, &(0x7f00000000c0)=0x20)
+
+18:47:41 executing program 4:
+chdir(&(0x7f0000000091)='/tmp/falLQm3LC\x00')
+r0 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+r1 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r1, 0x40086602, &(0x7f0000000040)=0x4000)
+pipe2(&(0x7f0000000000), 0x80000)
+write(r0, 0x0, 0x3a3)
+fallocate(r0, 0x8, 0x1000, 0x1000)
+
+18:47:41 executing program 3:
+r0 = socket$inet_tcp(0x2, 0x1, 0x0)
+r1 = semget(0x3, 0x5, 0x600)
+semop(r1, &(0x7f0000000000)=[{0x0, 0x0, 0x1000}], 0x1)
+semctl$IPC_RMID(r1, 0x0, 0x0)
+semctl$SEM_STAT(r1, 0x3, 0x12, &(0x7f0000000140)=""/198)
+r2 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r2, 0x40086602, &(0x7f0000000040)=0x4000)
+getsockname$packet(r2, &(0x7f0000000080)={0x11, 0x0, 0x0, 0x1, 0x0, 0x6, @random}, &(0x7f0000000240)=0x14)
+r3 = syz_open_dev$tty20(0xc, 0x4, 0x0)
+ioctl$TIOCSSOFTCAR(r3, 0x541a, &(0x7f0000000000))
+r4 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r4, 0x40086602, &(0x7f0000000040)=0x8400a)
+ioctl$TCSETS2(r4, 0x402c542b, &(0x7f0000000040)={0x513b, 0x80, 0x9, 0x5e, 0x8d, "0c1237dc14741d3dd1209a6b518d764b09a9ec", 0x8, 0x7a2})
+r5 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r5, 0x10, 0x0, 0x1000)
+write$P9_RAUTH(r5, &(0x7f0000000280)={0x14, 0x67, 0x2, {0x10, 0x4, 0x3}}, 0x14)
+ioctl$sock_inet_SIOCSARP(r0, 0x8955, &(0x7f00000000c0)={{0x2, 0x0, @multicast2}, {0x0, @remote}, 0x4, {0x2, 0x0, @local}})
+
+18:47:41 executing program 0:
+ioctl$sock_inet_SIOCDELRT(0xffffffffffffffff, 0x890c, &(0x7f0000000140)={0x0, {0x2, 0x4e22, @empty}, {0x2, 0x4e21, @initdev={0xac, 0x1e, 0x0, 0x0}}, {0x2, 0x0, @multicast1}, 0x0, 0x0, 0x0, 0x0, 0x0, &(0x7f00000000c0)='ip6erspan0\x00', 0x0, 0x0, 0x60})
+perf_event_open(&(0x7f0000000200)={0x0, 0x70, 0x0, 0x0, 0x0, 0x0, 0x0, 0x9cd9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, @perf_config_ext}, 0x0, 0xffffffffffffffff, 0xffffffffffffffff, 0x0)
+r0 = open(&(0x7f0000000000)='.\x00', 0x0, 0x0)
+ustat(0x3, &(0x7f0000000040))
+ioctl$EXT4_IOC_GROUP_EXTEND(r0, 0x40086607, &(0x7f0000000100))
+ioctl$KDADDIO(r0, 0x4b34, 0x180000000000)
+clone3(0x0, 0x0)
+
+18:47:41 executing program 6:
+io_setup(0xffffffff, &(0x7f0000000000))
+
+18:47:41 executing program 13:
+r0 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x42, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r0, 0x40086602, &(0x7f0000000040)=0x4000)
+syz_open_dev$sg(&(0x7f0000006ac0)='/dev/sg#\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r0, 0x40086602, &(0x7f00000067c0)=0x20)
+ioctl$BLKIOOPT(r0, 0x1279, &(0x7f0000000000))
+sendmsg$IPCTNL_MSG_EXP_GET_STATS_CPU(0xffffffffffffffff, &(0x7f0000000140)={0x0, 0x0, &(0x7f0000000100)={0x0}, 0x1, 0x0, 0x0, 0x4004000}, 0x40)
+prctl$PR_SET_MM_EXE_FILE(0x23, 0xd, 0xffffffffffffffff)
+
+18:47:41 executing program 15:
+r0 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x42, 0x2)
+ioctl$EXT4_IOC_SETFLAGS(r0, 0x40086602, &(0x7f0000000040)=0x4000)
+
+18:47:41 executing program 5:
+rseq(&(0x7f0000000080)={0x0, 0x0, &(0x7f0000000040)={0x0, 0x2, 0xfffffffffffffffe, 0x1, 0x1f}, 0x3}, 0x20, 0x0, 0x0)
+open(&(0x7f0000000000)='/dev/shm/..\x00', 0xa0042, 0x0)
+
+[   41.299316] FAT-fs (loop2): Unrecognized mount option "measure" or missing value
+18:47:41 executing program 3:
+r0 = openat$rtc(0xffffffffffffff9c, &(0x7f0000000080)='/dev/rtc0\x00', 0x0, 0x0)
+ioctl$RTC_SET_TIME(r0, 0x4024700a, &(0x7f00000000c0)={0x0, 0x0, 0x0, 0x0, 0xfffffffc, 0x80})
+pipe2(&(0x7f0000000000)={<r1=>0xffffffffffffffff}, 0x0)
+getsockopt$SO_TIMESTAMP(r1, 0x1, 0x3f, &(0x7f0000000040), &(0x7f0000000100)=0x4)
+
+18:47:41 executing program 6:
+syz_open_dev$tty20(0xc, 0x4, 0x0)
+r0 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0xe)
+ioctl$EXT4_IOC_SETFLAGS(r0, 0x40086602, &(0x7f0000000040)=0x4000)
+r1 = openat$vcs(0xffffffffffffff9c, &(0x7f0000000080)='/dev/vcs\x00', 0x0, 0x0)
+r2 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r2, 0x10, 0x0, 0x1000)
+ioctl$sock_proto_private(r2, 0x89e9, &(0x7f00000001c0)="25949bc9ad74b4d71c7c7cc547dabeb0140e09e624d4ab0c9230975e516098bf0120c2e727251c6808f79d9a88faf029888c2629fea4912872d18e025304b1ddcf96fdd4bd50c3594edd22ecd4658b04a184a88bdefd732006b4857e7b2719147db95a3ee523b78594501f7bd18be3bee73fe75874c6d71ec85481e0b66e82ea5f9d09f3016854c6a3075a54c50ea8f5ffdddb3c69e1536623573f2decc664c6cad1dd6eb126cff9c9d5bf209e4c2007c44c32b5d51ee25e575a7ca7faf27785ba44d355859a4ad5f47f6b6f278d8a8bc1e9b72089aa7592dd")
+ioctl$TIOCSLCKTRMIOS(r0, 0x5457, &(0x7f0000000100))
+socketpair$unix(0x1, 0x2, 0x0, &(0x7f0000000000)={0xffffffffffffffff, <r3=>0xffffffffffffffff})
+ioctl$void(r3, 0x5450)
+prctl$PR_GET_SECUREBITS(0x1b)
+socketpair$unix(0x1, 0x3, 0x0, &(0x7f00000002c0))
+r4 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+open_tree(r1, &(0x7f0000000300)='fallocate04.txt\x00', 0x1)
+fallocate(r4, 0x10, 0x0, 0x1000)
+getsockname$inet6(r4, &(0x7f0000000140)={0xa, 0x0, 0x0, @local}, &(0x7f0000000180)=0x1c)
+
+18:47:41 executing program 4:
+r0 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x42, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r0, 0x40086602, &(0x7f0000000040))
+ioctl$SG_SET_DEBUG(r0, 0x227e, &(0x7f0000000100))
+r1 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x42, 0x0)
+ioctl$FS_IOC_GETFLAGS(r1, 0x80086601, &(0x7f0000000000))
+write$P9_RAUTH(r1, &(0x7f0000000080)={0x4}, 0xfffffe7b)
+
+18:47:41 executing program 5:
+semget$private(0x0, 0x1, 0x400)
+syz_mount_image$iso9660(&(0x7f0000000140)='iso9660\x00', &(0x7f0000000040)='./file0\x00', 0xe57, 0x0, 0x0, 0x0, 0x0)
+
+18:47:41 executing program 15:
+open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x42, 0x0)
+mount(0x0, &(0x7f0000000040)='fallocate04.txt\x00', &(0x7f0000000000)='autofs\x00', 0x0, 0x0)
+r0 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r0, 0x40086602, &(0x7f0000000040)=0x4000)
+symlinkat(&(0x7f0000000080)='fallocate04.txt\x00', r0, &(0x7f0000000100)='fallocate04.txt\x00')
+
+18:47:42 executing program 1:
+syz_mount_image$vfat(0x0, 0x0, 0x0, 0x1, &(0x7f00000001c0)=[{&(0x7f0000000080)="14", 0x1, 0x81}], 0x0, 0x0)
+r0 = fspick(0xffffffffffffff9c, &(0x7f0000000000)='./file0\x00', 0x1)
+r1 = openat$dir(0xffffffffffffff9c, &(0x7f0000000100)='./file0\x00', 0x2, 0x76711cb343a0dd4d)
+open(&(0x7f0000000140)='./file0\x00', 0x400000, 0x10)
+fsconfig$FSCONFIG_SET_PATH_EMPTY(r0, 0x4, &(0x7f0000000040)='\x00', &(0x7f00000000c0)='./file0\x00', r1)
+
+18:47:42 executing program 2:
+perf_event_open(&(0x7f0000000000)={0x0, 0x70, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, @perf_config_ext}, 0x0, 0x2, 0xffffffffffffffff, 0x0)
+r0 = openat$full(0xffffffffffffff9c, &(0x7f0000000080)='/dev/full\x00', 0x22144261d3e77858, 0x0)
+ioctl$RTC_IRQP_READ(r0, 0x8008700b, &(0x7f00000000c0))
+
+18:47:42 executing program 11:
+perf_event_open(&(0x7f0000000200)={0x0, 0x70, 0x0, 0x0, 0x0, 0x0, 0x0, 0x9cd9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, @perf_config_ext={0x0, 0x4}}, 0x0, 0x0, 0xffffffffffffffff, 0x0)
+r0 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+write(r0, &(0x7f00000000b0)='c', 0xfffffc8a)
+open(0x0, 0x0, 0x0)
+fstat(0x1, &(0x7f00000001ca)={0x0, 0x0, 0x0, 0x0, <r1=>0x0})
+setresuid(0xffffffffffffffff, r1, 0xffffffffffffffff)
+quotactl(0x7, &(0x7f0000000000)='fallocate04.txt\x00', r1, &(0x7f0000000040)="af2936971bba5ec89f")
+ioctl$LOOP_CTL_GET_FREE(0xffffffffffffffff, 0x4c82)
+ioctl$LOOP_CTL_ADD(0xffffffffffffffff, 0x4c80, 0x0)
+
+18:47:42 executing program 3:
+r0 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x42, 0x0)
+syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+r1 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r1, 0x10, 0x0, 0x1000)
+mount$9p_fd(0x0, &(0x7f0000000080)='fallocate04.txt\x00', &(0x7f0000000500)='9p\x00', 0x0, &(0x7f0000000600)={'trans=fd,', {'rfdno', 0x3d, r0}, 0x2c, {'wfdno', 0x3d, r1}})
+write$P9_RSTATFS(r1, &(0x7f0000000100)={0x43, 0x9, 0x1, {0x9, 0x6, 0x2, 0x8001, 0xffffffffffffffff, 0x10000, 0x5, 0x8, 0x6}}, 0x43)
+
+18:47:42 executing program 13:
+r0 = clone3(&(0x7f0000000b80)={0x0, 0x0, 0x0, 0x0, {}, 0x0, 0x0, 0x0, 0x0}, 0x50)
+waitid(0x3, r0, 0x0, 0x1, 0x0)
+ptrace(0x420e, r0)
+syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x0)
+
+[   41.428933] isofs_fill_super: bread failed, dev=loop5, iso_blknum=16, block=32
+[   41.431997] autofs4:pid:8213:autofs_fill_super: called with bogus options
+[   41.455518] autofs4:pid:8213:autofs_fill_super: called with bogus options
+18:47:42 executing program 14:
+add_key(0x0, 0x0, &(0x7f0000000200)="775992d6a995793a2438de50b7e0d71d0661649093602d6fa2edb443bcd650a2ab587550203fb40389b3b9e447588e942724c31ffec434b06f17d13a75c314606fb840871c3d04e95185df603b0893666b0311aed1f3230ab19d31028da04b28cdc59cf3bc8ab8a73a25853b180795a8b701d3bfca5b4d0d36bf76057c3123bec1f8346faab3696265e5df1d9d7d91b6cc9b49fc1e79c5141ee447aa6eb757bb2d6f67b7527bbf4352f7b0c36c450b836f7620cc52f77ba24a85dace2f6618bbfe678115688130be612870592aca21cfbf21c20a2da0d5caf2c2660ae12b04257fda6d55a184563cd4e318851bb184c01124d5d805c0c5c7294d79f1ffd923b7391ec1b3ccb3260be254df602038ee9bc7a0ec7ea7d6f7959f527c19c288dde99323625bd575b5a46a664420686b4a32960e2bef95d1021477ccb91f524be6614be1ba71f9d11253429f18ceec987728f5f973424ee29638457b6742bb278548ff67624f1ae2657518750e9db7dd1b9d485c2e9993b2c1edfe1f232ed3c963fa099a3be40316f529eb7062db74ed4d3671e7f4caf8f5b050a2a14b6eec0f5a2e796299423d503ee705ed75a40d42b484357e40e7ca6ca14f17e4a555eef26be850653070b188d9830c43dcf4898b37c15da625f0a9c2404d97164ba6dd6501b21792c9aa4fc78e509e7854229e6e1a17145545bfa331c833891ed8239b96e27a834ad054ddbe31bd2137d1d3dff8e8ac8b048c3ca59cb3a1dda18d9fb2d36ad64b7df6e8033ddb7365cd7bcf4ac1694e21fd8fbc0275c21e4719c992abacd74ecd145404f02c17f394ba78b5bd59720ea23c8b791f11a2a6e37d148a4f8e38ee8287cf1dd7c71dba7024cb1e2293448ba964f8f6af48520763cdb8ca74077fc7f6bdad4ed947b54aa0b7036a86625d8a1eccb93aa838c66440bdabd79f894ebcefb26f1108fcdf02d6810287777f75c6318b116a35605aef8536f00344596a8249d271fd718313db759c20bd5d839b22ea2425fbcbff96104282485925ad4af8b99215cfa31224a5337633e9246f1ccd4d608fe72415dbad34e522c3d9f52948867c0d983b63751a2b39e24469a61a51f1a416234c58607b43fb060039f7b4e6140d19f4bed65a14ca4dfbb769d4a22af80d872489d807ce35cbd85cfa4ee7e8288e53314159b19701609fe5442f6de873a2ed59c4b6f341400eab788ee011ac2c64f0572d461d85fbc2de35c33d29ff8e6e0577f4cf5cbc0ded3d8ea6007cd8af0cbfcd6b64ecbd6da8ed2135bf3916d521ad4220db5b2d175ad756b66cc3a86cd93db20bbb8c0803588c976f16b243b563f5bdf49e34247d3dc4beaefcc8752d94da2c4d9bd6736593d4a7e160f7b2de786c05af337012fb98cbf387c07da4bc25082911c1288180a45dbd4772e3bcdfae5c0ec55462c6477fe520f97f9d9630e6a2cc3762fde09baa8930058e7a5fc6c763d705dcb38cffd08fd037d48f6bb72114c8ab26dc6cbf1ff08f8c70b8118c39fdc2b7fe24f22b15f4d81d6a86b9bdc1b7d7eb1829a6468aed76cb1566fc3e6e4ef662098c3bb5d9833a7c26aaf03343f7cb17f673157811e18a70778d9db0b9a096f3e0e7fb27886190082d14757d855709b5cf42c28989bc884f104e9ed63fc8c1432e8234d6363a98ce0d0d062b29259e6e38cef0e7900f94b0287a65e5f7535dc4ad626f8518e3db26a80434cb8580cc841159a549495be752f38872d9268a8974a0a239401e5e49af6027ed708bc7454c657e11c9fe035156e54b9c707660b161d725693f2c7cfc47952fd36e4fbf650ba456384849065da06e45ce214251d82c925282178baece8a7010c33138c4d45b19b828291f8eec54d2f77a90dc1ce0c741361fef0779153cd66972a3a209a0d5dba457695fff19483938d41a4ca9dbedc7c55e8b694dc76cf45dec784b078a5ad824b774981dece196789b95496743247871b6117e121a82245da1aac9ae5e6c4ef5b149223fca65aa580c8305aae0e2bd9e778d62e6b7d637f9772c2970091af4c58494761b7fc83bf680a91883ea5462790ffe93089e74c1d5a7cad64f80a3e2325d31634ea6194fa793a2d1fd759ce1ce679287d702e7cfcb377e99f4f6ee615d0fe12d3f9309e877fc0e1ecee721a893956ba055b9be198eb776ae296b6deddf29c1cbc3ec13f9d8e536630cb3043fc9d3760d08b45a68e47362fb6e9f730305b715ec338f2f8123ef3c9d3d7408cb2bb3c1f41216acd276b4a099052ea1f0c3b7c44cc5c08820924921ffb0cef538a1ebd74e7ff898e5cf69babd18e13eeaa8610915995355e65423b4db230c670d652388046955c170022fbda912126900e430d6010e9e8b3b35eadba78c655d904020c73efb5c35eb6415ce3adc95f80b63e4027bd8b1cc3c3337e67b20d313a72f7b5e18b098a5732c29c4a0e49be0c878f121e01e7915025f85616a6c43618bde59e593f456d42dc52418fadab244dfa358f04e0f2712366da276465b3724719534461cc60da116efa22634bc3d20ef987a267b3505e2397f74afc90cee19cf5d6441a5a6e994172da46ab73091c55de5121cd1f45aa8e2dabe99ed85e23f163d46d57336e2f0566f947b03e389da86ddf5b2c54668fbf76ee72a004b6605c65902e340490c56b7f30198e164bc724b71ea35ddac1f67deb3f1ab0c964573906cc0edb7e424c466aa865c79b07f251f368f4216f1bd27b8ea920bda8ada549f1fd33850174b75f4add98de448624001e8a97fc65743966ebf7e627716ca5dbe6aef4e4f4244a52929ab83ed057bab375ea4137c05912e1d0fc1732be40813527e8a7033fba09d73a3094f0fc9d892563d277c255d59012c3a4829c2dabd70e25731bad605e55e0bae9acce650762beaf629aa629c8f48989799bbaa1e11a099ff970e2e19a9c7b7e0494aff49afd04b2d8fc88f4cbf393cabd075682ccd7393c47799f4d3dc29731958578de374439d251e7415073fcb67537eb249ea04326d1c4996077e05828aafe495546bb854e4ef1acea72c5c062f9c2965a49569fb3c1fe7f73d9206884b5115ed19ab0a48794782ad204713a6e855e62499eeb84b50d3f784552c9d8f9e6c8a2b10082bca1757e320fe119f6b073dcfd93eb23d9be2edbff8febef02966d77a3c7a5854b4061f7305e8a3982bfa4ddd87a7fa6c88115be7a87cd1c602304dcc6b863e4d09f883558b7ed287dbd35e7eb1db742768d376046578829345654208830658d3c9d3c759ad9287d12292439515edb9631d5b6554425bfa410275c25c3a9f45ffd9188b20782da72fab263d41b4b642ab3bafa51222bde620edff61c3cb501b70ac17ebb4c6a81be61396168f9fb2c508e5d9d26b3b3a22a956ba0a7ab26f870bf4cbe842c4cb0d613e02ff5eaea1428488b14931c07491c17434d307e095365ac6e14e3cb9eb973be96309eb0372fceb2085c01df6e303386a157cd0e90723c83f284685bccabe2895fe85978a76770df2231a3a246a0b67565f09d6b03efa25890dcd229da51e25cedc578287d2c0cce420c60d2be90c68fed580a95738271f8cbea09dfd993af97fedc358a6f56092ed28ccbca5a3c9477b89aceb63f93eb528507df5cabcbc180205e4a47f9ad0b69233c215a9efd72dfb4b3dc7831b68649b7cff79d147ed285f113636881ea8595157a3fb5373ce45a24f308c517d8fd50178d622388017e74d27478b86a50d8b530348a58bcc8e79f2c130e276f028f1f2dc037dced7c96b41ee53c524d18027a4f362f671de74d4191e4b4a5ef85113d0b64012c10c34cbfd1f05486f0d62a9ee8b59e7308dc8c0af02bb6179e6e7408845a43432fd22cea0bd932f1ad40b56355b71dc8d3bcf41b345e21bebf62fcbf2e13ee8e250c71196f3896e7b45a7f661a9f5c45f30aca77120f2449c32dc09452ca2732d72fdb35054bba44345f072705fb624f32937c997ec77ee69af202aaa440cecbab742354fb95886291537da98161076f489ade57ed97f201fd8ef85bcb1a7c7fd4c8803274829c56f7d87f075f663a8f6a30df059acdea1bcc66bb151d4ad2e7a25faaa1901cee168c6a4f7a8777c3b9bba135c4c8f2fca92df79d65e1b5cf538129eb00b355746cf2f53464c583145d8c819cce1044a8d6569d059402f13db24190d20fa5760ff01a0a38cc276c862cfa72d22ca5fe3d0988b7e0fc0da4020904b74db57c5925b143eeecc195ab1e06e55a77988aa37469ea1dfff211d9e36a79a9d0d43b2a490bd2e7ab87d3c13fe5d73123b466afa6a04b1a06ed7b0e5afb0f66b950a7b0bf5b7991efc8f0649995631aa67c9cc24a4ab670d2f9bb6e473efb252cdc71d840265e1bd124dc57e3057c51f9995588f09c4233bc1e76538ad1b13af7cc2d55c07f3dfa4d4a583bed2b00ab587d8a7f280fd969d13af16946042309c8ddd1c0585971c5958d91d9053d2436c7633c6ec31daa77bcd48256d47f858d216623133af6563960b0a203105e5103f9afb49fdda613794efc24cd1028cc6f179dd173ad2ab0dc221b1e32b674ff25eb0702ae4b17d9076a405989801e3e68e7a4912ea6a75a516d1120980cbec1ec5669c87a7084b3d2fe1a91cd880b838c1e967dc705b171fc983f384140f141c6eb62c8efc02880f414b6ebe4fd40b923f105b4bb26a77675a8ff93098163c78b71a97c6dd84dc9ed9a742343a7c9679ff4a255dfb3f78b7bd428b0c9272afbef30512aa396ff894adb0f48bad61811ed7b58c1ec60b4f6b1a9c6add2a97ddc7ba209cb41af93acfe9ea0048f6ec44aebd05db934c35c5ee090e73653a888a7afa3479550b6f34b746039ce60a4b0a1579bc308c4c1647128114e3589b62d1a53d50f0e251538754e852bdb1e82f526e1466e2250f6c58e8270ae625f5c8a59ab74b26bcb9f69917bf14f65e12a58c499c78b13f0c4c7722881e1c82d434bbf743db0979dd7d49ef7c75ed6efeb8de8bced19bf4ce76379f837b39da61b148d204a2edb169d6c5e77809b3065f3828213d690d8d8efda32b9c03c137211f7c38b4096f3e1b4bf5", 0xe01, 0xfffffffffffffffe)
+mbind(&(0x7f0000000000/0x4000)=nil, 0x4000, 0x0, 0x0, 0x0, 0x1)
+r0 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r0, 0x40086602, &(0x7f0000000040)=0x4000)
+write$9p(r0, &(0x7f0000000040)="71d0cf9c57cfb403284024c486e7ce7fb50c12df4fade7e1a12b2f9fd4f6419663b0dd5cab985cf10c3d6c746c3bad95bca8836e86f8769708469dad82bf395be25eb1cec756fc795fb54447c2f22ef714619ba172d51c7bc0643749e1ded1d5466982adc236fa041ed45bdf209ea9c77b755fc16843bb5dbe25e3b472d85f6627466c14cee6107f1cfa873f2a7c4f07bbde5388fd228bf18349e7f53b241d08e329728cb4d253cb057f5343c9f75d07cdc06661b236729cb80e36ccdf14779d8876eae0fbeeab57160081c3", 0xcc)
+syz_open_dev$evdev(&(0x7f0000000000)='/dev/input/event#\x00', 0x6, 0x10000)
+
+18:47:42 executing program 12:
+ioctl$sock_inet_SIOCDELRT(0xffffffffffffffff, 0x890c, &(0x7f0000000140)={0x0, {0x2, 0x4e22, @empty}, {0x2, 0x0, @initdev={0xac, 0x1e, 0x1, 0x0}}, {0x2, 0x4e20, @multicast1}, 0x20, 0x0, 0x0, 0x0, 0x2, &(0x7f00000000c0)='ip6erspan0\x00', 0x80000000, 0x0, 0x60})
+perf_event_open(&(0x7f0000000200)={0x0, 0x70, 0x0, 0x0, 0x0, 0x0, 0x0, 0x9cd9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, @perf_config_ext}, 0x0, 0xffffffffffffffff, 0xffffffffffffffff, 0x0)
+ioctl$NS_GET_OWNER_UID(0xffffffffffffffff, 0xb704, &(0x7f0000000040)=<r0=>0x0)
+r1 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+r2 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r2, 0x10, 0x0, 0x1000)
+splice(r1, &(0x7f00000001c0)=0x9, r2, &(0x7f0000000380)=0x5, 0xda, 0xa)
+ioctl$EXT4_IOC_SETFLAGS(r1, 0x40086602, &(0x7f0000000040)=0x4000)
+getsockopt$inet6_IPV6_IPSEC_POLICY(r1, 0x29, 0x22, &(0x7f0000000280)={{{@in6=@mcast2, @in6=@mcast1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, <r3=>0x0}}, {{@in=@broadcast}, 0x0, @in6=@loopback}}, &(0x7f0000000080)=0xe8)
+setreuid(r0, r3)
+r4 = open(&(0x7f0000000000)='.\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_GROUP_EXTEND(r4, 0x40086607, &(0x7f0000000100))
+clone3(&(0x7f0000000500)={0x8040000, 0x0, 0x0, 0x0, {}, 0x0, 0x0, 0x0, 0x0, 0x18c}, 0x150aa521c6fb480a)
+r5 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r5, 0x40086602, &(0x7f0000000040)=0x4000)
+write$P9_RLERRORu(r5, &(0x7f00000003c0)={0x22, 0x7, 0x1, {{0x15, 'userbdev&vmnet0eth0[+'}, 0x9}}, 0x22)
+
+[   41.825992] audit: type=1326 audit(1579114062.433:11): auid=0 uid=0 gid=0 ses=4 subj=system_u:system_r:kernel_t:s0 pid=8063 comm="syz-executor.10" exe="/syz-executor.10" sig=31 arch=c000003e syscall=228 compat=0 ip=0x467dc7 code=0x0
+18:47:42 executing program 1:
+ioctl$sock_inet_SIOCDELRT(0xffffffffffffffff, 0x890c, &(0x7f0000000140)={0x0, {0x2, 0x4e22, @empty}, {0x2, 0x4e21, @initdev={0xac, 0x1e, 0x1, 0x0}}, {0x2, 0x4e20, @multicast1}, 0x20, 0x0, 0x0, 0x0, 0x2, &(0x7f00000000c0)='ip6erspan0\x00', 0x80000000, 0x0, 0x60})
+perf_event_open(&(0x7f0000000200)={0x0, 0x70, 0x0, 0xff, 0x0, 0x0, 0x0, 0x9cd9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, @perf_config_ext}, 0x0, 0xffffffffffffffff, 0xffffffffffffffff, 0x0)
+r0 = open(&(0x7f0000000000)='.\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_GROUP_EXTEND(r0, 0x40086607, &(0x7f0000000100))
+ioctl$KDADDIO(r0, 0x4b34, 0x180000000000)
+
+18:47:42 executing program 7:
+ioctl$sock_inet_SIOCDELRT(0xffffffffffffffff, 0x890c, &(0x7f0000000140)={0x0, {0x2, 0x4e22, @empty}, {0x2, 0x0, @initdev={0xac, 0x1e, 0x1, 0x0}}, {0x2, 0x4e20, @multicast1}, 0x20, 0x0, 0x0, 0x0, 0x2, &(0x7f00000000c0)='ip6erspan0\x00', 0x80000000, 0x0, 0x60})
+perf_event_open(&(0x7f0000000200)={0x0, 0x70, 0x0, 0x0, 0x0, 0x0, 0x0, 0x9cd9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, @perf_config_ext}, 0x0, 0xffffffffffffffff, 0xffffffffffffffff, 0x0)
+ioctl$NS_GET_OWNER_UID(0xffffffffffffffff, 0xb704, &(0x7f0000000040)=<r0=>0x0)
+r1 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+r2 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r2, 0x10, 0x0, 0x1000)
+splice(r1, &(0x7f00000001c0)=0x9, r2, &(0x7f0000000380)=0x5, 0xda, 0xa)
+ioctl$EXT4_IOC_SETFLAGS(r1, 0x40086602, &(0x7f0000000040)=0x4000)
+getsockopt$inet6_IPV6_IPSEC_POLICY(r1, 0x29, 0x22, &(0x7f0000000280)={{{@in6=@mcast2, @in6=@mcast1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, <r3=>0x0}}, {{@in=@broadcast}, 0x0, @in6=@loopback}}, &(0x7f0000000080)=0xe8)
+setreuid(r0, r3)
+r4 = open(&(0x7f0000000000)='.\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_GROUP_EXTEND(r4, 0x40086607, &(0x7f0000000100))
+clone3(&(0x7f0000000500)={0x8040000, 0x0, 0x0, 0x0, {}, 0x0, 0x0, 0x0, 0x0, 0x18c}, 0x150aa521c6fb480a)
+r5 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r5, 0x40086602, &(0x7f0000000040)=0x4000)
+write$P9_RLERRORu(r5, &(0x7f00000003c0)={0x22, 0x7, 0x1, {{0x15, 'userbdev&vmnet0eth0[+'}, 0x9}}, 0x22)
+
+18:47:42 executing program 6:
+syz_mount_image$msdos(&(0x7f0000000280)='msdos\x00', &(0x7f00000002c0)='./file0\x00', 0x0, 0xfffffffffffffe8a, 0x0, 0x0, &(0x7f0000000300)=ANY=[@ANYBLOB="666c13bdd4e50993585cd80d1ecbfeaca67573682c6469736361726444380bf424da2052782e59e0790872517ef9efaa1768b1f0c1878e374d2a5f73630e1fcb586c50211327c4a763b4043ab757c9a8bf0c4afc7d699eeafc8fac67ecebff9df0aa2f110d3476f7cab2b7d2c9338f56958a5d091b15f35ec43d14e95bababebca388ff78e68b3748bc2d04ec06ff301d8d464b5d3a884d40802c1fcb36ebbaddbebd77f05fa12d677e369f4a1be747315837d8203e8aec801e1386ec0cbacccb11a685f682de58aad2d9343903f5cd6a67b7756ed536bc6a86e9e3bec3cb60bba2ca6bb9c333e", @ANYBLOB=',func=MODULE_CHECK,defcontext=staff_u,'])
+r0 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r0, 0x10, 0x0, 0x1000)
+r1 = syz_genetlink_get_family_id$nbd(&(0x7f0000000040)='nbd\x00')
+sendmsg$NBD_CMD_DISCONNECT(r0, &(0x7f0000000140)={&(0x7f0000000000)={0x10, 0x0, 0x0, 0x80}, 0xc, &(0x7f0000000100)={&(0x7f0000000080)={0x80, r1, 0x400, 0x70bd27, 0x25dfdbfe, {}, [@NBD_ATTR_SERVER_FLAGS={0xc, 0x5, 0x3}, @NBD_ATTR_CLIENT_FLAGS={0xc}, @NBD_ATTR_BLOCK_SIZE_BYTES={0xc, 0x3, 0x1000}, @NBD_ATTR_INDEX={0x8, 0x1, 0x0}, @NBD_ATTR_BLOCK_SIZE_BYTES={0xc, 0x3, 0x5}, @NBD_ATTR_INDEX={0x8, 0x1, 0x0}, @NBD_ATTR_TIMEOUT={0xc, 0x4, 0xfff}, @NBD_ATTR_SIZE_BYTES={0xc, 0x2, 0x101}, @NBD_ATTR_SIZE_BYTES={0xc, 0x2, 0xff}, @NBD_ATTR_INDEX={0x8, 0x1, 0x0}]}, 0x80}, 0x1, 0x0, 0x0, 0x40040002}, 0xf41a04e4f315b020)
+getsockopt$SO_BINDTODEVICE(r0, 0x1, 0x19, &(0x7f0000000180), 0x10)
+
+18:47:42 executing program 5:
+syz_open_dev$sndseq(&(0x7f0000000000)='/dev/snd/seq\x00', 0x0, 0x0)
+r0 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r0, 0x40086602, &(0x7f0000000040)=0x4000)
+setsockopt$inet_pktinfo(0xffffffffffffffff, 0x0, 0x8, &(0x7f0000000140)={0x0, @dev={0xac, 0x14, 0x14, 0x1f}, @initdev={0xac, 0x1e, 0x0, 0x0}}, 0xc)
+ioctl$SNDRV_SEQ_IOCTL_UNSUBSCRIBE_PORT(r0, 0x40505331, &(0x7f00000000c0)={{0x2, 0x3}, {0xff, 0xf9}, 0x6, 0x2, 0x81})
+fstat(0xffffffffffffffff, 0x0)
+chmod(0x0, 0x0)
+chdir(&(0x7f0000000091)='/tmp/falLQm3LC\x00')
+r1 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x0, 0x1c0)
+fsync(r1)
+
+18:47:42 executing program 2:
+open(&(0x7f0000000000)='fallocate04.txt\x00', 0xbc3c0, 0x211)
+execve(&(0x7f0000000140)='fallocate04.txt\x00', 0x0, 0x0)
+
+18:47:42 executing program 8:
+munmap(&(0x7f00004a9000/0x3000)=nil, 0x3000)
+r0 = openat$autofs(0xffffffffffffff9c, &(0x7f00000002c0)='/dev/autofs\x00', 0x81, 0x0)
+r1 = clone3(&(0x7f0000000b80)={0x0, 0x0, 0x0, 0x0, {}, 0x0, 0x0, 0x0, 0x0}, 0x50)
+waitid(0x2, r1, 0x0, 0x8, 0x0)
+r2 = getpgrp(r1)
+ioprio_get$pid(0x1, r2)
+io_uring_register$IORING_REGISTER_BUFFERS(r0, 0x0, &(0x7f0000000300)=[{&(0x7f00000003c0)=""/116, 0x74}], 0x1)
+r3 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fstat(0x1, &(0x7f00000001ca)={0x0, 0x0, 0x0, 0x0, <r4=>0x0})
+mlock2(&(0x7f00004a6000/0x4000)=nil, 0x4000, 0x1)
+setresuid(0xffffffffffffffff, r4, 0xffffffffffffffff)
+fstat(0x1, &(0x7f0000000340)={0x0, 0x0, 0x0, 0x0, <r5=>0x0})
+r6 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r6, 0x10, 0x0, 0x1000)
+io_uring_register$IORING_REGISTER_EVENTFD(r3, 0x4, &(0x7f0000000700)=r6, 0x1)
+setresuid(0xffffffffffffffff, r5, 0xffffffffffffffff)
+syz_open_dev$loop(&(0x7f0000000280)='/dev/loop#\x00', 0x7, 0x20000)
+pipe2(&(0x7f0000000740), 0x4000)
+getresuid(&(0x7f0000000100), &(0x7f0000000140)=<r7=>0x0, &(0x7f0000000180))
+r8 = accept$inet(0xffffffffffffffff, 0x0, &(0x7f0000000440))
+getsockopt$inet_IP_IPSEC_POLICY(r8, 0x0, 0x10, &(0x7f0000000480)={{{@in=@broadcast, @in6=@local}}, {{@in6}, 0x0, @in=@multicast1}}, &(0x7f0000000580)=0xe8)
+mount$9p_xen(&(0x7f0000000000)='syz\x00', &(0x7f0000000040)='fallocate04.txt\x00', &(0x7f00000000c0)='9p\x00', 0x2000000, &(0x7f00000005c0)=ANY=[@ANYBLOB='trans=xen,cache=mmap,cachetag=md5sumtrusted,cachetag=usertrusted,afid=0x0000000000000312,version=9p2000,msize=0x0000000000000004,cache=none,dfltuid=', @ANYRESHEX=r4, @ANYBLOB=',dfltuid=', @ANYRESHEX=r5, @ANYBLOB="000000000000edeeb284c10127c2b41b391ca4624d9cfe44d2aee4e86d076e98797329b373aa073e7b40b39c", @ANYRESDEC=r7, @ANYBLOB=',\x00'])
+mmap$IORING_OFF_CQ_RING(&(0x7f00004a9000/0x3000)=nil, 0x3000, 0x0, 0x110051, r3, 0x8000000)
+
+18:47:42 executing program 13:
+r0 = openat(0xffffffffffffff9c, &(0x7f0000000000)='./file0\x00', 0x0, 0x64)
+epoll_pwait(r0, &(0x7f0000000040)=[{}], 0x1, 0xfff, &(0x7f0000000080)={0x8}, 0x8)
+unshare(0x8000400)
+r1 = dup(0x2)
+fchown(r1, 0xee01, 0x0)
+
+18:47:42 executing program 9:
+r0 = socket$inet6_tcp(0xa, 0x1, 0x0)
+openat$bsg(0xffffffffffffff9c, &(0x7f0000000000)='/dev/bsg\x00', 0xc000, 0x0)
+r1 = syz_open_dev$vcsn(&(0x7f00000000c0)='/dev/vcs#\x00', 0x3f, 0x100)
+r2 = openat$bsg(0xffffffffffffff9c, &(0x7f0000000040)='/dev/bsg\x00', 0x4000, 0x0)
+r3 = syz_genetlink_get_family_id$gtp(&(0x7f00000000c0)='gtp\x00')
+sendmsg$GTP_CMD_DELPDP(r2, &(0x7f0000000280)={&(0x7f0000000080), 0xc, &(0x7f0000000180)={&(0x7f0000000140)={0x1c, r3, 0x20, 0x6, 0x25dfdbfc, {}, [@GTPA_O_TEI={0x8, 0x9, 0x3}]}, 0x1c}, 0x1, 0x0, 0x0, 0x1}, 0x40000)
+sendmsg$GTP_CMD_NEWPDP(r1, &(0x7f00000001c0)={&(0x7f0000000100)={0x10, 0x0, 0x0, 0x80088}, 0xc, &(0x7f0000000180)={&(0x7f0000000140)={0x1c, r3, 0x8, 0x70bd2d, 0x25dfdbff, {}, [@GTPA_I_TEI={0x8, 0x8, 0x2}]}, 0x1c}, 0x1, 0x0, 0x0, 0x4040040}, 0x0)
+r4 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r4, 0x10, 0x0, 0x1000)
+r5 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r5, 0x10, 0x0, 0x1000)
+r6 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r6, 0x40086602, &(0x7f0000000040)=0x4000)
+ioctl$sock_FIOGETOWN(r6, 0x8903, &(0x7f0000000200)=<r7=>0x0)
+ioctl$sock_FIOSETOWN(r5, 0x8901, &(0x7f0000000240)=r7)
+dup3(r4, r0, 0x80000)
+ioctl$sock_SIOCOUTQNSD(0xffffffffffffffff, 0x894b, &(0x7f0000000040))
+
+18:47:42 executing program 15:
+mkdir(&(0x7f0000000180)='mntpoint\x00', 0x0)
+mount(&(0x7f0000000240)=ANY=[], &(0x7f00000000c0)='mntpoint\x00', &(0x7f0000000040)='hugetlbfs\x00', 0x100000, 0x0)
+
+18:47:42 executing program 0:
+r0 = socket$inet6_udplite(0xa, 0x2, 0x88)
+r1 = openat$vcs(0xffffffffffffff9c, &(0x7f0000000140)='/dev/vcs\x00', 0x0, 0x0)
+r2 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r2, 0x10, 0x0, 0x1000)
+ioctl$FS_IOC_SET_ENCRYPTION_POLICY(r2, 0x800c6613, &(0x7f00000001c0)=@v2={0x2, @aes256, 0x4, [], "ed22a5500a1f6f7507b4d0ddafc0e664"})
+ioctl$sock_netdev_private(r1, 0x89fa, &(0x7f0000000180)="900f622714ddfa99439577c0ff1be68d175ddc47dd562e419cf4cf0eff2ff0b998a3c0c05fe00df7cddb12dd")
+setsockopt$netlink_NETLINK_ADD_MEMBERSHIP(r2, 0x10e, 0x1, &(0x7f0000000680)=0x1a, 0x4)
+r3 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+r4 = socket$inet(0x2, 0x2, 0x0)
+getsockopt$sock_cred(r4, 0x1, 0x11, &(0x7f0000000000)={0x0, 0x0, <r5=>0x0}, &(0x7f0000001340)=0xee)
+setresgid(r5, 0x0, 0x0)
+r6 = socket$inet(0x2, 0x2, 0x0)
+getsockopt$sock_cred(r6, 0x1, 0x11, &(0x7f0000000000)={0x0, 0x0, <r7=>0x0}, &(0x7f0000001340)=0xee)
+r8 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r8, 0x10, 0x0, 0x1000)
+fstat(0x1, &(0x7f00000001ca)={0x0, 0x0, 0x0, 0x0, <r9=>0x0})
+setresuid(0xffffffffffffffff, r9, 0xffffffffffffffff)
+stat(&(0x7f00000004c0)='fallocate04.txt\x00', &(0x7f0000000500)={0x0, 0x0, 0x0, 0x0, <r10=>0x0})
+fstat(0x1, &(0x7f00000001ca)={0x0, 0x0, 0x0, 0x0, <r11=>0x0})
+setresuid(0xffffffffffffffff, r11, 0xffffffffffffffff)
+mount$9p_fd(0x0, &(0x7f0000000440)='fallocate04.txt\x00', &(0x7f0000000480)='9p\x00', 0x409, &(0x7f0000000580)={'trans=fd,', {'rfdno', 0x3d, r8}, 0x2c, {'wfdno', 0x3d, r0}, 0x2c, {[{@cache_loose='cache=loose'}, {@mmap='mmap'}, {@access_user='access=user'}, {@access_client='access=client'}], [{@euid_gt={'euid>', r9}}, {@euid_lt={'euid<', r10}}, {@defcontext={'defcontext', 0x3d, 'system_u'}}, {@uid_gt={'uid>', r11}}, {@uid_lt={'uid<'}}]}})
+setresgid(r7, 0x0, 0x0)
+r12 = socket$inet(0x2, 0x2, 0x0)
+getsockopt$sock_cred(r12, 0x1, 0x11, &(0x7f0000000000)={0x0, 0x0, <r13=>0x0}, &(0x7f0000001340)=0xee)
+setresgid(r13, 0x0, 0x0)
+getgroups(0x8, &(0x7f0000000400)=[0xffffffffffffffff, <r14=>0xee00, r5, 0x0, 0xee01, r7, 0x0, r13])
+lchown(&(0x7f0000000380)='fallocate04.txt\x00', 0x0, r14)
+fallocate(r3, 0x10, 0x0, 0x1000)
+r15 = accept4(r3, &(0x7f00000000c0)=@un=@abs, &(0x7f0000000040)=0x80, 0x800)
+sendmmsg$inet6(r15, &(0x7f0000000a00)=[{{&(0x7f0000000000)={0xa, 0x4e22, 0x0, @local, 0x9df}, 0x1c, 0x0}}, {{&(0x7f00000003c0)={0xa, 0x4e22, 0x0, @rand_addr="5c474489009a55e14b308fee97389e25"}, 0x1c, 0x0, 0x0, &(0x7f0000000200)=ANY=[@ANYBLOB="1800000000000000180000000000000029000000360000000000000000000000e98177318317cd835266f39c6aa68bfe1b5472d1cf14f2ffc2d33173fdcd47742428d8c2a17d69815b8984da9ed1ab51062b404f639b0eb6270850876e59728407eacc0d56df3180654a8147716245265e549dfd75f9da9f207c25b79c4fc24a814cdcce64d39a017ec8068655743b6e5c06870b4681f79b0fdf897fa8c6e8b25eafecb0d84b7c8adf0ec9322e38c17094ae4781faca6386683dd7dd33c0ad8cac497984bd9167628ec19187b22e3e9ef5463e8c84b090e75e258d1eb377cea24049fba1f68d0dc2a45374960bdea282b49d7a38ebafbbe6c454876ba9ab32ef467ce1285be2b0ccd0bd8da62e91b667cb360a745c02504b02b4ec6c307541d5250c1cfdb2678d4c7d2110be81cede80370461fbd327563e51a3df05ad52f52a0b59c3553c9956651ea232dd3198b91dcfea52aea94d8e00"/359], 0x177}}], 0x2, 0x840)
+
+18:47:42 executing program 4:
+getrandom(&(0x7f0000000140)=""/10, 0xfffffffffffffe92, 0x2)
+r0 = syz_open_dev$sg(&(0x7f0000000000)='/dev/sg#\x00', 0x0, 0x4)
+getpeername$inet(0xffffffffffffffff, &(0x7f00000001c0)={0x2, 0x0, @loopback}, &(0x7f0000000200)=0x10)
+getsockopt$inet_tcp_int(0xffffffffffffffff, 0x6, 0x1b, &(0x7f00000000c0), &(0x7f0000000100)=0xfffffffffffffd83)
+prctl$PR_SET_UNALIGN(0x6, 0x3)
+ioctl$SG_IO(r0, 0x2285, &(0x7f0000000040)={0x53, 0xfffffffffffffffe, 0x6, 0x4, @buffer={0x0, 0x0, 0x0}, &(0x7f0000000180)="c33a03391db0", 0x0, 0x0, 0x0, 0xffffffffffffffff, 0x0})
+r1 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r1, 0x10, 0x0, 0x1000)
+setsockopt$inet_int(r1, 0x0, 0x2, &(0x7f0000000240)=0x7, 0x4)
+
+18:47:42 executing program 12:
+r0 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r0, 0x10, 0x0, 0x1000)
+ioctl$KDGKBMODE(r0, 0x4b44, &(0x7f0000000000))
+r1 = socket$inet_tcp(0x2, 0x1, 0x0)
+r2 = syz_open_procfs(0x0, &(0x7f0000000040)='net/ipx\x00')
+ioctl$TCSETSW(r2, 0x5403, &(0x7f00000000c0)={0x40, 0x0, 0x49b, 0xc19e, 0xa, "35fb267570368d167768cf983eb84b874a0ded"})
+setsockopt$inet_tcp_TLS_RX(r1, 0x6, 0x2, &(0x7f0000000280)=@gcm_256={{}, "caa9ab00fb351e56", "57ba48c5b1ddaec1ec33d957aa212d28703c0f08c71cc2af8d7c05a652d1952d", "608339dc", "06591bb7bee2ff63"}, 0x38)
+
+18:47:42 executing program 14:
+fstat(0x1, &(0x7f00000001ca)={0x0, 0x0, 0x0, 0x0, <r0=>0x0})
+setresuid(0xffffffffffffffff, r0, 0xffffffffffffffff)
+r1 = clone3(&(0x7f0000000b80)={0x25000, 0x0, 0x0, 0x0, {}, 0x0, 0x0, 0x0, 0x0}, 0x50)
+tkill(r1, 0x0)
+munmap(&(0x7f0000ffc000/0x1000)=nil, 0x1000)
+
+18:47:42 executing program 11:
+perf_event_open(&(0x7f0000000200)={0x0, 0x70, 0x0, 0x0, 0x0, 0x0, 0x0, 0x9cd9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, @perf_config_ext={0x0, 0x4}}, 0x0, 0x0, 0xffffffffffffffff, 0x0)
+r0 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+write(r0, &(0x7f00000000b0)='c', 0xfffffc8a)
+open(0x0, 0x0, 0x0)
+fstat(0x1, &(0x7f00000001ca)={0x0, 0x0, 0x0, 0x0, <r1=>0x0})
+setresuid(0xffffffffffffffff, r1, 0xffffffffffffffff)
+quotactl(0x7, &(0x7f0000000000)='fallocate04.txt\x00', r1, &(0x7f0000000040)="af2936971bba5ec89f")
+ioctl$LOOP_CTL_GET_FREE(0xffffffffffffffff, 0x4c82)
+ioctl$LOOP_CTL_ADD(0xffffffffffffffff, 0x4c80, 0x0)
+
+18:47:42 executing program 10:
+r0 = socket$inet6_udplite(0xa, 0x2, 0x88)
+r1 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r1, 0x40086602, &(0x7f0000000040)=0x4000)
+ioctl$SNDRV_SEQ_IOCTL_GET_QUEUE_STATUS(r1, 0xc05c5340, &(0x7f0000000440)={0x4, 0x8, 0x7, {0x9, 0x20}, 0x10000})
+sendmmsg$inet6(r0, &(0x7f0000001440)=[{{&(0x7f0000000000)={0xa, 0x4e22, 0x0, @ipv4={[], [], @remote}}, 0x1c, &(0x7f0000000080)=[{&(0x7f0000000040)="397eab21d9cd", 0x6}], 0x1}}], 0x1, 0x0)
+set_mempolicy(0x5, &(0x7f0000000200)=0xc308, 0x101)
+r2 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+setxattr$security_evm(&(0x7f0000000240)='fallocate04.txt\x00', &(0x7f0000000280)='security.evm\x00', &(0x7f00000002c0)=@sha1={0x1, "11015f7c47516430ba8fbbd65a7a7e924bdbd7e0"}, 0x15, 0x2)
+fallocate(r2, 0x10, 0x0, 0x1000)
+r3 = syz_genetlink_get_family_id$netlbl_calipso(&(0x7f0000000100)='NLBL_CALIPSO\x00')
+sendmsg$NLBL_CALIPSO_C_LIST(r2, &(0x7f00000001c0)={&(0x7f00000000c0)={0x10, 0x0, 0x0, 0x4800012}, 0x0, &(0x7f0000000180)={&(0x7f0000000140)={0x3c, r3, 0x400, 0x70bd2b, 0x25dfdbfe, {}, [@NLBL_CALIPSO_A_MTYPE={0x8}, @NLBL_CALIPSO_A_MTYPE={0x8}, @NLBL_CALIPSO_A_MTYPE={0x2e1}, @NLBL_CALIPSO_A_MTYPE={0x8}, @NLBL_CALIPSO_A_MTYPE={0x8}]}, 0x3c}, 0x1, 0x0, 0x0, 0x800004b}, 0x800)
+r4 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r4, 0x40086602, &(0x7f0000000040)=0x4000)
+socketpair$nbd(0x1, 0x1, 0x0, &(0x7f0000000300)={<r5=>0xffffffffffffffff})
+r6 = signalfd4(r0, &(0x7f0000000340)={0x3f}, 0x8, 0x800)
+ppoll(&(0x7f0000000380)=[{r4, 0x240}, {r5, 0x4022}, {r2, 0x1023}, {r6, 0x2}, {r0, 0xa2f4}], 0x5, &(0x7f00000003c0), &(0x7f0000000400)={0xfffffffffffffffc}, 0x8)
+
+18:47:42 executing program 10:
+r0 = socket$inet6_udplite(0xa, 0x2, 0x88)
+sendmmsg$inet6(r0, &(0x7f0000001440)=[{{&(0x7f0000000000)={0xa, 0x4e22, 0x0, @ipv4={[], [], @remote}}, 0x1c, &(0x7f0000000080)=[{&(0x7f0000000040)='9~', 0x2}], 0x1}}], 0x1, 0x0)
+openat$null(0xffffffffffffff9c, &(0x7f00000000c0)='/dev/null\x00', 0x822281, 0x0)
+r1 = socket$inet6_tcp(0xa, 0x1, 0x0)
+getsockopt$inet6_mreq(r1, 0x29, 0x1c, &(0x7f0000000200)={@ipv4={[], [], @multicast1}, <r2=>0x0}, &(0x7f0000000280)=0x14)
+ioctl$sock_inet6_SIOCADDRT(r1, 0x890b, &(0x7f0000000040)={@ipv4={[], [], @multicast1}, @dev={0xfe, 0x80, [], 0x22}, @mcast2, 0x0, 0x0, 0x0, 0x0, 0x0, 0x84060200, r2})
+r3 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r3, 0x40086602, &(0x7f0000000040)=0x4000)
+sendmsg$NL80211_CMD_NEW_MPATH(r3, &(0x7f0000000200)={&(0x7f0000000100)={0x10, 0x0, 0x0, 0x11060000}, 0xc, &(0x7f00000001c0)={&(0x7f0000000140)=ANY=[@ANYBLOB='T\x00\x00\x00', @ANYRES16=r2, @ANYBLOB="5ac3013e7000fbdbdf25170000000a000600aaaaaaaaaaaa002cfe000100030000000c0099000400e6fffeffffff08000300", @ANYRES32=r2, @ANYBLOB="89840a0a000600aaaaaaa633a523ee6010a5c2"], 0x5}, 0x1, 0x0, 0x0, 0x8040}, 0x2)
+
+18:47:42 executing program 9:
+r0 = syz_open_dev$evdev(&(0x7f0000000d40)='/dev/input/event#\x00', 0x1, 0x329042)
+ioctl$EVIOCGMTSLOTS(r0, 0x8040450a, 0x0)
+
+18:47:42 executing program 0:
+r0 = dup3(0xffffffffffffffff, 0xffffffffffffffff, 0x80000)
+r1 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(r1, 0x10, 0x0, 0x1000)
+ioctl$EXT4_IOC_SWAP_BOOT(r1, 0x6611)
+read$ptp(r0, &(0x7f0000000080)=""/178, 0xb2)
+sendmmsg$inet6(0xffffffffffffffff, &(0x7f0000000300)=[{{&(0x7f0000000000)={0xa, 0x4e23, 0x0, @ipv4={[], [], @remote}}, 0x1c, 0x0}}, {{&(0x7f0000000040)={0xa, 0x0, 0x0, @ipv4={[], [], @initdev={0xac, 0x1e, 0x0, 0x0}}}, 0x1c, 0x0}}], 0x2, 0x0)
+
+18:47:42 executing program 1:
+r0 = clone3(&(0x7f0000000b80)={0x0, 0x0, 0x0, 0x0, {}, 0x0, 0x0, 0x0, 0x0}, 0x50)
+r1 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r1, 0x40086602, &(0x7f0000000040)=0x4000)
+setsockopt$inet_udp_int(r1, 0x11, 0xb, &(0x7f0000000100)=0x8, 0x4)
+waitid(0x2, r0, 0x0, 0x8, 0x0)
+ioctl$FS_IOC_RESVSP(r1, 0x40305828, &(0x7f0000000140)={0x0, 0x0, 0x80000000, 0x8fa})
+ptrace$setregset(0x4205, r0, 0x2, &(0x7f00000000c0)={&(0x7f0000000040)="784d2b64c304b9bf4737fd6e961384ee9ce8c0754bc9b5dd584baaff6f1bdf7e5021e4fde962a37e9db95417089f9f7e925fc03a30f4c798e96c078aea142fe22f6053bd9606ed89af7187953490a0d87fb7fa724276fda66450e87a8152f3b18f7325a503ac29dfb0d7b1679431ba72dd0f542a62", 0x75})
+rt_sigqueueinfo(r0, 0x3b, &(0x7f0000000240)={0xc, 0x401, 0x8})
+ioctl$SNDRV_SEQ_IOCTL_DELETE_PORT(r1, 0x40a85321, &(0x7f0000000180)={{0x4, 0x8f}, 'port1\x00', 0x40, 0x20000, 0x0, 0xc865, 0x1, 0x9, 0x6, 0x0, 0xdb7fa059991853cb})
+syz_mount_image$iso9660(&(0x7f0000000000)='iso9660\x00', 0x0, 0x0, 0x0, 0x0, 0x8000, 0x0)
+
+18:47:42 executing program 15:
+prctl$PR_GET_SPECULATION_CTRL(0x34, 0x0, 0x4)
+socket$inet_icmp_raw(0x2, 0x3, 0x1)
+r0 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r0, 0x40086602, &(0x7f0000000040)=0x4000)
+r1 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r1, 0x40086602, &(0x7f0000000040)=0x4000)
+setsockopt$inet_icmp_ICMP_FILTER(r1, 0x1, 0x1, &(0x7f0000002540)={0x1000}, 0x4)
+
+18:47:42 executing program 13:
+syz_genetlink_get_family_id$nbd(&(0x7f0000000000)='nbd\x00')
+mmap(&(0x7f0000000000/0x3000)=nil, 0x3000, 0x0, 0x40072, 0xffffffffffffffff, 0x0)
+
+18:47:42 executing program 2:
+mkdir(0x0, 0x0)
+chdir(&(0x7f0000000091)='/tmp/falLQm3LC\x00')
+r0 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+fallocate(0xffffffffffffffff, 0x10, 0x0, 0x1002)
+fallocate(r0, 0x8, 0x1000, 0x1000)
+setsockopt$SO_BINDTODEVICE(r0, 0x1, 0x19, &(0x7f0000000000)='veth1\x00', 0x10)
+
+18:47:42 executing program 4:
+perf_event_open(&(0x7f0000000200)={0x0, 0x70, 0x0, 0x0, 0x0, 0x0, 0x0, 0x9cd9, 0x0, 0x1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, @perf_config_ext={0x81, 0x4}, 0x0, 0x0, 0x0, 0x7}, 0x0, 0x0, 0xffffffffffffffff, 0x0)
+io_setup(0x8004, 0x0)
+r0 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r0, 0x40086602, &(0x7f0000000040)=0x4000)
+ioctl$sock_SIOCGPGRP(r0, 0x8904, &(0x7f0000000040)=<r1=>0x0)
+sched_getscheduler(r1)
+socket$nl_generic(0x10, 0x3, 0x10)
+openat$full(0xffffffffffffff9c, 0x0, 0x0, 0x0)
+mkdir(0x0, 0x0)
+ioctl$TIOCSCTTY(0xffffffffffffffff, 0x540e, 0x0)
+syz_open_dev$tty1(0xc, 0x4, 0x1)
+r2 = open(&(0x7f00000000a0)='fallocate04.txt\x00', 0x42, 0x0)
+write(r2, &(0x7f0000000100)="94a1195973", 0x30ebaff7)
+ioctl$EXT4_IOC_GROUP_EXTEND(0xffffffffffffffff, 0x40086607, &(0x7f0000000000))
+
+18:47:42 executing program 5:
+r0 = dup(0x2)
+poll(&(0x7f0000000200)=[{r0}], 0x1, 0x10001)
+r1 = dup(0x2)
+r2 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r2, 0x40086602, &(0x7f0000000040)=0x4000)
+io_uring_register$IORING_REGISTER_EVENTFD(r0, 0x4, &(0x7f0000000000)=r2, 0x1)
+write$P9_RREMOVE(r1, &(0x7f0000000040)={0x7}, 0x7)
+
+18:47:42 executing program 8:
+r0 = open(&(0x7f0000000000)='fallocate04.txt\x00', 0x2000, 0x0)
+open_by_handle_at(r0, &(0x7f0000000040)={0x9, 0x2, '!'}, 0x0)
+
+18:47:42 executing program 9:
+syz_mount_image$iso9660(&(0x7f0000000280)='iso9660\x00', &(0x7f00000002c0)='./file0\x00', 0x0, 0x0, 0x0, 0x0, &(0x7f00000000c0)={[{@nocompress='nocompress'}]})
+getsockopt$sock_cred(0xffffffffffffffff, 0x1, 0x11, &(0x7f0000000040)={0x0, <r0=>0x0}, &(0x7f0000000100)=0xc)
+r1 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r1, 0x40086602, &(0x7f0000000040)=0x4000)
+fstat(r1, &(0x7f0000000140)={0x0, 0x0, 0x0, 0x0, <r2=>0x0})
+stat(&(0x7f00000001c0)='./file0\x00', &(0x7f0000000200)={0x0, 0x0, 0x0, 0x0, <r3=>0x0})
+setresuid(r0, r2, r3)
+
+18:47:42 executing program 7:
+r0 = syz_open_dev$tty1(0xc, 0x4, 0x1)
+writev(r0, &(0x7f0000002340)=[{&(0x7f0000000180)="b96776091c6536c9241ad06515823d76f85254208aa49903dcc9e8df56ab53c6450d43bb2ca7110bc74a84b0", 0x2c}], 0x1)
+readv(r0, &(0x7f0000000100)=[{&(0x7f0000000000)=""/26, 0x1a}, {&(0x7f0000000040)=""/7, 0x7}, {&(0x7f0000000080)=""/97, 0x61}], 0x3)
+
+18:47:42 executing program 14:
+ioctl$sock_inet_SIOCDELRT(0xffffffffffffffff, 0x890c, &(0x7f0000000040)={0x0, {0x2, 0x4e2a, @rand_addr=0x3}, {0x2, 0xfffe, @multicast1}, {0x2, 0x0, @empty}, 0x200, 0x0, 0x0, 0x0, 0x2, &(0x7f00000000c0)='ip6erspan0\x00', 0x7, 0x80000000, 0x60})
+perf_event_open(&(0x7f0000000200)={0x0, 0x70, 0x0, 0x0, 0x0, 0x0, 0x0, 0x9cd9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, @perf_config_ext}, 0x0, 0xffffffffffffffff, 0xffffffffffffffff, 0x0)
+recvfrom$inet(0xffffffffffffffff, &(0x7f0000000280)=""/4096, 0x1000, 0x40010010, 0x0, 0x0)
+r0 = open(&(0x7f0000000000)='.\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_GROUP_EXTEND(r0, 0x40086607, &(0x7f0000000100))
+ioctl$KDADDIO(r0, 0x4b34, 0x180000000000)
+r1 = open(&(0x7f00000000c0)='fallocate04.txt\x00', 0x0, 0x0)
+ioctl$EXT4_IOC_SETFLAGS(r1, 0x40086602, &(0x7f0000000040)=0x4000)
+fsconfig$FSCONFIG_SET_PATH(r0, 0x3, &(0x7f0000001280)='eth1posix_acl_accesswlan1)^vboxnet0\x00', &(0x7f00000012c0)='./file0\x00', r1)
+r2 = syz_open_dev$vcsn(&(0x7f0000000140)='/dev/vcs#\x00', 0x5f2, 0x11600)
+write$P9_RSTAT(r2, &(0x7f0000000180)={0x70, 0x7d, 0x2, {0x0, 0x69, 0x0, 0x3f, {0x20, 0x1, 0x6}, 0x10000, 0x1, 0x5, 0x0, 0xb, 'ip6erspan0\x00', 0x29, 'ppp0securitysystem-vboxnet0)\x9b^cpusetwlan0', 0x1, '%', 0x1, 'b'}}, 0x70)
+
+[   42.487423] syz-executor.4 (8358) used greatest stack depth: 24672 bytes left
+[  341.453173] kworker/dying (503) used greatest stack depth: 23248 bytes left

@@ -1,0 +1,113 @@
+protocol 0000 is buggy, dev sit0
+==================================================================
+BUG: KASAN: use-after-free in atomic_sub_return include/asm-generic/atomic-instrumented.h:258 [inline]
+BUG: KASAN: use-after-free in skb_release_data+0xf6/0x5a0 net/core/skbuff.c:559
+Write of size 4 at addr ffff88002fba3c60 by task syz-executor.6/28850
+
+CPU: 0 PID: 28850 Comm: syz-executor.6 Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_address_description+0x65/0x270 mm/kasan/report.c:256
+ kasan_report_error mm/kasan/report.c:354 [inline]
+ kasan_report+0x253/0x380 mm/kasan/report.c:412
+ atomic_sub_return include/asm-generic/atomic-instrumented.h:258 [inline]
+ skb_release_data+0xf6/0x5a0 net/core/skbuff.c:559
+ skb_release_all+0x46/0x60 net/core/skbuff.c:627
+ __kfree_skb net/core/skbuff.c:641 [inline]
+ kfree_skb+0x91/0x1c0 net/core/skbuff.c:659
+ sit_tunnel_xmit+0xef/0x1bb0 net/ipv6/sit.c:1044
+ __netdev_start_xmit include/linux/netdevice.h:4087 [inline]
+ netdev_start_xmit include/linux/netdevice.h:4096 [inline]
+ xmit_one net/core/dev.c:3053 [inline]
+ dev_hard_start_xmit+0x15a/0x590 net/core/dev.c:3069
+ __dev_queue_xmit+0x1059/0x1a30 net/core/dev.c:3584
+ packet_snd net/packet/af_packet.c:2951 [inline]
+ packet_sendmsg+0x3416/0x52b0 net/packet/af_packet.c:2976
+ sock_sendmsg_nosec net/socket.c:629 [inline]
+ sock_sendmsg+0xc3/0x100 net/socket.c:639
+ __sys_sendto+0x2b6/0x310 net/socket.c:1789
+ __do_sys_sendto net/socket.c:1801 [inline]
+ __se_sys_sendto net/socket.c:1797 [inline]
+ __x64_sys_sendto+0xdd/0x1b0 net/socket.c:1797
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fa53bfaec58 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
+RAX: ffffffffffffffda RBX: 000000000073bf00 RCX: 0000000000466039
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000004
+RBP: 0000000000000006 R08: 0000000020000140 R09: 0000000000000014
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007fa53bfaf6bc
+R13: 00000000004c9590 R14: 000000000070c880 R15: 00000000ffffffff
+
+Allocated by task 28850:
+ set_track mm/kasan/kasan.c:460 [inline]
+ kasan_kmalloc+0xa0/0xd0 mm/kasan/kasan.c:553
+ slab_post_alloc_hook mm/slab.h:444 [inline]
+ slab_alloc_node mm/slub.c:2741 [inline]
+ __kmalloc_node_track_caller+0x188/0x220 mm/slub.c:4364
+ __kmalloc_reserve.isra.41+0x37/0xd0 net/core/skbuff.c:137
+ __alloc_skb+0xde/0x580 net/core/skbuff.c:205
+ alloc_skb include/linux/skbuff.h:987 [inline]
+ alloc_skb_with_frags+0xac/0x4d0 net/core/skbuff.c:5249
+ sock_alloc_send_pskb+0x5a6/0x710 net/core/sock.c:2088
+ packet_alloc_skb net/packet/af_packet.c:2810 [inline]
+ packet_snd net/packet/af_packet.c:2901 [inline]
+ packet_sendmsg+0x2323/0x52b0 net/packet/af_packet.c:2976
+ sock_sendmsg_nosec net/socket.c:629 [inline]
+ sock_sendmsg+0xc3/0x100 net/socket.c:639
+ __sys_sendto+0x2b6/0x310 net/socket.c:1789
+ __do_sys_sendto net/socket.c:1801 [inline]
+ __se_sys_sendto net/socket.c:1797 [inline]
+ __x64_sys_sendto+0xdd/0x1b0 net/socket.c:1797
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+
+Freed by task 28850:
+ set_track mm/kasan/kasan.c:460 [inline]
+ __kasan_slab_free+0x130/0x180 mm/kasan/kasan.c:521
+ slab_free_hook mm/slub.c:1388 [inline]
+ slab_free_freelist_hook mm/slub.c:1415 [inline]
+ slab_free mm/slub.c:2988 [inline]
+ kfree+0x8b/0x1a0 mm/slub.c:3944
+ skb_free_head+0x6f/0xa0 net/core/skbuff.c:550
+ skb_release_data+0x423/0x5a0 net/core/skbuff.c:570
+ skb_release_all+0x46/0x60 net/core/skbuff.c:627
+ __kfree_skb net/core/skbuff.c:641 [inline]
+ consume_skb+0x86/0x1b0 net/core/skbuff.c:701
+ packet_rcv+0xdc/0x14a0 net/packet/af_packet.c:2169
+ dev_queue_xmit_nit+0x667/0x8f0 net/core/dev.c:2018
+ xmit_one net/core/dev.c:3049 [inline]
+ dev_hard_start_xmit+0xa4/0x590 net/core/dev.c:3069
+ __dev_queue_xmit+0x1059/0x1a30 net/core/dev.c:3584
+ packet_snd net/packet/af_packet.c:2951 [inline]
+ packet_sendmsg+0x3416/0x52b0 net/packet/af_packet.c:2976
+ sock_sendmsg_nosec net/socket.c:629 [inline]
+ sock_sendmsg+0xc3/0x100 net/socket.c:639
+ __sys_sendto+0x2b6/0x310 net/socket.c:1789
+ __do_sys_sendto net/socket.c:1801 [inline]
+ __se_sys_sendto net/socket.c:1797 [inline]
+ __x64_sys_sendto+0xdd/0x1b0 net/socket.c:1797
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+
+The buggy address belongs to the object at ffff88002fba3b80
+ which belongs to the cache kmalloc-512 of size 512
+The buggy address is located 224 bytes inside of
+ 512-byte region [ffff88002fba3b80, ffff88002fba3d80)
+The buggy address belongs to the page:
+page:ffffea0000bee880 count:1 mapcount:0 mapping:0000000000000000 index:0x0 compound_mapcount: 0
+flags: 0x100000000008100(slab|head)
+raw: 0100000000008100 0000000000000000 0000000000000000 00000001800c000c
+raw: ffffea0000beb600 0000000700000007 ffff88006cc01280 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff88002fba3b00: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+ ffff88002fba3b80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+>ffff88002fba3c00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                                                       ^
+ ffff88002fba3c80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff88002fba3d00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+==================================================================

@@ -1,0 +1,41 @@
+EXT4-fs warning (device sda): ext4_resize_begin:45: There are errors in the filesystem, so online resizing is not allowed
+kasan: CONFIG_KASAN_INLINE enabled
+kasan: GPF could be caused by NULL-ptr deref or user memory access
+general protection fault: 0000 [#1] SMP KASAN PTI
+Dumping ftrace buffer:
+   (ftrace buffer empty)
+Modules linked in:
+CPU: 1 PID: 7310 Comm: kworker/u4:0 Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+RIP: 0010:prefetch_freepointer mm/slub.c:275 [inline]
+RIP: 0010:slab_alloc_node mm/slub.c:2734 [inline]
+RIP: 0010:slab_alloc mm/slub.c:2749 [inline]
+RIP: 0010:__kmalloc+0x13f/0x1d0 mm/slub.c:3785
+RSP: 0018:ffff880033ad7b30 EFLAGS: 00010202
+RAX: 0000000000000000 RBX: 0001800200008002 RCX: 0000000000006bee
+RDX: 0000000000006bed RSI: 00000000014000c0 RDI: 000000000002cba0
+RBP: 00000000014000c0 R08: ffff88006d32cba0 R09: 0000000000000000
+R10: 0000000000000001 R11: fffff9400011d3ab R12: 0000000000000188
+R13: ffff88006cc01280 R14: ffff88001e91e000 R15: ffffffffa2643ea0
+FS:  0000000000000000(0000) GS:ffff88006d300000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 000000000047ec00 CR3: 0000000022e0e004 CR4: 00000000003606e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+program syz-executor.8 is using a deprecated SCSI ioctl, please convert it to SG_IO
+Call Trace:
+ kmalloc include/linux/slab.h:517 [inline]
+ load_elf_phdrs+0x120/0x1c0 fs/binfmt_elf.c:441
+ load_elf_binary+0x1280/0x4269 fs/binfmt_elf.c:838
+ search_binary_handler+0x15b/0x4c0 fs/exec.c:1653
+ exec_binprm fs/exec.c:1695 [inline]
+ do_execveat_common.isra.39+0x13f0/0x1c20 fs/exec.c:1817
+ do_execve+0x2c/0x40 fs/exec.c:1862
+ call_usermodehelper_exec_async+0x2bc/0x4e0 kernel/umh.c:100
+ ret_from_fork+0x35/0x40 arch/x86/entry/entry_64.S:412
+Code: f6 74 7e 41 8b 45 20 49 8b 7d 00 48 8d 4a 01 49 8b 1c 06 4c 89 f0 65 48 0f c7 0f 0f 94 c0 84 c0 74 bd 48 85 db 74 0b 41 8b 45 20 <48> 8b 04 03 0f 18 08 f7 c5 00 80 00 00 75 69 8b 15 f8 cc c0 02 
+RIP: prefetch_freepointer mm/slub.c:275 [inline] RSP: ffff880033ad7b30
+RIP: slab_alloc_node mm/slub.c:2734 [inline] RSP: ffff880033ad7b30
+RIP: slab_alloc mm/slub.c:2749 [inline] RSP: ffff880033ad7b30
+RIP: __kmalloc+0x13f/0x1d0 mm/slub.c:3785 RSP: ffff880033ad7b30
+---[ end trace 87608abbbb22e3f1 ]---

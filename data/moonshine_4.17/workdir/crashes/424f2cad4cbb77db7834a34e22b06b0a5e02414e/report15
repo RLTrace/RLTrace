@@ -1,0 +1,92 @@
+==================================================================
+BUG: KASAN: use-after-free in con_shutdown+0x78/0x90 drivers/tty/vt/vt.c:2929
+Write of size 8 at addr ffff880063678508 by task syz-executor.14/10548
+
+CPU: 0 PID: 10548 Comm: syz-executor.14 Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_address_description+0x65/0x270 mm/kasan/report.c:256
+ kasan_report_error mm/kasan/report.c:354 [inline]
+ kasan_report+0x253/0x380 mm/kasan/report.c:412
+ con_shutdown+0x78/0x90 drivers/tty/vt/vt.c:2929
+ release_tty+0xc6/0x790 drivers/tty/tty_io.c:1487
+ tty_release_struct+0x32/0x40 drivers/tty/tty_io.c:1602
+ tty_release+0xa37/0xf70 drivers/tty/tty_io.c:1762
+ __fput+0x277/0x6e0 fs/file_table.c:209
+ task_work_run+0x140/0x1b0 kernel/task_work.c:113
+ tracehook_notify_resume include/linux/tracehook.h:191 [inline]
+ exit_to_usermode_loop+0x112/0x130 arch/x86/entry/common.c:166
+ prepare_exit_to_usermode arch/x86/entry/common.c:196 [inline]
+ syscall_return_slowpath arch/x86/entry/common.c:265 [inline]
+ do_syscall_64+0x258/0x2c0 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x415297
+RSP: 002b:00007ffc5bd582a0 EFLAGS: 00000293 ORIG_RAX: 0000000000000003
+RAX: 0000000000000000 RBX: 0000000000000005 RCX: 0000000000415297
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000005
+RBP: 0000000000000006 R08: 00000000409d4584 R09: 00000000409d4588
+R10: 00007ffc5bd583d0 R11: 0000000000000293 R12: 0000000000740210
+R13: 000000000073bf0c R14: 0000000000740218 R15: 00000000006fe420
+
+Allocated by task 10555:
+ set_track mm/kasan/kasan.c:460 [inline]
+ kasan_kmalloc+0xa0/0xd0 mm/kasan/kasan.c:553
+ kmem_cache_alloc_trace+0x69/0x180 mm/slub.c:2768
+ kmalloc include/linux/slab.h:512 [inline]
+ kzalloc include/linux/slab.h:701 [inline]
+ vc_allocate+0x184/0x570 drivers/tty/vt/vt.c:774
+ con_install+0x4f/0x3e0 drivers/tty/vt/vt.c:2880
+ tty_driver_install_tty drivers/tty/tty_io.c:1224 [inline]
+ tty_init_dev+0xe9/0x490 drivers/tty/tty_io.c:1324
+ tty_open_by_driver drivers/tty/tty_io.c:1959 [inline]
+ tty_open+0x675/0xaf0 drivers/tty/tty_io.c:2007
+ chrdev_open+0x208/0x510 fs/char_dev.c:417
+ do_dentry_open+0x759/0xe50 fs/open.c:784
+ vfs_open+0x107/0x220 fs/open.c:906
+ do_last fs/namei.c:3365 [inline]
+ path_openat+0x110a/0x4490 fs/namei.c:3500
+ do_filp_open+0x1a5/0x2b0 fs/namei.c:3535
+ do_sys_open+0x302/0x460 fs/open.c:1093
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+
+Freed by task 10563:
+ set_track mm/kasan/kasan.c:460 [inline]
+ __kasan_slab_free+0x130/0x180 mm/kasan/kasan.c:521
+ slab_free_hook mm/slub.c:1388 [inline]
+ slab_free_freelist_hook mm/slub.c:1415 [inline]
+ slab_free mm/slub.c:2988 [inline]
+ kfree+0x8b/0x1a0 mm/slub.c:3944
+ vt_disallocate_all+0x259/0x370 drivers/tty/vt/vt_ioctl.c:321
+ vt_ioctl+0x153c/0x24a0 drivers/tty/vt/vt_ioctl.c:812
+ tty_ioctl+0x26f/0x1330 drivers/tty/tty_io.c:2646
+ vfs_ioctl fs/ioctl.c:46 [inline]
+ do_vfs_ioctl+0x1a0/0xf50 fs/ioctl.c:686
+ ksys_ioctl+0x84/0x90 fs/ioctl.c:701
+ __do_sys_ioctl fs/ioctl.c:708 [inline]
+ __se_sys_ioctl fs/ioctl.c:706 [inline]
+ __x64_sys_ioctl+0x6f/0xb0 fs/ioctl.c:706
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+
+The buggy address belongs to the object at ffff880063678480
+ which belongs to the cache kmalloc-1024 of size 1024
+The buggy address is located 136 bytes inside of
+ 1024-byte region [ffff880063678480, ffff880063678880)
+The buggy address belongs to the page:
+page:ffffea00018d9e00 count:1 mapcount:0 mapping:0000000000000000 index:0x0 compound_mapcount: 0
+flags: 0x100000000008100(slab|head)
+raw: 0100000000008100 0000000000000000 0000000000000000 00000001000e000e
+raw: ffffea0001896a00 0000000500000005 ffff88006cc01140 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff880063678400: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+ ffff880063678480: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+>ffff880063678500: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                      ^
+ ffff880063678580: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff880063678600: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+==================================================================

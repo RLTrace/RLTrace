@@ -1,0 +1,52 @@
+==================================================================
+BUG: KASAN: use-after-free in screen_glyph drivers/tty/vt/vt.c:4621 [inline]
+BUG: KASAN: use-after-free in screen_glyph_unicode+0x296/0x2a0 drivers/tty/vt/vt.c:4636
+Read of size 2 at addr ffff88800011bdfe by task syz-executor.8/14887
+
+CPU: 1 PID: 14887 Comm: syz-executor.8 Not tainted 5.5.0-rc6 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x94/0xce lib/dump_stack.c:118
+ print_address_description.constprop.5+0x16/0x310 mm/kasan/report.c:374
+ __kasan_report+0x149/0x18d mm/kasan/report.c:506
+ kasan_report+0xe/0x20 mm/kasan/common.c:639
+ screen_glyph drivers/tty/vt/vt.c:4621 [inline]
+ screen_glyph_unicode+0x296/0x2a0 drivers/tty/vt/vt.c:4636
+ sel_pos+0x5d/0x70 drivers/tty/vt/selection.c:66
+ set_selection_kernel+0xeda/0x1180 drivers/tty/vt/selection.c:269
+ set_selection_user+0x87/0xd0 drivers/tty/vt/selection.c:177
+ tioclinux+0x32c/0x430 drivers/tty/vt/vt.c:3039
+ vt_ioctl+0x1306/0x2500 drivers/tty/vt/vt_ioctl.c:364
+ tty_ioctl+0x27d/0x1370 drivers/tty/tty_io.c:2660
+ vfs_ioctl fs/ioctl.c:47 [inline]
+ do_vfs_ioctl+0x1a0/0x1010 fs/ioctl.c:734
+ ksys_ioctl+0x84/0x90 fs/ioctl.c:749
+ __do_sys_ioctl fs/ioctl.c:756 [inline]
+ __se_sys_ioctl fs/ioctl.c:754 [inline]
+ __x64_sys_ioctl+0x6f/0xb0 fs/ioctl.c:754
+ do_syscall_64+0x9a/0x360 arch/x86/entry/common.c:294
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+Code: f7 d8 64 89 02 b8 ff ff ff ff c3 66 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 bc ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007fa5f3d26c58 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+RAX: ffffffffffffffda RBX: 000000000073bf00 RCX: 0000000000466039
+RDX: 0000000020000040 RSI: 000000000000541c RDI: 0000000000000003
+RBP: 0000000000000003 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007fa5f3d276bc
+R13: 00000000004c4f73 R14: 00000000007063a0 R15: 00000000ffffffff
+
+The buggy address belongs to the page:
+page:ffffea00000046c0 refcount:0 mapcount:0 mapping:0000000000000000 index:0x0
+raw: 0000000000000000 ffffea00000046c8 ffffea00000046c8 0000000000000000
+raw: 0000000000000000 0000000000000000 00000000ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff88800011bc80: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+ ffff88800011bd00: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+>ffff88800011bd80: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+                                                                ^
+ ffff88800011be00: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+ ffff88800011be80: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+==================================================================

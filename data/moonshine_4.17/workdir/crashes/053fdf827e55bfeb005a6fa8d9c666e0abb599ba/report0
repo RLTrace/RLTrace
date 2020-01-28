@@ -1,0 +1,54 @@
+BUG: unable to handle kernel paging request at fffff1e018000220
+PGD 0 P4D 0 
+Oops: 0000 [#1] SMP KASAN PTI
+Dumping ftrace buffer:
+   (ftrace buffer empty)
+Modules linked in:
+CPU: 1 PID: 18244 Comm: modprobe Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+RIP: 0010:__read_once_size include/linux/compiler.h:188 [inline]
+RIP: 0010:compound_head include/linux/page-flags.h:142 [inline]
+RIP: 0010:virt_to_head_page include/linux/mm.h:626 [inline]
+RIP: 0010:qlink_to_cache mm/kasan/quarantine.c:127 [inline]
+RIP: 0010:qlist_free_all+0x7b/0xc0 mm/kasan/quarantine.c:163
+RSP: 0018:ffff88003252fb90 EFLAGS: 00010286
+RAX: fffff1e018000200 RBX: 0000000000000000 RCX: ffffea000135a400
+RDX: 000077ff80000000 RSI: 0001800600008006 RDI: 0000000000000000
+RBP: 0001800600008006 R08: ffff880039df0000 R09: 0000000180070006
+R10: ffff88003252fad0 R11: 0000000180100001 R12: ffff88003252fbc8
+R13: ffffffff8e31b8b2 R14: 0000000080000000 R15: ffffffff80000000
+FS:  0000000000000000(0000) GS:ffff88006d300000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: fffff1e018000220 CR3: 0000000031512004 CR4: 00000000003606e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ quarantine_reduce+0x13e/0x160 mm/kasan/quarantine.c:259
+ kasan_kmalloc+0xb9/0xd0 mm/kasan/kasan.c:538
+ slab_post_alloc_hook mm/slab.h:444 [inline]
+ slab_alloc_node mm/slub.c:2741 [inline]
+ slab_alloc mm/slub.c:2749 [inline]
+ kmem_cache_alloc+0xbf/0x190 mm/slub.c:2754
+ kmem_cache_zalloc include/linux/slab.h:691 [inline]
+ mmap_region+0x5dc/0x10e0 mm/mmap.c:1700
+ do_mmap+0x618/0xd60 mm/mmap.c:1503
+ do_mmap_pgoff include/linux/mm.h:2237 [inline]
+ vm_mmap_pgoff+0x17b/0x1d0 mm/util.c:357
+ ksys_mmap_pgoff+0xb3/0x510 mm/mmap.c:1553
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x7ff90e18830a
+RSP: 002b:00007ffefaef08c8 EFLAGS: 00000246 ORIG_RAX: 0000000000000009
+RAX: ffffffffffffffda RBX: 0000000000000003 RCX: 00007ff90e18830a
+RDX: 0000000000000003 RSI: 0000000000002000 RDI: 0000000000000000
+RBP: ffffffffffffffff R08: ffffffffffffffff R09: 0000000000000000
+R10: 0000000000000022 R11: 0000000000000246 R12: 0000000000000000
+R13: 0000000000002000 R14: 0000000000000022 R15: 0000000000000000
+Code: 85 db 48 89 df 75 db 48 89 f0 4c 01 f0 72 56 4c 89 fa 48 2b 15 6f b7 62 02 48 01 d0 48 c1 e8 0c 48 c1 e0 06 48 03 05 4d b7 62 02 <48> 8b 50 20 48 8d 4a ff 83 e2 01 48 0f 45 c1 48 8b 78 30 eb a2 
+RIP: __read_once_size include/linux/compiler.h:188 [inline] RSP: ffff88003252fb90
+RIP: compound_head include/linux/page-flags.h:142 [inline] RSP: ffff88003252fb90
+RIP: virt_to_head_page include/linux/mm.h:626 [inline] RSP: ffff88003252fb90
+RIP: qlink_to_cache mm/kasan/quarantine.c:127 [inline] RSP: ffff88003252fb90
+RIP: qlist_free_all+0x7b/0xc0 mm/kasan/quarantine.c:163 RSP: ffff88003252fb90
+CR2: fffff1e018000220
+---[ end trace 1ed6a9161bffc3ae ]---

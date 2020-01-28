@@ -1,0 +1,1672 @@
+
+<!doctype html>
+<html>
+<head>
+	<title> syzkaller</title>
+	<style type="text/css" media="screen">
+#topbar {
+	padding: 5px 10px;
+	background: #E0EBF5;
+}
+
+#topbar a {
+	color: #375EAB;
+	text-decoration: none;
+}
+
+h1, h2, h3, h4 {
+	margin: 0;
+	padding: 0;
+	color: #375EAB;
+	font-weight: bold;
+}
+
+table {
+	border: 1px solid #ccc;
+	margin: 20px 5px;
+	border-collapse: collapse;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+table caption {
+	font-weight: bold;
+}
+
+table td, table th {
+	vertical-align: top;
+	padding: 2px 8px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.namespace {
+	font-weight: bold;
+	font-size: large;
+	color: #375EAB;
+}
+
+.position_table {
+	border: 0px;
+	margin: 0px;
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.position_table td, .position_table tr {
+	vertical-align: center;
+	padding: 0px;
+}
+
+.position_table .search {
+	text-align: right;
+}
+
+.list_table td, .list_table th {
+	border-left: 1px solid #ccc;
+}
+
+.list_table th {
+	background: #F4F4F4;
+}
+
+.list_table tr:nth-child(2n) {
+	background: #F4F4F4;
+}
+
+.list_table tr:hover {
+	background: #ffff99;
+}
+
+.list_table .namespace {
+	width: 100pt;
+	max-width: 100pt;
+}
+
+.list_table .title {
+	width: 350pt;
+	max-width: 350pt;
+}
+
+.list_table .commit_list {
+	width: 500pt;
+	max-width: 500pt;
+}
+
+.list_table .tag {
+	font-family: monospace;
+	font-size: 8pt;
+	width: 40pt;
+	max-width: 40pt;
+}
+
+.list_table .opts {
+	width: 40pt;
+	max-width: 40pt;
+}
+
+.list_table .status {
+	width: 250pt;
+	max-width: 250pt;
+}
+
+.list_table .patched {
+	width: 60pt;
+	max-width: 60pt;
+	text-align: center;
+}
+
+.list_table .kernel {
+	width: 80pt;
+	max-width: 80pt;
+}
+
+.list_table .maintainers {
+	width: 150pt;
+	max-width: 150pt;
+}
+
+.list_table .result {
+	width: 60pt;
+	max-width: 60pt;
+}
+
+.list_table .stat {
+	width: 55pt;
+	max-width: 55pt;
+	font-family: monospace;
+	text-align: right;
+}
+
+.list_table .date {
+	width: 60pt;
+	max-width: 60pt;
+	font-family: monospace;
+	text-align: right;
+}
+
+.list_table .stat_name {
+	width: 150pt;
+	max-width: 150pt;
+	font-family: monospace;
+}
+
+.list_table .stat_value {
+	width: 120pt;
+	max-width: 120pt;
+	font-family: monospace;
+}
+
+.bad {
+	color: #f00;
+	font-weight: bold;
+}
+
+.inactive {
+	color: #888;
+}
+
+.plain {
+	text-decoration: none;
+}
+
+textarea {
+	width:100%;
+	font-family: monospace;
+}
+
+.mono {
+	font-family: monospace;
+}
+</style><script>
+
+
+
+function sortTable(item, colName, conv, desc = false) {
+	table = item.parentNode.parentNode.parentNode.parentNode;
+	rows = table.rows;
+	col = findColumnByName(rows[0].getElementsByTagName("th"), colName);
+	values = [];
+	for (i = 1; i < rows.length; i++)
+		values.push([conv(rows[i].getElementsByTagName("td")[col].textContent), rows[i]]);
+	if (desc)
+		desc = !isSorted(values.slice().reverse())
+	else
+		desc = isSorted(values);
+	values.sort(function(a, b) {
+		if (a[0] == b[0]) return 0;
+		if (desc && a[0] > b[0] || !desc && a[0] < b[0]) return -1;
+		return 1;
+	});
+	for (i = 0; i < values.length; i++)
+		table.tBodies[0].appendChild(values[i][1]);
+	return false;
+}
+
+function findColumnByName(headers, colName) {
+	for (i = 0; i < headers.length; i++) {
+		if (headers[i].textContent == colName)
+			return i;
+	}
+	return 0;
+}
+
+function isSorted(values) {
+	for (i = 0; i < values.length - 1; i++) {
+		if (values[i][0] > values[i + 1][0])
+			return false;
+	}
+	return true;
+}
+
+function textSort(v) { return v.toLowerCase(); }
+function numSort(v) { return -parseInt(v); }
+function floatSort(v) { return -parseFloat(v); }
+function reproSort(v) { return v == "C" ? 0 : v == "syz" ? 1 : 2; }
+function patchedSort(v) { return v == "" ? -1 : parseInt(v); }
+
+function timeSort(v) {
+	if (v == "now")
+		return 0;
+	m = v.indexOf('m');
+	h = v.indexOf('h');
+	d = v.indexOf('d');
+	if (m > 0 && h < 0)
+		return parseInt(v);
+	if (h > 0 && m > 0)
+		return parseInt(v) * 60 + parseInt(v.substring(h + 1));
+	if (d > 0 && h > 0)
+		return parseInt(v) * 60 * 24 + parseInt(v.substring(d + 1)) * 60;
+	if (d > 0)
+		return parseInt(v) * 60 * 24;
+	return 1000000000;
+}
+</script>
+</head>
+<body>
+<b> syzkaller</b>
+<br>
+
+<table class="list_table">
+	<caption>Stats:</caption>
+	
+	<tr>
+		<td class="stat_name">revision</td>
+		<td class="stat_value">
+			
+				<a href="https://github.com/google/syzkaller/commits/53faa9fe74062ad0e47ea0269007ad5182252378">53faa9fe</a>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">config</td>
+		<td class="stat_value">
+			
+				<a href="/config"></a>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">uptime</td>
+		<td class="stat_value">
+			
+				3h7m24s
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">fuzzing</td>
+		<td class="stat_value">
+			
+				24h0m0s
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">corpus</td>
+		<td class="stat_value">
+			
+				<a href="/corpus">8346</a>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">triage queue</td>
+		<td class="stat_value">
+			
+				0
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">cover</td>
+		<td class="stat_value">
+			
+				<a href="/cover">72025</a>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">signal</td>
+		<td class="stat_value">
+			
+				122259
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">syscalls</td>
+		<td class="stat_value">
+			
+				<a href="/syscalls">1558</a>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">crash types</td>
+		<td class="stat_value">
+			
+				19 (6/hour)
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">crashes</td>
+		<td class="stat_value">
+			
+				213 (68/hour)
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">exec candidate</td>
+		<td class="stat_value">
+			
+				957 (306/hour)
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">exec fuzz</td>
+		<td class="stat_value">
+			
+				372165 (33/sec)
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">exec gen</td>
+		<td class="stat_value">
+			
+				6156 (32/min)
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">exec hints</td>
+		<td class="stat_value">
+			
+				0 (0/hour)
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">exec minimize</td>
+		<td class="stat_value">
+			
+				510986 (45/sec)
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">exec seeds</td>
+		<td class="stat_value">
+			
+				0 (0/hour)
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">exec smash</td>
+		<td class="stat_value">
+			
+				561392 (49/sec)
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">exec total</td>
+		<td class="stat_value">
+			
+				1552604 (138/sec)
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">exec triage</td>
+		<td class="stat_value">
+			
+				100961 (539/min)
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">executor restarts</td>
+		<td class="stat_value">
+			
+				4417 (23/min)
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">new inputs</td>
+		<td class="stat_value">
+			
+				12448 (66/min)
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">rotated inputs</td>
+		<td class="stat_value">
+			
+				0 (0/hour)
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">suppressed</td>
+		<td class="stat_value">
+			
+				11 (3/hour)
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="stat_name">vm restarts</td>
+		<td class="stat_value">
+			
+				237 (75/hour)
+			
+		</td>
+	</tr>
+	
+</table>
+
+<table class="list_table">
+	<caption>Crashes:</caption>
+	<tr>
+		<th><a onclick="return sortTable(this, 'Description', textSort)" href="#">Description</a></th>
+		<th><a onclick="return sortTable(this, 'Count', numSort)" href="#">Count</a></th>
+		<th><a onclick="return sortTable(this, 'Last Time', textSort, true)" href="#">Last Time</a></th>
+		<th><a onclick="return sortTable(this, 'Report', textSort)" href="#">Report</a></th>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=1a6abe077825183e67b67c3313ea6f99a992fe86">INFO: rcu detected stall in corrupted</a></td>
+		<td class="stat ">2</td>
+		<td class="time ">2019/12/14 12:57</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=f44bb8b57d1476fe1c9e3480960073e809d37d03">INFO: rcu detected stall in tty_ioctl</a></td>
+		<td class="stat ">16</td>
+		<td class="time ">2019/12/14 12:53</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=2a7a9859e0e44d5ce4eaa9acf568bf427eb5c71a">KASAN: slab-out-of-bounds Write in vgacon_scroll</a></td>
+		<td class="stat ">20</td>
+		<td class="time ">2019/12/14 12:44</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=0b1f0fafc59093a9dd4cdad26e5c9bd828416e83">KASAN: stack-out-of-bounds Write in mpol_to_str</a></td>
+		<td class="stat ">2</td>
+		<td class="time ">2019/12/14 11:08</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=f6d8941bce7dec58159de9b6d2acae5c36c6b5be">KASAN: use-after-free Read in con_scroll</a></td>
+		<td class="stat ">1</td>
+		<td class="time ">2019/12/14 10:23</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=1d00e5d6b390eb4502adc24fd4f3722f662f1710">KASAN: use-after-free Read in do_update_region</a></td>
+		<td class="stat ">4</td>
+		<td class="time ">2019/12/14 12:31</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=f7e0bba8c3e53fe21a4a60bc232356b7d704f634">KASAN: use-after-free Read in n_tty_receive_buf_common</a></td>
+		<td class="stat ">2</td>
+		<td class="time ">2019/12/14 11:57</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=5199451175f5917d378d47b452261b3a38666dd8">KASAN: use-after-free Read in screen_glyph_unicode</a></td>
+		<td class="stat ">2</td>
+		<td class="time ">2019/12/14 12:33</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=b504ba397d9c07a496cad20eee7f592b1ac883d5">KASAN: use-after-free Read in vc_do_resize</a></td>
+		<td class="stat ">2</td>
+		<td class="time ">2019/12/14 12:16</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=0013fbbedcb80b10b39f69a851427ffe7562d19b">KASAN: use-after-free Read in vc_uniscr_check</a></td>
+		<td class="stat ">2</td>
+		<td class="time ">2019/12/14 11:15</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=ba6c17826d8a6437a848f0f8bcc253eb4b5f308c">KASAN: use-after-free Read in vgacon_invert_region</a></td>
+		<td class="stat ">7</td>
+		<td class="time ">2019/12/14 13:00</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=c4a1f8e82cd3acbf6dc18f27e964a86ef9b00e49">KASAN: use-after-free Write in do_con_write</a></td>
+		<td class="stat ">11</td>
+		<td class="time ">2019/12/14 12:43</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=424f2cad4cbb77db7834a34e22b06b0a5e02414e">KASAN: use-after-free Write in release_tty</a></td>
+		<td class="stat ">19</td>
+		<td class="time ">2019/12/14 12:46</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=fb2b4756e80a6cca932c9e5940fd75a553a98b60">kernel panic: Attempted to kill init!</a></td>
+		<td class="stat ">43</td>
+		<td class="time ">2019/12/14 12:58</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=439c37d288d4f26a33a6c7e5c57a97791453a447">lost connection to test machine</a></td>
+		<td class="stat ">2</td>
+		<td class="time ">2019/12/14 12:30</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=e9f5b11984c54cecb386b92bb20c76d5d003719f">no output from test machine</a></td>
+		<td class="stat ">55</td>
+		<td class="time ">2019/12/14 12:58</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=35e19667650e0565c7f9d20e8e9306f919f5ea09">WARNING in __alloc_pages_nodemask</a></td>
+		<td class="stat ">3</td>
+		<td class="time ">2019/12/14 10:57</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=f73b3116ad434cc9b97b908060b5e73752df3be7">WARNING in restore_regulatory_settings</a></td>
+		<td class="stat ">14</td>
+		<td class="time ">2019/12/14 12:45</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="title"><a href="/crash?id=811a29afe339a1963f9b372824f0ce2a8c5d533b">WARNING: stack recursion on stack type 4</a></td>
+		<td class="stat ">6</td>
+		<td class="time ">2019/12/14 12:41</td>
+		<td>
+			
+		</td>
+	</tr>
+	
+</table>
+
+<b>Log:</b>
+<br>
+<textarea id="log_textarea" readonly rows="20" wrap=off>
+2019/12/14 11:41:20 loop: phase=4 shutdown=false instances=1/8 [4] repro: pending=0 reproducing=0 queued=0
+2019/12/14 11:41:20 loop: starting instance 4
+2019/12/14 11:41:26 VMs 7, executed 1111951, cover 110340, crashes 118, repro 0
+2019/12/14 11:41:33 fuzzer vm-4 connected
+2019/12/14 11:41:36 VMs 8, executed 1112574, cover 110340, crashes 118, repro 0
+2019/12/14 11:41:46 VMs 8, executed 1112628, cover 110358, crashes 118, repro 0
+2019/12/14 11:41:56 VMs 8, executed 1112672, cover 110358, crashes 118, repro 0
+2019/12/14 11:42:01 loop: instance 6 finished, crash=true
+2019/12/14 11:42:01 vm-6: crash: INFO: rcu detected stall in tty_ioctl
+2019/12/14 11:42:04 loop: phase=4 shutdown=false instances=1/8 [6] repro: pending=0 reproducing=0 queued=0
+2019/12/14 11:42:04 loop: starting instance 6
+2019/12/14 11:42:06 VMs 7, executed 1112700, cover 110358, crashes 119, repro 0
+2019/12/14 11:42:16 VMs 7, executed 1113125, cover 110360, crashes 119, repro 0
+2019/12/14 11:42:17 fuzzer vm-6 connected
+2019/12/14 11:42:26 VMs 8, executed 1113988, cover 110362, crashes 119, repro 0
+2019/12/14 11:42:36 VMs 8, executed 1113988, cover 110362, crashes 119, repro 0
+2019/12/14 11:42:45 loop: instance 4 finished, crash=true
+2019/12/14 11:42:45 vm-4: crash: kernel panic: Attempted to kill init!
+2019/12/14 11:42:46 VMs 6, executed 1113991, cover 110362, crashes 119, repro 0
+2019/12/14 11:42:47 loop: phase=4 shutdown=false instances=1/8 [4] repro: pending=0 reproducing=0 queued=0
+2019/12/14 11:42:47 loop: starting instance 4
+2019/12/14 11:42:47 loop: instance 5 finished, crash=true
+2019/12/14 11:42:47 vm-5: crash: no output from test machine
+2019/12/14 11:42:47 loop: phase=4 shutdown=false instances=1/8 [5] repro: pending=0 reproducing=0 queued=0
+2019/12/14 11:42:47 loop: starting instance 5
+2019/12/14 11:42:56 VMs 6, executed 1114471, cover 110362, crashes 121, repro 0
+2019/12/14 11:43:01 fuzzer vm-4 connected
+2019/12/14 11:43:01 fuzzer vm-5 connected
+2019/12/14 11:43:06 VMs 8, executed 1114479, cover 110362, crashes 121, repro 0
+2019/12/14 11:43:08 loop: instance 6 finished, crash=true
+2019/12/14 11:43:08 vm-6: crash: KASAN: use-after-free Read in vgacon_invert_region
+2019/12/14 11:43:11 loop: phase=4 shutdown=false instances=1/8 [6] repro: pending=0 reproducing=0 queued=0
+2019/12/14 11:43:11 loop: starting instance 6
+2019/12/14 11:43:16 VMs 7, executed 1114578, cover 110380, crashes 122, repro 0
+2019/12/14 11:43:24 fuzzer vm-6 connected
+2019/12/14 11:43:26 VMs 8, executed 1114666, cover 110380, crashes 122, repro 0
+2019/12/14 11:43:36 VMs 8, executed 1115257, cover 110380, crashes 122, repro 0
+2019/12/14 11:43:46 VMs 8, executed 1116399, cover 110380, crashes 122, repro 0
+2019/12/14 11:43:56 VMs 8, executed 1117242, cover 110384, crashes 122, repro 0
+2019/12/14 11:44:06 VMs 8, executed 1118696, cover 110388, crashes 122, repro 0
+2019/12/14 11:44:16 VMs 8, executed 1119709, cover 110422, crashes 122, repro 0
+2019/12/14 11:44:26 loop: instance 4 finished, crash=true
+2019/12/14 11:44:26 vm-4: crash: INFO: rcu detected stall in tty_ioctl
+2019/12/14 11:44:26 loop: phase=4 shutdown=false instances=1/8 [4] repro: pending=0 reproducing=0 queued=0
+2019/12/14 11:44:26 loop: starting instance 4
+2019/12/14 11:44:26 VMs 7, executed 1120389, cover 110436, crashes 123, repro 0
+2019/12/14 11:44:36 VMs 7, executed 1121228, cover 110456, crashes 123, repro 0
+2019/12/14 11:44:38 loop: instance 7 finished, crash=true
+2019/12/14 11:44:38 vm-7: crash: no output from test machine
+2019/12/14 11:44:38 loop: phase=4 shutdown=false instances=1/8 [7] repro: pending=0 reproducing=0 queued=0
+2019/12/14 11:44:38 loop: starting instance 7
+2019/12/14 11:44:40 fuzzer vm-4 connected
+2019/12/14 11:44:46 VMs 7, executed 1121275, cover 110461, crashes 124, repro 0
+2019/12/14 11:44:51 fuzzer vm-7 connected
+2019/12/14 11:44:55 loop: instance 0 finished, crash=true
+2019/12/14 11:44:55 vm-0: crash: no output from test machine
+2019/12/14 11:44:55 loop: phase=4 shutdown=false instances=1/8 [0] repro: pending=0 reproducing=0 queued=0
+2019/12/14 11:44:55 loop: starting instance 0
+2019/12/14 11:44:56 VMs 7, executed 1121360, cover 110461, crashes 125, repro 0
+2019/12/14 11:44:57 loop: instance 6 finished, crash=true
+2019/12/14 11:44:57 vm-6: crash: KASAN: use-after-free Read in screen_glyph_unicode
+2019/12/14 11:45:01 loop: phase=4 shutdown=false instances=1/8 [6] repro: pending=0 reproducing=0 queued=0
+2019/12/14 11:45:01 loop: starting instance 6
+2019/12/14 11:45:06 VMs 6, executed 1121361, cover 110461, crashes 126, repro 0
+2019/12/14 11:45:08 fuzzer vm-0 connected
+2019/12/14 11:45:14 fuzzer vm-6 connected
+2019/12/14 11:45:16 VMs 8, executed 1121733, cover 110461, crashes 126, repro 0
+2019/12/14 11:45:26 VMs 8, executed 1122892, cover 110511, crashes 126, repro 0
+2019/12/14 11:45:36 VMs 8, executed 1124397, cover 110613, crashes 126, repro 0
+2019/12/14 11:45:38 loop: instance 2 finished, crash=true
+2019/12/14 11:45:38 vm-2: crash: no output from test machine
+2019/12/14 11:45:38 loop: phase=4 shutdown=false instances=1/8 [2] repro: pending=0 reproducing=0 queued=0
+2019/12/14 11:45:38 loop: starting instance 2
+2019/12/14 11:45:46 VMs 7, executed 1126477, cover 110642, crashes 127, repro 0
+2019/12/14 11:45:51 fuzzer vm-2 connected
+2019/12/14 11:45:55 loop: instance 0 finished, crash=true
+2019/12/14 11:45:55 vm-0: crash: WARNING in restore_regulatory_settings
+2019/12/14 11:45:56 loop: phase=4 shutdown=false instances=1/8 [0] repro: pending=0 reproducing=0 queued=0
+2019/12/14 11:45:56 loop: starting instance 0
+2019/12/14 11:45:56 VMs 7, executed 1128202, cover 110645, crashes 128, repro 0
+2019/12/14 11:46:06 VMs 7, executed 1129715, cover 110656, crashes 128, repro 0
+2019/12/14 11:46:09 fuzzer vm-0 connected
+2019/12/14 11:46:16 VMs 8, executed 1131122, cover 110666, crashes 128, repro 0
+2019/12/14 11:46:26 VMs 8, executed 1132694, cover 110702, crashes 128, repro 0
+2019/12/14 11:46:36 VMs 8, executed 1133962, cover 110747, crashes 128, repro 0
+2019/12/14 11:46:46 VMs 8, executed 1135182, cover 110770, crashes 128, repro 0
+2019/12/14 11:46:56 VMs 8, executed 1136105, cover 110773, crashes 128, repro 0
+2019/12/14 11:47:06 VMs 8, executed 1137523, cover 110839, crashes 128, repro 0
+2019/12/14 11:47:16 VMs 8, executed 1138746, cover 110856, crashes 128, repro 0
+2019/12/14 11:47:26 VMs 8, executed 1140197, cover 111003, crashes 128, repro 0
+2019/12/14 11:47:36 VMs 8, executed 1142636, cover 111344, crashes 128, repro 0
+2019/12/14 11:47:46 VMs 8, executed 1144767, cover 111681, crashes 128, repro 0
+2019/12/14 11:47:56 VMs 8, executed 1146458, cover 111921, crashes 128, repro 0
+2019/12/14 11:47:57 loop: instance 2 finished, crash=true
+2019/12/14 11:47:57 vm-2: crash: KASAN: slab-out-of-bounds Write in vgacon_scroll
+2019/12/14 11:48:00 loop: phase=4 shutdown=false instances=1/8 [2] repro: pending=0 reproducing=0 queued=0
+2019/12/14 11:48:00 loop: starting instance 2
+2019/12/14 11:48:06 VMs 7, executed 1148048, cover 111957, crashes 129, repro 0
+2019/12/14 11:48:12 loop: instance 7 finished, crash=true
+2019/12/14 11:48:12 vm-7: crash: kernel panic: Attempted to kill init!
+2019/12/14 11:48:13 fuzzer vm-2 connected
+2019/12/14 11:48:15 loop: phase=4 shutdown=false instances=1/8 [7] repro: pending=0 reproducing=0 queued=0
+2019/12/14 11:48:15 loop: starting instance 7
+2019/12/14 11:48:16 VMs 7, executed 1148532, cover 112001, crashes 130, repro 0
+2019/12/14 11:48:19 loop: instance 4 finished, crash=true
+2019/12/14 11:48:19 vm-4: crash: KASAN: use-after-free Write in release_tty
+2019/12/14 11:48:22 loop: phase=4 shutdown=false instances=1/8 [4] repro: pending=0 reproducing=0 queued=0
+2019/12/14 11:48:22 loop: starting instance 4
+2019/12/14 11:48:26 VMs 6, executed 1148720, cover 112047, crashes 131, repro 0
+2019/12/14 11:48:28 fuzzer vm-7 connected
+2019/12/14 11:48:35 fuzzer vm-4 connected
+2019/12/14 11:48:36 VMs 8, executed 1149522, cover 112064, crashes 131, repro 0
+2019/12/14 11:48:46 VMs 8, executed 1150219, cover 112107, crashes 131, repro 0
+2019/12/14 11:48:56 VMs 8, executed 1151360, cover 112123, crashes 131, repro 0
+2019/12/14 11:49:06 VMs 8, executed 1152853, cover 112129, crashes 131, repro 0
+2019/12/14 11:49:16 VMs 8, executed 1154553, cover 112148, crashes 131, repro 0
+2019/12/14 11:49:26 VMs 8, executed 1156645, cover 112303, crashes 131, repro 0
+2019/12/14 11:49:36 VMs 8, executed 1158087, cover 112380, crashes 131, repro 0
+2019/12/14 11:49:46 VMs 8, executed 1159051, cover 112394, crashes 131, repro 0
+2019/12/14 11:49:56 VMs 8, executed 1159932, cover 112404, crashes 131, repro 0
+2019/12/14 11:50:06 VMs 8, executed 1160728, cover 112429, crashes 131, repro 0
+2019/12/14 11:50:16 VMs 8, executed 1161519, cover 112445, crashes 131, repro 0
+2019/12/14 11:50:26 VMs 8, executed 1162346, cover 112463, crashes 131, repro 0
+2019/12/14 11:50:36 VMs 8, executed 1163528, cover 112465, crashes 131, repro 0
+2019/12/14 11:50:46 VMs 8, executed 1164423, cover 112483, crashes 131, repro 0
+2019/12/14 11:50:53 loop: instance 6 finished, crash=true
+2019/12/14 11:50:53 vm-6: crash: no output from test machine
+2019/12/14 11:50:53 loop: phase=4 shutdown=false instances=1/8 [6] repro: pending=0 reproducing=0 queued=0
+2019/12/14 11:50:53 loop: starting instance 6
+2019/12/14 11:50:56 VMs 7, executed 1164927, cover 112531, crashes 132, repro 0
+2019/12/14 11:51:06 VMs 8, executed 1165561, cover 112535, crashes 132, repro 0
+2019/12/14 11:51:06 fuzzer vm-6 connected
+2019/12/14 11:51:13 loop: instance 2 finished, crash=true
+2019/12/14 11:51:13 vm-2: crash: INFO: rcu detected stall in tty_ioctl
+2019/12/14 11:51:13 loop: phase=4 shutdown=false instances=1/8 [2] repro: pending=0 reproducing=0 queued=0
+2019/12/14 11:51:13 loop: starting instance 2
+2019/12/14 11:51:16 VMs 7, executed 1166100, cover 112535, crashes 133, repro 0
+2019/12/14 11:51:26 VMs 8, executed 1166564, cover 112535, crashes 133, repro 0
+2019/12/14 11:51:27 fuzzer vm-2 connected
+2019/12/14 11:51:36 VMs 8, executed 1166957, cover 112535, crashes 133, repro 0
+2019/12/14 11:51:40 loop: instance 5 finished, crash=true
+2019/12/14 11:51:40 vm-5: crash: no output from test machine
+2019/12/14 11:51:40 loop: phase=4 shutdown=false instances=1/8 [5] repro: pending=0 reproducing=0 queued=0
+2019/12/14 11:51:40 loop: starting instance 5
+2019/12/14 11:51:46 VMs 7, executed 1167252, cover 112535, crashes 134, repro 0
+2019/12/14 11:51:48 loop: instance 6 finished, crash=true
+2019/12/14 11:51:48 vm-6: crash: KASAN: use-after-free Write in do_con_write
+2019/12/14 11:51:52 loop: phase=4 shutdown=false instances=1/8 [6] repro: pending=0 reproducing=0 queued=0
+2019/12/14 11:51:52 loop: starting instance 6
+2019/12/14 11:51:56 VMs 6, executed 1167514, cover 112535, crashes 135, repro 0
+2019/12/14 11:52:00 fuzzer vm-5 connected
+2019/12/14 11:52:06 fuzzer vm-6 connected
+2019/12/14 11:52:06 VMs 8, executed 1167881, cover 112604, crashes 135, repro 0
+2019/12/14 11:52:16 VMs 8, executed 1168191, cover 112629, crashes 135, repro 0
+2019/12/14 11:52:17 loop: instance 2 finished, crash=true
+2019/12/14 11:52:17 vm-2: crash: WARNING in restore_regulatory_settings
+2019/12/14 11:52:18 loop: phase=4 shutdown=false instances=1/8 [2] repro: pending=0 reproducing=0 queued=0
+2019/12/14 11:52:18 loop: starting instance 2
+2019/12/14 11:52:26 VMs 7, executed 1168660, cover 112647, crashes 136, repro 0
+2019/12/14 11:52:31 fuzzer vm-2 connected
+2019/12/14 11:52:36 VMs 8, executed 1169303, cover 112707, crashes 136, repro 0
+2019/12/14 11:52:46 VMs 8, executed 1170690, cover 112714, crashes 136, repro 0
+2019/12/14 11:52:56 VMs 8, executed 1171665, cover 112795, crashes 136, repro 0
+2019/12/14 11:53:06 VMs 8, executed 1172858, cover 112817, crashes 136, repro 0
+2019/12/14 11:53:16 VMs 8, executed 1174141, cover 112870, crashes 136, repro 0
+2019/12/14 11:53:22 loop: instance 5 finished, crash=true
+2019/12/14 11:53:22 vm-5: crash: KASAN: use-after-free Write in do_con_write
+2019/12/14 11:53:26 loop: phase=4 shutdown=false instances=1/8 [5] repro: pending=0 reproducing=0 queued=0
+2019/12/14 11:53:26 loop: starting instance 5
+2019/12/14 11:53:26 VMs 7, executed 1174733, cover 112870, crashes 137, repro 0
+2019/12/14 11:53:36 VMs 7, executed 1175264, cover 112870, crashes 137, repro 0
+2019/12/14 11:53:39 fuzzer vm-5 connected
+2019/12/14 11:53:46 VMs 8, executed 1175673, cover 112871, crashes 137, repro 0
+2019/12/14 11:53:56 VMs 8, executed 1176209, cover 112872, crashes 137, repro 0
+2019/12/14 11:54:06 VMs 8, executed 1177449, cover 112914, crashes 137, repro 0
+2019/12/14 11:54:16 VMs 8, executed 1178709, cover 112955, crashes 137, repro 0
+2019/12/14 11:54:26 VMs 8, executed 1179832, cover 112955, crashes 137, repro 0
+2019/12/14 11:54:36 VMs 8, executed 1180936, cover 112996, crashes 137, repro 0
+2019/12/14 11:54:46 VMs 8, executed 1181801, cover 113067, crashes 137, repro 0
+2019/12/14 11:54:49 loop: instance 5 finished, crash=true
+2019/12/14 11:54:49 vm-5: crash: KASAN: slab-out-of-bounds Write in vgacon_scroll
+2019/12/14 11:54:52 loop: phase=4 shutdown=false instances=1/8 [5] repro: pending=0 reproducing=0 queued=0
+2019/12/14 11:54:52 loop: starting instance 5
+2019/12/14 11:54:56 VMs 7, executed 1182366, cover 113142, crashes 138, repro 0
+2019/12/14 11:54:57 loop: instance 7 finished, crash=true
+2019/12/14 11:54:57 vm-7: crash: no output from test machine
+2019/12/14 11:54:57 loop: phase=4 shutdown=false instances=1/8 [7] repro: pending=0 reproducing=0 queued=0
+2019/12/14 11:54:57 loop: starting instance 7
+2019/12/14 11:55:05 fuzzer vm-5 connected
+2019/12/14 11:55:05 minimized corpus: 7752 -&gt; 7687
+2019/12/14 11:55:06 VMs 7, executed 1183043, cover 113257, crashes 139, repro 0
+2019/12/14 11:55:10 fuzzer vm-7 connected
+2019/12/14 11:55:16 VMs 8, executed 1183674, cover 113280, crashes 139, repro 0
+2019/12/14 11:55:26 VMs 8, executed 1184335, cover 113283, crashes 139, repro 0
+2019/12/14 11:55:36 VMs 8, executed 1184861, cover 113283, crashes 139, repro 0
+2019/12/14 11:55:46 VMs 8, executed 1186220, cover 113409, crashes 139, repro 0
+2019/12/14 11:55:56 VMs 8, executed 1187531, cover 113428, crashes 139, repro 0
+2019/12/14 11:56:06 VMs 8, executed 1189013, cover 113439, crashes 139, repro 0
+2019/12/14 11:56:16 VMs 8, executed 1190207, cover 113448, crashes 139, repro 0
+2019/12/14 11:56:26 VMs 8, executed 1190975, cover 113482, crashes 139, repro 0
+2019/12/14 11:56:36 VMs 8, executed 1191689, cover 113490, crashes 139, repro 0
+2019/12/14 11:56:46 VMs 8, executed 1192370, cover 113490, crashes 139, repro 0
+2019/12/14 11:56:49 loop: instance 7 finished, crash=true
+2019/12/14 11:56:49 vm-7: crash: INFO: rcu detected stall in tty_ioctl
+2019/12/14 11:56:50 loop: phase=4 shutdown=false instances=1/8 [7] repro: pending=0 reproducing=0 queued=0
+2019/12/14 11:56:50 loop: starting instance 7
+2019/12/14 11:56:56 VMs 7, executed 1193010, cover 113510, crashes 140, repro 0
+2019/12/14 11:57:01 loop: instance 6 finished, crash=true
+2019/12/14 11:57:01 vm-6: crash: KASAN: use-after-free Read in do_update_region
+2019/12/14 11:57:03 fuzzer vm-7 connected
+2019/12/14 11:57:05 loop: phase=4 shutdown=false instances=1/8 [6] repro: pending=0 reproducing=0 queued=0
+2019/12/14 11:57:05 loop: starting instance 6
+2019/12/14 11:57:06 VMs 7, executed 1193583, cover 113526, crashes 141, repro 0
+2019/12/14 11:57:16 VMs 7, executed 1193870, cover 113561, crashes 141, repro 0
+2019/12/14 11:57:18 fuzzer vm-6 connected
+2019/12/14 11:57:22 loop: instance 5 finished, crash=true
+2019/12/14 11:57:22 vm-5: crash: KASAN: use-after-free Read in n_tty_receive_buf_common
+2019/12/14 11:57:23 loop: phase=4 shutdown=false instances=1/8 [5] repro: pending=0 reproducing=0 queued=0
+2019/12/14 11:57:23 loop: starting instance 5
+2019/12/14 11:57:26 VMs 7, executed 1194375, cover 113561, crashes 142, repro 0
+2019/12/14 11:57:36 fuzzer vm-5 connected
+2019/12/14 11:57:36 VMs 8, executed 1195134, cover 113563, crashes 142, repro 0
+2019/12/14 11:57:46 VMs 8, executed 1195691, cover 113574, crashes 142, repro 0
+2019/12/14 11:57:49 loop: instance 0 finished, crash=true
+2019/12/14 11:57:49 vm-0: crash: WARNING: stack recursion on stack type 4
+2019/12/14 11:57:49 loop: phase=4 shutdown=false instances=1/8 [0] repro: pending=0 reproducing=0 queued=0
+2019/12/14 11:57:49 loop: starting instance 0
+2019/12/14 11:57:56 VMs 7, executed 1195953, cover 113574, crashes 143, repro 0
+2019/12/14 11:58:02 fuzzer vm-0 connected
+2019/12/14 11:58:06 VMs 8, executed 1196606, cover 113574, crashes 143, repro 0
+2019/12/14 11:58:16 VMs 8, executed 1196965, cover 113574, crashes 143, repro 0
+2019/12/14 11:58:20 loop: instance 2 finished, crash=true
+2019/12/14 11:58:20 vm-2: crash: no output from test machine
+2019/12/14 11:58:20 loop: phase=4 shutdown=false instances=1/8 [2] repro: pending=0 reproducing=0 queued=0
+2019/12/14 11:58:20 loop: starting instance 2
+2019/12/14 11:58:26 VMs 7, executed 1197068, cover 113576, crashes 144, repro 0
+2019/12/14 11:58:33 fuzzer vm-2 connected
+2019/12/14 11:58:36 VMs 8, executed 1197322, cover 113576, crashes 144, repro 0
+2019/12/14 11:58:46 VMs 8, executed 1197576, cover 113576, crashes 144, repro 0
+2019/12/14 11:58:56 VMs 8, executed 1197852, cover 113598, crashes 144, repro 0
+2019/12/14 11:59:05 loop: instance 0 finished, crash=true
+2019/12/14 11:59:05 vm-0: crash: INFO: rcu detected stall in tty_ioctl
+2019/12/14 11:59:06 VMs 7, executed 1198749, cover 113598, crashes 144, repro 0
+2019/12/14 11:59:10 loop: phase=4 shutdown=false instances=1/8 [0] repro: pending=0 reproducing=0 queued=0
+2019/12/14 11:59:10 loop: starting instance 0
+2019/12/14 11:59:16 VMs 7, executed 1199765, cover 113600, crashes 145, repro 0
+2019/12/14 11:59:21 loop: instance 6 finished, crash=true
+2019/12/14 11:59:21 vm-6: suppressed crash lost connection to test machine
+2019/12/14 11:59:21 loop: phase=4 shutdown=false instances=1/8 [6] repro: pending=0 reproducing=0 queued=0
+2019/12/14 11:59:21 loop: starting instance 6
+2019/12/14 11:59:23 fuzzer vm-0 connected
+2019/12/14 11:59:26 VMs 7, executed 1200525, cover 113606, crashes 145, repro 0
+2019/12/14 11:59:34 fuzzer vm-6 connected
+2019/12/14 11:59:36 VMs 8, executed 1201358, cover 113670, crashes 145, repro 0
+2019/12/14 11:59:46 VMs 8, executed 1201807, cover 113673, crashes 145, repro 0
+2019/12/14 11:59:48 loop: instance 2 finished, crash=true
+2019/12/14 11:59:48 vm-2: crash: KASAN: use-after-free Write in release_tty
+2019/12/14 11:59:52 loop: phase=4 shutdown=false instances=1/8 [2] repro: pending=0 reproducing=0 queued=0
+2019/12/14 11:59:52 loop: starting instance 2
+2019/12/14 11:59:56 VMs 7, executed 1202181, cover 113679, crashes 146, repro 0
+2019/12/14 12:00:05 fuzzer vm-2 connected
+2019/12/14 12:00:06 VMs 8, executed 1202882, cover 113700, crashes 146, repro 0
+2019/12/14 12:00:16 VMs 8, executed 1203511, cover 113705, crashes 146, repro 0
+2019/12/14 12:00:26 VMs 8, executed 1204236, cover 113705, crashes 146, repro 0
+2019/12/14 12:00:36 VMs 8, executed 1204418, cover 113705, crashes 146, repro 0
+2019/12/14 12:00:46 VMs 8, executed 1205079, cover 113705, crashes 146, repro 0
+2019/12/14 12:00:56 VMs 8, executed 1205130, cover 113705, crashes 146, repro 0
+2019/12/14 12:01:06 VMs 8, executed 1205480, cover 113711, crashes 146, repro 0
+2019/12/14 12:01:16 VMs 8, executed 1205489, cover 113711, crashes 146, repro 0
+2019/12/14 12:01:26 VMs 8, executed 1205540, cover 113711, crashes 146, repro 0
+2019/12/14 12:01:36 VMs 8, executed 1205714, cover 113711, crashes 146, repro 0
+2019/12/14 12:01:46 VMs 8, executed 1205807, cover 113711, crashes 146, repro 0
+2019/12/14 12:01:56 VMs 8, executed 1206582, cover 113711, crashes 146, repro 0
+2019/12/14 12:02:06 VMs 8, executed 1207317, cover 113722, crashes 146, repro 0
+2019/12/14 12:02:16 VMs 8, executed 1207776, cover 113722, crashes 146, repro 0
+2019/12/14 12:02:26 VMs 8, executed 1209152, cover 113723, crashes 146, repro 0
+2019/12/14 12:02:36 VMs 8, executed 1209978, cover 113864, crashes 146, repro 0
+2019/12/14 12:02:46 VMs 8, executed 1210949, cover 113907, crashes 146, repro 0
+2019/12/14 12:02:56 VMs 8, executed 1211679, cover 113908, crashes 146, repro 0
+2019/12/14 12:03:06 VMs 8, executed 1211764, cover 113908, crashes 146, repro 0
+2019/12/14 12:03:15 loop: instance 5 finished, crash=true
+2019/12/14 12:03:15 vm-5: crash: no output from test machine
+2019/12/14 12:03:15 loop: phase=4 shutdown=false instances=1/8 [5] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:03:15 loop: starting instance 5
+2019/12/14 12:03:16 VMs 7, executed 1212104, cover 113908, crashes 147, repro 0
+2019/12/14 12:03:26 VMs 7, executed 1212500, cover 113930, crashes 147, repro 0
+2019/12/14 12:03:28 fuzzer vm-5 connected
+2019/12/14 12:03:36 VMs 8, executed 1212604, cover 113930, crashes 147, repro 0
+2019/12/14 12:03:45 loop: instance 4 finished, crash=true
+2019/12/14 12:03:45 vm-4: crash: no output from test machine
+2019/12/14 12:03:45 loop: phase=4 shutdown=false instances=1/8 [4] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:03:45 loop: starting instance 4
+2019/12/14 12:03:46 VMs 7, executed 1213064, cover 113986, crashes 148, repro 0
+2019/12/14 12:03:56 VMs 7, executed 1213493, cover 114066, crashes 148, repro 0
+2019/12/14 12:03:58 fuzzer vm-4 connected
+2019/12/14 12:04:06 VMs 8, executed 1213996, cover 114138, crashes 148, repro 0
+2019/12/14 12:04:16 VMs 8, executed 1214439, cover 114142, crashes 148, repro 0
+2019/12/14 12:04:26 VMs 8, executed 1215475, cover 114142, crashes 148, repro 0
+2019/12/14 12:04:36 VMs 8, executed 1216677, cover 114142, crashes 148, repro 0
+2019/12/14 12:04:46 VMs 8, executed 1217666, cover 114206, crashes 148, repro 0
+2019/12/14 12:04:56 VMs 8, executed 1219316, cover 114265, crashes 148, repro 0
+2019/12/14 12:05:02 loop: instance 0 finished, crash=true
+2019/12/14 12:05:02 vm-0: crash: no output from test machine
+2019/12/14 12:05:02 loop: phase=4 shutdown=false instances=1/8 [0] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:05:02 loop: starting instance 0
+2019/12/14 12:05:06 VMs 7, executed 1220160, cover 114266, crashes 149, repro 0
+2019/12/14 12:05:13 loop: instance 5 finished, crash=true
+2019/12/14 12:05:13 vm-5: crash: WARNING: stack recursion on stack type 4
+2019/12/14 12:05:13 loop: phase=4 shutdown=false instances=1/8 [5] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:05:13 loop: starting instance 5
+2019/12/14 12:05:15 fuzzer vm-0 connected
+2019/12/14 12:05:16 VMs 7, executed 1220982, cover 114271, crashes 150, repro 0
+2019/12/14 12:05:26 VMs 8, executed 1221781, cover 114274, crashes 150, repro 0
+2019/12/14 12:05:27 fuzzer vm-5 connected
+2019/12/14 12:05:36 VMs 8, executed 1222546, cover 114293, crashes 150, repro 0
+2019/12/14 12:05:46 VMs 8, executed 1222837, cover 114311, crashes 150, repro 0
+2019/12/14 12:05:56 VMs 8, executed 1223977, cover 114316, crashes 150, repro 0
+2019/12/14 12:06:06 VMs 8, executed 1225065, cover 114321, crashes 150, repro 0
+2019/12/14 12:06:16 VMs 8, executed 1226329, cover 114337, crashes 150, repro 0
+2019/12/14 12:06:22 loop: instance 0 finished, crash=true
+2019/12/14 12:06:22 vm-0: crash: kernel panic: Attempted to kill init!
+2019/12/14 12:06:25 loop: phase=4 shutdown=false instances=1/8 [0] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:06:25 loop: starting instance 0
+2019/12/14 12:06:26 VMs 7, executed 1227168, cover 114377, crashes 151, repro 0
+2019/12/14 12:06:36 VMs 7, executed 1227775, cover 114394, crashes 151, repro 0
+2019/12/14 12:06:38 fuzzer vm-0 connected
+2019/12/14 12:06:46 VMs 8, executed 1228388, cover 114413, crashes 151, repro 0
+2019/12/14 12:06:56 VMs 8, executed 1229070, cover 114444, crashes 151, repro 0
+2019/12/14 12:07:06 VMs 8, executed 1230062, cover 114444, crashes 151, repro 0
+2019/12/14 12:07:16 VMs 8, executed 1230897, cover 114548, crashes 151, repro 0
+2019/12/14 12:07:26 VMs 8, executed 1231817, cover 114587, crashes 151, repro 0
+2019/12/14 12:07:36 VMs 8, executed 1232766, cover 114641, crashes 151, repro 0
+2019/12/14 12:07:46 VMs 8, executed 1233531, cover 114657, crashes 151, repro 0
+2019/12/14 12:07:53 loop: instance 6 finished, crash=true
+2019/12/14 12:07:53 vm-6: crash: no output from test machine
+2019/12/14 12:07:53 loop: phase=4 shutdown=false instances=1/8 [6] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:07:53 loop: starting instance 6
+2019/12/14 12:07:56 VMs 7, executed 1234191, cover 114662, crashes 152, repro 0
+2019/12/14 12:08:06 VMs 8, executed 1234936, cover 114664, crashes 152, repro 0
+2019/12/14 12:08:07 fuzzer vm-6 connected
+2019/12/14 12:08:16 vm-3: running for 1h0m0.000819323s, restarting
+2019/12/14 12:08:16 VMs 7, executed 1235712, cover 114676, crashes 152, repro 0
+2019/12/14 12:08:17 loop: instance 3 finished, crash=false
+2019/12/14 12:08:17 loop: phase=4 shutdown=false instances=1/8 [3] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:08:17 loop: starting instance 3
+2019/12/14 12:08:26 VMs 7, executed 1236308, cover 114740, crashes 152, repro 0
+2019/12/14 12:08:30 fuzzer vm-3 connected
+2019/12/14 12:08:36 VMs 8, executed 1236920, cover 114740, crashes 152, repro 0
+2019/12/14 12:08:46 VMs 8, executed 1237794, cover 114827, crashes 152, repro 0
+2019/12/14 12:08:56 VMs 8, executed 1238116, cover 114841, crashes 152, repro 0
+2019/12/14 12:09:06 VMs 8, executed 1238566, cover 114865, crashes 152, repro 0
+2019/12/14 12:09:12 loop: instance 0 finished, crash=true
+2019/12/14 12:09:12 vm-0: crash: INFO: rcu detected stall in tty_ioctl
+2019/12/14 12:09:12 loop: phase=4 shutdown=false instances=1/8 [0] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:09:12 loop: starting instance 0
+2019/12/14 12:09:16 VMs 7, executed 1239164, cover 114873, crashes 153, repro 0
+2019/12/14 12:09:25 fuzzer vm-0 connected
+2019/12/14 12:09:26 VMs 8, executed 1239285, cover 114888, crashes 153, repro 0
+2019/12/14 12:09:36 VMs 8, executed 1239804, cover 114907, crashes 153, repro 0
+2019/12/14 12:09:46 VMs 8, executed 1239996, cover 114924, crashes 153, repro 0
+2019/12/14 12:09:56 VMs 8, executed 1240988, cover 114968, crashes 153, repro 0
+2019/12/14 12:10:06 VMs 8, executed 1242272, cover 114987, crashes 153, repro 0
+2019/12/14 12:10:16 VMs 8, executed 1243378, cover 114993, crashes 153, repro 0
+2019/12/14 12:10:26 VMs 8, executed 1244374, cover 115017, crashes 153, repro 0
+2019/12/14 12:10:36 loop: instance 6 finished, crash=true
+2019/12/14 12:10:36 vm-6: crash: INFO: rcu detected stall in tty_ioctl
+2019/12/14 12:10:36 VMs 7, executed 1245426, cover 115038, crashes 153, repro 0
+2019/12/14 12:10:40 loop: phase=4 shutdown=false instances=1/8 [6] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:10:40 loop: starting instance 6
+2019/12/14 12:10:46 VMs 7, executed 1246704, cover 115040, crashes 154, repro 0
+2019/12/14 12:10:47 loop: instance 4 finished, crash=true
+2019/12/14 12:10:47 vm-4: crash: no output from test machine
+2019/12/14 12:10:47 loop: phase=4 shutdown=false instances=1/8 [4] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:10:47 loop: starting instance 4
+2019/12/14 12:10:53 fuzzer vm-6 connected
+2019/12/14 12:10:56 VMs 7, executed 1247885, cover 115243, crashes 155, repro 0
+2019/12/14 12:11:00 fuzzer vm-4 connected
+2019/12/14 12:11:06 VMs 8, executed 1248972, cover 115485, crashes 155, repro 0
+2019/12/14 12:11:16 VMs 8, executed 1249932, cover 115583, crashes 155, repro 0
+2019/12/14 12:11:26 VMs 8, executed 1250865, cover 115648, crashes 155, repro 0
+2019/12/14 12:11:36 VMs 8, executed 1251984, cover 115681, crashes 155, repro 0
+2019/12/14 12:11:44 loop: instance 6 finished, crash=true
+2019/12/14 12:11:44 vm-6: crash: KASAN: slab-out-of-bounds Write in vgacon_scroll
+2019/12/14 12:11:46 VMs 7, executed 1252919, cover 115729, crashes 155, repro 0
+2019/12/14 12:11:48 loop: phase=4 shutdown=false instances=1/8 [6] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:11:48 loop: starting instance 6
+2019/12/14 12:11:49 loop: instance 4 finished, crash=true
+2019/12/14 12:11:49 vm-4: crash: KASAN: use-after-free Write in do_con_write
+2019/12/14 12:11:53 loop: phase=4 shutdown=false instances=1/8 [4] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:11:53 loop: starting instance 4
+2019/12/14 12:11:56 VMs 6, executed 1253804, cover 115749, crashes 157, repro 0
+2019/12/14 12:12:01 fuzzer vm-6 connected
+2019/12/14 12:12:06 fuzzer vm-4 connected
+2019/12/14 12:12:06 VMs 8, executed 1254500, cover 115776, crashes 157, repro 0
+2019/12/14 12:12:16 VMs 8, executed 1255320, cover 115782, crashes 157, repro 0
+2019/12/14 12:12:26 VMs 8, executed 1256130, cover 115887, crashes 157, repro 0
+2019/12/14 12:12:36 VMs 8, executed 1257154, cover 115924, crashes 157, repro 0
+2019/12/14 12:12:46 VMs 8, executed 1258958, cover 115977, crashes 157, repro 0
+2019/12/14 12:12:55 loop: instance 4 finished, crash=true
+2019/12/14 12:12:55 vm-4: crash: kernel panic: Attempted to kill init!
+2019/12/14 12:12:56 VMs 7, executed 1260681, cover 115987, crashes 157, repro 0
+2019/12/14 12:12:58 loop: phase=4 shutdown=false instances=1/8 [4] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:12:58 loop: starting instance 4
+2019/12/14 12:13:06 VMs 7, executed 1262871, cover 116001, crashes 158, repro 0
+2019/12/14 12:13:11 fuzzer vm-4 connected
+2019/12/14 12:13:16 VMs 8, executed 1263753, cover 116014, crashes 158, repro 0
+2019/12/14 12:13:18 loop: instance 6 finished, crash=true
+2019/12/14 12:13:18 vm-6: crash: kernel panic: Attempted to kill init!
+2019/12/14 12:13:21 loop: phase=4 shutdown=false instances=1/8 [6] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:13:21 loop: starting instance 6
+2019/12/14 12:13:26 VMs 7, executed 1264449, cover 116018, crashes 159, repro 0
+2019/12/14 12:13:29 loop: instance 0 finished, crash=true
+2019/12/14 12:13:29 vm-0: suppressed crash lost connection to test machine
+2019/12/14 12:13:29 loop: phase=4 shutdown=false instances=1/8 [0] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:13:29 loop: starting instance 0
+2019/12/14 12:13:34 fuzzer vm-6 connected
+2019/12/14 12:13:35 minimized corpus: 7919 -&gt; 7877
+2019/12/14 12:13:36 VMs 7, executed 1265080, cover 116125, crashes 159, repro 0
+2019/12/14 12:13:43 fuzzer vm-0 connected
+2019/12/14 12:13:46 VMs 8, executed 1265783, cover 116145, crashes 159, repro 0
+2019/12/14 12:13:56 VMs 8, executed 1267146, cover 116166, crashes 159, repro 0
+2019/12/14 12:14:06 VMs 8, executed 1268480, cover 116240, crashes 159, repro 0
+2019/12/14 12:14:16 VMs 8, executed 1270455, cover 116270, crashes 159, repro 0
+2019/12/14 12:14:26 VMs 8, executed 1272750, cover 116318, crashes 159, repro 0
+2019/12/14 12:14:36 VMs 8, executed 1274682, cover 116688, crashes 159, repro 0
+2019/12/14 12:14:46 VMs 8, executed 1276211, cover 116898, crashes 159, repro 0
+2019/12/14 12:14:56 VMs 8, executed 1277954, cover 116948, crashes 159, repro 0
+2019/12/14 12:15:06 VMs 8, executed 1279578, cover 117039, crashes 159, repro 0
+2019/12/14 12:15:16 VMs 8, executed 1280909, cover 117087, crashes 159, repro 0
+2019/12/14 12:15:26 VMs 8, executed 1282541, cover 117094, crashes 159, repro 0
+2019/12/14 12:15:36 VMs 8, executed 1283723, cover 117143, crashes 159, repro 0
+2019/12/14 12:15:46 VMs 8, executed 1285587, cover 117175, crashes 159, repro 0
+2019/12/14 12:15:56 VMs 8, executed 1287240, cover 117257, crashes 159, repro 0
+2019/12/14 12:16:06 VMs 8, executed 1288866, cover 117286, crashes 159, repro 0
+2019/12/14 12:16:16 VMs 8, executed 1290715, cover 117324, crashes 159, repro 0
+2019/12/14 12:16:26 VMs 8, executed 1292041, cover 117327, crashes 159, repro 0
+2019/12/14 12:16:28 loop: instance 4 finished, crash=true
+2019/12/14 12:16:28 vm-4: crash: KASAN: use-after-free Read in vc_do_resize
+2019/12/14 12:16:32 loop: phase=4 shutdown=false instances=1/8 [4] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:16:32 loop: starting instance 4
+2019/12/14 12:16:36 VMs 7, executed 1293301, cover 117337, crashes 160, repro 0
+2019/12/14 12:16:45 fuzzer vm-4 connected
+2019/12/14 12:16:46 VMs 8, executed 1294722, cover 117342, crashes 160, repro 0
+2019/12/14 12:16:56 VMs 8, executed 1296122, cover 117362, crashes 160, repro 0
+2019/12/14 12:17:06 VMs 8, executed 1297493, cover 117385, crashes 160, repro 0
+2019/12/14 12:17:16 VMs 8, executed 1298517, cover 117396, crashes 160, repro 0
+2019/12/14 12:17:26 VMs 8, executed 1300362, cover 117413, crashes 160, repro 0
+2019/12/14 12:17:36 VMs 8, executed 1302061, cover 117425, crashes 160, repro 0
+2019/12/14 12:17:46 VMs 8, executed 1303597, cover 117466, crashes 160, repro 0
+2019/12/14 12:17:56 VMs 8, executed 1305199, cover 117536, crashes 160, repro 0
+2019/12/14 12:18:06 VMs 8, executed 1307141, cover 117677, crashes 160, repro 0
+2019/12/14 12:18:16 VMs 8, executed 1308714, cover 117789, crashes 160, repro 0
+2019/12/14 12:18:26 VMs 8, executed 1310414, cover 117857, crashes 160, repro 0
+2019/12/14 12:18:36 VMs 8, executed 1312446, cover 118063, crashes 160, repro 0
+2019/12/14 12:18:46 VMs 8, executed 1314426, cover 118183, crashes 160, repro 0
+2019/12/14 12:18:56 VMs 8, executed 1316305, cover 118242, crashes 160, repro 0
+2019/12/14 12:19:06 VMs 8, executed 1318431, cover 118286, crashes 160, repro 0
+2019/12/14 12:19:16 VMs 8, executed 1320473, cover 118396, crashes 160, repro 0
+2019/12/14 12:19:26 VMs 8, executed 1322929, cover 118630, crashes 160, repro 0
+2019/12/14 12:19:36 VMs 8, executed 1325237, cover 118715, crashes 160, repro 0
+2019/12/14 12:19:46 VMs 8, executed 1327169, cover 118818, crashes 160, repro 0
+2019/12/14 12:19:55 loop: instance 0 finished, crash=true
+2019/12/14 12:19:55 vm-0: crash: kernel panic: Attempted to kill init!
+2019/12/14 12:19:56 VMs 7, executed 1328964, cover 118833, crashes 160, repro 0
+2019/12/14 12:19:58 loop: phase=4 shutdown=false instances=1/8 [0] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:19:58 loop: starting instance 0
+2019/12/14 12:20:06 VMs 7, executed 1330678, cover 118876, crashes 161, repro 0
+2019/12/14 12:20:11 fuzzer vm-0 connected
+2019/12/14 12:20:16 VMs 8, executed 1331853, cover 118929, crashes 161, repro 0
+2019/12/14 12:20:26 VMs 8, executed 1333099, cover 118951, crashes 161, repro 0
+2019/12/14 12:20:36 VMs 8, executed 1334583, cover 119070, crashes 161, repro 0
+2019/12/14 12:20:46 VMs 8, executed 1335536, cover 119072, crashes 161, repro 0
+2019/12/14 12:20:48 loop: instance 3 finished, crash=true
+2019/12/14 12:20:48 vm-3: crash: kernel panic: Attempted to kill init!
+2019/12/14 12:20:51 loop: phase=4 shutdown=false instances=1/8 [3] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:20:51 loop: starting instance 3
+2019/12/14 12:20:56 VMs 7, executed 1336917, cover 119091, crashes 162, repro 0
+2019/12/14 12:21:04 fuzzer vm-3 connected
+2019/12/14 12:21:06 VMs 8, executed 1338454, cover 119106, crashes 162, repro 0
+2019/12/14 12:21:16 VMs 8, executed 1339385, cover 119128, crashes 162, repro 0
+2019/12/14 12:21:26 VMs 8, executed 1340543, cover 119136, crashes 162, repro 0
+2019/12/14 12:21:36 VMs 8, executed 1341348, cover 119136, crashes 162, repro 0
+2019/12/14 12:21:39 loop: instance 6 finished, crash=true
+2019/12/14 12:21:39 vm-6: crash: WARNING: stack recursion on stack type 4
+2019/12/14 12:21:39 loop: phase=4 shutdown=false instances=1/8 [6] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:21:39 loop: starting instance 6
+2019/12/14 12:21:46 VMs 7, executed 1342302, cover 119136, crashes 163, repro 0
+2019/12/14 12:21:52 fuzzer vm-6 connected
+2019/12/14 12:21:56 VMs 8, executed 1342944, cover 119142, crashes 163, repro 0
+2019/12/14 12:21:57 loop: instance 3 finished, crash=true
+2019/12/14 12:21:57 vm-3: crash: KASAN: slab-out-of-bounds Write in vgacon_scroll
+2019/12/14 12:22:01 loop: phase=4 shutdown=false instances=1/8 [3] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:22:01 loop: starting instance 3
+2019/12/14 12:22:06 VMs 7, executed 1343555, cover 119142, crashes 164, repro 0
+2019/12/14 12:22:14 fuzzer vm-3 connected
+2019/12/14 12:22:16 VMs 8, executed 1344679, cover 119177, crashes 164, repro 0
+2019/12/14 12:22:26 VMs 8, executed 1345992, cover 119186, crashes 164, repro 0
+2019/12/14 12:22:36 VMs 8, executed 1346977, cover 119186, crashes 164, repro 0
+2019/12/14 12:22:39 loop: instance 6 finished, crash=true
+2019/12/14 12:22:39 vm-6: crash: kernel panic: Attempted to kill init!
+2019/12/14 12:22:41 loop: phase=4 shutdown=false instances=1/8 [6] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:22:41 loop: starting instance 6
+2019/12/14 12:22:46 VMs 7, executed 1347855, cover 119201, crashes 165, repro 0
+2019/12/14 12:22:54 fuzzer vm-6 connected
+2019/12/14 12:22:56 VMs 8, executed 1348988, cover 119275, crashes 165, repro 0
+2019/12/14 12:23:06 VMs 8, executed 1350080, cover 119290, crashes 165, repro 0
+2019/12/14 12:23:16 VMs 8, executed 1351085, cover 119354, crashes 165, repro 0
+2019/12/14 12:23:26 VMs 8, executed 1351746, cover 119354, crashes 165, repro 0
+2019/12/14 12:23:31 loop: instance 2 finished, crash=true
+2019/12/14 12:23:31 vm-2: crash: INFO: rcu detected stall in tty_ioctl
+2019/12/14 12:23:34 loop: phase=4 shutdown=false instances=1/8 [2] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:23:34 loop: starting instance 2
+2019/12/14 12:23:36 VMs 7, executed 1352965, cover 119365, crashes 166, repro 0
+2019/12/14 12:23:44 loop: instance 6 finished, crash=true
+2019/12/14 12:23:44 vm-6: crash: KASAN: use-after-free Write in do_con_write
+2019/12/14 12:23:46 VMs 6, executed 1353609, cover 119541, crashes 166, repro 0
+2019/12/14 12:23:48 fuzzer vm-2 connected
+2019/12/14 12:23:48 minimized corpus: 8125 -&gt; 8087
+2019/12/14 12:23:49 loop: phase=4 shutdown=false instances=1/8 [6] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:23:49 loop: starting instance 6
+2019/12/14 12:23:56 VMs 7, executed 1354426, cover 119565, crashes 167, repro 0
+2019/12/14 12:24:06 VMs 8, executed 1355455, cover 119566, crashes 167, repro 0
+2019/12/14 12:24:07 fuzzer vm-6 connected
+2019/12/14 12:24:16 VMs 8, executed 1355932, cover 119590, crashes 167, repro 0
+2019/12/14 12:24:19 loop: instance 0 finished, crash=true
+2019/12/14 12:24:19 vm-0: crash: KASAN: slab-out-of-bounds Write in vgacon_scroll
+2019/12/14 12:24:22 loop: phase=4 shutdown=false instances=1/8 [0] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:24:22 loop: starting instance 0
+2019/12/14 12:24:26 VMs 7, executed 1356526, cover 119606, crashes 168, repro 0
+2019/12/14 12:24:36 VMs 8, executed 1357722, cover 119606, crashes 168, repro 0
+2019/12/14 12:24:37 fuzzer vm-0 connected
+2019/12/14 12:24:46 VMs 8, executed 1358830, cover 119618, crashes 168, repro 0
+2019/12/14 12:24:56 VMs 8, executed 1359794, cover 119622, crashes 168, repro 0
+2019/12/14 12:25:06 VMs 8, executed 1360625, cover 119624, crashes 168, repro 0
+2019/12/14 12:25:16 VMs 8, executed 1361566, cover 119625, crashes 168, repro 0
+2019/12/14 12:25:22 loop: instance 6 finished, crash=true
+2019/12/14 12:25:22 vm-6: crash: INFO: rcu detected stall in tty_ioctl
+2019/12/14 12:25:26 loop: phase=4 shutdown=false instances=1/8 [6] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:25:26 loop: starting instance 6
+2019/12/14 12:25:26 VMs 7, executed 1362727, cover 119629, crashes 169, repro 0
+2019/12/14 12:25:36 VMs 7, executed 1364886, cover 119672, crashes 169, repro 0
+2019/12/14 12:25:39 fuzzer vm-6 connected
+2019/12/14 12:25:46 VMs 8, executed 1366623, cover 119707, crashes 169, repro 0
+2019/12/14 12:25:56 VMs 8, executed 1367854, cover 119707, crashes 169, repro 0
+2019/12/14 12:26:06 VMs 8, executed 1368888, cover 119710, crashes 169, repro 0
+2019/12/14 12:26:16 VMs 8, executed 1369716, cover 119712, crashes 169, repro 0
+2019/12/14 12:26:26 VMs 8, executed 1370989, cover 119714, crashes 169, repro 0
+2019/12/14 12:26:30 loop: instance 6 finished, crash=true
+2019/12/14 12:26:30 vm-6: crash: kernel panic: Attempted to kill init!
+2019/12/14 12:26:33 loop: phase=4 shutdown=false instances=1/8 [6] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:26:33 loop: starting instance 6
+2019/12/14 12:26:36 VMs 7, executed 1371387, cover 119722, crashes 170, repro 0
+2019/12/14 12:26:41 loop: instance 0 finished, crash=true
+2019/12/14 12:26:41 vm-0: crash: KASAN: slab-out-of-bounds Write in vgacon_scroll
+2019/12/14 12:26:46 loop: phase=4 shutdown=false instances=1/8 [0] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:26:46 loop: starting instance 0
+2019/12/14 12:26:46 fuzzer vm-6 connected
+2019/12/14 12:26:46 VMs 7, executed 1371681, cover 119722, crashes 171, repro 0
+2019/12/14 12:26:56 VMs 7, executed 1371877, cover 119722, crashes 171, repro 0
+2019/12/14 12:27:03 loop: instance 3 finished, crash=true
+2019/12/14 12:27:03 vm-3: crash: kernel panic: Attempted to kill init!
+2019/12/14 12:27:04 fuzzer vm-0 connected
+2019/12/14 12:27:06 loop: phase=4 shutdown=false instances=1/8 [3] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:27:06 loop: starting instance 3
+2019/12/14 12:27:06 VMs 7, executed 1372364, cover 119722, crashes 172, repro 0
+2019/12/14 12:27:16 VMs 7, executed 1372712, cover 119722, crashes 172, repro 0
+2019/12/14 12:27:26 fuzzer vm-3 connected
+2019/12/14 12:27:26 VMs 8, executed 1372814, cover 119722, crashes 172, repro 0
+2019/12/14 12:27:33 loop: instance 6 finished, crash=true
+2019/12/14 12:27:33 vm-6: crash: KASAN: use-after-free Write in release_tty
+2019/12/14 12:27:34 loop: phase=4 shutdown=false instances=1/8 [6] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:27:34 loop: starting instance 6
+2019/12/14 12:27:36 VMs 7, executed 1373184, cover 119722, crashes 173, repro 0
+2019/12/14 12:27:46 VMs 7, executed 1374006, cover 119722, crashes 173, repro 0
+2019/12/14 12:27:47 fuzzer vm-6 connected
+2019/12/14 12:27:56 VMs 8, executed 1374763, cover 119729, crashes 173, repro 0
+2019/12/14 12:28:03 loop: instance 0 finished, crash=true
+2019/12/14 12:28:03 vm-0: crash: WARNING: stack recursion on stack type 4
+2019/12/14 12:28:03 loop: phase=4 shutdown=false instances=1/8 [0] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:28:03 loop: starting instance 0
+2019/12/14 12:28:06 VMs 7, executed 1375200, cover 119730, crashes 174, repro 0
+2019/12/14 12:28:16 fuzzer vm-0 connected
+2019/12/14 12:28:16 VMs 8, executed 1375935, cover 119731, crashes 174, repro 0
+2019/12/14 12:28:26 VMs 8, executed 1376829, cover 119771, crashes 174, repro 0
+2019/12/14 12:28:36 VMs 8, executed 1378719, cover 119771, crashes 174, repro 0
+2019/12/14 12:28:46 VMs 8, executed 1379758, cover 119787, crashes 174, repro 0
+2019/12/14 12:28:55 loop: instance 3 finished, crash=true
+2019/12/14 12:28:55 vm-3: crash: KASAN: slab-out-of-bounds Write in vgacon_scroll
+2019/12/14 12:28:56 VMs 7, executed 1381161, cover 119791, crashes 174, repro 0
+2019/12/14 12:28:58 loop: phase=4 shutdown=false instances=1/8 [3] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:28:58 loop: starting instance 3
+2019/12/14 12:29:06 VMs 7, executed 1382468, cover 119807, crashes 175, repro 0
+2019/12/14 12:29:11 fuzzer vm-3 connected
+2019/12/14 12:29:16 VMs 8, executed 1383864, cover 119808, crashes 175, repro 0
+2019/12/14 12:29:23 vm-1: running for 1h0m0.000794902s, restarting
+2019/12/14 12:29:23 loop: instance 1 finished, crash=false
+2019/12/14 12:29:23 loop: phase=4 shutdown=false instances=1/8 [1] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:29:23 loop: starting instance 1
+2019/12/14 12:29:26 VMs 7, executed 1384781, cover 119891, crashes 175, repro 0
+2019/12/14 12:29:36 fuzzer vm-1 connected
+2019/12/14 12:29:36 VMs 8, executed 1385945, cover 119950, crashes 175, repro 0
+2019/12/14 12:29:46 VMs 8, executed 1386936, cover 119980, crashes 175, repro 0
+2019/12/14 12:29:56 VMs 8, executed 1388345, cover 119996, crashes 175, repro 0
+2019/12/14 12:30:06 VMs 8, executed 1390320, cover 120043, crashes 175, repro 0
+2019/12/14 12:30:16 VMs 8, executed 1391580, cover 120047, crashes 175, repro 0
+2019/12/14 12:30:26 VMs 8, executed 1392889, cover 120055, crashes 175, repro 0
+2019/12/14 12:30:31 loop: instance 1 finished, crash=true
+2019/12/14 12:30:31 vm-1: crash: kernel panic: Attempted to kill init!
+2019/12/14 12:30:33 loop: phase=4 shutdown=false instances=1/8 [1] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:30:33 loop: starting instance 1
+2019/12/14 12:30:36 VMs 7, executed 1394014, cover 120056, crashes 176, repro 0
+2019/12/14 12:30:37 loop: instance 4 finished, crash=true
+2019/12/14 12:30:37 vm-4: crash: lost connection to test machine
+2019/12/14 12:30:37 loop: phase=4 shutdown=false instances=1/8 [4] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:30:37 loop: starting instance 4
+2019/12/14 12:30:46 VMs 7, executed 1394976, cover 120057, crashes 177, repro 0
+2019/12/14 12:30:46 fuzzer vm-1 connected
+2019/12/14 12:30:47 loop: instance 2 finished, crash=true
+2019/12/14 12:30:47 vm-2: crash: no output from test machine
+2019/12/14 12:30:47 loop: phase=4 shutdown=false instances=1/8 [2] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:30:47 loop: starting instance 2
+2019/12/14 12:30:50 fuzzer vm-4 connected
+2019/12/14 12:30:56 VMs 7, executed 1395663, cover 120058, crashes 178, repro 0
+2019/12/14 12:31:00 fuzzer vm-2 connected
+2019/12/14 12:31:06 VMs 8, executed 1397253, cover 120058, crashes 178, repro 0
+2019/12/14 12:31:16 VMs 8, executed 1398131, cover 120087, crashes 178, repro 0
+2019/12/14 12:31:26 VMs 8, executed 1399584, cover 120109, crashes 178, repro 0
+2019/12/14 12:31:31 loop: instance 1 finished, crash=true
+2019/12/14 12:31:31 vm-1: crash: KASAN: use-after-free Write in release_tty
+2019/12/14 12:31:35 loop: phase=4 shutdown=false instances=1/8 [1] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:31:35 loop: starting instance 1
+2019/12/14 12:31:36 VMs 7, executed 1400353, cover 120109, crashes 179, repro 0
+2019/12/14 12:31:38 loop: instance 6 finished, crash=true
+2019/12/14 12:31:38 vm-6: crash: kernel panic: Attempted to kill init!
+2019/12/14 12:31:40 loop: phase=4 shutdown=false instances=1/8 [6] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:31:40 loop: starting instance 6
+2019/12/14 12:31:44 loop: instance 3 finished, crash=true
+2019/12/14 12:31:44 vm-3: crash: KASAN: slab-out-of-bounds Write in vgacon_scroll
+2019/12/14 12:31:46 VMs 5, executed 1400659, cover 120109, crashes 180, repro 0
+2019/12/14 12:31:47 loop: phase=4 shutdown=false instances=1/8 [3] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:31:47 loop: starting instance 3
+2019/12/14 12:31:48 loop: instance 4 finished, crash=true
+2019/12/14 12:31:48 vm-4: crash: KASAN: use-after-free Read in do_update_region
+2019/12/14 12:31:49 fuzzer vm-1 connected
+2019/12/14 12:31:53 loop: phase=4 shutdown=false instances=1/8 [4] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:31:53 loop: starting instance 4
+2019/12/14 12:31:53 fuzzer vm-6 connected
+2019/12/14 12:31:56 VMs 6, executed 1401011, cover 120109, crashes 182, repro 0
+2019/12/14 12:32:06 fuzzer vm-4 connected
+2019/12/14 12:32:06 VMs 8, executed 1401345, cover 120109, crashes 182, repro 0
+2019/12/14 12:32:07 fuzzer vm-3 connected
+2019/12/14 12:32:16 VMs 8, executed 1401704, cover 120109, crashes 182, repro 0
+2019/12/14 12:32:26 VMs 8, executed 1401706, cover 120110, crashes 182, repro 0
+2019/12/14 12:32:36 VMs 8, executed 1402973, cover 120113, crashes 182, repro 0
+2019/12/14 12:32:46 VMs 8, executed 1404702, cover 120113, crashes 182, repro 0
+2019/12/14 12:32:56 VMs 8, executed 1406552, cover 120115, crashes 182, repro 0
+2019/12/14 12:33:03 loop: instance 3 finished, crash=true
+2019/12/14 12:33:03 vm-3: crash: kernel panic: Attempted to kill init!
+2019/12/14 12:33:06 loop: phase=4 shutdown=false instances=1/8 [3] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:33:06 loop: starting instance 3
+2019/12/14 12:33:06 VMs 7, executed 1408263, cover 120158, crashes 183, repro 0
+2019/12/14 12:33:16 VMs 7, executed 1409262, cover 120158, crashes 183, repro 0
+2019/12/14 12:33:19 fuzzer vm-3 connected
+2019/12/14 12:33:24 loop: instance 4 finished, crash=true
+2019/12/14 12:33:24 vm-4: suppressed crash lost connection to test machine
+2019/12/14 12:33:24 loop: phase=4 shutdown=false instances=1/8 [4] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:33:24 loop: starting instance 4
+2019/12/14 12:33:26 VMs 7, executed 1409363, cover 120162, crashes 183, repro 0
+2019/12/14 12:33:36 loop: instance 6 finished, crash=true
+2019/12/14 12:33:36 vm-6: crash: KASAN: use-after-free Read in screen_glyph_unicode
+2019/12/14 12:33:36 VMs 6, executed 1409841, cover 120162, crashes 183, repro 0
+2019/12/14 12:33:38 fuzzer vm-4 connected
+2019/12/14 12:33:39 loop: phase=4 shutdown=false instances=1/8 [6] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:33:39 loop: starting instance 6
+2019/12/14 12:33:39 loop: instance 1 finished, crash=true
+2019/12/14 12:33:39 vm-1: crash: INFO: rcu detected stall in tty_ioctl
+2019/12/14 12:33:43 loop: phase=4 shutdown=false instances=1/8 [1] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:33:43 loop: starting instance 1
+2019/12/14 12:33:46 VMs 6, executed 1410200, cover 120162, crashes 185, repro 0
+2019/12/14 12:33:53 fuzzer vm-6 connected
+2019/12/14 12:33:56 fuzzer vm-1 connected
+2019/12/14 12:33:56 VMs 8, executed 1410420, cover 120162, crashes 185, repro 0
+2019/12/14 12:34:06 VMs 8, executed 1411306, cover 120162, crashes 185, repro 0
+2019/12/14 12:34:16 VMs 8, executed 1411498, cover 120163, crashes 185, repro 0
+2019/12/14 12:34:25 loop: instance 0 finished, crash=true
+2019/12/14 12:34:25 vm-0: crash: no output from test machine
+2019/12/14 12:34:25 loop: phase=4 shutdown=false instances=1/8 [0] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:34:25 loop: starting instance 0
+2019/12/14 12:34:26 VMs 7, executed 1412675, cover 120166, crashes 186, repro 0
+2019/12/14 12:34:36 VMs 7, executed 1413679, cover 120169, crashes 186, repro 0
+2019/12/14 12:34:38 fuzzer vm-0 connected
+2019/12/14 12:34:46 VMs 8, executed 1414650, cover 120176, crashes 186, repro 0
+2019/12/14 12:34:56 VMs 8, executed 1415734, cover 120240, crashes 186, repro 0
+2019/12/14 12:34:57 loop: instance 6 finished, crash=true
+2019/12/14 12:34:57 vm-6: crash: WARNING in restore_regulatory_settings
+2019/12/14 12:34:58 loop: phase=4 shutdown=false instances=1/8 [6] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:34:58 loop: starting instance 6
+2019/12/14 12:35:06 VMs 7, executed 1416630, cover 120266, crashes 187, repro 0
+2019/12/14 12:35:11 fuzzer vm-6 connected
+2019/12/14 12:35:16 VMs 8, executed 1417679, cover 120271, crashes 187, repro 0
+2019/12/14 12:35:25 loop: instance 0 finished, crash=true
+2019/12/14 12:35:25 vm-0: crash: kernel panic: Attempted to kill init!
+2019/12/14 12:35:26 VMs 7, executed 1418170, cover 120271, crashes 187, repro 0
+2019/12/14 12:35:27 loop: phase=4 shutdown=false instances=1/8 [0] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:35:27 loop: starting instance 0
+2019/12/14 12:35:36 VMs 7, executed 1418182, cover 120273, crashes 188, repro 0
+2019/12/14 12:35:40 fuzzer vm-0 connected
+2019/12/14 12:35:46 VMs 8, executed 1418763, cover 120273, crashes 188, repro 0
+2019/12/14 12:35:56 VMs 8, executed 1419474, cover 120274, crashes 188, repro 0
+2019/12/14 12:36:06 VMs 8, executed 1419576, cover 120274, crashes 188, repro 0
+2019/12/14 12:36:16 VMs 8, executed 1419957, cover 120274, crashes 188, repro 0
+2019/12/14 12:36:26 VMs 8, executed 1420882, cover 120300, crashes 188, repro 0
+2019/12/14 12:36:36 VMs 8, executed 1421582, cover 120301, crashes 188, repro 0
+2019/12/14 12:36:46 VMs 8, executed 1422279, cover 120301, crashes 188, repro 0
+2019/12/14 12:36:56 VMs 8, executed 1422866, cover 120330, crashes 188, repro 0
+2019/12/14 12:37:06 VMs 8, executed 1423651, cover 120353, crashes 188, repro 0
+2019/12/14 12:37:16 VMs 8, executed 1424712, cover 120353, crashes 188, repro 0
+2019/12/14 12:37:26 VMs 8, executed 1425238, cover 120363, crashes 188, repro 0
+2019/12/14 12:37:36 VMs 8, executed 1426197, cover 120372, crashes 188, repro 0
+2019/12/14 12:37:44 loop: instance 2 finished, crash=true
+2019/12/14 12:37:44 vm-2: crash: WARNING in restore_regulatory_settings
+2019/12/14 12:37:45 loop: phase=4 shutdown=false instances=1/8 [2] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:37:45 loop: starting instance 2
+2019/12/14 12:37:46 VMs 7, executed 1426330, cover 120372, crashes 189, repro 0
+2019/12/14 12:37:56 VMs 7, executed 1426918, cover 120372, crashes 189, repro 0
+2019/12/14 12:37:58 fuzzer vm-2 connected
+2019/12/14 12:38:06 VMs 8, executed 1427417, cover 120374, crashes 189, repro 0
+2019/12/14 12:38:16 VMs 8, executed 1427495, cover 120426, crashes 189, repro 0
+2019/12/14 12:38:26 VMs 8, executed 1428119, cover 120452, crashes 189, repro 0
+2019/12/14 12:38:36 VMs 8, executed 1428834, cover 120529, crashes 189, repro 0
+2019/12/14 12:38:46 VMs 8, executed 1429635, cover 120547, crashes 189, repro 0
+2019/12/14 12:38:56 VMs 8, executed 1429959, cover 120547, crashes 189, repro 0
+2019/12/14 12:39:02 loop: instance 0 finished, crash=true
+2019/12/14 12:39:02 vm-0: crash: WARNING: stack recursion on stack type 4
+2019/12/14 12:39:02 loop: phase=4 shutdown=false instances=1/8 [0] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:39:02 loop: starting instance 0
+2019/12/14 12:39:06 VMs 7, executed 1429959, cover 120547, crashes 190, repro 0
+2019/12/14 12:39:08 loop: instance 3 finished, crash=true
+2019/12/14 12:39:08 vm-3: crash: no output from test machine
+2019/12/14 12:39:08 loop: phase=4 shutdown=false instances=1/8 [3] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:39:08 loop: starting instance 3
+2019/12/14 12:39:15 fuzzer vm-0 connected
+2019/12/14 12:39:16 VMs 7, executed 1429959, cover 120547, crashes 191, repro 0
+2019/12/14 12:39:22 fuzzer vm-3 connected
+2019/12/14 12:39:26 VMs 8, executed 1429959, cover 120547, crashes 191, repro 0
+2019/12/14 12:39:35 loop: instance 1 finished, crash=true
+2019/12/14 12:39:35 vm-1: crash: no output from test machine
+2019/12/14 12:39:35 loop: phase=4 shutdown=false instances=1/8 [1] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:39:35 loop: starting instance 1
+2019/12/14 12:39:36 VMs 7, executed 1429959, cover 120547, crashes 192, repro 0
+2019/12/14 12:39:46 VMs 7, executed 1429960, cover 120547, crashes 192, repro 0
+2019/12/14 12:39:48 fuzzer vm-1 connected
+2019/12/14 12:39:56 VMs 8, executed 1430322, cover 120560, crashes 192, repro 0
+2019/12/14 12:40:06 VMs 8, executed 1431261, cover 120560, crashes 192, repro 0
+2019/12/14 12:40:16 VMs 8, executed 1431635, cover 120628, crashes 192, repro 0
+2019/12/14 12:40:21 loop: instance 3 finished, crash=true
+2019/12/14 12:40:21 vm-3: crash: kernel panic: Attempted to kill init!
+2019/12/14 12:40:23 loop: phase=4 shutdown=false instances=1/8 [3] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:40:23 loop: starting instance 3
+2019/12/14 12:40:26 VMs 7, executed 1433246, cover 120631, crashes 193, repro 0
+2019/12/14 12:40:27 loop: instance 4 finished, crash=true
+2019/12/14 12:40:27 vm-4: crash: no output from test machine
+2019/12/14 12:40:27 loop: phase=4 shutdown=false instances=1/8 [4] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:40:27 loop: starting instance 4
+2019/12/14 12:40:36 VMs 7, executed 1434080, cover 120631, crashes 194, repro 0
+2019/12/14 12:40:37 fuzzer vm-3 connected
+2019/12/14 12:40:40 fuzzer vm-4 connected
+2019/12/14 12:40:46 VMs 8, executed 1434868, cover 120631, crashes 194, repro 0
+2019/12/14 12:40:56 VMs 8, executed 1436252, cover 120644, crashes 194, repro 0
+2019/12/14 12:41:00 loop: instance 6 finished, crash=true
+2019/12/14 12:41:00 vm-6: crash: no output from test machine
+2019/12/14 12:41:00 loop: phase=4 shutdown=false instances=1/8 [6] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:41:00 loop: starting instance 6
+2019/12/14 12:41:03 loop: instance 0 finished, crash=true
+2019/12/14 12:41:03 vm-0: crash: WARNING: stack recursion on stack type 4
+2019/12/14 12:41:03 loop: phase=4 shutdown=false instances=1/8 [0] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:41:03 loop: starting instance 0
+2019/12/14 12:41:06 VMs 6, executed 1436358, cover 120644, crashes 196, repro 0
+2019/12/14 12:41:13 fuzzer vm-6 connected
+2019/12/14 12:41:16 VMs 8, executed 1437038, cover 120644, crashes 196, repro 0
+2019/12/14 12:41:16 fuzzer vm-0 connected
+2019/12/14 12:41:26 VMs 8, executed 1437888, cover 120644, crashes 196, repro 0
+2019/12/14 12:41:36 VMs 8, executed 1438611, cover 120644, crashes 196, repro 0
+2019/12/14 12:41:42 loop: instance 4 finished, crash=true
+2019/12/14 12:41:42 vm-4: suppressed crash lost connection to test machine
+2019/12/14 12:41:42 loop: phase=4 shutdown=false instances=1/8 [4] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:41:42 loop: starting instance 4
+2019/12/14 12:41:46 VMs 7, executed 1439862, cover 120694, crashes 196, repro 0
+2019/12/14 12:41:55 fuzzer vm-4 connected
+2019/12/14 12:41:56 VMs 8, executed 1440697, cover 120694, crashes 196, repro 0
+2019/12/14 12:42:00 loop: instance 6 finished, crash=true
+2019/12/14 12:42:00 vm-6: crash: kernel panic: Attempted to kill init!
+2019/12/14 12:42:03 loop: phase=4 shutdown=false instances=1/8 [6] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:42:03 loop: starting instance 6
+2019/12/14 12:42:06 VMs 7, executed 1441424, cover 120695, crashes 197, repro 0
+2019/12/14 12:42:10 loop: instance 0 finished, crash=true
+2019/12/14 12:42:10 vm-0: crash: KASAN: use-after-free Write in release_tty
+2019/12/14 12:42:14 loop: phase=4 shutdown=false instances=1/8 [0] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:42:14 loop: starting instance 0
+2019/12/14 12:42:16 fuzzer vm-6 connected
+2019/12/14 12:42:16 VMs 7, executed 1442473, cover 120698, crashes 198, repro 0
+2019/12/14 12:42:26 VMs 8, executed 1443324, cover 120730, crashes 198, repro 0
+2019/12/14 12:42:27 fuzzer vm-0 connected
+2019/12/14 12:42:36 VMs 8, executed 1444153, cover 120731, crashes 198, repro 0
+2019/12/14 12:42:46 VMs 8, executed 1445356, cover 120734, crashes 198, repro 0
+2019/12/14 12:42:56 VMs 8, executed 1447828, cover 120758, crashes 198, repro 0
+2019/12/14 12:43:03 loop: instance 4 finished, crash=true
+2019/12/14 12:43:03 vm-4: crash: WARNING in restore_regulatory_settings
+2019/12/14 12:43:03 loop: phase=4 shutdown=false instances=1/8 [4] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:43:03 loop: starting instance 4
+2019/12/14 12:43:06 VMs 7, executed 1449268, cover 120760, crashes 199, repro 0
+2019/12/14 12:43:14 loop: instance 0 finished, crash=true
+2019/12/14 12:43:14 vm-0: crash: KASAN: use-after-free Write in do_con_write
+2019/12/14 12:43:16 VMs 7, executed 1450336, cover 120771, crashes 199, repro 0
+2019/12/14 12:43:16 fuzzer vm-4 connected
+2019/12/14 12:43:18 loop: phase=4 shutdown=false instances=1/8 [0] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:43:18 loop: starting instance 0
+2019/12/14 12:43:26 VMs 7, executed 1451856, cover 120786, crashes 200, repro 0
+2019/12/14 12:43:31 fuzzer vm-0 connected
+2019/12/14 12:43:36 VMs 8, executed 1453149, cover 120810, crashes 200, repro 0
+2019/12/14 12:43:46 VMs 8, executed 1454360, cover 120829, crashes 200, repro 0
+2019/12/14 12:43:56 VMs 8, executed 1456001, cover 120834, crashes 200, repro 0
+2019/12/14 12:43:58 loop: instance 2 finished, crash=true
+2019/12/14 12:43:58 vm-2: crash: no output from test machine
+2019/12/14 12:43:58 loop: phase=4 shutdown=false instances=1/8 [2] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:43:58 loop: starting instance 2
+2019/12/14 12:44:06 VMs 7, executed 1456357, cover 120834, crashes 201, repro 0
+2019/12/14 12:44:11 fuzzer vm-2 connected
+2019/12/14 12:44:16 VMs 8, executed 1457379, cover 120834, crashes 201, repro 0
+2019/12/14 12:44:18 loop: instance 0 finished, crash=true
+2019/12/14 12:44:18 vm-0: crash: KASAN: slab-out-of-bounds Write in vgacon_scroll
+2019/12/14 12:44:22 loop: phase=4 shutdown=false instances=1/8 [0] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:44:22 loop: starting instance 0
+2019/12/14 12:44:26 VMs 7, executed 1458039, cover 120834, crashes 202, repro 0
+2019/12/14 12:44:36 fuzzer vm-0 connected
+2019/12/14 12:44:36 VMs 8, executed 1458783, cover 120846, crashes 202, repro 0
+2019/12/14 12:44:46 VMs 8, executed 1459941, cover 120859, crashes 202, repro 0
+2019/12/14 12:44:56 VMs 8, executed 1461449, cover 120885, crashes 202, repro 0
+2019/12/14 12:45:06 VMs 8, executed 1463076, cover 120931, crashes 202, repro 0
+2019/12/14 12:45:16 VMs 8, executed 1464837, cover 121035, crashes 202, repro 0
+2019/12/14 12:45:26 VMs 8, executed 1465969, cover 121079, crashes 202, repro 0
+2019/12/14 12:45:27 loop: instance 0 finished, crash=true
+2019/12/14 12:45:27 vm-0: crash: WARNING in restore_regulatory_settings
+2019/12/14 12:45:27 loop: phase=4 shutdown=false instances=1/8 [0] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:45:27 loop: starting instance 0
+2019/12/14 12:45:36 VMs 7, executed 1466936, cover 121082, crashes 203, repro 0
+2019/12/14 12:45:41 fuzzer vm-0 connected
+2019/12/14 12:45:46 VMs 8, executed 1468078, cover 121109, crashes 203, repro 0
+2019/12/14 12:45:56 VMs 8, executed 1469208, cover 121111, crashes 203, repro 0
+2019/12/14 12:46:06 VMs 8, executed 1470026, cover 121160, crashes 203, repro 0
+2019/12/14 12:46:16 VMs 8, executed 1471000, cover 121160, crashes 203, repro 0
+2019/12/14 12:46:26 VMs 8, executed 1472584, cover 121164, crashes 203, repro 0
+2019/12/14 12:46:36 VMs 8, executed 1474090, cover 121164, crashes 203, repro 0
+2019/12/14 12:46:46 VMs 8, executed 1475533, cover 121292, crashes 203, repro 0
+2019/12/14 12:46:55 loop: instance 3 finished, crash=true
+2019/12/14 12:46:55 vm-3: crash: KASAN: use-after-free Write in release_tty
+2019/12/14 12:46:56 VMs 7, executed 1476754, cover 121302, crashes 203, repro 0
+2019/12/14 12:46:59 loop: phase=4 shutdown=false instances=1/8 [3] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:46:59 loop: starting instance 3
+2019/12/14 12:47:06 VMs 7, executed 1477947, cover 121320, crashes 204, repro 0
+2019/12/14 12:47:12 fuzzer vm-3 connected
+2019/12/14 12:47:16 VMs 8, executed 1479462, cover 121370, crashes 204, repro 0
+2019/12/14 12:47:26 VMs 8, executed 1480433, cover 121436, crashes 204, repro 0
+2019/12/14 12:47:36 VMs 8, executed 1480852, cover 121438, crashes 204, repro 0
+2019/12/14 12:47:46 VMs 8, executed 1481706, cover 121438, crashes 204, repro 0
+2019/12/14 12:47:56 VMs 8, executed 1483117, cover 121450, crashes 204, repro 0
+2019/12/14 12:48:06 VMs 8, executed 1484560, cover 121492, crashes 204, repro 0
+2019/12/14 12:48:16 VMs 8, executed 1485622, cover 121492, crashes 204, repro 0
+2019/12/14 12:48:26 VMs 8, executed 1485915, cover 121500, crashes 204, repro 0
+2019/12/14 12:48:36 VMs 8, executed 1486495, cover 121500, crashes 204, repro 0
+2019/12/14 12:48:46 VMs 8, executed 1487000, cover 121522, crashes 204, repro 0
+2019/12/14 12:48:56 VMs 8, executed 1487112, cover 121526, crashes 204, repro 0
+2019/12/14 12:49:06 VMs 8, executed 1487844, cover 121534, crashes 204, repro 0
+2019/12/14 12:49:16 VMs 8, executed 1488945, cover 121535, crashes 204, repro 0
+2019/12/14 12:49:26 VMs 8, executed 1490308, cover 121548, crashes 204, repro 0
+2019/12/14 12:49:36 VMs 8, executed 1491833, cover 121553, crashes 204, repro 0
+2019/12/14 12:49:46 VMs 8, executed 1492742, cover 121623, crashes 204, repro 0
+2019/12/14 12:49:56 VMs 8, executed 1493750, cover 121628, crashes 204, repro 0
+2019/12/14 12:50:06 VMs 8, executed 1494850, cover 121643, crashes 204, repro 0
+2019/12/14 12:50:16 VMs 8, executed 1496014, cover 121666, crashes 204, repro 0
+2019/12/14 12:50:26 VMs 8, executed 1496868, cover 121670, crashes 204, repro 0
+2019/12/14 12:50:36 VMs 8, executed 1497933, cover 121681, crashes 204, repro 0
+2019/12/14 12:50:46 VMs 8, executed 1499936, cover 121683, crashes 204, repro 0
+2019/12/14 12:50:56 VMs 8, executed 1500922, cover 121706, crashes 204, repro 0
+2019/12/14 12:51:06 VMs 8, executed 1501853, cover 121719, crashes 204, repro 0
+2019/12/14 12:51:16 VMs 8, executed 1502815, cover 121719, crashes 204, repro 0
+2019/12/14 12:51:26 VMs 8, executed 1503346, cover 121722, crashes 204, repro 0
+2019/12/14 12:51:36 VMs 8, executed 1504645, cover 121742, crashes 204, repro 0
+2019/12/14 12:51:46 loop: instance 3 finished, crash=true
+2019/12/14 12:51:46 vm-3: crash: kernel panic: Attempted to kill init!
+2019/12/14 12:51:46 VMs 7, executed 1505196, cover 121742, crashes 204, repro 0
+2019/12/14 12:51:49 loop: phase=4 shutdown=false instances=1/8 [3] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:51:49 loop: starting instance 3
+2019/12/14 12:51:54 loop: instance 4 finished, crash=true
+2019/12/14 12:51:54 vm-4: suppressed crash lost connection to test machine
+2019/12/14 12:51:54 loop: phase=4 shutdown=false instances=1/8 [4] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:51:54 loop: starting instance 4
+2019/12/14 12:51:56 VMs 6, executed 1505809, cover 121742, crashes 205, repro 0
+2019/12/14 12:52:06 VMs 6, executed 1505932, cover 121750, crashes 205, repro 0
+2019/12/14 12:52:08 fuzzer vm-4 connected
+2019/12/14 12:52:08 minimized corpus: 8330 -&gt; 8255
+2019/12/14 12:52:08 fuzzer vm-3 connected
+2019/12/14 12:52:16 VMs 8, executed 1506422, cover 121758, crashes 205, repro 0
+2019/12/14 12:52:20 loop: instance 0 finished, crash=true
+2019/12/14 12:52:20 vm-0: crash: no output from test machine
+2019/12/14 12:52:20 loop: phase=4 shutdown=false instances=1/8 [0] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:52:20 loop: starting instance 0
+2019/12/14 12:52:26 VMs 7, executed 1506780, cover 121758, crashes 206, repro 0
+2019/12/14 12:52:33 fuzzer vm-0 connected
+2019/12/14 12:52:36 VMs 8, executed 1506780, cover 121758, crashes 206, repro 0
+2019/12/14 12:52:46 VMs 8, executed 1506796, cover 121758, crashes 206, repro 0
+2019/12/14 12:52:56 VMs 8, executed 1507484, cover 121758, crashes 206, repro 0
+2019/12/14 12:53:06 VMs 8, executed 1508408, cover 121765, crashes 206, repro 0
+2019/12/14 12:53:16 VMs 8, executed 1508792, cover 121765, crashes 206, repro 0
+2019/12/14 12:53:26 VMs 8, executed 1508878, cover 121782, crashes 206, repro 0
+2019/12/14 12:53:28 loop: instance 4 finished, crash=true
+2019/12/14 12:53:28 vm-4: crash: INFO: rcu detected stall in tty_ioctl
+2019/12/14 12:53:32 loop: phase=4 shutdown=false instances=1/8 [4] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:53:32 loop: starting instance 4
+2019/12/14 12:53:36 VMs 7, executed 1509240, cover 121785, crashes 207, repro 0
+2019/12/14 12:53:46 VMs 7, executed 1509835, cover 121785, crashes 207, repro 0
+2019/12/14 12:53:52 fuzzer vm-4 connected
+2019/12/14 12:53:56 VMs 8, executed 1509877, cover 121785, crashes 207, repro 0
+2019/12/14 12:54:06 VMs 8, executed 1510045, cover 121795, crashes 207, repro 0
+2019/12/14 12:54:16 VMs 8, executed 1510102, cover 121795, crashes 207, repro 0
+2019/12/14 12:54:26 VMs 8, executed 1510318, cover 121795, crashes 207, repro 0
+2019/12/14 12:54:36 VMs 8, executed 1510600, cover 121795, crashes 207, repro 0
+2019/12/14 12:54:41 loop: instance 4 finished, crash=true
+2019/12/14 12:54:41 vm-4: crash: kernel panic: Attempted to kill init!
+2019/12/14 12:54:44 loop: phase=4 shutdown=false instances=1/8 [4] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:54:44 loop: starting instance 4
+2019/12/14 12:54:46 VMs 7, executed 1511448, cover 121832, crashes 208, repro 0
+2019/12/14 12:54:56 VMs 7, executed 1511448, cover 121832, crashes 208, repro 0
+2019/12/14 12:54:57 fuzzer vm-4 connected
+2019/12/14 12:55:06 VMs 8, executed 1512402, cover 121840, crashes 208, repro 0
+2019/12/14 12:55:16 VMs 8, executed 1513444, cover 121844, crashes 208, repro 0
+2019/12/14 12:55:26 VMs 8, executed 1514030, cover 121844, crashes 208, repro 0
+2019/12/14 12:55:36 VMs 8, executed 1514407, cover 121845, crashes 208, repro 0
+2019/12/14 12:55:46 VMs 8, executed 1515175, cover 121864, crashes 208, repro 0
+2019/12/14 12:55:56 VMs 8, executed 1516227, cover 121877, crashes 208, repro 0
+2019/12/14 12:56:06 VMs 8, executed 1517108, cover 121887, crashes 208, repro 0
+2019/12/14 12:56:16 VMs 8, executed 1517288, cover 121901, crashes 208, repro 0
+2019/12/14 12:56:26 VMs 8, executed 1518793, cover 121945, crashes 208, repro 0
+2019/12/14 12:56:36 VMs 8, executed 1519501, cover 121946, crashes 208, repro 0
+2019/12/14 12:56:46 VMs 8, executed 1519887, cover 121978, crashes 208, repro 0
+2019/12/14 12:56:56 VMs 8, executed 1521460, cover 122004, crashes 208, repro 0
+2019/12/14 12:56:58 loop: instance 1 finished, crash=true
+2019/12/14 12:56:58 vm-1: crash: no output from test machine
+2019/12/14 12:56:58 loop: phase=4 shutdown=false instances=1/8 [1] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:56:58 loop: starting instance 1
+2019/12/14 12:57:02 vm-7: running for 1h0m0.000938943s, restarting
+2019/12/14 12:57:02 loop: instance 7 finished, crash=false
+2019/12/14 12:57:02 loop: phase=4 shutdown=false instances=1/8 [7] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:57:02 loop: starting instance 7
+2019/12/14 12:57:06 VMs 6, executed 1521941, cover 122034, crashes 209, repro 0
+2019/12/14 12:57:11 fuzzer vm-1 connected
+2019/12/14 12:57:15 fuzzer vm-7 connected
+2019/12/14 12:57:16 VMs 8, executed 1522894, cover 122036, crashes 209, repro 0
+2019/12/14 12:57:26 VMs 8, executed 1523823, cover 122040, crashes 209, repro 0
+2019/12/14 12:57:30 loop: instance 0 finished, crash=true
+2019/12/14 12:57:30 vm-0: crash: INFO: rcu detected stall in corrupted [corrupted]
+2019/12/14 12:57:30 loop: phase=4 shutdown=false instances=1/8 [0] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:57:30 loop: starting instance 0
+2019/12/14 12:57:36 VMs 7, executed 1523884, cover 122043, crashes 210, repro 0
+2019/12/14 12:57:43 fuzzer vm-0 connected
+2019/12/14 12:57:46 VMs 8, executed 1524620, cover 122043, crashes 210, repro 0
+2019/12/14 12:57:56 VMs 8, executed 1526023, cover 122044, crashes 210, repro 0
+2019/12/14 12:57:59 loop: instance 1 finished, crash=true
+2019/12/14 12:57:59 vm-1: crash: kernel panic: Attempted to kill init!
+2019/12/14 12:58:02 loop: phase=4 shutdown=false instances=1/8 [1] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:58:02 loop: starting instance 1
+2019/12/14 12:58:06 VMs 7, executed 1527002, cover 122047, crashes 211, repro 0
+2019/12/14 12:58:08 loop: instance 3 finished, crash=true
+2019/12/14 12:58:08 vm-3: crash: no output from test machine
+2019/12/14 12:58:08 loop: phase=4 shutdown=false instances=1/8 [3] repro: pending=0 reproducing=0 queued=0
+2019/12/14 12:58:08 loop: starting instance 3
+2019/12/14 12:58:15 fuzzer vm-1 connected
+2019/12/14 12:58:16 VMs 7, executed 1528195, cover 122079, crashes 212, repro 0
+2019/12/14 12:58:21 fuzzer vm-3 connected
+2019/12/14 12:58:26 VMs 8, executed 1529678, cover 122079, crashes 212, repro 0
+2019/12/14 12:58:36 VMs 8, executed 1530632, cover 122079, crashes 212, repro 0
+2019/12/14 12:58:46 VMs 8, executed 1531576, cover 122080, crashes 212, repro 0
+2019/12/14 12:58:56 VMs 8, executed 1532822, cover 122084, crashes 212, repro 0
+2019/12/14 12:59:06 VMs 8, executed 1534295, cover 122088, crashes 212, repro 0
+2019/12/14 12:59:16 VMs 8, executed 1536201, cover 122106, crashes 212, repro 0
+2019/12/14 12:59:26 VMs 8, executed 1538285, cover 122111, crashes 212, repro 0
+2019/12/14 12:59:36 VMs 8, executed 1540168, cover 122113, crashes 212, repro 0
+2019/12/14 12:59:46 VMs 8, executed 1542308, cover 122141, crashes 212, repro 0
+2019/12/14 12:59:56 VMs 8, executed 1544180, cover 122167, crashes 212, repro 0
+2019/12/14 13:00:06 VMs 8, executed 1546477, cover 122204, crashes 212, repro 0
+2019/12/14 13:00:16 VMs 8, executed 1548567, cover 122235, crashes 212, repro 0
+2019/12/14 13:00:26 VMs 8, executed 1550283, cover 122239, crashes 212, repro 0
+2019/12/14 13:00:33 loop: instance 0 finished, crash=true
+2019/12/14 13:00:33 vm-0: crash: KASAN: use-after-free Read in vgacon_invert_region
+2019/12/14 13:00:36 VMs 7, executed 1551114, cover 122253, crashes 212, repro 0
+2019/12/14 13:00:37 loop: phase=4 shutdown=false instances=1/8 [0] repro: pending=0 reproducing=0 queued=0
+2019/12/14 13:00:37 loop: starting instance 0
+2019/12/14 13:00:46 VMs 7, executed 1551745, cover 122254, crashes 213, repro 0
+2019/12/14 13:00:50 fuzzer vm-0 connected
+2019/12/14 13:00:56 VMs 8, executed 1552604, cover 122259, crashes 213, repro 0
+
+</textarea>
+<script>
+	var textarea = document.getElementById("log_textarea");
+	textarea.scrollTop = textarea.scrollHeight;
+</script>
+</body></html>

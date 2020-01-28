@@ -1,0 +1,93 @@
+==================================================================
+BUG: KASAN: use-after-free in __receive_buf drivers/tty/n_tty.c:1626 [inline]
+BUG: KASAN: use-after-free in n_tty_receive_buf_common+0x1f87/0x20a0 drivers/tty/n_tty.c:1709
+Read of size 1 at addr ffff88006bd4d9f0 by task syz-executor.13/13093
+
+CPU: 1 PID: 13093 Comm: syz-executor.13 Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_address_description+0x65/0x270 mm/kasan/report.c:256
+ kasan_report_error mm/kasan/report.c:354 [inline]
+ kasan_report+0x253/0x380 mm/kasan/report.c:412
+ __receive_buf drivers/tty/n_tty.c:1626 [inline]
+ n_tty_receive_buf_common+0x1f87/0x20a0 drivers/tty/n_tty.c:1709
+ tty_ldisc_receive_buf+0xa0/0x160 drivers/tty/tty_buffer.c:456
+ paste_selection+0x201/0x310 drivers/tty/vt/selection.c:348
+ tioclinux+0x10e/0x3b0 drivers/tty/vt/vt.c:2695
+ vt_ioctl+0x1508/0x24a0 drivers/tty/vt/vt_ioctl.c:362
+ tty_ioctl+0x26f/0x1330 drivers/tty/tty_io.c:2646
+ vfs_ioctl fs/ioctl.c:46 [inline]
+ do_vfs_ioctl+0x1a0/0xf50 fs/ioctl.c:686
+ ksys_ioctl+0x84/0x90 fs/ioctl.c:701
+ __do_sys_ioctl fs/ioctl.c:708 [inline]
+ __se_sys_ioctl fs/ioctl.c:706 [inline]
+ __x64_sys_ioctl+0x6f/0xb0 fs/ioctl.c:706
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fc07a065c58 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+RAX: ffffffffffffffda RBX: 000000000073bf00 RCX: 0000000000466039
+RDX: 0000000020000040 RSI: 000000000000541c RDI: 0000000000000003
+RBP: 0000000000000003 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007fc07a0666bc
+R13: 00000000004c4f2d R14: 0000000000706358 R15: 00000000ffffffff
+
+Allocated by task 13087:
+ set_track mm/kasan/kasan.c:460 [inline]
+ kasan_kmalloc+0xa0/0xd0 mm/kasan/kasan.c:553
+ __kmalloc+0x85/0x1d0 mm/slub.c:3789
+ kmalloc include/linux/slab.h:517 [inline]
+ set_selection+0x88d/0xe30 drivers/tty/vt/selection.c:283
+ tioclinux+0xf8/0x3b0 drivers/tty/vt/vt.c:2691
+ vt_ioctl+0x1508/0x24a0 drivers/tty/vt/vt_ioctl.c:362
+ tty_ioctl+0x26f/0x1330 drivers/tty/tty_io.c:2646
+ vfs_ioctl fs/ioctl.c:46 [inline]
+ do_vfs_ioctl+0x1a0/0xf50 fs/ioctl.c:686
+ ksys_ioctl+0x84/0x90 fs/ioctl.c:701
+ __do_sys_ioctl fs/ioctl.c:708 [inline]
+ __se_sys_ioctl fs/ioctl.c:706 [inline]
+ __x64_sys_ioctl+0x6f/0xb0 fs/ioctl.c:706
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+
+Freed by task 13127:
+ set_track mm/kasan/kasan.c:460 [inline]
+ __kasan_slab_free+0x130/0x180 mm/kasan/kasan.c:521
+ slab_free_hook mm/slub.c:1388 [inline]
+ slab_free_freelist_hook mm/slub.c:1415 [inline]
+ slab_free mm/slub.c:2988 [inline]
+ kfree+0x8b/0x1a0 mm/slub.c:3944
+ set_selection+0x8b7/0xe30 drivers/tty/vt/selection.c:289
+ tioclinux+0xf8/0x3b0 drivers/tty/vt/vt.c:2691
+ vt_ioctl+0x1508/0x24a0 drivers/tty/vt/vt_ioctl.c:362
+ tty_ioctl+0x26f/0x1330 drivers/tty/tty_io.c:2646
+ vfs_ioctl fs/ioctl.c:46 [inline]
+ do_vfs_ioctl+0x1a0/0xf50 fs/ioctl.c:686
+ ksys_ioctl+0x84/0x90 fs/ioctl.c:701
+ __do_sys_ioctl fs/ioctl.c:708 [inline]
+ __se_sys_ioctl fs/ioctl.c:706 [inline]
+ __x64_sys_ioctl+0x6f/0xb0 fs/ioctl.c:706
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+
+The buggy address belongs to the object at ffff88006bd4d9f0
+ which belongs to the cache kmalloc-8 of size 8
+The buggy address is located 0 bytes inside of
+ 8-byte region [ffff88006bd4d9f0, ffff88006bd4d9f8)
+The buggy address belongs to the page:
+page:ffffea0001af5340 count:1 mapcount:0 mapping:0000000000000000 index:0x0
+flags: 0x100000000000100(slab)
+raw: 0100000000000100 0000000000000000 0000000000000000 0000000180aa00aa
+raw: ffffea0001af4040 0000000700000007 ffff88006cc01c80 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff88006bd4d880: fc fb fc fc 00 fc fc fb fc fc fb fc fc fb fc fc
+ ffff88006bd4d900: fb fc fc fb fc fc fb fc fc fb fc fc fb fc fc fb
+>ffff88006bd4d980: fc fc 00 fc fc fb fc fc fb fc fc fb fc fc fb fc
+                                                             ^
+ ffff88006bd4da00: fc fb fc fc 00 fc fc 04 fc fc fb fc fc fb fc fc
+ ffff88006bd4da80: fb fc fc fb fc fc fb fc fc fb fc fc fb fc fc fb
+==================================================================

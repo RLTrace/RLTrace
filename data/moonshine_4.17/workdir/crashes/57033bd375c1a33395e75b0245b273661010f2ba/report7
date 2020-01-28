@@ -1,0 +1,96 @@
+SELinux:  Context ELF± is not valid (left unmapped).
+==================================================================
+BUG: KASAN: slab-out-of-bounds in ext4_xattr_set_entry+0x11be/0x2e50 fs/ext4/xattr.c:1749
+Read of size 88 at addr ffff88000e1671f8 by task syz-executor.0/14462
+
+CPU: 0 PID: 14462 Comm: syz-executor.0 Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_address_description+0x65/0x270 mm/kasan/report.c:256
+ kasan_report_error mm/kasan/report.c:354 [inline]
+ kasan_report+0x253/0x380 mm/kasan/report.c:412
+ memcpy+0x1f/0x50 mm/kasan/kasan.c:302
+ ext4_xattr_set_entry+0x11be/0x2e50 fs/ext4/xattr.c:1749
+ ext4_xattr_block_set+0x147b/0x2c40 fs/ext4/xattr.c:1952
+ ext4_xattr_set_handle+0xa62/0x1040 fs/ext4/xattr.c:2411
+ ext4_initxattrs+0xb8/0x110 fs/ext4/xattr_security.c:43
+ security_inode_init_security+0x172/0x300 security/security.c:497
+ __ext4_new_inode+0x31f1/0x3cf0 fs/ext4/ialloc.c:1151
+ ext4_create+0x1d9/0x500 fs/ext4/namei.c:2446
+ lookup_open fs/namei.c:3186 [inline]
+ do_last fs/namei.c:3277 [inline]
+ path_openat+0x32f6/0x4490 fs/namei.c:3500
+ do_filp_open+0x1a5/0x2b0 fs/namei.c:3535
+ do_sys_open+0x302/0x460 fs/open.c:1093
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007f04db315c58 EFLAGS: 00000246 ORIG_RAX: 0000000000000055
+RAX: ffffffffffffffda RBX: 000000000073bf00 RCX: 0000000000466039
+RDX: 0000000000000000 RSI: 0000000000000088 RDI: 0000000020000000
+RBP: 0000000000000002 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007f04db3166bc
+R13: 00000000004c037f R14: 00000000006ff200 R15: 00000000ffffffff
+
+Allocated by task 14462:
+ set_track mm/kasan/kasan.c:460 [inline]
+ kasan_kmalloc+0xa0/0xd0 mm/kasan/kasan.c:553
+ slab_post_alloc_hook mm/slab.h:444 [inline]
+ slab_alloc_node mm/slub.c:2741 [inline]
+ slab_alloc mm/slub.c:2749 [inline]
+ __kmalloc_track_caller+0x13a/0x1a0 mm/slub.c:4334
+ kstrdup+0x35/0x70 mm/util.c:56
+ context_struct_to_string+0x13e/0x7a0 security/selinux/ss/services.c:1238
+ security_sid_to_context_core.isra.14+0x201/0x320 security/selinux/ss/services.c:1331
+ selinux_inode_init_security+0x448/0x690 security/selinux/hooks.c:3050
+ security_inode_init_security+0x131/0x300 security/security.c:486
+ __ext4_new_inode+0x31f1/0x3cf0 fs/ext4/ialloc.c:1151
+ ext4_create+0x1d9/0x500 fs/ext4/namei.c:2446
+ lookup_open fs/namei.c:3186 [inline]
+ do_last fs/namei.c:3277 [inline]
+ path_openat+0x32f6/0x4490 fs/namei.c:3500
+ do_filp_open+0x1a5/0x2b0 fs/namei.c:3535
+ do_sys_open+0x302/0x460 fs/open.c:1093
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+
+Freed by task 14032:
+ set_track mm/kasan/kasan.c:460 [inline]
+ __kasan_slab_free+0x130/0x180 mm/kasan/kasan.c:521
+ slab_free_hook mm/slub.c:1388 [inline]
+ slab_free_freelist_hook mm/slub.c:1415 [inline]
+ slab_free mm/slub.c:2988 [inline]
+ kfree+0x8b/0x1a0 mm/slub.c:3944
+ evdev_handle_get_val+0x3d7/0x4b0 drivers/input/evdev.c:950
+ evdev_do_ioctl drivers/input/evdev.c:1199 [inline]
+ evdev_ioctl_handler+0x356/0x1760 drivers/input/evdev.c:1308
+ vfs_ioctl fs/ioctl.c:46 [inline]
+ do_vfs_ioctl+0x1a0/0xf50 fs/ioctl.c:686
+ ksys_ioctl+0x84/0x90 fs/ioctl.c:701
+ __do_sys_ioctl fs/ioctl.c:708 [inline]
+ __se_sys_ioctl fs/ioctl.c:706 [inline]
+ __x64_sys_ioctl+0x6f/0xb0 fs/ioctl.c:706
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+
+The buggy address belongs to the object at ffff88000e1671f8
+ which belongs to the cache kmalloc-8 of size 8
+The buggy address is located 0 bytes inside of
+ 8-byte region [ffff88000e1671f8, ffff88000e167200)
+The buggy address belongs to the page:
+page:ffffea00003859c0 count:1 mapcount:0 mapping:0000000000000000 index:0xffff88000e167768
+flags: 0x100000000000100(slab)
+raw: 0100000000000100 0000000000000000 ffff88000e167768 0000000180aa009b
+raw: ffffea000052bb80 0000001900000019 ffff88006cc01c80 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff88000e167100: fc 00 fc fc 00 fc fc fb fc fc 00 fc fc fb fc fc
+ ffff88000e167180: 00 fc fc fb fc fc fb fc fc fb fc fc fb fc fc 00
+>ffff88000e167200: fc fc fb fc fc fb fc fc fb fc fc fb fc fc 00 fc
+                   ^
+ ffff88000e167280: fc 00 fc fc fb fc fc fb fc fc fb fc fc 00 fc fc
+ ffff88000e167300: 00 fc fc 00 fc fc 00 fc fc 00 fc fc 00 fc fc fb
+==================================================================

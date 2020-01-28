@@ -1,0 +1,26 @@
+Kernel panic - not syncing: Attempted to kill init! exitcode=0x0000000b
+CPU: 0 PID: 1 Comm: systemd Not tainted 5.5.0-rc6 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x94/0xce lib/dump_stack.c:118
+ panic+0x234/0x56f kernel/panic.c:221
+ do_exit+0x1855/0x2940 kernel/exit.c:770
+ do_group_exit+0xed/0x310 kernel/exit.c:899
+ get_signal+0x37a/0x1ab0 kernel/signal.c:2734
+ do_signal+0x8f/0x1450 arch/x86/kernel/signal.c:815
+ exit_to_usermode_loop+0x12d/0x170 arch/x86/entry/common.c:160
+ prepare_exit_to_usermode+0x19f/0x1f0 arch/x86/entry/common.c:195
+ ret_from_intr+0x20/0x20
+RIP: 0033:0x558aee06c466
+Code: 00 00 00 00 41 57 41 56 41 55 41 54 55 53 89 fd 48 81 ec 48 01 00 00 64 48 8b 04 25 28 00 00 00 48 89 84 24 38 01 00 00 31 c0 <e8> f5 bf f7 ff 83 f8 01 0f 84 b7 00 00 00 48 8d 9c 24 a0 00 00 00
+RSP: 002b:00007ffeb4d62000 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: 0000558aef7fbd10 RCX: 00007fda065972e3
+RDX: 00007ffeb4d62180 RSI: 00007ffeb4d622b0 RDI: 0000000000000007
+RBP: 0000000000000007 R08: 44b1f5fa1eb1c808 R09: 00000000000006f0
+R10: 00000000ffffffff R11: 0000000000000246 R12: 00007ffeb5560c30
+R13: 0000000000000001 R14: ffffffffffffffff R15: 0000000000000002
+Dumping ftrace buffer:
+   (ftrace buffer empty)
+Kernel Offset: 0x20e00000 from 0xffffffff81000000 (relocation range: 0xffffffff80000000-0xffffffffbfffffff)
+Rebooting in 1 seconds..

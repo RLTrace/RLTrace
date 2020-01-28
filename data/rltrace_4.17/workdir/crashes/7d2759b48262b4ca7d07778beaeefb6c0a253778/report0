@@ -1,0 +1,1286 @@
+swap_info_get: Bad swap file entry 1600000000000010
+BUG: Bad page map in process syz-executor.8  pte:00041660 pmd:4dfde067
+addr:0000000022a527ec vm_flags:100400fb anon_vma:          (null) mapping:000000005485d6a7 index:da
+file:kcov fault:          (null) mmap:kcov_mmap readpage:          (null)
+CPU: 1 PID: 24257 Comm: syz-executor.8 Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+ zap_pte_range mm/memory.c:1384 [inline]
+ zap_pmd_range mm/memory.c:1441 [inline]
+ zap_pud_range mm/memory.c:1470 [inline]
+ zap_p4d_range mm/memory.c:1491 [inline]
+ unmap_page_range+0xece/0x1430 mm/memory.c:1512
+ unmap_single_vma+0x14f/0x2c0 mm/memory.c:1557
+ unmap_vmas+0xe2/0x1a0 mm/memory.c:1587
+ exit_mmap+0x1f9/0x450 mm/mmap.c:3047
+ __mmput kernel/fork.c:961 [inline]
+ mmput+0x52/0x2b0 kernel/fork.c:982
+ exit_mm kernel/exit.c:544 [inline]
+ do_exit+0x6e4/0x2850 kernel/exit.c:852
+ do_group_exit+0xed/0x320 kernel/exit.c:968
+ get_signal+0x5dd/0x1140 kernel/signal.c:2469
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+ prepare_exit_to_usermode arch/x86/entry/common.c:196 [inline]
+ syscall_return_slowpath arch/x86/entry/common.c:265 [inline]
+ do_syscall_64+0x258/0x2c0 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fbe82726cd8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: 0000000000000000 RBX: 000000000073bf08 RCX: 0000000000466039
+RDX: 0000000000000000 RSI: 0000000000000080 RDI: 000000000073bf08
+RBP: 000000000073bf00 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 000000000073bf0c
+R13: 0000000000000000 R14: 000000000073bf00 R15: 00007fff7891f230
+BUG: Bad page map in process syz-executor.8  pte:e64700009b5935fc pmd:4dfde067
+addr:0000000057e9b00f vm_flags:100400fb anon_vma:          (null) mapping:000000005485d6a7 index:db
+file:kcov fault:          (null) mmap:kcov_mmap readpage:          (null)
+CPU: 1 PID: 24257 Comm: syz-executor.8 Tainted: G    B             4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+ _vm_normal_page+0x101/0x1b0 mm/memory.c:861
+ zap_pte_range mm/memory.c:1310 [inline]
+ zap_pmd_range mm/memory.c:1441 [inline]
+ zap_pud_range mm/memory.c:1470 [inline]
+ zap_p4d_range mm/memory.c:1491 [inline]
+ unmap_page_range+0x68b/0x1430 mm/memory.c:1512
+ unmap_single_vma+0x14f/0x2c0 mm/memory.c:1557
+ unmap_vmas+0xe2/0x1a0 mm/memory.c:1587
+ exit_mmap+0x1f9/0x450 mm/mmap.c:3047
+ __mmput kernel/fork.c:961 [inline]
+ mmput+0x52/0x2b0 kernel/fork.c:982
+ exit_mm kernel/exit.c:544 [inline]
+ do_exit+0x6e4/0x2850 kernel/exit.c:852
+ do_group_exit+0xed/0x320 kernel/exit.c:968
+ get_signal+0x5dd/0x1140 kernel/signal.c:2469
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+ prepare_exit_to_usermode arch/x86/entry/common.c:196 [inline]
+ syscall_return_slowpath arch/x86/entry/common.c:265 [inline]
+ do_syscall_64+0x258/0x2c0 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fbe82726cd8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: 0000000000000000 RBX: 000000000073bf08 RCX: 0000000000466039
+RDX: 0000000000000000 RSI: 0000000000000080 RDI: 000000000073bf08
+RBP: 000000000073bf00 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 000000000073bf0c
+R13: 0000000000000000 R14: 000000000073bf00 R15: 00007fff7891f230
+swap_info_get: Bad swap file entry 200000008480000
+BUG: Bad page map in process syz-executor.8  pte:21200000202 pmd:4dfde067
+addr:000000002ef98f1b vm_flags:100400fb anon_vma:          (null) mapping:000000005485d6a7 index:e0
+file:kcov fault:          (null) mmap:kcov_mmap readpage:          (null)
+CPU: 1 PID: 24257 Comm: syz-executor.8 Tainted: G    B             4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+ zap_pte_range mm/memory.c:1384 [inline]
+ zap_pmd_range mm/memory.c:1441 [inline]
+ zap_pud_range mm/memory.c:1470 [inline]
+ zap_p4d_range mm/memory.c:1491 [inline]
+ unmap_page_range+0xece/0x1430 mm/memory.c:1512
+ unmap_single_vma+0x14f/0x2c0 mm/memory.c:1557
+ unmap_vmas+0xe2/0x1a0 mm/memory.c:1587
+ exit_mmap+0x1f9/0x450 mm/mmap.c:3047
+ __mmput kernel/fork.c:961 [inline]
+ mmput+0x52/0x2b0 kernel/fork.c:982
+ exit_mm kernel/exit.c:544 [inline]
+ do_exit+0x6e4/0x2850 kernel/exit.c:852
+ do_group_exit+0xed/0x320 kernel/exit.c:968
+ get_signal+0x5dd/0x1140 kernel/signal.c:2469
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+ prepare_exit_to_usermode arch/x86/entry/common.c:196 [inline]
+ syscall_return_slowpath arch/x86/entry/common.c:265 [inline]
+ do_syscall_64+0x258/0x2c0 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fbe82726cd8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: 0000000000000000 RBX: 000000000073bf08 RCX: 0000000000466039
+RDX: 0000000000000000 RSI: 0000000000000080 RDI: 000000000073bf08
+RBP: 000000000073bf00 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 000000000073bf0c
+R13: 0000000000000000 R14: 000000000073bf00 R15: 00007fff7891f230
+swap_info_get: Bad swap file entry 400621867e80000
+BUG: Bad page map in process syz-executor.8  pte:188619fa00000422 pmd:4dfde067
+addr:00000000a809789a vm_flags:100400fb anon_vma:          (null) mapping:000000005485d6a7 index:e1
+file:kcov fault:          (null) mmap:kcov_mmap readpage:          (null)
+CPU: 1 PID: 24257 Comm: syz-executor.8 Tainted: G    B             4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+ zap_pte_range mm/memory.c:1384 [inline]
+ zap_pmd_range mm/memory.c:1441 [inline]
+ zap_pud_range mm/memory.c:1470 [inline]
+ zap_p4d_range mm/memory.c:1491 [inline]
+ unmap_page_range+0xece/0x1430 mm/memory.c:1512
+ unmap_single_vma+0x14f/0x2c0 mm/memory.c:1557
+ unmap_vmas+0xe2/0x1a0 mm/memory.c:1587
+ exit_mmap+0x1f9/0x450 mm/mmap.c:3047
+ __mmput kernel/fork.c:961 [inline]
+ mmput+0x52/0x2b0 kernel/fork.c:982
+ exit_mm kernel/exit.c:544 [inline]
+ do_exit+0x6e4/0x2850 kernel/exit.c:852
+ do_group_exit+0xed/0x320 kernel/exit.c:968
+ get_signal+0x5dd/0x1140 kernel/signal.c:2469
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+ prepare_exit_to_usermode arch/x86/entry/common.c:196 [inline]
+ syscall_return_slowpath arch/x86/entry/common.c:265 [inline]
+ do_syscall_64+0x258/0x2c0 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fbe82726cd8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: 0000000000000000 RBX: 000000000073bf08 RCX: 0000000000466039
+RDX: 0000000000000000 RSI: 0000000000000080 RDI: 000000000073bf08
+RBP: 000000000073bf00 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 000000000073bf0c
+R13: 0000000000000000 R14: 000000000073bf00 R15: 00007fff7891f230
+swap_info_get: Bad swap file entry 2e0272c044e68cba
+BUG: Bad page map in process syz-executor.8  pte:9cb01139a32eae24 pmd:4dfde067
+addr:00000000835ca06c vm_flags:100400fb anon_vma:          (null) mapping:000000005485d6a7 index:e3
+file:kcov fault:          (null) mmap:kcov_mmap readpage:          (null)
+CPU: 1 PID: 24257 Comm: syz-executor.8 Tainted: G    B             4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+program syz-executor.9 is using a deprecated SCSI ioctl, please convert it to SG_IO
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+swap_info_get: Bad swap file entry 600080002
+ zap_pte_range mm/memory.c:1384 [inline]
+ zap_pmd_range mm/memory.c:1441 [inline]
+ zap_pud_range mm/memory.c:1470 [inline]
+ zap_p4d_range mm/memory.c:1491 [inline]
+ unmap_page_range+0xece/0x1430 mm/memory.c:1512
+BUG: Bad page map in process syz-executor.9  pte:1800200008002 pmd:4dfdf067
+ unmap_single_vma+0x14f/0x2c0 mm/memory.c:1557
+ unmap_vmas+0xe2/0x1a0 mm/memory.c:1587
+addr:000000006ec68ce7 vm_flags:100400fb anon_vma:          (null) mapping:000000005485d6a7 index:111
+ exit_mmap+0x1f9/0x450 mm/mmap.c:3047
+file:kcov fault:          (null) mmap:kcov_mmap readpage:          (null)
+ __mmput kernel/fork.c:961 [inline]
+ mmput+0x52/0x2b0 kernel/fork.c:982
+ exit_mm kernel/exit.c:544 [inline]
+ do_exit+0x6e4/0x2850 kernel/exit.c:852
+ do_group_exit+0xed/0x320 kernel/exit.c:968
+ get_signal+0x5dd/0x1140 kernel/signal.c:2469
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+ prepare_exit_to_usermode arch/x86/entry/common.c:196 [inline]
+ syscall_return_slowpath arch/x86/entry/common.c:265 [inline]
+ do_syscall_64+0x258/0x2c0 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fbe82726cd8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: 0000000000000000 RBX: 000000000073bf08 RCX: 0000000000466039
+RDX: 0000000000000000 RSI: 0000000000000080 RDI: 000000000073bf08
+RBP: 000000000073bf00 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 000000000073bf0c
+R13: 0000000000000000 R14: 000000000073bf00 R15: 00007fff7891f230
+CPU: 0 PID: 24262 Comm: syz-executor.9 Tainted: G    B             4.17.0-rc4 #3
+BUG: Bad page map in process syz-executor.8  pte:132b398b pmd:4dfde067
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+page:ffffea00004cacc0 count:0 mapcount:-1 mapping:0000000000000000 index:0x0
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+ zap_pte_range mm/memory.c:1384 [inline]
+ zap_pmd_range mm/memory.c:1441 [inline]
+ zap_pud_range mm/memory.c:1470 [inline]
+ zap_p4d_range mm/memory.c:1491 [inline]
+ unmap_page_range+0xece/0x1430 mm/memory.c:1512
+ unmap_single_vma+0x14f/0x2c0 mm/memory.c:1557
+ unmap_vmas+0xe2/0x1a0 mm/memory.c:1587
+ exit_mmap+0x1f9/0x450 mm/mmap.c:3047
+flags: 0x100000000000000()
+ __mmput kernel/fork.c:961 [inline]
+ mmput+0x52/0x2b0 kernel/fork.c:982
+raw: 0100000000000000 0000000000000000 0000000000000000 00000000fffffffe
+ exit_mm kernel/exit.c:544 [inline]
+ do_exit+0x6e4/0x2850 kernel/exit.c:852
+raw: ffffea00004cace0 ffffea00004cace0 0000000000000000 0000000000000000
+page dumped because: bad pte
+addr:000000005f873b86 vm_flags:100400fb anon_vma:          (null) mapping:000000005485d6a7 index:e7
+ do_group_exit+0xed/0x320 kernel/exit.c:968
+file:kcov fault:          (null) mmap:kcov_mmap readpage:          (null)
+ get_signal+0x5dd/0x1140 kernel/signal.c:2469
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+ prepare_exit_to_usermode arch/x86/entry/common.c:196 [inline]
+ syscall_return_slowpath arch/x86/entry/common.c:265 [inline]
+ do_syscall_64+0x258/0x2c0 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fbea34cccd8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: 0000000000000001 RBX: 000000000073bfb0 RCX: 0000000000466039
+RDX: 00000000000f4240 RSI: 0000000000000081 RDI: 000000000073bfb4
+RBP: 000000000073bfa8 R08: 0000000000000019 R09: 0000000000000000
+R10: ffffffffffffffff R11: 0000000000000246 R12: 000000000073bfb4
+R13: 0000000000000000 R14: 000000000073bfa8 R15: 00007ffe61b8d060
+CPU: 1 PID: 24257 Comm: syz-executor.8 Tainted: G    B             4.17.0-rc4 #3
+swap_info_get: Bad swap file entry e0008000a
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+BUG: Bad page map in process syz-executor.9  pte:3800200028002 pmd:4dfdf067
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+ zap_pte_range mm/memory.c:1339 [inline]
+ zap_pmd_range mm/memory.c:1441 [inline]
+ zap_pud_range mm/memory.c:1470 [inline]
+ zap_p4d_range mm/memory.c:1491 [inline]
+ unmap_page_range+0xcd8/0x1430 mm/memory.c:1512
+addr:00000000235faabc vm_flags:100400fb anon_vma:          (null) mapping:000000005485d6a7 index:112
+ unmap_single_vma+0x14f/0x2c0 mm/memory.c:1557
+ unmap_vmas+0xe2/0x1a0 mm/memory.c:1587
+ exit_mmap+0x1f9/0x450 mm/mmap.c:3047
+file:kcov fault:          (null) mmap:kcov_mmap readpage:          (null)
+ __mmput kernel/fork.c:961 [inline]
+ mmput+0x52/0x2b0 kernel/fork.c:982
+ exit_mm kernel/exit.c:544 [inline]
+ do_exit+0x6e4/0x2850 kernel/exit.c:852
+ do_group_exit+0xed/0x320 kernel/exit.c:968
+ get_signal+0x5dd/0x1140 kernel/signal.c:2469
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+ prepare_exit_to_usermode arch/x86/entry/common.c:196 [inline]
+ syscall_return_slowpath arch/x86/entry/common.c:265 [inline]
+ do_syscall_64+0x258/0x2c0 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fbe82726cd8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: 0000000000000000 RBX: 000000000073bf08 RCX: 0000000000466039
+RDX: 0000000000000000 RSI: 0000000000000080 RDI: 000000000073bf08
+RBP: 000000000073bf00 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 000000000073bf0c
+R13: 0000000000000000 R14: 000000000073bf00 R15: 00007fff7891f230
+CPU: 0 PID: 24262 Comm: syz-executor.9 Tainted: G    B             4.17.0-rc4 #3
+BUG: Bad page map in process syz-executor.8  pte:0004000f pmd:4dfde067
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+page:ffffea0000001000 count:0 mapcount:-128 mapping:0000000000000000 index:0x0
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+ zap_pte_range mm/memory.c:1384 [inline]
+ zap_pmd_range mm/memory.c:1441 [inline]
+ zap_pud_range mm/memory.c:1470 [inline]
+ zap_p4d_range mm/memory.c:1491 [inline]
+ unmap_page_range+0xece/0x1430 mm/memory.c:1512
+ unmap_single_vma+0x14f/0x2c0 mm/memory.c:1557
+ unmap_vmas+0xe2/0x1a0 mm/memory.c:1587
+ exit_mmap+0x1f9/0x450 mm/mmap.c:3047
+flags: 0x0()
+raw: 0000000000000000 0000000000000000 0000000000000000 00000000ffffff7f
+ __mmput kernel/fork.c:961 [inline]
+ mmput+0x52/0x2b0 kernel/fork.c:982
+ exit_mm kernel/exit.c:544 [inline]
+ do_exit+0x6e4/0x2850 kernel/exit.c:852
+raw: ffff88007ffdc270 ffff88007ffdc270 0000000000000006 0000000000000000
+page dumped because: bad pte
+addr:00000000169b94cd vm_flags:100400fb anon_vma:          (null) mapping:000000005485d6a7 index:ea
+file:kcov fault:          (null) mmap:kcov_mmap readpage:          (null)
+ do_group_exit+0xed/0x320 kernel/exit.c:968
+ get_signal+0x5dd/0x1140 kernel/signal.c:2469
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+ prepare_exit_to_usermode arch/x86/entry/common.c:196 [inline]
+ syscall_return_slowpath arch/x86/entry/common.c:265 [inline]
+ do_syscall_64+0x258/0x2c0 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fbea34cccd8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: 0000000000000001 RBX: 000000000073bfb0 RCX: 0000000000466039
+RDX: 00000000000f4240 RSI: 0000000000000081 RDI: 000000000073bfb4
+RBP: 000000000073bfa8 R08: 0000000000000019 R09: 0000000000000000
+R10: ffffffffffffffff R11: 0000000000000246 R12: 000000000073bfb4
+R13: 0000000000000000 R14: 000000000073bfa8 R15: 00007ffe61b8d060
+CPU: 1 PID: 24257 Comm: syz-executor.8 Tainted: G    B             4.17.0-rc4 #3
+swap_info_get: Bad swap file entry 3200080012
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+BUG: Bad page map in process syz-executor.9  pte:c800200048002 pmd:4dfdf067
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+ zap_pte_range mm/memory.c:1339 [inline]
+ zap_pmd_range mm/memory.c:1441 [inline]
+ zap_pud_range mm/memory.c:1470 [inline]
+ zap_p4d_range mm/memory.c:1491 [inline]
+ unmap_page_range+0xcd8/0x1430 mm/memory.c:1512
+addr:000000000ca313f4 vm_flags:100400fb anon_vma:          (null) mapping:000000005485d6a7 index:113
+ unmap_single_vma+0x14f/0x2c0 mm/memory.c:1557
+ unmap_vmas+0xe2/0x1a0 mm/memory.c:1587
+file:kcov fault:          (null) mmap:kcov_mmap readpage:          (null)
+ exit_mmap+0x1f9/0x450 mm/mmap.c:3047
+ __mmput kernel/fork.c:961 [inline]
+ mmput+0x52/0x2b0 kernel/fork.c:982
+ exit_mm kernel/exit.c:544 [inline]
+ do_exit+0x6e4/0x2850 kernel/exit.c:852
+ do_group_exit+0xed/0x320 kernel/exit.c:968
+ get_signal+0x5dd/0x1140 kernel/signal.c:2469
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+ prepare_exit_to_usermode arch/x86/entry/common.c:196 [inline]
+ syscall_return_slowpath arch/x86/entry/common.c:265 [inline]
+ do_syscall_64+0x258/0x2c0 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fbe82726cd8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: 0000000000000000 RBX: 000000000073bf08 RCX: 0000000000466039
+RDX: 0000000000000000 RSI: 0000000000000080 RDI: 000000000073bf08
+RBP: 000000000073bf00 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 000000000073bf0c
+R13: 0000000000000000 R14: 000000000073bf00 R15: 00007fff7891f230
+CPU: 0 PID: 24262 Comm: syz-executor.9 Tainted: G    B             4.17.0-rc4 #3
+BUG: Bad page map in process syz-executor.8  pte:8836d0dd pmd:4dfde067
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+addr:00000000678def01 vm_flags:100400fb anon_vma:          (null) mapping:000000005485d6a7 index:ef
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+file:kcov fault:          (null) mmap:kcov_mmap readpage:          (null)
+ zap_pte_range mm/memory.c:1384 [inline]
+ zap_pmd_range mm/memory.c:1441 [inline]
+ zap_pud_range mm/memory.c:1470 [inline]
+ zap_p4d_range mm/memory.c:1491 [inline]
+ unmap_page_range+0xece/0x1430 mm/memory.c:1512
+ unmap_single_vma+0x14f/0x2c0 mm/memory.c:1557
+ unmap_vmas+0xe2/0x1a0 mm/memory.c:1587
+ exit_mmap+0x1f9/0x450 mm/mmap.c:3047
+ __mmput kernel/fork.c:961 [inline]
+ mmput+0x52/0x2b0 kernel/fork.c:982
+ exit_mm kernel/exit.c:544 [inline]
+ do_exit+0x6e4/0x2850 kernel/exit.c:852
+ do_group_exit+0xed/0x320 kernel/exit.c:968
+ get_signal+0x5dd/0x1140 kernel/signal.c:2469
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+ prepare_exit_to_usermode arch/x86/entry/common.c:196 [inline]
+ syscall_return_slowpath arch/x86/entry/common.c:265 [inline]
+ do_syscall_64+0x258/0x2c0 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fbea34cccd8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: 0000000000000001 RBX: 000000000073bfb0 RCX: 0000000000466039
+RDX: 00000000000f4240 RSI: 0000000000000081 RDI: 000000000073bfb4
+RBP: 000000000073bfa8 R08: 0000000000000019 R09: 0000000000000000
+R10: ffffffffffffffff R11: 0000000000000246 R12: 000000000073bfb4
+R13: 0000000000000000 R14: 000000000073bfa8 R15: 00007ffe61b8d060
+CPU: 1 PID: 24257 Comm: syz-executor.8 Tainted: G    B             4.17.0-rc4 #3
+swap_info_get: Bad swap file entry 00000036
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+BUG: Bad page map in process syz-executor.9  pte:000d8002 pmd:4dfdf067
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+ _vm_normal_page+0x101/0x1b0 mm/memory.c:861
+ zap_pte_range mm/memory.c:1310 [inline]
+ zap_pmd_range mm/memory.c:1441 [inline]
+ zap_pud_range mm/memory.c:1470 [inline]
+ zap_p4d_range mm/memory.c:1491 [inline]
+ unmap_page_range+0x68b/0x1430 mm/memory.c:1512
+addr:00000000aff8fae8 vm_flags:100400fb anon_vma:          (null) mapping:000000005485d6a7 index:114
+file:kcov fault:          (null) mmap:kcov_mmap readpage:          (null)
+ unmap_single_vma+0x14f/0x2c0 mm/memory.c:1557
+ unmap_vmas+0xe2/0x1a0 mm/memory.c:1587
+ exit_mmap+0x1f9/0x450 mm/mmap.c:3047
+ __mmput kernel/fork.c:961 [inline]
+ mmput+0x52/0x2b0 kernel/fork.c:982
+ exit_mm kernel/exit.c:544 [inline]
+ do_exit+0x6e4/0x2850 kernel/exit.c:852
+ do_group_exit+0xed/0x320 kernel/exit.c:968
+ get_signal+0x5dd/0x1140 kernel/signal.c:2469
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+ prepare_exit_to_usermode arch/x86/entry/common.c:196 [inline]
+ syscall_return_slowpath arch/x86/entry/common.c:265 [inline]
+ do_syscall_64+0x258/0x2c0 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fbe82726cd8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: 0000000000000000 RBX: 000000000073bf08 RCX: 0000000000466039
+RDX: 0000000000000000 RSI: 0000000000000080 RDI: 000000000073bf08
+RBP: 000000000073bf00 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 000000000073bf0c
+R13: 0000000000000000 R14: 000000000073bf00 R15: 00007fff7891f230
+CPU: 0 PID: 24262 Comm: syz-executor.9 Tainted: G    B             4.17.0-rc4 #3
+swap_info_get: Bad swap file entry 200000008500000
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+BUG: Bad page map in process syz-executor.8  pte:21400000204 pmd:4dfde067
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+addr:000000003c46d20d vm_flags:100400fb anon_vma:          (null) mapping:000000005485d6a7 index:f0
+ zap_pte_range mm/memory.c:1384 [inline]
+ zap_pmd_range mm/memory.c:1441 [inline]
+ zap_pud_range mm/memory.c:1470 [inline]
+ zap_p4d_range mm/memory.c:1491 [inline]
+ unmap_page_range+0xece/0x1430 mm/memory.c:1512
+file:kcov fault:          (null) mmap:kcov_mmap readpage:          (null)
+ unmap_single_vma+0x14f/0x2c0 mm/memory.c:1557
+ unmap_vmas+0xe2/0x1a0 mm/memory.c:1587
+ exit_mmap+0x1f9/0x450 mm/mmap.c:3047
+ __mmput kernel/fork.c:961 [inline]
+ mmput+0x52/0x2b0 kernel/fork.c:982
+ exit_mm kernel/exit.c:544 [inline]
+ do_exit+0x6e4/0x2850 kernel/exit.c:852
+ do_group_exit+0xed/0x320 kernel/exit.c:968
+ get_signal+0x5dd/0x1140 kernel/signal.c:2469
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+ prepare_exit_to_usermode arch/x86/entry/common.c:196 [inline]
+ syscall_return_slowpath arch/x86/entry/common.c:265 [inline]
+ do_syscall_64+0x258/0x2c0 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fbea34cccd8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: 0000000000000001 RBX: 000000000073bfb0 RCX: 0000000000466039
+RDX: 00000000000f4240 RSI: 0000000000000081 RDI: 000000000073bfb4
+RBP: 000000000073bfa8 R08: 0000000000000019 R09: 0000000000000000
+R10: ffffffffffffffff R11: 0000000000000246 R12: 000000000073bfb4
+R13: 0000000000000000 R14: 000000000073bfa8 R15: 00007ffe61b8d060
+CPU: 1 PID: 24257 Comm: syz-executor.8 Tainted: G    B             4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+ zap_pte_range mm/memory.c:1384 [inline]
+ zap_pmd_range mm/memory.c:1441 [inline]
+ zap_pud_range mm/memory.c:1470 [inline]
+ zap_p4d_range mm/memory.c:1491 [inline]
+ unmap_page_range+0xece/0x1430 mm/memory.c:1512
+ unmap_single_vma+0x14f/0x2c0 mm/memory.c:1557
+ unmap_vmas+0xe2/0x1a0 mm/memory.c:1587
+ exit_mmap+0x1f9/0x450 mm/mmap.c:3047
+ __mmput kernel/fork.c:961 [inline]
+ mmput+0x52/0x2b0 kernel/fork.c:982
+ exit_mm kernel/exit.c:544 [inline]
+ do_exit+0x6e4/0x2850 kernel/exit.c:852
+ do_group_exit+0xed/0x320 kernel/exit.c:968
+ get_signal+0x5dd/0x1140 kernel/signal.c:2469
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+ prepare_exit_to_usermode arch/x86/entry/common.c:196 [inline]
+ syscall_return_slowpath arch/x86/entry/common.c:265 [inline]
+ do_syscall_64+0x258/0x2c0 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fbe82726cd8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: 0000000000000000 RBX: 000000000073bf08 RCX: 0000000000466039
+RDX: 0000000000000000 RSI: 0000000000000080 RDI: 000000000073bf08
+RBP: 000000000073bf00 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 000000000073bf0c
+R13: 0000000000000000 R14: 000000000073bf00 R15: 00007fff7891f230
+swap_info_get: Bad swap file entry 800804046b80000
+BUG: Bad page map in process syz-executor.8  pte:201011ae00000824 pmd:4dfde067
+addr:00000000faed0e77 vm_flags:100400fb anon_vma:          (null) mapping:000000005485d6a7 index:f1
+file:kcov fault:          (null) mmap:kcov_mmap readpage:          (null)
+CPU: 1 PID: 24257 Comm: syz-executor.8 Tainted: G    B             4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+ zap_pte_range mm/memory.c:1384 [inline]
+ zap_pmd_range mm/memory.c:1441 [inline]
+ zap_pud_range mm/memory.c:1470 [inline]
+ zap_p4d_range mm/memory.c:1491 [inline]
+ unmap_page_range+0xece/0x1430 mm/memory.c:1512
+ unmap_single_vma+0x14f/0x2c0 mm/memory.c:1557
+ unmap_vmas+0xe2/0x1a0 mm/memory.c:1587
+ exit_mmap+0x1f9/0x450 mm/mmap.c:3047
+ __mmput kernel/fork.c:961 [inline]
+ mmput+0x52/0x2b0 kernel/fork.c:982
+ exit_mm kernel/exit.c:544 [inline]
+ do_exit+0x6e4/0x2850 kernel/exit.c:852
+ do_group_exit+0xed/0x320 kernel/exit.c:968
+ get_signal+0x5dd/0x1140 kernel/signal.c:2469
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+ prepare_exit_to_usermode arch/x86/entry/common.c:196 [inline]
+ syscall_return_slowpath arch/x86/entry/common.c:265 [inline]
+ do_syscall_64+0x258/0x2c0 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fbe82726cd8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: 0000000000000000 RBX: 000000000073bf08 RCX: 0000000000466039
+RDX: 0000000000000000 RSI: 0000000000000080 RDI: 000000000073bf08
+RBP: 000000000073bf00 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 000000000073bf0c
+R13: 0000000000000000 R14: 000000000073bf00 R15: 00007fff7891f230
+swap_info_get: Bad swap file entry 00000014
+BUG: Bad page map in process syz-executor.8  pte:00050000 pmd:4dfde067
+addr:00000000ff3ca24a vm_flags:100400fb anon_vma:          (null) mapping:000000005485d6a7 index:f2
+file:kcov fault:          (null) mmap:kcov_mmap readpage:          (null)
+CPU: 1 PID: 24257 Comm: syz-executor.8 Tainted: G    B             4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+ zap_pte_range mm/memory.c:1384 [inline]
+ zap_pmd_range mm/memory.c:1441 [inline]
+ zap_pud_range mm/memory.c:1470 [inline]
+ zap_p4d_range mm/memory.c:1491 [inline]
+ unmap_page_range+0xece/0x1430 mm/memory.c:1512
+ unmap_single_vma+0x14f/0x2c0 mm/memory.c:1557
+ unmap_vmas+0xe2/0x1a0 mm/memory.c:1587
+ exit_mmap+0x1f9/0x450 mm/mmap.c:3047
+ __mmput kernel/fork.c:961 [inline]
+ mmput+0x52/0x2b0 kernel/fork.c:982
+ exit_mm kernel/exit.c:544 [inline]
+ do_exit+0x6e4/0x2850 kernel/exit.c:852
+ do_group_exit+0xed/0x320 kernel/exit.c:968
+ get_signal+0x5dd/0x1140 kernel/signal.c:2469
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+ prepare_exit_to_usermode arch/x86/entry/common.c:196 [inline]
+ syscall_return_slowpath arch/x86/entry/common.c:265 [inline]
+ do_syscall_64+0x258/0x2c0 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fbe82726cd8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: 0000000000000000 RBX: 000000000073bf08 RCX: 0000000000466039
+RDX: 0000000000000000 RSI: 0000000000000080 RDI: 000000000073bf08
+RBP: 000000000073bf00 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 000000000073bf0c
+R13: 0000000000000000 R14: 000000000073bf00 R15: 00007fff7891f230
+BUG: Bad page map in process syz-executor.8  pte:8d620100000f057 pmd:4dfde067
+addr:000000001b5bdc8b vm_flags:100400fb anon_vma:          (null) mapping:000000005485d6a7 index:f3
+file:kcov fault:          (null) mmap:kcov_mmap readpage:          (null)
+CPU: 1 PID: 24257 Comm: syz-executor.8 Tainted: G    B             4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+ _vm_normal_page+0x101/0x1b0 mm/memory.c:861
+ zap_pte_range mm/memory.c:1310 [inline]
+ zap_pmd_range mm/memory.c:1441 [inline]
+ zap_pud_range mm/memory.c:1470 [inline]
+ zap_p4d_range mm/memory.c:1491 [inline]
+ unmap_page_range+0x68b/0x1430 mm/memory.c:1512
+ unmap_single_vma+0x14f/0x2c0 mm/memory.c:1557
+ unmap_vmas+0xe2/0x1a0 mm/memory.c:1587
+ exit_mmap+0x1f9/0x450 mm/mmap.c:3047
+ __mmput kernel/fork.c:961 [inline]
+ mmput+0x52/0x2b0 kernel/fork.c:982
+ exit_mm kernel/exit.c:544 [inline]
+ do_exit+0x6e4/0x2850 kernel/exit.c:852
+ do_group_exit+0xed/0x320 kernel/exit.c:968
+ get_signal+0x5dd/0x1140 kernel/signal.c:2469
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+ prepare_exit_to_usermode arch/x86/entry/common.c:196 [inline]
+ syscall_return_slowpath arch/x86/entry/common.c:265 [inline]
+ do_syscall_64+0x258/0x2c0 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fbe82726cd8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: 0000000000000000 RBX: 000000000073bf08 RCX: 0000000000466039
+RDX: 0000000000000000 RSI: 0000000000000080 RDI: 000000000073bf08
+RBP: 000000000073bf00 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 000000000073bf0c
+R13: 0000000000000000 R14: 000000000073bf00 R15: 00007fff7891f230
+swap_info_get: Bad swap file entry 00000014
+BUG: Bad page map in process syz-executor.8  pte:00050000 pmd:4dfde067
+addr:0000000091d0d24e vm_flags:100400fb anon_vma:          (null) mapping:000000005485d6a7 index:fa
+file:kcov fault:          (null) mmap:kcov_mmap readpage:          (null)
+CPU: 1 PID: 24257 Comm: syz-executor.8 Tainted: G    B             4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+ zap_pte_range mm/memory.c:1384 [inline]
+ zap_pmd_range mm/memory.c:1441 [inline]
+ zap_pud_range mm/memory.c:1470 [inline]
+ zap_p4d_range mm/memory.c:1491 [inline]
+ unmap_page_range+0xece/0x1430 mm/memory.c:1512
+ unmap_single_vma+0x14f/0x2c0 mm/memory.c:1557
+ unmap_vmas+0xe2/0x1a0 mm/memory.c:1587
+ exit_mmap+0x1f9/0x450 mm/mmap.c:3047
+ __mmput kernel/fork.c:961 [inline]
+ mmput+0x52/0x2b0 kernel/fork.c:982
+ exit_mm kernel/exit.c:544 [inline]
+ do_exit+0x6e4/0x2850 kernel/exit.c:852
+ do_group_exit+0xed/0x320 kernel/exit.c:968
+ get_signal+0x5dd/0x1140 kernel/signal.c:2469
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+ prepare_exit_to_usermode arch/x86/entry/common.c:196 [inline]
+ syscall_return_slowpath arch/x86/entry/common.c:265 [inline]
+ do_syscall_64+0x258/0x2c0 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fbe82726cd8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: 0000000000000000 RBX: 000000000073bf08 RCX: 0000000000466039
+RDX: 0000000000000000 RSI: 0000000000000080 RDI: 000000000073bf08
+RBP: 000000000073bf00 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 000000000073bf0c
+R13: 0000000000000000 R14: 000000000073bf00 R15: 00007fff7891f230
+swap_info_get: Bad swap file entry 200000008580000
+BUG: Bad page map in process syz-executor.8  pte:21600000206 pmd:4dfde067
+addr:00000000a12c3b6b vm_flags:100400fb anon_vma:          (null) mapping:000000005485d6a7 index:100
+file:kcov fault:          (null) mmap:kcov_mmap readpage:          (null)
+CPU: 1 PID: 24257 Comm: syz-executor.8 Tainted: G    B             4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+ zap_pte_range mm/memory.c:1384 [inline]
+ zap_pmd_range mm/memory.c:1441 [inline]
+ zap_pud_range mm/memory.c:1470 [inline]
+ zap_p4d_range mm/memory.c:1491 [inline]
+ unmap_page_range+0xece/0x1430 mm/memory.c:1512
+ unmap_single_vma+0x14f/0x2c0 mm/memory.c:1557
+ unmap_vmas+0xe2/0x1a0 mm/memory.c:1587
+ exit_mmap+0x1f9/0x450 mm/mmap.c:3047
+ __mmput kernel/fork.c:961 [inline]
+ mmput+0x52/0x2b0 kernel/fork.c:982
+ exit_mm kernel/exit.c:544 [inline]
+ do_exit+0x6e4/0x2850 kernel/exit.c:852
+ do_group_exit+0xed/0x320 kernel/exit.c:968
+ get_signal+0x5dd/0x1140 kernel/signal.c:2469
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+ prepare_exit_to_usermode arch/x86/entry/common.c:196 [inline]
+ syscall_return_slowpath arch/x86/entry/common.c:265 [inline]
+ do_syscall_64+0x258/0x2c0 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fbe82726cd8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: 0000000000000000 RBX: 000000000073bf08 RCX: 0000000000466039
+RDX: 0000000000000000 RSI: 0000000000000080 RDI: 000000000073bf08
+RBP: 000000000073bf00 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 000000000073bf0c
+R13: 0000000000000000 R14: 000000000073bf00 R15: 00007fff7891f230
+swap_info_get: Bad swap file entry c008041ed840000
+BUG: Bad page map in process syz-executor.8  pte:20107b6100000c26 pmd:4dfde067
+addr:000000000afc9a02 vm_flags:100400fb anon_vma:          (null) mapping:000000005485d6a7 index:101
+file:kcov fault:          (null) mmap:kcov_mmap readpage:          (null)
+CPU: 1 PID: 24257 Comm: syz-executor.8 Tainted: G    B             4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+ zap_pte_range mm/memory.c:1384 [inline]
+ zap_pmd_range mm/memory.c:1441 [inline]
+ zap_pud_range mm/memory.c:1470 [inline]
+ zap_p4d_range mm/memory.c:1491 [inline]
+ unmap_page_range+0xece/0x1430 mm/memory.c:1512
+ unmap_single_vma+0x14f/0x2c0 mm/memory.c:1557
+ unmap_vmas+0xe2/0x1a0 mm/memory.c:1587
+ exit_mmap+0x1f9/0x450 mm/mmap.c:3047
+ __mmput kernel/fork.c:961 [inline]
+ mmput+0x52/0x2b0 kernel/fork.c:982
+ exit_mm kernel/exit.c:544 [inline]
+ do_exit+0x6e4/0x2850 kernel/exit.c:852
+ do_group_exit+0xed/0x320 kernel/exit.c:968
+ get_signal+0x5dd/0x1140 kernel/signal.c:2469
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+ prepare_exit_to_usermode arch/x86/entry/common.c:196 [inline]
+ syscall_return_slowpath arch/x86/entry/common.c:265 [inline]
+ do_syscall_64+0x258/0x2c0 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fbe82726cd8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: 0000000000000000 RBX: 000000000073bf08 RCX: 0000000000466039
+RDX: 0000000000000000 RSI: 0000000000000080 RDI: 000000000073bf08
+RBP: 000000000073bf00 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 000000000073bf0c
+R13: 0000000000000000 R14: 000000000073bf00 R15: 00007fff7891f230
+swap_info_get: Bad swap file entry 00000014
+BUG: Bad page map in process syz-executor.8  pte:00050000 pmd:4dfde067
+addr:00000000b4f69b34 vm_flags:100400fb anon_vma:          (null) mapping:000000005485d6a7 index:102
+file:kcov fault:          (null) mmap:kcov_mmap readpage:          (null)
+CPU: 1 PID: 24257 Comm: syz-executor.8 Tainted: G    B             4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+ zap_pte_range mm/memory.c:1384 [inline]
+ zap_pmd_range mm/memory.c:1441 [inline]
+ zap_pud_range mm/memory.c:1470 [inline]
+ zap_p4d_range mm/memory.c:1491 [inline]
+ unmap_page_range+0xece/0x1430 mm/memory.c:1512
+ unmap_single_vma+0x14f/0x2c0 mm/memory.c:1557
+ unmap_vmas+0xe2/0x1a0 mm/memory.c:1587
+ exit_mmap+0x1f9/0x450 mm/mmap.c:3047
+ __mmput kernel/fork.c:961 [inline]
+ mmput+0x52/0x2b0 kernel/fork.c:982
+ exit_mm kernel/exit.c:544 [inline]
+ do_exit+0x6e4/0x2850 kernel/exit.c:852
+ do_group_exit+0xed/0x320 kernel/exit.c:968
+ get_signal+0x5dd/0x1140 kernel/signal.c:2469
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+ prepare_exit_to_usermode arch/x86/entry/common.c:196 [inline]
+ syscall_return_slowpath arch/x86/entry/common.c:265 [inline]
+ do_syscall_64+0x258/0x2c0 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fbe82726cd8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: 0000000000000000 RBX: 000000000073bf08 RCX: 0000000000466039
+RDX: 0000000000000000 RSI: 0000000000000080 RDI: 000000000073bf08
+RBP: 000000000073bf00 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 000000000073bf0c
+R13: 0000000000000000 R14: 000000000073bf00 R15: 00007fff7891f230
+BUG: Bad page map in process syz-executor.8  pte:0000cdf7 pmd:4dfde067
+page:ffffea0000000300 count:1 mapcount:-1 mapping:0000000000000000 index:0x0
+flags: 0x814(referenced|dirty|reserved)
+raw: 0000000000000814 0000000000000000 0000000000000000 00000001fffffffe
+raw: ffffea0000000320 ffffea0000000320 0000000000000000 0000000000000000
+page dumped because: bad pte
+addr:00000000ae879f94 vm_flags:100400fb anon_vma:          (null) mapping:000000005485d6a7 index:107
+file:kcov fault:          (null) mmap:kcov_mmap readpage:          (null)
+CPU: 1 PID: 24257 Comm: syz-executor.8 Tainted: G    B             4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+ zap_pte_range mm/memory.c:1339 [inline]
+ zap_pmd_range mm/memory.c:1441 [inline]
+ zap_pud_range mm/memory.c:1470 [inline]
+ zap_p4d_range mm/memory.c:1491 [inline]
+ unmap_page_range+0xcd8/0x1430 mm/memory.c:1512
+ unmap_single_vma+0x14f/0x2c0 mm/memory.c:1557
+ unmap_vmas+0xe2/0x1a0 mm/memory.c:1587
+ exit_mmap+0x1f9/0x450 mm/mmap.c:3047
+ __mmput kernel/fork.c:961 [inline]
+ mmput+0x52/0x2b0 kernel/fork.c:982
+ exit_mm kernel/exit.c:544 [inline]
+ do_exit+0x6e4/0x2850 kernel/exit.c:852
+ do_group_exit+0xed/0x320 kernel/exit.c:968
+ get_signal+0x5dd/0x1140 kernel/signal.c:2469
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+ prepare_exit_to_usermode arch/x86/entry/common.c:196 [inline]
+ syscall_return_slowpath arch/x86/entry/common.c:265 [inline]
+ do_syscall_64+0x258/0x2c0 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fbe82726cd8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: 0000000000000000 RBX: 000000000073bf08 RCX: 0000000000466039
+RDX: 0000000000000000 RSI: 0000000000000080 RDI: 000000000073bf08
+RBP: 000000000073bf00 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 000000000073bf0c
+R13: 0000000000000000 R14: 000000000073bf00 R15: 00007fff7891f230
+swap_info_get: Bad swap file entry 00000014
+BUG: Bad page map in process syz-executor.8  pte:00050000 pmd:4dfde067
+addr:00000000fdeed506 vm_flags:100400fb anon_vma:          (null) mapping:000000005485d6a7 index:10a
+file:kcov fault:          (null) mmap:kcov_mmap readpage:          (null)
+CPU: 1 PID: 24257 Comm: syz-executor.8 Tainted: G    B             4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+ zap_pte_range mm/memory.c:1384 [inline]
+ zap_pmd_range mm/memory.c:1441 [inline]
+ zap_pud_range mm/memory.c:1470 [inline]
+ zap_p4d_range mm/memory.c:1491 [inline]
+ unmap_page_range+0xece/0x1430 mm/memory.c:1512
+ unmap_single_vma+0x14f/0x2c0 mm/memory.c:1557
+ unmap_vmas+0xe2/0x1a0 mm/memory.c:1587
+ exit_mmap+0x1f9/0x450 mm/mmap.c:3047
+ __mmput kernel/fork.c:961 [inline]
+ mmput+0x52/0x2b0 kernel/fork.c:982
+ exit_mm kernel/exit.c:544 [inline]
+ do_exit+0x6e4/0x2850 kernel/exit.c:852
+ do_group_exit+0xed/0x320 kernel/exit.c:968
+ get_signal+0x5dd/0x1140 kernel/signal.c:2469
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+ prepare_exit_to_usermode arch/x86/entry/common.c:196 [inline]
+ syscall_return_slowpath arch/x86/entry/common.c:265 [inline]
+ do_syscall_64+0x258/0x2c0 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fbe82726cd8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: 0000000000000000 RBX: 000000000073bf08 RCX: 0000000000466039
+RDX: 0000000000000000 RSI: 0000000000000080 RDI: 000000000073bf08
+RBP: 000000000073bf00 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 000000000073bf0c
+R13: 0000000000000000 R14: 000000000073bf00 R15: 00007fff7891f230
+BUG: Bad page map in process syz-executor.8  pte:c8f720100000b512 pmd:4dfde067
+addr:00000000cd0ea14c vm_flags:100400fb anon_vma:          (null) mapping:000000005485d6a7 index:10b
+file:kcov fault:          (null) mmap:kcov_mmap readpage:          (null)
+CPU: 1 PID: 24257 Comm: syz-executor.8 Tainted: G    B             4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+ _vm_normal_page+0x101/0x1b0 mm/memory.c:861
+ zap_pte_range mm/memory.c:1310 [inline]
+ zap_pmd_range mm/memory.c:1441 [inline]
+ zap_pud_range mm/memory.c:1470 [inline]
+ zap_p4d_range mm/memory.c:1491 [inline]
+ unmap_page_range+0x68b/0x1430 mm/memory.c:1512
+ unmap_single_vma+0x14f/0x2c0 mm/memory.c:1557
+ unmap_vmas+0xe2/0x1a0 mm/memory.c:1587
+ exit_mmap+0x1f9/0x450 mm/mmap.c:3047
+ __mmput kernel/fork.c:961 [inline]
+ mmput+0x52/0x2b0 kernel/fork.c:982
+ exit_mm kernel/exit.c:544 [inline]
+ do_exit+0x6e4/0x2850 kernel/exit.c:852
+ do_group_exit+0xed/0x320 kernel/exit.c:968
+ get_signal+0x5dd/0x1140 kernel/signal.c:2469
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+ prepare_exit_to_usermode arch/x86/entry/common.c:196 [inline]
+ syscall_return_slowpath arch/x86/entry/common.c:265 [inline]
+ do_syscall_64+0x258/0x2c0 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fbe82726cd8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: 0000000000000000 RBX: 000000000073bf08 RCX: 0000000000466039
+RDX: 0000000000000000 RSI: 0000000000000080 RDI: 000000000073bf08
+RBP: 000000000073bf00 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 000000000073bf0c
+R13: 0000000000000000 R14: 000000000073bf00 R15: 00007fff7891f230
+swap_info_get: Bad swap file entry 200000008600000
+BUG: Bad page map in process syz-executor.8  pte:21800000208 pmd:4dfde067
+addr:0000000034bb694f vm_flags:100400fb anon_vma:          (null) mapping:000000005485d6a7 index:110
+file:kcov fault:          (null) mmap:kcov_mmap readpage:          (null)
+CPU: 1 PID: 24257 Comm: syz-executor.8 Tainted: G    B             4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+ zap_pte_range mm/memory.c:1384 [inline]
+ zap_pmd_range mm/memory.c:1441 [inline]
+ zap_pud_range mm/memory.c:1470 [inline]
+ zap_p4d_range mm/memory.c:1491 [inline]
+ unmap_page_range+0xece/0x1430 mm/memory.c:1512
+ unmap_single_vma+0x14f/0x2c0 mm/memory.c:1557
+ unmap_vmas+0xe2/0x1a0 mm/memory.c:1587
+ exit_mmap+0x1f9/0x450 mm/mmap.c:3047
+ __mmput kernel/fork.c:961 [inline]
+ mmput+0x52/0x2b0 kernel/fork.c:982
+ exit_mm kernel/exit.c:544 [inline]
+ do_exit+0x6e4/0x2850 kernel/exit.c:852
+ do_group_exit+0xed/0x320 kernel/exit.c:968
+ get_signal+0x5dd/0x1140 kernel/signal.c:2469
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+ prepare_exit_to_usermode arch/x86/entry/common.c:196 [inline]
+ syscall_return_slowpath arch/x86/entry/common.c:265 [inline]
+ do_syscall_64+0x258/0x2c0 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fbe82726cd8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: 0000000000000000 RBX: 000000000073bf08 RCX: 0000000000466039
+RDX: 0000000000000000 RSI: 0000000000000080 RDI: 000000000073bf08
+RBP: 000000000073bf00 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 000000000073bf0c
+R13: 0000000000000000 R14: 000000000073bf00 R15: 00007fff7891f230
+swap_info_get: Bad swap file entry 10008041e8200000
+BUG: Bad page map in process syz-executor.8  pte:20107a0800001028 pmd:4dfde067
+addr:0000000017d59b3c vm_flags:100400fb anon_vma:          (null) mapping:000000005485d6a7 index:111
+file:kcov fault:          (null) mmap:kcov_mmap readpage:          (null)
+CPU: 1 PID: 24257 Comm: syz-executor.8 Tainted: G    B             4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+ zap_pte_range mm/memory.c:1384 [inline]
+ zap_pmd_range mm/memory.c:1441 [inline]
+ zap_pud_range mm/memory.c:1470 [inline]
+ zap_p4d_range mm/memory.c:1491 [inline]
+ unmap_page_range+0xece/0x1430 mm/memory.c:1512
+ unmap_single_vma+0x14f/0x2c0 mm/memory.c:1557
+ unmap_vmas+0xe2/0x1a0 mm/memory.c:1587
+ exit_mmap+0x1f9/0x450 mm/mmap.c:3047
+ __mmput kernel/fork.c:961 [inline]
+ mmput+0x52/0x2b0 kernel/fork.c:982
+ exit_mm kernel/exit.c:544 [inline]
+ do_exit+0x6e4/0x2850 kernel/exit.c:852
+ do_group_exit+0xed/0x320 kernel/exit.c:968
+ get_signal+0x5dd/0x1140 kernel/signal.c:2469
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+ prepare_exit_to_usermode arch/x86/entry/common.c:196 [inline]
+ syscall_return_slowpath arch/x86/entry/common.c:265 [inline]
+ do_syscall_64+0x258/0x2c0 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fbe82726cd8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: 0000000000000000 RBX: 000000000073bf08 RCX: 0000000000466039
+RDX: 0000000000000000 RSI: 0000000000000080 RDI: 000000000073bf08
+RBP: 000000000073bf00 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 000000000073bf0c
+R13: 0000000000000000 R14: 000000000073bf00 R15: 00007fff7891f230
+swap_info_get: Bad swap file entry 00000014
+BUG: Bad page map in process syz-executor.8  pte:00050000 pmd:4dfde067
+addr:00000000506c1506 vm_flags:100400fb anon_vma:          (null) mapping:000000005485d6a7 index:112
+file:kcov fault:          (null) mmap:kcov_mmap readpage:          (null)
+CPU: 1 PID: 24257 Comm: syz-executor.8 Tainted: G    B             4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+ zap_pte_range mm/memory.c:1384 [inline]
+ zap_pmd_range mm/memory.c:1441 [inline]
+ zap_pud_range mm/memory.c:1470 [inline]
+ zap_p4d_range mm/memory.c:1491 [inline]
+ unmap_page_range+0xece/0x1430 mm/memory.c:1512
+ unmap_single_vma+0x14f/0x2c0 mm/memory.c:1557
+ unmap_vmas+0xe2/0x1a0 mm/memory.c:1587
+ exit_mmap+0x1f9/0x450 mm/mmap.c:3047
+ __mmput kernel/fork.c:961 [inline]
+ mmput+0x52/0x2b0 kernel/fork.c:982
+ exit_mm kernel/exit.c:544 [inline]
+ do_exit+0x6e4/0x2850 kernel/exit.c:852
+ do_group_exit+0xed/0x320 kernel/exit.c:968
+ get_signal+0x5dd/0x1140 kernel/signal.c:2469
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+ prepare_exit_to_usermode arch/x86/entry/common.c:196 [inline]
+ syscall_return_slowpath arch/x86/entry/common.c:265 [inline]
+ do_syscall_64+0x258/0x2c0 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fbe82726cd8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: 0000000000000000 RBX: 000000000073bf08 RCX: 0000000000466039
+RDX: 0000000000000000 RSI: 0000000000000080 RDI: 000000000073bf08
+RBP: 000000000073bf00 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 000000000073bf0c
+R13: 0000000000000000 R14: 000000000073bf00 R15: 00007fff7891f230
+BUG: Bad page map in process syz-executor.8  pte:4d3420100000f1d6 pmd:4dfde067
+addr:000000002feab203 vm_flags:100400fb anon_vma:          (null) mapping:000000005485d6a7 index:113
+file:kcov fault:          (null) mmap:kcov_mmap readpage:          (null)
+CPU: 1 PID: 24257 Comm: syz-executor.8 Tainted: G    B             4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+ _vm_normal_page+0x101/0x1b0 mm/memory.c:861
+ zap_pte_range mm/memory.c:1310 [inline]
+ zap_pmd_range mm/memory.c:1441 [inline]
+ zap_pud_range mm/memory.c:1470 [inline]
+ zap_p4d_range mm/memory.c:1491 [inline]
+ unmap_page_range+0x68b/0x1430 mm/memory.c:1512
+ unmap_single_vma+0x14f/0x2c0 mm/memory.c:1557
+ unmap_vmas+0xe2/0x1a0 mm/memory.c:1587
+ exit_mmap+0x1f9/0x450 mm/mmap.c:3047
+ __mmput kernel/fork.c:961 [inline]
+ mmput+0x52/0x2b0 kernel/fork.c:982
+ exit_mm kernel/exit.c:544 [inline]
+ do_exit+0x6e4/0x2850 kernel/exit.c:852
+ do_group_exit+0xed/0x320 kernel/exit.c:968
+ get_signal+0x5dd/0x1140 kernel/signal.c:2469
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+ prepare_exit_to_usermode arch/x86/entry/common.c:196 [inline]
+ syscall_return_slowpath arch/x86/entry/common.c:265 [inline]
+ do_syscall_64+0x258/0x2c0 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fbe82726cd8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: 0000000000000000 RBX: 000000000073bf08 RCX: 0000000000466039
+RDX: 0000000000000000 RSI: 0000000000000080 RDI: 000000000073bf08
+RBP: 000000000073bf00 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 000000000073bf0c
+R13: 0000000000000000 R14: 000000000073bf00 R15: 00007fff7891f230
+swap_info_get: Bad swap file entry 00000014
+BUG: Bad page map in process syz-executor.8  pte:00050000 pmd:4dfde067
+addr:000000008540226f vm_flags:100400fb anon_vma:          (null) mapping:000000005485d6a7 index:11a
+file:kcov fault:          (null) mmap:kcov_mmap readpage:          (null)
+CPU: 1 PID: 24257 Comm: syz-executor.8 Tainted: G    B             4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+ zap_pte_range mm/memory.c:1384 [inline]
+ zap_pmd_range mm/memory.c:1441 [inline]
+ zap_pud_range mm/memory.c:1470 [inline]
+ zap_p4d_range mm/memory.c:1491 [inline]
+ unmap_page_range+0xece/0x1430 mm/memory.c:1512
+ unmap_single_vma+0x14f/0x2c0 mm/memory.c:1557
+ unmap_vmas+0xe2/0x1a0 mm/memory.c:1587
+ exit_mmap+0x1f9/0x450 mm/mmap.c:3047
+ __mmput kernel/fork.c:961 [inline]
+ mmput+0x52/0x2b0 kernel/fork.c:982
+ exit_mm kernel/exit.c:544 [inline]
+ do_exit+0x6e4/0x2850 kernel/exit.c:852
+ do_group_exit+0xed/0x320 kernel/exit.c:968
+ get_signal+0x5dd/0x1140 kernel/signal.c:2469
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+ prepare_exit_to_usermode arch/x86/entry/common.c:196 [inline]
+ syscall_return_slowpath arch/x86/entry/common.c:265 [inline]
+ do_syscall_64+0x258/0x2c0 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fbe82726cd8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: 0000000000000000 RBX: 000000000073bf08 RCX: 0000000000466039
+RDX: 0000000000000000 RSI: 0000000000000080 RDI: 000000000073bf08
+RBP: 000000000073bf00 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 000000000073bf0c
+R13: 0000000000000000 R14: 000000000073bf00 R15: 00007fff7891f230
+BUG: Bad page map in process syz-executor.8  pte:d95820100000ec89 pmd:4dfde067
+addr:00000000b880c02b vm_flags:100400fb anon_vma:          (null) mapping:000000005485d6a7 index:11b
+file:kcov fault:          (null) mmap:kcov_mmap readpage:          (null)
+CPU: 1 PID: 24257 Comm: syz-executor.8 Tainted: G    B             4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+ _vm_normal_page+0x101/0x1b0 mm/memory.c:861
+ zap_pte_range mm/memory.c:1310 [inline]
+ zap_pmd_range mm/memory.c:1441 [inline]
+ zap_pud_range mm/memory.c:1470 [inline]
+ zap_p4d_range mm/memory.c:1491 [inline]
+ unmap_page_range+0x68b/0x1430 mm/memory.c:1512
+ unmap_single_vma+0x14f/0x2c0 mm/memory.c:1557
+ unmap_vmas+0xe2/0x1a0 mm/memory.c:1587
+ exit_mmap+0x1f9/0x450 mm/mmap.c:3047
+BUG: Bad rss-counter state mm:0000000040bb1930 idx:0 val:64
+BUG: Bad rss-counter state mm:0000000040bb1930 idx:2 val:-4
+ __mmput kernel/fork.c:961 [inline]
+ mmput+0x52/0x2b0 kernel/fork.c:982
+ exit_mm kernel/exit.c:544 [inline]
+ do_exit+0x6e4/0x2850 kernel/exit.c:852
+ do_group_exit+0xed/0x320 kernel/exit.c:968
+ get_signal+0x5dd/0x1140 kernel/signal.c:2469
+BUG: Bad page map in process syz-executor.5  pte:8000000043431007 pmd:69752067
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+page:ffffea00010d0c40 count:2 mapcount:-1 mapping:0000000000000000 index:0x0
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+flags: 0x100000000000014(referenced|dirty)
+ prepare_exit_to_usermode arch/x86/entry/common.c:196 [inline]
+ syscall_return_slowpath arch/x86/entry/common.c:265 [inline]
+ do_syscall_64+0x258/0x2c0 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+raw: 0100000000000014 0000000000000000 0000000000000000 00000002fffffffe
+RIP: 0033:0x466039
+RSP: 002b:00007fbe82726cd8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: 0000000000000000 RBX: 000000000073bf08 RCX: 0000000000466039
+raw: dead000000000100 dead000000000200 0000000000000000 0000000000000000
+RDX: 0000000000000000 RSI: 0000000000000080 RDI: 000000000073bf08
+RBP: 000000000073bf00 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 000000000073bf0c
+R13: 0000000000000000 R14: 000000000073bf00 R15: 00007fff7891f230
+swap_info_get: Bad swap file entry 2400000000000001
+page dumped because: bad pte
+BUG: Bad page map in process syz-executor.8  pte:00006482 pmd:4dfde067
+addr:000000003989942f vm_flags:100400fb anon_vma:          (null) mapping:000000005485d6a7 index:1b0
+file:kcov fault:          (null) mmap:kcov_mmap readpage:          (null)
+addr:000000000d796c80 vm_flags:100400fb anon_vma:          (null) mapping:000000005485d6a7 index:11f
+CPU: 0 PID: 8900 Comm: syz-executor.5 Tainted: G    B             4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+file:kcov fault:          (null) mmap:kcov_mmap readpage:          (null)
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+ zap_pte_range mm/memory.c:1339 [inline]
+ zap_pmd_range mm/memory.c:1441 [inline]
+ zap_pud_range mm/memory.c:1470 [inline]
+ zap_p4d_range mm/memory.c:1491 [inline]
+ unmap_page_range+0xcd8/0x1430 mm/memory.c:1512
+ unmap_single_vma+0x14f/0x2c0 mm/memory.c:1557
+ unmap_vmas+0xe2/0x1a0 mm/memory.c:1587
+ exit_mmap+0x1f9/0x450 mm/mmap.c:3047
+ __mmput kernel/fork.c:961 [inline]
+ mmput+0x52/0x2b0 kernel/fork.c:982
+ exit_mm kernel/exit.c:544 [inline]
+ do_exit+0x6e4/0x2850 kernel/exit.c:852
+ do_group_exit+0xed/0x320 kernel/exit.c:968
+ get_signal+0x5dd/0x1140 kernel/signal.c:2469
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+ prepare_exit_to_usermode arch/x86/entry/common.c:196 [inline]
+ syscall_return_slowpath arch/x86/entry/common.c:265 [inline]
+ do_syscall_64+0x258/0x2c0 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fb47fb58cd8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: fffffffffffffe00 RBX: 000000000073bf08 RCX: 0000000000466039
+RDX: 0000000000000000 RSI: 0000000000000080 RDI: 000000000073bf08
+RBP: 000000000073bf00 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 000000000073bf0c
+R13: 0000000000000000 R14: 000000000073bf00 R15: 00007ffd61918930
+CPU: 1 PID: 24257 Comm: syz-executor.8 Tainted: G    B             4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+ zap_pte_range mm/memory.c:1384 [inline]
+ zap_pmd_range mm/memory.c:1441 [inline]
+ zap_pud_range mm/memory.c:1470 [inline]
+ zap_p4d_range mm/memory.c:1491 [inline]
+ unmap_page_range+0xece/0x1430 mm/memory.c:1512
+ unmap_single_vma+0x14f/0x2c0 mm/memory.c:1557
+ unmap_vmas+0xe2/0x1a0 mm/memory.c:1587
+ exit_mmap+0x1f9/0x450 mm/mmap.c:3047
+ __mmput kernel/fork.c:961 [inline]
+ mmput+0x52/0x2b0 kernel/fork.c:982
+ exit_mm kernel/exit.c:544 [inline]
+ do_exit+0x6e4/0x2850 kernel/exit.c:852
+ do_group_exit+0xed/0x320 kernel/exit.c:968
+ get_signal+0x5dd/0x1140 kernel/signal.c:2469
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+ prepare_exit_to_usermode arch/x86/entry/common.c:196 [inline]
+ syscall_return_slowpath arch/x86/entry/common.c:265 [inline]
+ do_syscall_64+0x258/0x2c0 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fbe82726cd8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: 0000000000000000 RBX: 000000000073bf08 RCX: 0000000000466039
+RDX: 0000000000000000 RSI: 0000000000000080 RDI: 000000000073bf08
+RBP: 000000000073bf00 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 000000000073bf0c
+R13: 0000000000000000 R14: 000000000073bf00 R15: 00007fff7891f230
+swap_info_get: Bad swap file entry 200000008680000
+BUG: Bad page map in process syz-executor.8  pte:21a0000020a pmd:4dfde067
+addr:00000000b652e9b8 vm_flags:100400fb anon_vma:          (null) mapping:000000005485d6a7 index:120
+file:kcov fault:          (null) mmap:kcov_mmap readpage:          (null)
+BUG: unable to handle kernel paging request at ffffebe844000020
+CPU: 1 PID: 24257 Comm: syz-executor.8 Tainted: G    B             4.17.0-rc4 #3
+PGD 0 P4D 0 
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+Oops: 0000 [#1] SMP KASAN PTI
+Dumping ftrace buffer:
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+   (ftrace buffer empty)
+ zap_pte_range mm/memory.c:1384 [inline]
+ zap_pmd_range mm/memory.c:1441 [inline]
+ zap_pud_range mm/memory.c:1470 [inline]
+ zap_p4d_range mm/memory.c:1491 [inline]
+ unmap_page_range+0xece/0x1430 mm/memory.c:1512
+Modules linked in:
+CPU: 0 PID: 1148 Comm: systemd-journal Tainted: G    B             4.17.0-rc4 #3
+ unmap_single_vma+0x14f/0x2c0 mm/memory.c:1557
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+ unmap_vmas+0xe2/0x1a0 mm/memory.c:1587
+RIP: 0010:__read_once_size include/linux/compiler.h:188 [inline]
+RIP: 0010:compound_head include/linux/page-flags.h:142 [inline]
+RIP: 0010:virt_to_head_page include/linux/mm.h:626 [inline]
+RIP: 0010:qlink_to_cache mm/kasan/quarantine.c:127 [inline]
+RIP: 0010:qlist_free_all+0x7b/0xc0 mm/kasan/quarantine.c:163
+ exit_mmap+0x1f9/0x450 mm/mmap.c:3047
+RSP: 0018:ffff8800672e7d50 EFLAGS: 00010286
+RAX: ffffebe844000000 RBX: 0000000000000000 RCX: 0000000180070004
+RDX: 000077ff80000000 RSI: 0000021100000201 RDI: 0000000000000000
+ __mmput kernel/fork.c:961 [inline]
+ mmput+0x52/0x2b0 kernel/fork.c:982
+RBP: 0000021100000201 R08: ffff8800392e0000 R09: 0000000180070004
+ exit_mm kernel/exit.c:544 [inline]
+ do_exit+0x6e4/0x2850 kernel/exit.c:852
+R10: ffff8800672e7c90 R11: 0000000180070000 R12: ffff8800672e7d88
+R13: ffffffff9df1b8b2 R14: 0000000080000000 R15: ffffffff80000000
+FS:  00007fae754f98c0(0000) GS:ffff88006d200000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: ffffebe844000020 CR3: 0000000067ecc004 CR4: 00000000003606f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000600
+Call Trace:
+ do_group_exit+0xed/0x320 kernel/exit.c:968
+ quarantine_reduce+0x13e/0x160 mm/kasan/quarantine.c:259
+ get_signal+0x5dd/0x1140 kernel/signal.c:2469
+ kasan_kmalloc+0xb9/0xd0 mm/kasan/kasan.c:538
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+ slab_post_alloc_hook mm/slab.h:444 [inline]
+ slab_alloc_node mm/slub.c:2741 [inline]
+ slab_alloc mm/slub.c:2749 [inline]
+ kmem_cache_alloc+0xbf/0x190 mm/slub.c:2754
+ getname_flags+0xc5/0x560 fs/namei.c:140
+ getname fs/namei.c:211 [inline]
+ user_path_create fs/namei.c:3664 [inline]
+ do_mkdirat+0x88/0x210 fs/namei.c:3802
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+ prepare_exit_to_usermode arch/x86/entry/common.c:196 [inline]
+ syscall_return_slowpath arch/x86/entry/common.c:265 [inline]
+ do_syscall_64+0x258/0x2c0 arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x7fae747b5687
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RSP: 002b:00007ffffc73c2b8 EFLAGS: 00000293
+RIP: 0033:0x466039
+ ORIG_RAX: 0000000000000053
+RSP: 002b:00007fbe82726cd8 EFLAGS: 00000246
+RAX: ffffffffffffffda RBX: 00007ffffc73f1d0 RCX: 00007fae747b5687
+ ORIG_RAX: 00000000000000ca
+RDX: 00007fae75226a00 RSI: 00000000000001ed RDI: 0000563fedabe8c0
+RAX: 0000000000000000 RBX: 000000000073bf08 RCX: 0000000000466039
+RBP: 00007ffffc73c2f0 R08: 0000000000000000 R09: 0000000000000000
+RDX: 0000000000000000 RSI: 0000000000000080 RDI: 000000000073bf08
+R10: 0000000000000069 R11: 0000000000000293 R12: 0000000000000000
+RBP: 000000000073bf00 R08: 0000000000000000 R09: 0000000000000000
+R13: 0000000000000000 R14: 00007ffffc73f1d0 R15: 00007ffffc73c7e0
+R10: 0000000000000000 R11: 0000000000000246 R12: 000000000073bf0c
+Code: 
+R13: 0000000000000000 R14: 000000000073bf00 R15: 00007fff7891f230
+85 
+swap_info_get: Bad swap file entry 14008041f35c0000
+db 48 89 df 75 db 48 89 f0 4c 01 f0 72 
+BUG: Bad page map in process syz-executor.8  pte:20107cd70000142a pmd:4dfde067
+56 4c 89 fa 48 2b 15 6f b7 62 02 48 01 d0 48 c1 e8 
+addr:000000000f103009 vm_flags:100400fb anon_vma:          (null) mapping:000000005485d6a7 index:121
+0c 48 c1 e0 06 48 03 05 4d b7 62 02 <48> 
+file:kcov fault:          (null) mmap:kcov_mmap readpage:          (null)
+8b 50 20 48 8d 4a ff 83 e2 01 48 0f 45 c1 
+CPU: 1 PID: 24257 Comm: syz-executor.8 Tainted: G    B             4.17.0-rc4 #3
+48 
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+8b 
+Call Trace:
+78 
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+30 
+eb 
+ print_bad_pte+0x53f/0x770 mm/memory.c:774
+a2 
+ zap_pte_range mm/memory.c:1384 [inline]
+ zap_pmd_range mm/memory.c:1441 [inline]
+ zap_pud_range mm/memory.c:1470 [inline]
+ zap_p4d_range mm/memory.c:1491 [inline]
+ unmap_page_range+0xece/0x1430 mm/memory.c:1512
+RIP: __read_once_size include/linux/compiler.h:188 [inline] RSP: ffff8800672e7d50
+RIP: compound_head include/linux/page-flags.h:142 [inline] RSP: ffff8800672e7d50
+RIP: virt_to_head_page include/linux/mm.h:626 [inline] RSP: ffff8800672e7d50
+RIP: qlink_to_cache mm/kasan/quarantine.c:127 [inline] RSP: ffff8800672e7d50
+RIP: qlist_free_all+0x7b/0xc0 mm/kasan/quarantine.c:163 RSP: ffff8800672e7d50
+ unmap_single_vma+0x14f/0x2c0 mm/memory.c:1557
+CR2: ffffebe844000020
+ unmap_vmas+0xe2/0x1a0 mm/memory.c:1587
+---[ end trace 9cc2b531e32ac14a ]---
+ exit_mmap+0x1f9/0x450 mm/mmap.c:3047

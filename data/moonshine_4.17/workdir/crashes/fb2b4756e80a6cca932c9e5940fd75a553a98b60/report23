@@ -1,0 +1,31 @@
+audit: type=1400 audit(1579289810.203:15): avc:  denied  { create } for  pid=8710 comm="syz-executor.12" name="5" scontext=system_u:system_r:kernel_t:s0 tcontext=system_u:object_r:kernel_t:s0 tclass=file permissive=1
+systemd: 38 output lines suppressed due to ratelimiting
+Kernel panic - not syncing: Attempted to kill init! exitcode=0x0000000b
+
+CPU: 0 PID: 1 Comm: systemd Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ panic+0x1cb/0x3ba kernel/panic.c:184
+ find_child_reaper kernel/exit.c:578 [inline]
+ forget_original_parent kernel/exit.c:670 [inline]
+ exit_notify kernel/exit.c:706 [inline]
+ do_exit+0x21ff/0x2850 kernel/exit.c:885
+ do_group_exit+0xed/0x320 kernel/exit.c:968
+ get_signal+0x5dd/0x1140 kernel/signal.c:2469
+ do_signal+0x8f/0x16d0 arch/x86/kernel/signal.c:810
+ exit_to_usermode_loop+0xfa/0x130 arch/x86/entry/common.c:162
+ prepare_exit_to_usermode+0x120/0x150 arch/x86/entry/common.c:196
+ retint_user+0x8/0x8
+RIP: 0033:0x7fbddeab8f10
+RSP: 002b:00007ffe8faac378 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: 0000000000000000 RCX: 00007fbddeadd0ba
+RDX: 00007ffe8faac500 RSI: 00007ffe8faac630 RDI: 0000000000000007
+RBP: 0000000000000007 R08: 0000000000000001 R09: 0000000000000070
+R10: 0000000000000063 R11: 0000000000000206 R12: 000055b727169a70
+R13: 00007ffe902aa248 R14: 000055b727155c40 R15: 000055b7270f6ce0
+Dumping ftrace buffer:
+   (ftrace buffer empty)
+Kernel Offset: 0x17a00000 from 0xffffffff81000000 (relocation range: 0xffffffff80000000-0xffffffffbfffffff)
+Rebooting in 1 seconds..

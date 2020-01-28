@@ -1,0 +1,61 @@
+audit: type=1400 audit(1579290176.688:37): avc:  denied  { create } for  pid=15361 comm="syz-executor.1" scontext=system_u:system_r:kernel_t:s0 tcontext=system_u:system_r:kernel_t:s0 tclass=dccp_socket permissive=1
+devpts: called with bogus options
+INFO: rcu_sched self-detected stall on CPU
+	1-...!: (20999 ticks this GP) idle=c56/1/4611686018427387906 softirq=35585/35585 fqs=10 
+	 (t=21000 jiffies g=11909 c=11908 q=145)
+rcu_sched kthread starved for 20957 jiffies! g11909 c11908 f0x0 RCU_GP_WAIT_FQS(3) ->state=0x0 ->cpu=1
+RCU grace-period kthread stack dump:
+rcu_sched       R  running task    29816     9      2 0x80000000
+Call Trace:
+ schedule+0x70/0x190 kernel/sched/core.c:3549
+ schedule_timeout+0x333/0x9b0 kernel/time/timer.c:1801
+ rcu_gp_kthread+0xe2e/0x2c80 kernel/rcu/tree.c:2231
+ kthread+0x2f4/0x3b0 kernel/kthread.c:238
+ ret_from_fork+0x35/0x40 arch/x86/entry/entry_64.S:412
+NMI backtrace for cpu 1
+CPU: 1 PID: 1974 Comm: syz-executor.5 Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ <IRQ>
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ nmi_cpu_backtrace+0x153/0x170 lib/nmi_backtrace.c:103
+ nmi_trigger_cpumask_backtrace+0xf9/0x150 lib/nmi_backtrace.c:62
+ trigger_single_cpu_backtrace include/linux/nmi.h:156 [inline]
+ rcu_dump_cpu_stacks+0x17d/0x1cb kernel/rcu/tree.c:1376
+ print_cpu_stall kernel/rcu/tree.c:1525 [inline]
+ check_cpu_stall kernel/rcu/tree.c:1593 [inline]
+ __rcu_pending kernel/rcu/tree.c:3356 [inline]
+ rcu_pending kernel/rcu/tree.c:3401 [inline]
+ rcu_check_callbacks+0xd6f/0x1ba0 kernel/rcu/tree.c:2763
+ update_process_times+0x28/0x60 kernel/time/timer.c:1636
+ tick_sched_handle+0xe6/0x150 kernel/time/tick-sched.c:164
+ tick_sched_timer+0x40/0x110 kernel/time/tick-sched.c:1274
+ __run_hrtimer kernel/time/hrtimer.c:1398 [inline]
+ __hrtimer_run_queues+0x31a/0x780 kernel/time/hrtimer.c:1460
+ hrtimer_interrupt+0x2af/0x6f0 kernel/time/hrtimer.c:1518
+ local_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1025 [inline]
+ smp_apic_timer_interrupt+0xb9/0x2e0 arch/x86/kernel/apic/apic.c:1050
+ apic_timer_interrupt+0xf/0x20 arch/x86/entry/entry_64.S:863
+ </IRQ>
+RIP: 0010:_raw_spin_lock+0x0/0x30 kernel/locking/spinlock.c:143
+RSP: 0018:ffff880042b57ca8 EFLAGS: 00000293 ORIG_RAX: ffffffffffffff13
+RAX: ffff880068612a00 RBX: ffff880060a61b00 RCX: ffffffff9ad7e88e
+RDX: 0000000000000000 RSI: ffff880042b57d50 RDI: ffff880060a61b58
+RBP: dffffc0000000000 R08: ffffed000c10c12c R09: ffffed000c10c12c
+R10: 0000000000000001 R11: ffffed000c10c12b R12: ffff880042b57d58
+R13: 1ffff1000856afa6 R14: ffff88006082d828 R15: ffff880060a61b00
+ spin_lock include/linux/spinlock.h:310 [inline]
+ d_walk+0x78/0x5a0 fs/dcache.c:1250
+ shrink_dcache_parent+0xa6/0xf0 fs/dcache.c:1486
+ vfs_rmdir+0x1cc/0x440 fs/namei.c:3850
+ do_rmdir+0x2dc/0x380 fs/namei.c:3911
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x465c87
+RSP: 002b:00007fff3d4325d8 EFLAGS: 00000207 ORIG_RAX: 0000000000000054
+RAX: ffffffffffffffda RBX: 0000000000000065 RCX: 0000000000465c87
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 00007fff3d433730
+RBP: 0000000000000000 R08: 00000000010efc7b R09: 000000000000000f
+R10: 00000000fffffff6 R11: 0000000000000207 R12: 00007fff3d433730
+R13: 00000000010efbe0 R14: 0000000000000002 R15: 00000000ffffffff

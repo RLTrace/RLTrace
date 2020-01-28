@@ -1,0 +1,39 @@
+FAT-fs (loop5): Unrecognized mount option "†xÁâÚ˘ñúÒ¢äâ.òÖ˝®*W6∫∆i—©æ@Ö2ß”˚‡öGÿ˚.≈®¬é VW¬õ‰£4#9w€∏°pœóá¯gEºp5M≤†ëjgâ®ê≠" or missing value
+------------[ cut here ]------------
+Unexpected user alpha2: ∆
+WARNING: CPU: 0 PID: 4 at net/wireless/reg.c:418 is_user_regdom_saved net/wireless/reg.c:416 [inline]
+WARNING: CPU: 0 PID: 4 at net/wireless/reg.c:418 restore_alpha2 net/wireless/reg.c:3107 [inline]
+WARNING: CPU: 0 PID: 4 at net/wireless/reg.c:418 restore_regulatory_settings+0x180/0xde0 net/wireless/reg.c:3199
+Kernel panic - not syncing: panic_on_warn set ...
+
+CPU: 0 PID: 4 Comm: kworker/0:0 Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Workqueue: events_power_efficient crda_timeout_work
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ panic+0x1cb/0x3ba kernel/panic.c:184
+ __warn+0x1d9/0x1f0 kernel/panic.c:536
+ report_bug+0x1ee/0x2b0 lib/bug.c:186
+ fixup_bug.part.9+0x32/0x80 arch/x86/kernel/traps.c:178
+ fixup_bug arch/x86/kernel/traps.c:247 [inline]
+ do_error_trap+0x1af/0x1f0 arch/x86/kernel/traps.c:296
+ invalid_op+0x14/0x20 arch/x86/entry/entry_64.S:992
+RIP: 0010:is_user_regdom_saved net/wireless/reg.c:416 [inline]
+RIP: 0010:restore_alpha2 net/wireless/reg.c:3107 [inline]
+RIP: 0010:restore_regulatory_settings+0x180/0xde0 net/wireless/reg.c:3199
+RSP: 0000:ffff88006c437cc8 EFLAGS: 00010282
+RAX: 0000000000000000 RBX: 0000000000000018 RCX: ffffffffaca13419
+RDX: 0000000000000000 RSI: 0000000000000008 RDI: ffff88006d2250ec
+RBP: 0000000000000001 R08: ffffed000da44c5b R09: ffffed000da44c5b
+R10: 0000000000000001 R11: ffffed000da44c5a R12: 00000000000000c6
+R13: 1ffff1000d886f9e R14: 0000000000000018 R15: ffff88006cc15a00
+ crda_timeout_work+0x1b/0x20 net/wireless/reg.c:526
+ process_one_work+0x88c/0x12a0 kernel/workqueue.c:2145
+ worker_thread+0xd3/0xf80 kernel/workqueue.c:2279
+ kthread+0x2f4/0x3b0 kernel/kthread.c:238
+ ret_from_fork+0x35/0x40 arch/x86/entry/entry_64.S:412
+Dumping ftrace buffer:
+   (ftrace buffer empty)
+Kernel Offset: 0x2b800000 from 0xffffffff81000000 (relocation range: 0xffffffff80000000-0xffffffffbfffffff)
+Rebooting in 1 seconds..

@@ -1,0 +1,59 @@
+INFO: rcu_sched self-detected stall on CPU
+	1-...!: (20862 ticks this GP) idle=872/1/4611686018427387906 softirq=163166/163175 fqs=0 
+	 (t=21000 jiffies g=71498 c=71497 q=1049)
+rcu_sched kthread starved for 21000 jiffies! g71498 c71497 f0x0 RCU_GP_WAIT_FQS(3) ->state=0x0 ->cpu=0
+RCU grace-period kthread stack dump:
+rcu_sched       R  running task    29816     9      2 0x80000000
+Call Trace:
+ schedule+0x70/0x190 kernel/sched/core.c:3549
+ schedule_timeout+0x333/0x9b0 kernel/time/timer.c:1801
+ rcu_gp_kthread+0xe2e/0x2c80 kernel/rcu/tree.c:2231
+ kthread+0x2f4/0x3b0 kernel/kthread.c:238
+ ret_from_fork+0x35/0x40 arch/x86/entry/entry_64.S:412
+NMI backtrace for cpu 1
+CPU: 1 PID: 1960 Comm: syz-executor.6 Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ <IRQ>
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ nmi_cpu_backtrace+0x153/0x170 lib/nmi_backtrace.c:103
+ nmi_trigger_cpumask_backtrace+0xf9/0x150 lib/nmi_backtrace.c:62
+ trigger_single_cpu_backtrace include/linux/nmi.h:156 [inline]
+ rcu_dump_cpu_stacks+0x17d/0x1cb kernel/rcu/tree.c:1376
+ print_cpu_stall kernel/rcu/tree.c:1525 [inline]
+ check_cpu_stall kernel/rcu/tree.c:1593 [inline]
+ __rcu_pending kernel/rcu/tree.c:3356 [inline]
+ rcu_pending kernel/rcu/tree.c:3401 [inline]
+ rcu_check_callbacks+0xd6f/0x1ba0 kernel/rcu/tree.c:2763
+ update_process_times+0x28/0x60 kernel/time/timer.c:1636
+ tick_sched_handle+0xe6/0x150 kernel/time/tick-sched.c:164
+ tick_sched_timer+0x40/0x110 kernel/time/tick-sched.c:1274
+ __run_hrtimer kernel/time/hrtimer.c:1398 [inline]
+ __hrtimer_run_queues+0x31a/0x780 kernel/time/hrtimer.c:1460
+ hrtimer_interrupt+0x2af/0x6f0 kernel/time/hrtimer.c:1518
+ local_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1025 [inline]
+ smp_apic_timer_interrupt+0xb9/0x2e0 arch/x86/kernel/apic/apic.c:1050
+ apic_timer_interrupt+0xf/0x20 arch/x86/entry/entry_64.S:863
+ </IRQ>
+RIP: 0010:get_current arch/x86/include/asm/current.h:15 [inline]
+RIP: 0010:__sanitizer_cov_trace_pc+0x0/0x50 kernel/kcov.c:100
+RSP: 0018:ffff880047597ca8 EFLAGS: 00000246 ORIG_RAX: ffffffffffffff13
+RAX: ffff8800666e8000 RBX: ffff88006461b9a0 RCX: ffffffff92b7e9df
+RDX: 0000000000000000 RSI: ffff880060970400 RDI: ffff880047597d68
+RBP: dffffc0000000000 R08: ffffed000c12e08c R09: ffffed000c12e08c
+R10: 0000000000000001 R11: ffffed000c12e08b R12: ffff880060970400
+R13: ffff88006461b9a0 R14: ffff88006461b900 R15: ffff880060970458
+ d_walk+0x1cd/0x5a0 fs/dcache.c:1305
+ shrink_dcache_parent+0xa6/0xf0 fs/dcache.c:1486
+ vfs_rmdir+0x1cc/0x440 fs/namei.c:3850
+ do_rmdir+0x2dc/0x380 fs/namei.c:3911
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x465c87
+RSP: 002b:00007ffd20e918c8 EFLAGS: 00000207 ORIG_RAX: 0000000000000054
+RAX: ffffffffffffffda RBX: 0000000000000065 RCX: 0000000000465c87
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 00007ffd20e92a20
+RBP: 0000000000000000 R08: 0000000000e71c7b R09: 0000000000000010
+R10: 00000000fffffff6 R11: 0000000000000207 R12: 00007ffd20e92a20
+R13: 0000000000e71be0 R14: 000000000000000a R15: 00000000ffffffff

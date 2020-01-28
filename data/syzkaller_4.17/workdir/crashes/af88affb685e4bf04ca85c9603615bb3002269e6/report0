@@ -1,0 +1,86 @@
+==================================================================
+BUG: KASAN: use-after-free in p9_poll_mux net/9p/trans_fd.c:645 [inline]
+BUG: KASAN: use-after-free in p9_poll_workfn+0x347/0x3f0 net/9p/trans_fd.c:1117
+Read of size 4 at addr ffff88002e98e304 by task kworker/1:2/1005
+
+CPU: 1 PID: 1005 Comm: kworker/1:2 Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Workqueue: events p9_poll_workfn
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x8c/0xce lib/dump_stack.c:113
+ print_address_description+0x65/0x270 mm/kasan/report.c:256
+ kasan_report_error mm/kasan/report.c:354 [inline]
+ kasan_report+0x253/0x380 mm/kasan/report.c:412
+ p9_poll_mux net/9p/trans_fd.c:645 [inline]
+ p9_poll_workfn+0x347/0x3f0 net/9p/trans_fd.c:1117
+ process_one_work+0x88c/0x12a0 kernel/workqueue.c:2145
+ worker_thread+0xd3/0xf80 kernel/workqueue.c:2279
+ kthread+0x2f4/0x3b0 kernel/kthread.c:238
+ ret_from_fork+0x35/0x40 arch/x86/entry/entry_64.S:412
+
+Allocated by task 19385:
+ set_track mm/kasan/kasan.c:460 [inline]
+ kasan_kmalloc+0xa0/0xd0 mm/kasan/kasan.c:553
+ kmem_cache_alloc_trace+0x69/0x180 mm/slub.c:2768
+ kmalloc include/linux/slab.h:512 [inline]
+ kzalloc include/linux/slab.h:701 [inline]
+ p9_fd_open net/9p/trans_fd.c:806 [inline]
+ p9_fd_create+0x147/0x3f0 net/9p/trans_fd.c:1046
+ p9_client_create+0x7fd/0x1230 net/9p/client.c:1065
+ v9fs_session_init+0x20d/0x1370 fs/9p/v9fs.c:405
+ v9fs_mount+0x7d/0x7e0 fs/9p/vfs_super.c:135
+ mount_fs+0x66/0x2c0 fs/super.c:1267
+ vfs_kern_mount.part.26+0x5e/0x310 fs/namespace.c:1037
+ vfs_kern_mount fs/namespace.c:2515 [inline]
+ do_new_mount fs/namespace.c:2518 [inline]
+ do_mount+0xc30/0x2550 fs/namespace.c:2848
+ ksys_mount+0xa8/0x120 fs/namespace.c:3064
+ __do_sys_mount fs/namespace.c:3078 [inline]
+ __se_sys_mount fs/namespace.c:3075 [inline]
+ __x64_sys_mount+0xba/0x150 fs/namespace.c:3075
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+
+Freed by task 19385:
+ set_track mm/kasan/kasan.c:460 [inline]
+ __kasan_slab_free+0x130/0x180 mm/kasan/kasan.c:521
+ slab_free_hook mm/slub.c:1388 [inline]
+ slab_free_freelist_hook mm/slub.c:1415 [inline]
+ slab_free mm/slub.c:2988 [inline]
+ kfree+0x8b/0x1a0 mm/slub.c:3944
+ p9_fd_close+0x2f8/0x3e0 net/9p/trans_fd.c:903
+ p9_client_create+0x931/0x1230 net/9p/client.c:1079
+ v9fs_session_init+0x20d/0x1370 fs/9p/v9fs.c:405
+ v9fs_mount+0x7d/0x7e0 fs/9p/vfs_super.c:135
+ mount_fs+0x66/0x2c0 fs/super.c:1267
+ vfs_kern_mount.part.26+0x5e/0x310 fs/namespace.c:1037
+ vfs_kern_mount fs/namespace.c:2515 [inline]
+ do_new_mount fs/namespace.c:2518 [inline]
+ do_mount+0xc30/0x2550 fs/namespace.c:2848
+ ksys_mount+0xa8/0x120 fs/namespace.c:3064
+ __do_sys_mount fs/namespace.c:3078 [inline]
+ __se_sys_mount fs/namespace.c:3075 [inline]
+ __x64_sys_mount+0xba/0x150 fs/namespace.c:3075
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+
+The buggy address belongs to the object at ffff88002e98e280
+ which belongs to the cache kmalloc-512 of size 512
+The buggy address is located 132 bytes inside of
+ 512-byte region [ffff88002e98e280, ffff88002e98e480)
+The buggy address belongs to the page:
+page:ffffea0000ba6380 count:1 mapcount:0 mapping:0000000000000000 index:0x0 compound_mapcount: 0
+flags: 0x100000000008100(slab|head)
+raw: 0100000000008100 0000000000000000 0000000000000000 00000001000c000c
+raw: dead000000000100 dead000000000200 ffff88006cc01280 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff88002e98e200: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+ ffff88002e98e280: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+>ffff88002e98e300: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                   ^
+ ffff88002e98e380: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff88002e98e400: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+==================================================================

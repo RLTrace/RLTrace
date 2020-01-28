@@ -1,0 +1,68 @@
+perf: interrupt took too long (82114 > 41090), lowering kernel.perf_event_max_sample_rate to 2000
+audit: type=1326 audit(1579115668.906:16): auid=0 uid=0 gid=0 ses=4 subj=system_u:system_r:kernel_t:s0 pid=9971 comm="syz-executor.0" exe="/syz-executor.0" sig=9 arch=c000003e syscall=228 compat=0 ip=0x467dc7 code=0x0
+rcu: INFO: rcu_sched self-detected stall on CPU
+rcu: 	0-....: (20964 ticks this GP) idle=be2/1/0x4000000000000002 softirq=25480/25480 fqs=5238 
+	(t=21007 jiffies g=32645 q=1854)
+NMI backtrace for cpu 0
+CPU: 0 PID: 9978 Comm: syz-executor.5 Not tainted 5.5.0-rc6 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ <IRQ>
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x94/0xce lib/dump_stack.c:118
+ nmi_cpu_backtrace+0x123/0x140 lib/nmi_backtrace.c:101
+ nmi_trigger_cpumask_backtrace+0x174/0x1e0 lib/nmi_backtrace.c:62
+ trigger_single_cpu_backtrace include/linux/nmi.h:164 [inline]
+ rcu_dump_cpu_stacks+0x16c/0x1c9 kernel/rcu/tree_stall.h:254
+ print_cpu_stall kernel/rcu/tree_stall.h:455 [inline]
+ check_cpu_stall kernel/rcu/tree_stall.h:529 [inline]
+ rcu_pending kernel/rcu/tree.c:2827 [inline]
+ rcu_sched_clock_irq+0xd99/0x15f0 kernel/rcu/tree.c:2271
+ update_process_times+0x24/0x50 kernel/time/timer.c:1726
+ tick_sched_handle+0xe6/0x150 kernel/time/tick-sched.c:167
+ tick_sched_timer+0x40/0x110 kernel/time/tick-sched.c:1310
+ __run_hrtimer kernel/time/hrtimer.c:1517 [inline]
+ __hrtimer_run_queues+0x31a/0x7f0 kernel/time/hrtimer.c:1579
+ hrtimer_interrupt+0x2af/0x6f0 kernel/time/hrtimer.c:1641
+ local_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1110 [inline]
+ smp_apic_timer_interrupt+0xd4/0x340 arch/x86/kernel/apic/apic.c:1135
+ apic_timer_interrupt+0xf/0x20 arch/x86/entry/entry_64.S:829
+ </IRQ>
+RIP: 0010:bytes_is_nonzero mm/kasan/generic.c:92 [inline]
+RIP: 0010:memory_is_nonzero mm/kasan/generic.c:109 [inline]
+RIP: 0010:memory_is_poisoned_n mm/kasan/generic.c:135 [inline]
+RIP: 0010:memory_is_poisoned mm/kasan/generic.c:166 [inline]
+RIP: 0010:check_memory_region_inline mm/kasan/generic.c:182 [inline]
+RIP: 0010:check_memory_region+0x64/0x1a0 mm/kasan/generic.c:192
+Code: 49 c1 eb 03 4d 01 cb 49 01 c1 49 8d 6b 01 4d 89 c8 49 89 ea 4d 29 ca 49 83 fa 10 7f 49 4d 85 d2 0f 84 bf 00 00 00 41 80 39 00 <75> 26 49 b8 01 00 00 00 00 fc ff df 4d 01 d1 4c 01 c0 49 39 c1 49
+RSP: 0018:ffff88806b54f7e8 EFLAGS: 00000246 ORIG_RAX: ffffffffffffff13
+RAX: 1ffff1100c944572 RBX: ffff888064a22b97 RCX: ffffffffaed0ec9f
+RDX: 0000000000000001 RSI: 0000000000000008 RDI: ffff888064a22b90
+RBP: ffffed100c944573 R08: ffffed100c944572 R09: ffffed100c944572
+R10: 0000000000000001 R11: ffffed100c944572 R12: ffffed100c917b38
+R13: ffff8880648bd9c0 R14: ffff888067a76160 R15: ffff888064a22b80
+ paste_selection+0x18f/0x340 drivers/tty/vt/selection.c:365
+ tioclinux+0x201/0x430 drivers/tty/vt/vt.c:3044
+ vt_ioctl+0x1306/0x2500 drivers/tty/vt/vt_ioctl.c:364
+ tty_ioctl+0x27d/0x1370 drivers/tty/tty_io.c:2660
+ vfs_ioctl fs/ioctl.c:47 [inline]
+ do_vfs_ioctl+0x1a0/0x1010 fs/ioctl.c:734
+ ksys_ioctl+0x84/0x90 fs/ioctl.c:749
+ __do_sys_ioctl fs/ioctl.c:756 [inline]
+ __se_sys_ioctl fs/ioctl.c:754 [inline]
+ __x64_sys_ioctl+0x6f/0xb0 fs/ioctl.c:754
+ do_syscall_64+0x9a/0x360 arch/x86/entry/common.c:294
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+Code: f7 d8 64 89 02 b8 ff ff ff ff c3 66 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 bc ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007fe2c539cc58 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+RAX: ffffffffffffffda RBX: 000000000073c050 RCX: 0000000000466039
+RDX: 0000000020000040 RSI: 000000000000541c RDI: 0000000000000008
+RBP: 0000000000000003 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007fe2c539d6bc
+R13: 00000000004c4f2d R14: 0000000000706358 R15: 00000000ffffffff
+rcu: INFO: rcu_sched detected expedited stalls on CPUs/tasks: { 0-... } 21494 jiffies s: 357 root: 0x1/.
+rcu: blocking rcu_node structures:
+Task dump for CPU 0:
+syz-executor.5  R  running task    29344  9978   2101 0x8000000c
+Call Trace:

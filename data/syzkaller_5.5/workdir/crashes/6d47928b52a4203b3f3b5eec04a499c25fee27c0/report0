@@ -1,0 +1,64 @@
+kasan: CONFIG_KASAN_INLINE enabled
+kasan: GPF could be caused by NULL-ptr deref or user memory access
+general protection fault: 0000 [#1] SMP KASAN PTI
+CPU: 0 PID: 2049 Comm: syz-executor.4 Not tainted 5.5.0-rc6 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+RIP: 0010:__list_del include/linux/list.h:105 [inline]
+RIP: 0010:__list_del_entry include/linux/list.h:134 [inline]
+RIP: 0010:list_move_tail include/linux/list.h:213 [inline]
+RIP: 0010:rwsem_mark_wake+0x242/0xa10 kernel/locking/rwsem.c:507
+Code: 07 00 00 48 8d 7b 08 48 8b 13 48 89 f8 48 c1 e8 03 80 3c 28 00 0f 85 46 07 00 00 48 8d 7a 08 4c 8b 63 08 49 89 fa 49 c1 ea 03 <41> 80 3c 2a 00 0f 85 26 06 00 00 4c 89 e7 4c 89 62 08 48 c1 ef 03
+RSP: 0018:ffff88804296f710 EFLAGS: 00010002
+RAX: 1ffff11000020f07 RBX: ffff888000107830 RCX: ffff8880656d6788
+RDX: 0720072007200720 RSI: 0000000000000001 RDI: 0720072007200728
+RBP: dffffc0000000000 R08: ffff8880656d67a0 R09: 0000000000000100
+R10: 00e400e400e400e5 R11: ffffed100cadacf2 R12: 0720072007200720
+R13: 0720072007200720 R14: ffff88804296f768 R15: ffff888000107830
+FS:  0000000001a72940(0000) GS:ffff88806d200000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000a7266a CR3: 0000000042964006 CR4: 00000000003606f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000600
+Call Trace:
+ rwsem_down_write_slowpath+0xa5b/0xd10 kernel/locking/rwsem.c:1192
+ __down_write kernel/locking/rwsem.c:1392 [inline]
+ down_write+0x105/0x120 kernel/locking/rwsem.c:1535
+ i_mmap_lock_write include/linux/fs.h:526 [inline]
+ dup_mmap kernel/fork.c:571 [inline]
+ dup_mm.isra.55+0x5d6/0x1100 kernel/fork.c:1360
+ copy_mm kernel/fork.c:1416 [inline]
+ copy_process+0x2505/0x5920 kernel/fork.c:2072
+ _do_fork+0x100/0x940 kernel/fork.c:2421
+ __do_sys_clone kernel/fork.c:2576 [inline]
+ __se_sys_clone kernel/fork.c:2557 [inline]
+ __x64_sys_clone+0x184/0x210 kernel/fork.c:2557
+ do_syscall_64+0x9a/0x360 arch/x86/entry/common.c:294
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x4644e4
+Code: c5 45 85 f6 0f 85 2c 02 00 00 64 4c 8b 04 25 10 00 00 00 31 d2 4d 8d 90 d0 02 00 00 31 f6 bf 11 00 20 01 b8 38 00 00 00 0f 05 <48> 3d 00 f0 ff ff 0f 87 58 01 00 00 85 c0 41 89 c4 0f 85 65 01 00
+RSP: 002b:00007ffc97abd4b0 EFLAGS: 00000246 ORIG_RAX: 0000000000000038
+RAX: ffffffffffffffda RBX: 00007ffc97abd4b0 RCX: 00000000004644e4
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000001200011
+RBP: 00007ffc97abd510 R08: 0000000001a72940 R09: 0000000000000000
+R10: 0000000001a72c10 R11: 0000000000000246 R12: 0000000000000000
+R13: 0000000000000020 R14: 0000000000000000 R15: 0000000000000004
+Modules linked in:
+Dumping ftrace buffer:
+   (ftrace buffer empty)
+---[ end trace cb5662e73c1fcbe8 ]---
+RIP: 0010:__list_del include/linux/list.h:105 [inline]
+RIP: 0010:__list_del_entry include/linux/list.h:134 [inline]
+RIP: 0010:list_move_tail include/linux/list.h:213 [inline]
+RIP: 0010:rwsem_mark_wake+0x242/0xa10 kernel/locking/rwsem.c:507
+Code: 07 00 00 48 8d 7b 08 48 8b 13 48 89 f8 48 c1 e8 03 80 3c 28 00 0f 85 46 07 00 00 48 8d 7a 08 4c 8b 63 08 49 89 fa 49 c1 ea 03 <41> 80 3c 2a 00 0f 85 26 06 00 00 4c 89 e7 4c 89 62 08 48 c1 ef 03
+RSP: 0018:ffff88804296f710 EFLAGS: 00010002
+RAX: 1ffff11000020f07 RBX: ffff888000107830 RCX: ffff8880656d6788
+RDX: 0720072007200720 RSI: 0000000000000001 RDI: 0720072007200728
+RBP: dffffc0000000000 R08: ffff8880656d67a0 R09: 0000000000000100
+R10: 00e400e400e400e5 R11: ffffed100cadacf2 R12: 0720072007200720
+R13: 0720072007200720 R14: ffff88804296f768 R15: ffff888000107830
+FS:  0000000001a72940(0000) GS:ffff88806d200000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000a7266a CR3: 0000000042964006 CR4: 00000000003606f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000600

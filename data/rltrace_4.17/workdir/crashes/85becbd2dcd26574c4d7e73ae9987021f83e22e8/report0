@@ -1,0 +1,50 @@
+FAT-fs (loop5): bogus number of reserved sectors
+FAT-fs (loop5): Can't find a valid FAT filesystem
+SELinux:  Invalid class 0
+------------[ cut here ]------------
+kernel BUG at security/selinux/avc.c:147!
+invalid opcode: 0000 [#1] SMP KASAN PTI
+Dumping ftrace buffer:
+   (ftrace buffer empty)
+Modules linked in:
+CPU: 1 PID: 1168 Comm: systemd-udevd Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+RIP: 0010:avc_dump_av security/selinux/avc.c:147 [inline]
+RIP: 0010:avc_audit_pre_callback+0x23b/0x290 security/selinux/avc.c:740
+RSP: 0018:ffff88006c1af830 EFLAGS: 00010293
+RAX: ffff88006c124600 RBX: 0000000000000000 RCX: ffffffff9eff41db
+RDX: 0000000000000000 RSI: 000000000000000d RDI: ffff88006c1afa70
+RBP: ffffffffa0d18940 R08: ffffed000d29d777 R09: ffffed000d29d777
+R10: ffff88006c1af9f8 R11: ffffed000d29d776 R12: 0000000000000010
+R13: ffff880067a80050 R14: ffffffff9eff3b90 R15: ffff880067a80050
+FS:  00007ff5725178c0(0000) GS:ffff88006d300000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00005643dab9ce60 CR3: 000000006c148002 CR4: 00000000003606e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ common_lsm_audit+0x11d/0x1e20 security/lsm_audit.c:457
+ slow_avc_audit+0x15c/0x1f0 security/selinux/avc.c:802
+ avc_audit security/selinux/include/avc.h:138 [inline]
+ avc_has_perm+0x341/0x3b0 security/selinux/avc.c:1187
+ inode_has_perm.isra.38+0x108/0x170 security/selinux/hooks.c:1811
+ path_has_perm security/selinux/hooks.c:1844 [inline]
+ selinux_inode_getattr+0x16a/0x200 security/selinux/hooks.c:3226
+ security_inode_getattr+0xc5/0x130 security/security.c:723
+ vfs_getattr+0x21/0x50 fs/stat.c:113
+ vfs_statx+0x100/0x180 fs/stat.c:189
+ vfs_lstat include/linux/fs.h:3083 [inline]
+ __do_sys_newlstat+0x81/0x100 fs/stat.c:350
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x7ff57138a335
+RSP: 002b:00007fff42a018e8 EFLAGS: 00000246 ORIG_RAX: 0000000000000006
+RAX: ffffffffffffffda RBX: 00005643dab9c830 RCX: 00007ff57138a335
+RDX: 00007fff42a01920 RSI: 00007fff42a01920 RDI: 00005643dab9b830
+RBP: 00007fff42a019e0 R08: 00007ff5716491a8 R09: 0000000000001010
+R10: 0000000000000020 R11: 0000000000000246 R12: 00005643dab9b830
+R13: 00005643dab9b856 R14: 00005643dab88fb1 R15: 00005643dab88fb6
+Code: c7 c6 c0 8a d1 a0 4c 89 ff e8 72 7c 90 ff eb b1 e8 3b de 92 ff 48 c7 c6 00 8a d1 a0 4c 89 ff e8 5c 7c 90 ff eb af e8 25 de 92 ff <0f> 0b e8 4e 72 b2 ff e9 cc fe ff ff 48 89 df e8 61 72 b2 ff e9 
+RIP: avc_dump_av security/selinux/avc.c:147 [inline] RSP: ffff88006c1af830
+RIP: avc_audit_pre_callback+0x23b/0x290 security/selinux/avc.c:740 RSP: ffff88006c1af830
+---[ end trace f7e9ad04b8ff5904 ]---

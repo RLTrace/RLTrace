@@ -1,0 +1,46 @@
+kasan: CONFIG_KASAN_INLINE enabled
+kasan: GPF could be caused by NULL-ptr deref or user memory access
+general protection fault: 0000 [#1] SMP KASAN PTI
+Dumping ftrace buffer:
+   (ftrace buffer empty)
+Modules linked in:
+CPU: 0 PID: 22187 Comm: syz-executor.10 Not tainted 4.17.0-rc4 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+RIP: 0010:write_cr3 arch/x86/include/asm/paravirt.h:72 [inline]
+RIP: 0010:load_new_mm_cr3+0x65/0x210 arch/x86/mm/tlb.c:120
+RSP: 0018:ffff880032db77f0 EFLAGS: 00010006
+RAX: dffffc0000000000 RBX: 0000000080000000 RCX: 0000000000000003
+RDX: 000077ff80000000 RSI: 0000000000000003 RDI: 0000780000000003
+RBP: ffff8800340e5b00 R08: 0000000000029180 R09: 0000000000000000
+R10: 0000000000000001 R11: ffffed000681c97e R12: ffff8800340e4be8
+R13: 0000000000000002 R14: 0000000000000002 R15: 0000000000000002
+FS:  00007fa7fc256700(0000) GS:ffff88006d200000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000000 CR3: 00000000337e6002 CR4: 00000000003606f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000600
+Call Trace:
+ switch_mm_irqs_off+0x409/0x8e0 arch/x86/mm/tlb.c:304
+ context_switch kernel/sched/core.c:2836 [inline]
+ __schedule+0x658/0x1650 kernel/sched/core.c:3490
+ schedule+0x70/0x190 kernel/sched/core.c:3549
+ freezable_schedule include/linux/freezer.h:172 [inline]
+ futex_wait_queue_me+0x2e2/0x4f0 kernel/futex.c:2530
+ futex_wait+0x1e7/0x5f0 kernel/futex.c:2645
+ do_futex+0x9e8/0x1720 kernel/futex.c:3527
+ __do_sys_futex kernel/futex.c:3587 [inline]
+ __se_sys_futex kernel/futex.c:3555 [inline]
+ __x64_sys_futex+0x291/0x380 kernel/futex.c:3555
+ do_syscall_64+0xa0/0x2c0 arch/x86/entry/common.c:287
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+RSP: 002b:00007fa7fc255cd8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: ffffffffffffffda RBX: 000000000073bf08 RCX: 0000000000466039
+RDX: 0000000000000000 RSI: 0000000000000080 RDI: 000000000073bf08
+RBP: 000000000073bf00 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 000000000073bf0c
+R13: 0000000000000000 R14: 000000000073bf00 R15: 00007ffe25145ad0
+Code: 80 3c 02 00 0f 85 85 01 00 00 48 8b 05 65 96 b2 02 8d 7e 01 48 be 00 00 00 00 00 00 00 80 0f b7 ff 48 09 f7 48 8d 34 18 48 09 f7 <0f> 22 df 0f 1f 40 00 48 83 c4 08 5b c3 48 c7 c7 58 70 14 8a 48 
+RIP: write_cr3 arch/x86/include/asm/paravirt.h:72 [inline] RSP: ffff880032db77f0
+RIP: load_new_mm_cr3+0x65/0x210 arch/x86/mm/tlb.c:120 RSP: ffff880032db77f0
+---[ end trace f092108685fd31b9 ]---

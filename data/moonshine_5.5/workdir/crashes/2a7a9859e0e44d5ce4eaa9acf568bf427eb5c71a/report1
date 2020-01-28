@@ -1,0 +1,58 @@
+==================================================================
+BUG: KASAN: slab-out-of-bounds in scr_memcpyw include/linux/vt_buffer.h:49 [inline]
+BUG: KASAN: slab-out-of-bounds in vgacon_scrollback_update drivers/video/console/vgacon.c:254 [inline]
+BUG: KASAN: slab-out-of-bounds in vgacon_scroll+0x658/0x840 drivers/video/console/vgacon.c:1380
+Write of size 13432 at addr ffff88806ccbd1e0 by task syz-executor.1/17757
+
+CPU: 1 PID: 17757 Comm: syz-executor.1 Not tainted 5.5.0-rc6 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x94/0xce lib/dump_stack.c:118
+ print_address_description.constprop.5+0x16/0x310 mm/kasan/report.c:374
+ __kasan_report+0x149/0x18d mm/kasan/report.c:506
+ kasan_report+0xe/0x20 mm/kasan/common.c:639
+ check_memory_region_inline mm/kasan/generic.c:185 [inline]
+ check_memory_region+0x149/0x1a0 mm/kasan/generic.c:192
+ memcpy+0x34/0x50 mm/kasan/common.c:126
+ scr_memcpyw include/linux/vt_buffer.h:49 [inline]
+ vgacon_scrollback_update drivers/video/console/vgacon.c:254 [inline]
+ vgacon_scroll+0x658/0x840 drivers/video/console/vgacon.c:1380
+ con_scroll+0x377/0x5c0 drivers/tty/vt/vt.c:631
+ lf+0x23f/0x290 drivers/tty/vt/vt.c:1453
+ do_con_trol+0x232/0x5860 drivers/tty/vt/vt.c:2121
+ do_con_write.part.27+0x558/0x1ae0 drivers/tty/vt/vt.c:2797
+ do_con_write drivers/tty/vt/vt.c:3139 [inline]
+ con_write+0xa7/0xc0 drivers/tty/vt/vt.c:3135
+ process_output_block drivers/tty/n_tty.c:595 [inline]
+ n_tty_write+0x4f7/0xd50 drivers/tty/n_tty.c:2333
+ do_tty_write drivers/tty/tty_io.c:962 [inline]
+ tty_write+0x445/0x940 drivers/tty/tty_io.c:1046
+ __vfs_write+0x7c/0x100 fs/read_write.c:494
+ vfs_write+0x168/0x4a0 fs/read_write.c:558
+ ksys_write+0x175/0x200 fs/read_write.c:611
+ do_syscall_64+0x9a/0x360 arch/x86/entry/common.c:294
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x466039
+Code: f7 d8 64 89 02 b8 ff ff ff ff c3 66 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 bc ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f326ae9fc58 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
+RAX: ffffffffffffffda RBX: 000000000073bf00 RCX: 0000000000466039
+RDX: 000000000000fcfe RSI: 0000000020000100 RDI: 0000000000000005
+RBP: 0000000000000003 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007f326aea06bc
+R13: 00000000004c6f6b R14: 000000000070fdc0 R15: 00000000ffffffff
+
+The buggy address belongs to the page:
+page:ffffea0001b32c00 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 compound_mapcount: 0
+raw: 0100000000010000 dead000000000100 dead000000000122 0000000000000000
+raw: 0000000000000000 0000000000000000 00000001ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff88806ccbff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ ffff88806ccbff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>ffff88806ccc0000: 00 00 00 00 00 00 00 00 00 fc fc fc fc 00 00 00
+                                              ^
+ ffff88806ccc0080: 00 00 00 00 00 00 fc fc fc fc 00 00 00 00 00 00
+ ffff88806ccc0100: 00 00 00 fc fc fc fc 00 00 00 00 00 00 00 00 00
+==================================================================
