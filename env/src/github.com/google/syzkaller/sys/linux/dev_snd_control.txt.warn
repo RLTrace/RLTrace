@@ -1,0 +1,5 @@
+bad-field-number: snd_ctl_elem_info: syz=12 kernel=7
+compiler: len target names_ptr refer to an array with variable-size elements (do you mean bytesize?)
+bad-field-size: snd_ctl_elem_info.items/value: syz=4 kernel=128
+bad-field-size: snd_ctl_elem_info.item/reserved: syz=4 kernel=64
+bad-field-offset: snd_ctl_elem_info.item/reserved: syz=84 kernel=208
